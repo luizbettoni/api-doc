@@ -1,6 +1,7 @@
 
 # NFe
 
+
 Através da API NFe é possível:
 
 * Emitir NFe utilizando dados simplificados.
@@ -21,6 +22,349 @@ DELETE |	/v2/nfe/REFERENCIA	| Cancela uma nota fiscal com a referência informad
 POST |	/v2/nfe/REFERENCIA/carta_correcao	| Cria uma carta de correção para a nota fiscal com a referência informada.
 POST |	/v2/nfe/REFERENCIA/email	| Envia um email com uma cópia da nota fiscal com a referência informada
 POST |	/v2/nfe/inutilizacao	| Inutiliza uma numeração da nota fiscal
+
+## Campos obrigatórios de uma NFe
+
+Atualmente, a NFe possui centenas de campos para os mais variados tipos e formas de operações, por isso, criamos uma página exclusiva que mostra todos os campos da nossa API para o envio de NFe. Nela, você pode buscar os campos pela TAG XML ou pela nossa tradução para API.
+
+Documentação completa dos campos (versão 4.00 da NFe)
+
+Documentação completa dos campos – versão 3.10 da NFe – Disponível até 2/abril/2018
+
+Abaixo, iremos mostrar os campos de uso obrigatório para emissão de uma Nota Fiscal Eletrônica.
+
+### Geral
+
+* <strong>natureza_operacao</strong>: Descrição da natureza da operação a ser realizada pela nota fiscal.
+* <strong>forma_pagamento</strong>: Forma de pagamento utilizado no operação. Valores possíveis:
+
+0 – à vista;
+
+1 – à prazo;
+
+2 – outros.
+
+* <strong>data_emissao</strong>: Data da emissão da NFe. Formato padrão ISO, exemplo: “2016-12-25T12:00-0300”.
+* <strong>tipo_documento</strong>: Tipo da NFe. Valores possíveis:
+
+0 – Nota Fiscal de Entrada;
+
+1 – Nota Fiscal de Saída.
+
+* <strong>local_destino</strong>: Local onde a operação irá acontecer. Valores possíveis:
+
+0 – Operação interna;
+
+1 – Operação interestadual;
+
+2 – Operação com exterior.
+
+* <strong>finalidade_emissao</strong>: Indicar qual a finalidade da emissão da nota. Valores possíveis:
+
+1 – Normal;
+
+2 – Complementar;
+
+3 – Nota de ajuste;
+
+4 – Devolução.
+
+* <strong>consumidor_final</strong>: Indicar se a operação é com consumidor final. Valores possíveis:
+
+0 – Normal;
+
+1 – Consumidor final.
+
+* <strong>presenca_comprador</strong>: Informar como foi a presença do comprador. Valores possíveis:
+
+0 – Não se aplica (por exemplo, para a Nota Fiscal complementar ou de ajuste);
+
+1 – Operação presencial;
+
+2 – Operação não presencial, pela Internet;
+
+3 – Operação não presencial, Teleatendimento;
+
+4 – NFC-e em operação com entrega em domicílio;
+
+9 – Operação não presencial, outros.
+
+### Emitente
+
+* <strong>cnpj_emitente</strong>: CNPJ do emitente da nota.
+* <strong>inscricao_estadual_emitente</strong>: Informar a Inscrição Estadual do emitente.
+* <strong>logradouro_emitente</strong>: Logradouro do emitente.
+* <strong>numero_emitente</strong>: Número do logradouro do emitente.
+* <strong>bairro_emitente</strong>: Bairro do emitente.
+* <strong>municipio_emitente</strong>: Município do emitente.
+* <strong>uf_emitente</strong>: UF do emitente.
+* <strong>regime_tributario_emitente</strong>: Informar qual o regime tributário do emitente. Valores possíveis:
+
+1 – Simples Nacional;
+
+2 – Simples Nacional – excesso de sublimite de receita bruta;
+
+3 – Regime Normal.
+
+### Destinatário
+* <strong>nome_destinatario</strong>: Nome completo do destinatário.
+* <strong>cnpj_destinatario</strong>: CNPJ da empresa destinatária.
+* <strong>cpf_destinatario</strong>: CPF do destinatário. Caso utilize este campo, não enviar o campo “cnpf_destinatario”.
+* <strong>inscricao_estadual_destinatario</strong>: Informar a Inscrição Estadual do destinatário.
+* <strong>logradouro_destinatario</strong>: Logradouro do destinatário.
+* <strong>numero_destinatario</strong>: Número do logradouro do destinatário.
+* <strong>bairro_destinatario</strong>: Bairro do destinatário.
+* <strong>municipio_destinatario</strong>: Município do destinatário.
+* <strong>uf_destinatario</strong>: UF do destinatário.
+* <strong>indicador_inscricao_estadual_destinatario</strong>: Indicador da Inscrição Estadual do destinatário. Valores possíveis:
+
+1 – Contribuinte ICMS (informar a IE do destinatário);
+
+2 – Contribuinte isento de Inscrição no cadastro de Contribuintes do ICMS;
+
+9 – Não Contribuinte, que pode ou não possuir Inscrição Estadual no Cadastro de Contribuintes do ICMS.
+
+### Itens
+Uma NFe irá conter um ou mais itens no campo “items” que poderão conter os campos abaixo:
+
+* <strong>numero_item</strong>: Numeração que indica qual a posição do item na nota, deve ser usado numeração sequencial a partir do número “1”.
+* <strong>codigo_produto</strong>: Código do produto.
+* <strong>descricao</strong>: Descrição do produto.
+* <strong>cfop</strong>: Código Fiscal da Operação, CFOP da operação válido para NFe.
+* <strong>quantidade_comercial</strong>: Quantidade da mercadoria.
+* <strong>quantidade_tributavel</strong>: Quantidade tributavel da mercadoria. Caso não se aplique, utilize o mesmo valor do campo quantidade_comercial.
+* <strong>valor_unitario_comercial</strong>: Valor unitário da mercadoria.
+* <strong>valor_unitario_tributavel</strong>: Valor unitário tributável da mercadoria. Caso não se aplique, utilize o mesmo valor do campo valor_unitario_comercial.
+* <strong>unidade_comercial</strong>: Unidade comercial do produto. Você pode utilizar valores como “KG”, “L”, “UN” entre outros. * Caso não se aplique, use “UN”.
+* <strong>unidade_tributavel</strong>: Unidade tributável do produto. Caso não se aplique, utilize o mesmo valor do campo unidade_comercial.
+* <strong>valor_bruto</strong>: Valor bruto do produto.
+* <strong>código_ncm</strong>: Código NCM do produto. Este código possui 8 dígitos.
+* <strong>inclui_no_total</strong>: Valor do item (valor_bruto) compõe valor total da NFe (valor_produtos)?. Valores possíveis:
+
+0 – Não;
+
+1 – Sim.
+
+* <strong>icms_origem</strong>: Informar a origem do ICMS. Valores possíveis:
+
+0 – Nacional;
+
+1 – Estrangeira (importação direta);
+
+2 – Estrangeira (adquirida no mercado interno);
+
+3 – Nacional com mais de 40% de conteúdo estrangeiro;
+
+4 – Nacional produzida através de processos produtivos básicos;
+
+5 – Nacional com menos de 40% de conteúdo estrangeiro;
+
+6 – Estrangeira (importação direta) sem produto nacional similar;
+
+7 – Estrangeira (adquirida no mercado interno) sem produto nacional similar;
+
+* <strong>icms_situacao_tributaria</strong>: Informar qual a situação do ICMS para a operação. Valores possíveis:
+
+00 – Tributada integralmente;
+
+10 – Tributada e com cobrança do ICMS por substituição tributária;
+
+20 – Tributada com redução de base de cálculo;
+
+30 – Isenta ou não tributada e com cobrança do ICMS por substituição tributária;
+
+40 – Isenta;
+
+41 – Não tributada;
+
+50 – Suspensão;
+
+51 – Diferimento (a exigência do preenchimento das informações do ICMS diferido fica a critério de cada UF);
+
+60 – Cobrado anteriormente por substituição tributária;
+
+70 – Tributada com redução de base de cálculo e com cobrança do ICMS por substituição tributária;
+90 – Outras (regime Normal);
+
+101 – Ttributada pelo Simples Nacional com permissão de crédito;
+
+102 – Tributada pelo Simples Nacional sem permissão de crédito;
+
+103 – Isenção do ICMS no Simples Nacional para faixa de receita bruta;
+
+201 – Tributada pelo Simples Nacional com permissão de crédito e com cobrança do ICMS por substituição tributária;
+
+202 – Tributada pelo Simples Nacional sem permissão de crédito e com cobrança do ICMS por substituição tributária;
+
+203 – Isenção do ICMS nos Simples Nacional para faixa de receita bruta e com cobrança do ICMS por substituição tributária;
+
+300 – Imune;
+
+400 – Não tributada pelo Simples Nacional;
+
+500 – ICMS cobrado anteriormente por substituição tributária (substituído) ou por antecipação;
+
+900 – Outras (regime Simples Nacional);
+
+pis_situacao_tributaria: Informar qual a situação do PIS para a operação. Valores possíveis:
+01 – Operação tributável: base de cálculo = valor da operação (alíquota normal – cumulativo/não cumulativo);
+
+02 – Operação tributável: base de cálculo = valor da operação (alíquota diferenciada);
+
+03 – Operação tributável: base de cálculo = quantidade vendida × alíquota por unidade de produto;
+
+04 – Operação tributável: tributação monofásica (alíquota zero);
+
+05 – Operação tributável: substituição tributária;
+
+06 – Operação tributável: alíquota zero;
+
+07 – Operação isenta da contribuição;
+
+08 – Operação sem incidência da contribuição;
+
+09 – Operação com suspensão da contribuição;
+
+49 – Outras operações de saída;
+
+50 – Operação com direito a crédito: vinculada exclusivamente a receita tributada no mercado interno;
+
+51 – Operação com direito a crédito: vinculada exclusivamente a receita não tributada no mercado interno;
+
+52 – Operação com direito a crédito: vinculada exclusivamente a receita de exportação;
+
+53 – Operação com direito a crédito: vinculada a receitas tributadas e não-tributadas no mercado interno;
+
+54 – Operação com direito a crédito: vinculada a receitas tributadas no mercado interno e de exportação;
+
+55 – Operação com direito a crédito: vinculada a receitas não-tributadas no mercado interno e de exprtação;
+
+56 – Operação com direito a crédito: vinculada a receitas tributadas e não-tributadas no mercado interno e de exportação;
+
+60 – Crédito presumido: operação de aquisição vinculada exclusivamente a receita tributada no mercado interno;
+
+61 – Crédito presumido: operação de aquisição vinculada exclusivamente a receita não-tributada no mercado interno;
+
+62 – Crédito presumido: operação de aquisição vinculada exclusivamente a receita de exportação;
+
+63 – Crédito presumido: operação de aquisição vinculada a receitas tributadas e não-tributadas no mercado interno;
+
+64 – Crédito presumido: operação de aquisição vinculada a receitas tributadas no mercado interno e de exportação;
+
+65 – Crédito presumido: operação de aquisição vinculada a receitas não-tributadas no mercado interno e de exportação;
+
+66 – Crédito presumido: operação de aquisição vinculada a receitas tributadas e não-tributadas no mercado interno e de exportação;
+
+67 – Crédito presumido: outras operações;
+
+70 – Operação de aquisição sem direito a crédito;
+
+71 – Operação de aquisição com isenção;
+
+72 – Operação de aquisição com suspensão;
+
+73 – Operação de aquisição a alíquota zero;
+
+74 – Operação de aquisição sem incidência da contribuição;
+
+75 – Operação de aquisição por substituição tributária;
+
+98 – Outras operações de entrada;
+
+99 – Outras operações;
+
+* <strong>cofins_situacao_tributaria</strong>: Informar qual a situação do CONFINS para a operação. Valores possíveis:
+
+01 – Operação tributável: base de cálculo = valor da operação (alíquota normal – cumulativo/não cumulativo);
+
+02 – Operação tributável: base de cálculo = valor da operação (alíquota diferenciada);
+
+03 – Operação tributável: base de cálculo = quantidade vendida × alíquota por unidade de produto;
+
+04 – Operação tributável: tributação monofásica (alíquota zero);
+
+05 – Operação tributável: substituição tributária;
+
+06 – Operação tributável: alíquota zero;
+
+07 – Operação isenta da contribuição;
+
+08 – Operação sem incidência da contribuição;
+
+09 – Operação com suspensão da contribuição;
+
+49 – Outras operações de saída;
+
+50 – Operação com direito a crédito: vinculada exclusivamente a receita tributada no mercado interno;
+
+51 – Operação com direito a crédito: vinculada exclusivamente a receita não tributada no mercado
+
+interno;
+
+52 – Operação com direito a crédito: vinculada exclusivamente a receita de exportação;
+
+53 – Operação com direito a crédito: vinculada a receitas tributadas e não-tributadas no mercado interno;
+
+54 – Operação com direito a crédito: vinculada a receitas tributadas no mercado interno e de exportação;
+
+55 – Operação com direito a crédito: vinculada a receitas não-tributadas no mercado interno e de exportação;
+
+56 – Operação com direito a crédito: vinculada a receitas tributadas e não-tributadas no mercado interno e de exportação;
+
+60 – Crédito presumido: operação de aquisição vinculada exclusivamente a receita tributada no mercado interno;
+
+61 – Crédito presumido: operação de aquisição vinculada exclusivamente a receita não-tributada no mercado interno;
+
+62 – Crédito presumido: operação de aquisição vinculada exclusivamente a receita de exportação;
+
+63 – Crédito presumido: operação de aquisição vinculada a receitas tributadas e não-tributadas no mercado interno;
+
+64 – Crédito presumido: operação de aquisição vinculada a receitas tributadas no mercado interno e de exportação;
+
+65 – Crédito presumido: operação de aquisição vinculada a receitas não-tributadas no mercado interno e de exportação;
+
+66 – Crédito presumido: operação de aquisição vinculada a receitas tributadas e não-tributadas no mercado interno e de exportação;
+
+67 – Crédito presumido: outras operações;
+
+70 – Operação de aquisição sem direito a crédito;
+
+71 – Operação de aquisição com isenção;
+
+72 – Operação de aquisição com suspensão;
+
+73 – Operação de aquisição a alíquota zero;
+
+74 – Operação de aquisição sem incidência da contribuição;
+
+75 – Operação de aquisição por substituição tributária;
+
+98 – Outras operações de entrada;
+
+99 – Outras operações;
+
+* <strong>icms_base_calculo</strong>: Valor total da base de cálculo do ICMS. Assume zero se não informado.
+* <strong>icms_valor_total</strong>: Valor total do ICMS. Assume zero se não informado.
+* <strong>icms_base_calculo_st</strong>: Valor total da base de cálculo do ICMS do substituto tributário. Assume zero se não informado.
+* <strong>icms_valor_total_st</strong>: Valor total do ICMS do substituto tributário. Assume zero se não informado.
+* <strong>valor_produtos</strong>: Valor total dos produtos. Assume zero se não informado.
+* <strong>valor_frete</strong>: Valor total do frete. Assume zero se não informado.
+* <strong>valor_seguro</strong>: Valor total do seguro. Assume zero se não informado.
+* <strong>valor_desconto</strong>: Valor total do desconto. Assume zero se não informado.
+* <strong>valor_ipi</strong>: Valor total do IPI. Assume zero se não informado.
+* <strong>valor_pis</strong>: Valor do PIS. Assume zero se não informado.
+* <strong>valor_cofins</strong>: Valor do COFINS. Assume zero se não informado.
+* <strong>valor_outras_despesas</strong>: Valor das despesas acessórias. Assume zero se não informado.
+* <strong>valor_total</strong>: Valor total da nota fiscal.
+* <strong>modalidade_frete</strong>: Indica a modalidade do frete da operação. Valores possíveis:
+
+0 – Por conta do emitente;
+
+1 – Por conta do destinatário;
+
+2 – Por conta de terceiros;
+
+9 – Sem frete;
 
 ## Envio
 
@@ -170,6 +514,132 @@ curl_close($ch);
 ?>
 ```
 
+```java
+
+import java.util.HashMap;
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.client.WebResource;
+import com.sun.jersey.api.client.config.ClientConfig;
+import com.sun.jersey.api.client.config.DefaultClientConfig;
+import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
+
+public class NFe_autorizar {
+
+	public static void main(String[] args) throws JSONException{
+		
+		String login = "Token_enviado_pelo_suporte";
+
+		/* Substituir pela sua identificação interna da nota. */
+		String ref = "12345";
+		
+		/* Para ambiente de produção use a variável abaixo:
+		String server = "https://api.focusnfe.com.br/"; */
+ 		String server = "http://homologacao.acrasnfe.acras.com.br/";
+ 		
+ 		String url = server.concat("v2/nfe?ref="+ref);
+	
+		/* Configuração para realizar o HTTP BasicAuth. */
+		Object config = new DefaultClientConfig();
+		Client client = Client.create((ClientConfig) config);
+		client.addFilter(new HTTPBasicAuthFilter(login, ""));
+		
+		/* Aqui são criados as hash's que receberão os dados da nota. */
+		HashMap<String, String> nfe = new HashMap<String, String>();
+		HashMap<String, String> itens = new HashMap<String, String>();
+   
+		nfe.put("data_emissao", "2018-01-16T09:38:00");
+		nfe.put("natureza_operacao", "Remessa de Produtos");
+		nfe.put("forma_pagamento", "0");
+		nfe.put("tipo_documento", "1");
+		nfe.put("finalidade_emissao", "1");
+		nfe.put("cnpj_emitente", "51916585000125");
+		nfe.put("nome_emitente", "ACME LTDA");
+		nfe.put("nome_fantasia_emitente", "ACME TESTES");
+		nfe.put("logradouro_emitente", "Rua Interventor Manoel Ribas");
+		nfe.put("numero_emitente", "1355 ");
+		nfe.put("bairro_emitente", "Santa Felicidade");
+		nfe.put("municipio_emitente", "Curitiba");
+		nfe.put("uf_emitente", "PR");
+		nfe.put("cep_emitente", "82320030");
+		nfe.put("telefone_emitente", "44912345678");
+		nfe.put("inscricao_estadual_emitente", "1234567");
+		nfe.put("nome_destinatario", "NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL");
+		nfe.put("cpf_destinatario", "51966818092");
+		nfe.put("inscricao_estadual_destinatario", "ISENTO");
+		nfe.put("telefone_destinatario", "19912345678");
+		nfe.put("logradouro_destinatario", "Rua Leonor Campos");
+		nfe.put("numero_destinatario", "29");
+		nfe.put("bairro_destinatario", "Swiss Park");
+		nfe.put("municipio_destinatario", "Campinas");
+		nfe.put("uf_destinatario", "SP");
+		nfe.put("pais_destinatario", "Brasil");
+		nfe.put("cep_destinatario", "13049555");
+		nfe.put("icms_base_calculo", "0");
+		nfe.put("icms_valor_total", "0");
+		nfe.put("icms_base_calculo_st", "0");
+		nfe.put("icms_valor_total_st", "0");
+		nfe.put("icms_modalidade_base_calculo", "0");
+		nfe.put("icms_valor", "0");
+		nfe.put("valor_frete", "0");
+		nfe.put("valor_seguro", "0");
+		nfe.put("valor_total", "1");
+		nfe.put("valor_produtos", "1");
+		nfe.put("valor_desconto", "0.00");
+		nfe.put("valor_ipi", "0");
+		nfe.put("modalidade_frete", "1");
+		itens.put("numero_item","128");
+		itens.put("codigo_produto","1007");
+		itens.put("descricao","Multi Mist 500g");
+		itens.put("cfop","6102");
+		itens.put("unidade_comercial","un");
+		itens.put("quantidade_comercial","1");
+		itens.put("valor_unitario_comercial","1");
+		itens.put("valor_unitario_tributavel","1");
+		itens.put("unidade_tributavel","un");
+		itens.put("codigo_ncm","11041900");
+		itens.put("valor_frete","0");
+		itens.put("valor_desconto","0.00");
+		itens.put("quantidade_tributavel","1");
+		itens.put("valor_bruto","1");
+		itens.put("icms_situacao_tributaria","103");
+		itens.put("icms_origem","0");
+		itens.put("pis_situacao_tributaria","07");
+		itens.put("cofins_situacao_tributaria","07");
+		itens.put("ipi_situacao_tributaria","53");
+		itens.put("ipi_codigo_enquadramento_legal","999");
+		
+		/* Depois de fazer o input dos dados, são criados os objetos JSON já com os valores das hash's. */
+		JSONObject json = new JSONObject (nfe);
+		JSONObject JsonItens = new JSONObject (itens);
+		
+		/* Aqui adicionamos os objetos JSON nos campos da API como array no JSON principal. */
+		json.append("items", JsonItens);
+
+		/* É recomendado verificar como os dados foram gerados em JSON e se ele está seguindo a estrutura especificada em nossa documentação.
+		System.out.print(json); */
+		
+		WebResource request = client.resource(url);
+
+		ClientResponse resposta = request.post(ClientResponse.class, json);
+
+		int HttpCode = resposta.getStatus(); 
+
+		String body = resposta.getEntity(String.class);
+		
+		/* As três linhas a seguir exibem as informações retornadas pela nossa API. 
+		 * Aqui o seu sistema deverá interpretar e lidar com o retorno. */
+		System.out.print("HTTP Code: ");
+		System.out.print(HttpCode);
+		System.out.printf(body);
+	}
+}
+
+```
+
+
 ### Reenvio automático em contingência
 
 Caso nossa equipe de monitoramento detecte que o SEFAZ de algum estado esteja fora do ar as requisições são redirecionadas para o ambiente de contingência da SEFAZ do estado. É natural haver uma demora na SEFAZ em disponibilizar esse ambiente (eles realizam este processo manualmente) porém nossa API irá continuar tentando o reenvio até que seja possível, seja pela emissão normal ou em contingência. Isto é feito de forma transparente aos clientes da API.
@@ -215,6 +685,50 @@ print($body."\n\n");
 print("");
 curl_close($ch);
 ?>
+```
+```java
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.client.WebResource;
+import com.sun.jersey.api.client.config.ClientConfig;
+import com.sun.jersey.api.client.config.DefaultClientConfig;
+import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
+
+public class NFe_consulta {
+
+	public static void main(String[] args){
+
+		String login = "Token_enviado_pelo_suporte";
+
+		/* Substituir pela sua identificação interna da nota. */
+		String ref = "12345";
+		
+		/* Para ambiente de produção use a variável abaixo:
+		String server = "https://api.focusnfe.com.br/"; */
+ 		String server = "http://homologacao.acrasnfe.acras.com.br/";
+ 		
+		String url = server.concat("v2/nfe/"+ref+"?completa=1");
+		
+		/* Configuração para realizar o HTTP BasicAuth. */
+		Object config = new DefaultClientConfig();
+		Client client = Client.create((ClientConfig) config);
+		client.addFilter(new HTTPBasicAuthFilter(login, ""));
+
+		WebResource request = client.resource(url);
+
+		ClientResponse resposta = request.get(ClientResponse.class);
+
+		int HttpCode = resposta.getStatus(); 
+
+		String body = resposta.getEntity(String.class);
+
+		/* As três linhas abaixo imprimem as informações retornadas pela API. 
+		 * Aqui o seu sistema deverá interpretar e lidar com o retorno. */
+		System.out.print("HTTP Code: ");
+		System.out.print(HttpCode);
+		System.out.printf(body);
+	}
+}
 ```
 
 >Exemplo de resposta da consulta de NFe:
@@ -317,6 +831,58 @@ print("");
 curl_close($ch);
 ?>
 ```
+```java
+import java.util.HashMap;
+import org.codehaus.jettison.json.JSONObject;
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.client.WebResource;
+import com.sun.jersey.api.client.config.ClientConfig;
+import com.sun.jersey.api.client.config.DefaultClientConfig;
+import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
+
+public class NFe_cancelamento {
+
+	public static void main(String[] args){
+		
+		String login = "Token_enviado_pelo_suporte";
+
+		/* Substituir pela sua identificação interna da nota. */
+		String ref = "12345";
+		
+		/* Para ambiente de produção use a variável abaixo:
+		String server = "https://api.focusnfe.com.br/"; */
+ 		String server = "http://homologacao.acrasnfe.acras.com.br/";
+ 		
+ 		String url = server.concat("v2/nfe/"+ref);
+ 		/* Aqui criamos um hashmap para receber a chave "justificativa" e o valor desejado. */
+		HashMap<String, String> justificativa = new HashMap<String, String>();
+		justificativa.put("justificativa", "Informe aqui a sua justificativa para realizar o cancelamento da NFe.");
+		
+		/* Criamos um objeto JSON para receber a hash com os dados esperado pela API. */
+		JSONObject json = new JSONObject(justificativa);
+		
+		/* Configuração para realizar o HTTP BasicAuth. */
+		Object config = new DefaultClientConfig();
+		Client client = Client.create((ClientConfig) config);
+		client.addFilter(new HTTPBasicAuthFilter(login, ""));
+	
+		WebResource request = client.resource(url);
+
+		ClientResponse resposta = request.delete(ClientResponse.class, json);
+
+		int HttpCode = resposta.getStatus(); 
+
+		String body = resposta.getEntity(String.class);
+		
+	   /* As três linhas abaixo imprimem as informações retornadas pela API. 
+        * Aqui o seu sistema deverá interpretar e lidar com o retorno. */
+		System.out.print("HTTP Code: ");
+		System.out.print(HttpCode);
+		System.out.printf(body);
+	}
+}
+```
 
 A API irá em seguida devolver os seguintes campos:
 
@@ -379,6 +945,60 @@ print("");
 curl_close($ch);
 ?>
 ```
+```java
+import java.util.HashMap;
+import org.codehaus.jettison.json.JSONObject;
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.client.WebResource;
+import com.sun.jersey.api.client.config.ClientConfig;
+import com.sun.jersey.api.client.config.DefaultClientConfig;
+import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
+
+public class NFe_CCe {
+
+	public static void main(String[] args){
+
+		String login = "Token_enviado_pelo_suporte";
+		
+		/* Substituir pela sua identificação interna da nota. */
+		String ref = "12345";
+		
+		/* Para ambiente de produção use a variável abaixo:
+		String server = "https://api.focusnfe.com.br/"; */
+		String server = "http://homologacao.acrasnfe.acras.com.br/";
+		
+		String url = server.concat("v2/nfe/"+ref+"/carta_correcao");
+
+		/* Aqui criamos um hashmap para receber a chave "correcao" e o valor desejado. */
+		HashMap<String, String> correcao = new HashMap<String, String>();
+		correcao.put("correcao", "Informe aqui os campos que foram corrigidos na NFe.");
+		
+		/* Criamos um objeto JSON para receber a hash com os dados esperado pela API. */
+		JSONObject json = new JSONObject(correcao);
+		
+		/* Configuração para realizar o HTTP BasicAuth. */
+		Object config = new DefaultClientConfig();
+		Client client = Client.create((ClientConfig) config);
+		client.addFilter(new HTTPBasicAuthFilter(login, ""));
+
+		WebResource request = client.resource(url);
+
+		ClientResponse resposta = request.post(ClientResponse.class, json);
+
+		int HttpCode = resposta.getStatus(); 
+
+		String body = resposta.getEntity(String.class);
+
+	   /* As três linhas abaixo imprimem as informações retornadas pela API. 
+		* Aqui o seu sistema deverá interpretar e lidar com o retorno. */
+		System.out.print("HTTP Code: ");
+		System.out.print(HttpCode);
+		System.out.printf(body);
+	}
+}
+```
+
 
 A API irá em seguida devolver os seguintes campos:
 
@@ -425,6 +1045,65 @@ print($body."\n\n");
 print("");
 curl_close($ch);
 ?>
+```
+
+```java
+import org.codehaus.jettison.json.JSONArray;
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.client.WebResource;
+import com.sun.jersey.api.client.config.ClientConfig;
+import com.sun.jersey.api.client.config.DefaultClientConfig;
+import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
+
+public class NFe_envia_email {
+
+	public static void main(String[] args) throws JSONException{
+		
+		String login = "Token_enviado_pelo_suporte";
+
+		/* Substituir pela sua identificação interna da nota. */
+		String ref = "12345";
+		
+		/* Para ambiente de produção use a variável abaixo:
+		String server = "https://api.focusnfe.com.br/"; */
+ 		String server = "http://homologacao.acrasnfe.acras.com.br/";
+ 		
+		String url = server.concat("v2/nfe/"+ref+"/email");
+		
+		/* Criamos o um objeto JSON que receberá um JSON Array com a lista de e-mails. */
+		JSONObject json = new JSONObject ();	
+		JSONArray ListaEmails = new JSONArray();
+		ListaEmails.put("email_01@acras.com.br");
+		ListaEmails.put("email_02@acras.com.br");
+		ListaEmails.put("email_03@acras.com.br");
+		json.put("emails", ListaEmails);	
+		
+		/* Testar se o JSON gerado está dentro do formato esperado.
+		System.out.print(json); */
+		
+		/* Configuração para realizar o HTTP BasicAuth. */
+		Object config = new DefaultClientConfig();
+		Client client = Client.create((ClientConfig) config);
+		client.addFilter(new HTTPBasicAuthFilter(login, ""));
+
+		WebResource request = client.resource(url);
+
+		ClientResponse resposta = request.post(ClientResponse.class, json);
+
+		int HttpCode = resposta.getStatus(); 
+
+		String body = resposta.getEntity(String.class);
+		
+		/* As três linhas abaixo imprimem as informações retornadas pela API. 
+		 * Aqui o seu sistema deverá interpretar e lidar com o retorno. */
+		System.out.print("HTTP Code: ");
+		System.out.print(HttpCode);
+		System.out.printf(body); 
+	}
+}
 ```
 
 Para cada nota autorizada, cancelada ou que tenha sido emitida uma carta de correção o destinatário da nota é notificado via email. Porém eventualmente pode ser necessário enviar a nota fiscal para outras pessoas ou mesmo reenviar o email para o mesmo destinatário.
@@ -490,6 +1169,64 @@ print("");
 curl_close($ch);
 ?>
 ```
+```java
+import java.util.HashMap;
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.client.WebResource;
+import com.sun.jersey.api.client.config.ClientConfig;
+import com.sun.jersey.api.client.config.DefaultClientConfig;
+import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
+
+public class NFe_inutilizacao {
+
+	public static void main(String[] args) throws JSONException{
+		
+		String login = "Token_enviado_pelo_suporte";
+		
+		/* Para ambiente de produção use a variável abaixo:
+		String server = "https://api.focusnfe.com.br/"; */
+ 		String server = "http://homologacao.acrasnfe.acras.com.br/";
+ 		
+ 		String url = server.concat("v2/nfe/inutilizacao");
+ 		
+ 		/* Aqui criamos um hash que irá receber as chaves e valores esperados para gerar a inutilização. */
+		HashMap<String, String> DadosInutilizacao = new HashMap<String, String>();
+		DadosInutilizacao.put("cnpj", "51916585009999");
+		DadosInutilizacao.put("serie", "9");
+		DadosInutilizacao.put("numero_inicial", "7730");
+		DadosInutilizacao.put("numero_final", "7732");
+		DadosInutilizacao.put("justificativa", "Informe aqui a justificativa para realizar a inutilizacao da numeracao.");
+		
+		/* Criamos um objeto JSON que irá receber o input dos dados, para então enviar a requisição. */
+		JSONObject json = new JSONObject (DadosInutilizacao);
+		
+		/* Testar se o JSON gerado está dentro do formato esperado.
+		System.out.print(json); */
+		
+		/* Configuração para realizar o HTTP BasicAuth. */
+		Object config = new DefaultClientConfig();
+		Client client = Client.create((ClientConfig) config);
+		client.addFilter(new HTTPBasicAuthFilter(login, ""));
+
+		WebResource request = client.resource(url);
+
+		ClientResponse resposta = request.post(ClientResponse.class, json);
+
+		int HttpCode = resposta.getStatus(); 
+
+		String body = resposta.getEntity(String.class);
+		
+		 /* As três linhas abaixo imprimem as informações retornadas pela API. 
+		  * Aqui o seu sistema deverá interpretar e lidar com o retorno. */
+		System.out.print("HTTP Code: ");
+		System.out.print(HttpCode);
+		System.out.printf(body); 
+	}
+}
+```
 
 A API irá enviar uma resposta com os seguintes campos:
 
@@ -500,3 +1237,69 @@ A API irá enviar uma resposta com os seguintes campos:
 * **numero_inicial**: Número inicial a ser inutilizado
 * **numero_final**: Número final a ser inutilizado
 * **caminho_xml**: Caminho do XML para download caso a inutilização tenha sido autorizada pela SEFAZ.
+
+## Outras documentações
+### Enviador de Arquivos
+
+Uma das formas de se comunicar com o Focus NFe é gerando um arquivo texto no formato especificado.
+
+Para sistemas desktop que não desejam implementar uma comunicação direta com nossos web services criamos um agente de comunicação que lê os arquivos gerados em uma pasta e envia para o Focus NFe. Em um segundo momento o próprio agente consulta o status da nota e faz o download dos arquivos do DANFe e XML da nota.
+
+**Como Funciona**
+
+Sempre que o comunicador é chamado ele irá seguir os passos abaixo:
+
+1.  **Enviar os arquivos de NFe** que estão no diretório de envio e criar uma pendência de retorno para esta nota.
+2.  **Enviar os arquivos de cancelamento** que estão no diretório de envio e criar uma pendência de retorno para este cancelamento.
+3.  **Consultando os retornos pendentes**.
+    1.  **Havendo retorno** o comunicador irá **gravar o arquivo de retorno** com o nome do identificador e a extensão (.ret). Por exemplo, para uma NFe com identificador único 99887766 será gravado o arquivo 99887766.ret no diretório de retorno.
+    2. Se o retorno é referente a uma **emissão de NFe e esta nota foi autorizada**, o comunicador já irá fazer o download do **DANFe e do XML** gravando os dois arquivos em um subdiretório do diretório de retorno. Para o DANFe o nome do subdiretório será DANFEs e para o XML será XMLs.
+
+    
+**Envio do arquivo para emissão da NFe**
+
+A aplicação do cliente deverá gravar um arquivo contendo o conteúdo da NFe e cujo nome é composto de um identificador único e com extensão NFe. Por exemplo, se o identificador único da nota no sistema cliente é 99887766 deverá ser gravado no diretório de envio com a extensão nfe, ou seja 99887766.nfe.
+
+**Envio do arquivo para cancelamento de NFe**
+
+A aplicação cliente deverá gravar um arquivo contendo um texto de justificativa de cancelamento. O arquivo deverá ser nomeado com o identificador único da nota e com extensão (.can). Em nosso exemplo acima o nome do arquivo seria 99887766.can. Este arquivo deverá ser gravado no diretório de envio de dados.
+
+**Envio do carta de correção eletrônica (CCe)**
+
+A aplicação cliente deverá gravar um arquivo contendo um texto da correção a ser aplicada. O arquivo deverá ser nomeado com o identificador único da nota e com extensão (.cce) e gravar no diretório de envio de dados.
+
+O PDF e XML da carta de correção serão gravados no diretório de retorno, subdiretório CCes.
+
+**Reconsulta de nfe**
+
+O comunicador faz adiciona pendências de consulta automaticamente para todo envio e cancelamento comandado. Se por algum motivo houver a necessidade de comandar novamente uma consulta, basta acionar o comunicador com o parâmetro ref e o valor sendo o id único da nota. Por exemplo, para comandar a reconsulta da nota com id único 99887766 basta chamar o comunicador como na linha de comando a seguir:
+
+`$ focusNFeFileCommunicator ref=99887766`
+
+**Importante**
+
+O comunicador possui uma execução linear e ao final é desativado. Isto quer dizer que ele não repete as consultas até que as notas estejam em estado final. É de responsabilidade da aplicação do cliente chamar o comunicador de tempos em tempos até que tenha as respostas para seus envios.
+
+**Configuração**
+
+Após rodar o comunicador pela primeira vez ele irá gerar um arquivo de configuração com informações padrão, como no exemplo ao lado.
+
+<pre>
+[Diretorios]
+envio =P:envios
+retorno =P:retornos
+logs=P:logs
+[Conexao]
+url =http://producao.acrasnfe.acras.com.br/
+token={token-enviado-pelo-suporte-focusnfe}
+</pre>
+
+Na seção **Diretorios** são configurados os diretórios de comunicação (envio e retorno) onde a aplicação do cliente irá salvar e ler arquivos respectivamente. Também é configurado o diretório de logs, onde o comunicador irá gravar os logs das operações realizadas por ele.
+
+A seção **Conexão** possui duas configurações cruciais para a correta comunicação com o Focus NFe. A url determina o endereço de comunicação que pode ser o de homologação (http://homologacao.acrasnfe.acras.com.br) e produção (http://producao.acrasnfe.acras.com.br).
+
+O token é a chave de acesso, fornecida pelo suporte, que irá garantir que a aplicação do cliente tem acesso ao Focus NFe.
+
+**Download**
+
+O comunicador foi desenvolvido para uso em sistema operacional Windows, para fazer o download do comunicador [clique aqui](http://www.focusnfe.com.br/downloads/focusNfeFileCommunicator.exe) . 
