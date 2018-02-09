@@ -1,7 +1,7 @@
 <<<<<<< HEAD
-ruby '>=2.3.1'
+ruby '2.3.1'
 =======
-ruby '>=2.4.0'
+ruby '2.3.1'
 >>>>>>> 6ee54754902b164941c7476760e79fbc79285d85
 source 'https://rubygems.org'
 
