@@ -4,13 +4,13 @@ title: API Reference
 language_tabs: # must be one of https://git.io/vQNgJ
   - shell
   - php
+  - java
 
 toc_footers:
   - <a href='#'>Sign Up for a Developer Key</a>
   - <a href='https://github.com/lord/slate'>Documentation Powered by Slate</a>
 
 includes:
-  - errors
   - nfe
   - nfce
   - backups
@@ -19,6 +19,7 @@ includes:
   - webhooks
   - revenda
   - limite-requisicoes
+  - github
 
 search: true
 ---
@@ -56,6 +57,28 @@ Existe algumas exceções no país, por exemplo Brasília pode utilizar NFe para
 
 ## Visão geral do processo de emissão de um documento
 
+A emissão de NFe e NFSe são processadas de forma **assíncrona**. NFCe é processada de forma **síncrona**.
+
+A emissão de documentos síncronos (NFCe) é simples:
+
+1. Você envia pela API os dados do documento
+2. A API devolve como resposta da requisição se o documento foi emitido ou não, e qual a mensagem de erro
+
+Já a emissão de documentos de forma assíncrona são feitos da seguinte forma:
+
+1. Você envia pela API os dados do documento
+2. A API faz uma primeira validação do formato dos dados. Se houver alguma inconsistência, é devolvida uma mensagem de erro. Se estiver tudo ok, o documento é **aceito para processamento posterior**. Ou seja, ele vai para uma fila onde será eventualmente processado.
+3. Sua aplicação irá fazer uma nova consulta para verificar o status do processamento
+4. Nossa API irá informar se o documento ainda está sendo processado, ou se o processamento já finalizou. Neste último caso informa a mensagem de erro ou os dados do documento gerado caso a nota tenha sido autorizada.
+5. Caso o documento ainda esteja em processamento, sua aplicação deverá agendar uma nova consulta dentro de alguns segundos.
+
+Alternativamente, você poderá usar o conceito de [gatilhos](#gatilhos). Neste caso você informa a API qual endereço de sua aplicação deverá ser chamado quando uma nota for autorizada. Neste caso funcionaria assim:
+
+1. Você envia pela API os dados do documento
+2. A API faz uma primeira validação do formato dos dados. Informa sobre inconsistência ou avisa que a nota foi aceita para processamento, como no cenário anterior.
+3. Quando a nota for processada, a API irá ativamente lhe informar através de um HTTP POST no endereço combinado o resultado do processamento.
+
+
 ## Autenticação
 
 A autenticação é feita através de um token. Ao habilitar a API para sua empresa forneceremos uma string secreta e única que será usada para efetuar todas as operações. A autenticação poderá ser feita usando o método HTTP Basic Auth (saiba mais em [https://en.wikipedia.org/wiki/Basic_access_authentication](https://en.wikipedia.org/wiki/Basic_access_authentication)) fornecendo o token como nome de usuário e deixando a senha em branco.
@@ -86,7 +109,6 @@ Homologação: `http://homologacao.acrasnfe.acras.com.br` (note que não é util
 
 Produção: `https://api.focusnfe.com.br` (obrigatório o uso de SSL).
 
-Ao longo desta documentação todas as URLs serão mostradas para ambiente de produção. Para usar o ambiente de homologação basta alterar o endereço do servidor.
 
 ## Padrão REST
 
@@ -99,6 +121,10 @@ Método | URL (recurso) | Ação
 POST |	/v2/nfe?ref=REFERENCIA | Cria uma nota fiscal e a envia para processamento.
 GET	| /v2/nfe/REFERENCIA | Consulta a nota fiscal com a referência informada e o seu status de processamento
 DELETE | /v2/nfe/REFERENCIA	| Cancela uma nota fiscal com a referência informada
+
+<aside class="notice">
+Você deve substituir <code>REFERENCIA</code> pela referência gerada pela sua aplicação.
+</aside>
 
 A API utiliza o formato JSON para transferência de dados.
 
@@ -123,215 +149,3 @@ Código HTTP	| Significado	| Explicação
 500 | Erro interno do servidor | Ocorreu algum erro inesperado. Contate o suporte técnico.
 
 Note que se o código HTTP devolvido for de sucesso não implica que uma nota tenha sido autorizada com sucesso. Por exemplo, você pode enviar uma nota fiscal para autorização, nossa API devolver o status 201 (criado) (pois não havia nenhum erro aparente na nota fiscal) porém ao ser processada pela SEFAZ ou prefeitura verificou-se que a data de emissão estava muito atrasada. Ou seja, os códigos HTTP são utilizados para verificar se a transação está ok no nível de comunicação da sua aplicação com a nossa API (e não com o SEFAZ).
-
-# Authentication
-
-> To authorize, use this code:
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-```
-
-```shell
-# With shell, you can just pass the correct header with each request
-curl "api_endpoint_here"
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-```
-
-> Make sure to replace `meowmeowmeow` with your API key.
-
-Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our [developer portal](http://example.com/developers).
-
-Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:
-
-`Authorization: meowmeowmeow`
-
-<aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
-</aside>
-
-# Kittens
-
-## Get All Kittens
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get()
-```
-
-```shell
-curl "http://example.com/api/kittens"
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let kittens = api.kittens.get();
-```
-
-> The above command returns JSON structured like this:
-
-```json
-[
-  {
-    "id": 1,
-    "name": "Fluffums",
-    "breed": "calico",
-    "fluffiness": 6,
-    "cuteness": 7
-  },
-  {
-    "id": 2,
-    "name": "Max",
-    "breed": "unknown",
-    "fluffiness": 5,
-    "cuteness": 10
-  }
-]
-```
-
-This endpoint retrieves all kittens.
-
-### HTTP Request
-
-`GET http://example.com/api/kittens`
-
-### Query Parameters
-
-Parameter | Default | Description
---------- | ------- | -----------
-include_cats | false | If set to true, the result will also include cats.
-available | true | If set to false, the result will include kittens that have already been adopted.
-
-<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside>
-
-## Get a Specific Kitten
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```shell
-curl "http://example.com/api/kittens/2"
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.get(2);
-```
-
-> The above command returns JSON structured like this:
-
-```json
-{
-  "id": 2,
-  "name": "Max",
-  "breed": "unknown",
-  "fluffiness": 5,
-  "cuteness": 10
-}
-```
-
-This endpoint retrieves a specific kitten.
-
-<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
-
-### HTTP Request
-
-`GET http://example.com/kittens/<ID>`
-
-### URL Parameters
-
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to retrieve
-
-## Delete a Specific Kitten
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.delete(2)
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.delete(2)
-```
-
-```shell
-curl "http://example.com/api/kittens/2"
-  -X DELETE
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.delete(2);
-```
-
-> The above command returns JSON structured like this:
-
-```json
-{
-  "id": 2,
-  "deleted" : ":("
-}
-```
-
-This endpoint deletes a specific kitten.
-
-### HTTP Request
-
-`DELETE http://example.com/kittens/<ID>`
-
-### URL Parameters
-
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to delete
