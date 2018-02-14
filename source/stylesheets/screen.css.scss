@@ -62,6 +62,12 @@ html, body {
   font-size: 13px;
   font-weight: bold;
 
+  .logo{
+    width: 50%;
+    margin: 0 auto;
+    padding: 15px 0 10px;
+  }
+
   // language selector for mobile devices
   .lang-selector {
     display: none;
