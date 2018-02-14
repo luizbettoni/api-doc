@@ -1,12 +1,4 @@
-<<<<<<< HEAD
 ruby '>=2.3.1'
-=======
-<<<<<<< HEAD
-ruby '2.3.1'
-=======
-ruby '2.3.1'
->>>>>>> 6ee54754902b164941c7476760e79fbc79285d85
->>>>>>> 5943e8f07cca90d5dd52228cba68b9b85e4d9a67
 source 'https://rubygems.org'
 
 # Middleman
