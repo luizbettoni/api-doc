@@ -6,7 +6,7 @@ Mensalmente a API (primeira hora do primeiro dia de cada mês) gera um arquivo c
 
 A consulta dos arquivos de backup pode ser feito com a URL abaixo:
 
-`https://api.focusnfe.com.br/backups/CNPJ.json?token=TOKEN`
+`https://api.focusnfe.com.br/backups/CNPJ.json`
 
 Utilize o comando HTTP GET para consultar o seu backup em nossa API.
 
@@ -14,7 +14,7 @@ Onde CNPJ é o CNPJ da empresa a ser consultada. Está requisição irá devolve
 
 * <strong>backups</strong>: Array de objetos contendo:
    * <strong>mes</strong>: Mês do backup no formato AAAAMM”, ex: “201701”
-   * <strong>danfes</strong>: Caminho para baixar arquivo ZIP com as DANFEs geradas
-   * <strong>xmls</strong>: Caminho para baixar arquivo ZIP com os XMLs gerados
+   * <strong>danfes</strong>: Caminho para baixar arquivo ZIP com as DANFEs geradas (NFe)
+   * <strong>xmls</strong>: Caminho para baixar arquivo ZIP com os XMLs gerados (NFe e NFCe)
 
-Caso você emita também NFCe, Nota Fiscal de Consumidor Eletrônica, os XMLs estarão no mesmo arquivo ZIP. Os backups serão mantidos por 6 meses em nossos servidores.
+Os backups serão mantidos por 6 meses em nossos servidores.

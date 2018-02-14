@@ -33,6 +33,64 @@ Documentação completa dos campos – versão 3.10 da NFe – Disponível até 
 
 Abaixo, iremos mostrar os campos de uso obrigatório para emissão de uma Nota Fiscal Eletrônica.
 
+>> Abaixo um exemplo de dados de uma nota (usando a versão 4.00 da NFe):
+
+```json
+{
+  "natureza_operacao":"Remessa",
+  "data_emissao":"2017-04-15",
+  "data_entrada_saida":"2017-04-15",
+  "tipo_documento":1,
+  "finalidade_emissao":1,
+  "cnpj_emitente":"SEU_CNPJ",
+  "nome_emitente":"Sua Raz\u00e3o Social Ltda",
+  "nome_fantasia_emitente":"Fantasia do Emitente",
+  "logradouro_emitente":"Rua Quinze de Abril",
+  "numero_emitente":999,
+  "bairro_emitente":"Jd Paulistano",
+  "municipio_emitente":"S\u00e3o Paulo",
+  "uf_emitente":"SP",
+  "cep_emitente":"01454-600",
+  "inscricao_estadual_emitente":"SUA_INSCRICAO_ESTADUAL",
+  "nome_destinatario":"NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL",
+  "cpf_destinatario":"03055054911",
+  "inscricao_estadual_destinatario":null,
+  "telefone_destinatario":1196185555,
+  "logradouro_destinatario":"Rua S\u00e3o Janu\u00e1rio",
+  "numero_destinatario":99,
+  "bairro_destinatario":"Crespo",
+  "municipio_destinatario":"Manaus",
+  "uf_destinatario":"AM",
+  "pais_destinatario":"Brasil",
+  "cep_destinatario":69073178,
+  "valor_frete":0.0,
+  "valor_seguro":0,
+  "valor_total":47.23,
+  "valor_produtos":47.23,
+  "modalidade_frete":0,
+  "items": [
+    {
+      "numero_item":1,
+      "codigo_produto":1232,
+      "descricao":"Cartu00f5es de Visita",
+      "cfop":5923,
+      "unidade_comercial":"un",
+      "quantidade_comercial":100,
+      "valor_unitario_comercial":0.4723,
+      "valor_unitario_tributavel":0.4723,
+      "unidade_tributavel":"un",
+      "codigo_ncm":49111090,
+      "quantidade_tributavel":100,
+      "valor_bruto":47.23,
+      "icms_situacao_tributaria":41,
+      "icms_origem":0,
+      "pis_situacao_tributaria":"07",
+      "cofins_situacao_tributaria":"07"
+    }
+  ]
+}
+```
+
 ### Geral
 
 * <strong>natureza_operacao</strong>: Descrição da natureza da operação a ser realizada pela nota fiscal.
@@ -368,70 +426,11 @@ interno;
 
 ## Envio
 
-Para enviar uma NFe utilize a URL abaixo, alterando o ambiente de produção para homologação, caso esteja emitindo notas de teste.
 
-Envia uma NFe para autorização:
-
-`https://api.focusnfe.com.br/v2/nfe?ref=REFERENCIA`
-
-Utilize o comando HTTP POST para enviar a sua nota para nossa API. Envie como corpo do POST os dados em formato JSON da nota fiscal.
-
->> Abaixo um exemplo de dados de uma nota (usando a versão 4.00 da NFe):
-
-```json
-{
-  "natureza_operacao":"Remessa",
-  "data_emissao":"2017-04-15",
-  "data_entrada_saida":"2017-04-15",
-  "tipo_documento":1,
-  "finalidade_emissao":1,
-  "cnpj_emitente":"SEU_CNPJ",
-  "nome_emitente":"Sua Raz\u00e3o Social Ltda",
-  "nome_fantasia_emitente":"Fantasia do Emitente",
-  "logradouro_emitente":"Rua Quinze de Abril",
-  "numero_emitente":999,
-  "bairro_emitente":"Jd Paulistano",
-  "municipio_emitente":"S\u00e3o Paulo",
-  "uf_emitente":"SP",
-  "cep_emitente":"01454-600",
-  "inscricao_estadual_emitente":"SUA_INSCRICAO_ESTADUAL",
-  "nome_destinatario":"NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL",
-  "cpf_destinatario":"03055054911",
-  "inscricao_estadual_destinatario":null,
-  "telefone_destinatario":1196185555,
-  "logradouro_destinatario":"Rua S\u00e3o Janu\u00e1rio",
-  "numero_destinatario":99,
-  "bairro_destinatario":"Crespo",
-  "municipio_destinatario":"Manaus",
-  "uf_destinatario":"AM",
-  "pais_destinatario":"Brasil",
-  "cep_destinatario":69073178,
-  "valor_frete":0.0,
-  "valor_seguro":0,
-  "valor_total":47.23,
-  "valor_produtos":47.23,
-  "modalidade_frete":0,
-  "items": [
-    {
-      "numero_item":1,
-      "codigo_produto":1232,
-      "descricao":"Cartu00f5es de Visita",
-      "cfop":5923,
-      "unidade_comercial":"un",
-      "quantidade_comercial":100,
-      "valor_unitario_comercial":0.4723,
-      "valor_unitario_tributavel":0.4723,
-      "unidade_tributavel":"un",
-      "codigo_ncm":49111090,
-      "quantidade_tributavel":100,
-      "valor_bruto":47.23,
-      "icms_situacao_tributaria":41,
-      "icms_origem":0,
-      "pis_situacao_tributaria":"07",
-      "cofins_situacao_tributaria":"07"
-    }
-  ]
-}
+```shell
+# arquivo.json deve conter os dados da NFe
+curl -u token_enviado_pelo_suporte: \
+  -X POST -T arquivo.json http://homologacao.acrasnfe.acras.com.br/v2/nfe
 ```
 
 ```php
@@ -529,27 +528,27 @@ import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 public class NFe_autorizar {
 
 	public static void main(String[] args) throws JSONException{
-		
+
 		String login = "Token_enviado_pelo_suporte";
 
 		/* Substituir pela sua identificação interna da nota. */
 		String ref = "12345";
-		
+
 		/* Para ambiente de produção use a variável abaixo:
 		String server = "https://api.focusnfe.com.br/"; */
  		String server = "http://homologacao.acrasnfe.acras.com.br/";
- 		
+
  		String url = server.concat("v2/nfe?ref="+ref);
-	
+
 		/* Configuração para realizar o HTTP BasicAuth. */
 		Object config = new DefaultClientConfig();
 		Client client = Client.create((ClientConfig) config);
 		client.addFilter(new HTTPBasicAuthFilter(login, ""));
-		
+
 		/* Aqui são criados as hash's que receberão os dados da nota. */
 		HashMap<String, String> nfe = new HashMap<String, String>();
 		HashMap<String, String> itens = new HashMap<String, String>();
-   
+
 		nfe.put("data_emissao", "2018-01-16T09:38:00");
 		nfe.put("natureza_operacao", "Remessa de Produtos");
 		nfe.put("forma_pagamento", "0");
@@ -610,26 +609,26 @@ public class NFe_autorizar {
 		itens.put("cofins_situacao_tributaria","07");
 		itens.put("ipi_situacao_tributaria","53");
 		itens.put("ipi_codigo_enquadramento_legal","999");
-		
+
 		/* Depois de fazer o input dos dados, são criados os objetos JSON já com os valores das hash's. */
 		JSONObject json = new JSONObject (nfe);
 		JSONObject JsonItens = new JSONObject (itens);
-		
+
 		/* Aqui adicionamos os objetos JSON nos campos da API como array no JSON principal. */
 		json.append("items", JsonItens);
 
 		/* É recomendado verificar como os dados foram gerados em JSON e se ele está seguindo a estrutura especificada em nossa documentação.
 		System.out.print(json); */
-		
+
 		WebResource request = client.resource(url);
 
 		ClientResponse resposta = request.post(ClientResponse.class, json);
 
-		int HttpCode = resposta.getStatus(); 
+		int HttpCode = resposta.getStatus();
 
 		String body = resposta.getEntity(String.class);
-		
-		/* As três linhas a seguir exibem as informações retornadas pela nossa API. 
+
+		/* As três linhas a seguir exibem as informações retornadas pela nossa API.
 		 * Aqui o seu sistema deverá interpretar e lidar com o retorno. */
 		System.out.print("HTTP Code: ");
 		System.out.print(HttpCode);
@@ -638,6 +637,15 @@ public class NFe_autorizar {
 }
 
 ```
+
+Para enviar uma NFe utilize a URL abaixo, alterando o ambiente de produção para homologação, caso esteja emitindo notas de teste.
+
+Envia uma NFe para autorização:
+
+`https://api.focusnfe.com.br/v2/nfe?ref=REFERENCIA`
+
+Utilize o comando HTTP POST para enviar a sua nota para nossa API. Envie como corpo do POST os dados em formato JSON da nota fiscal.
+
 
 
 ### Reenvio automático em contingência
@@ -652,13 +660,11 @@ O sistema cliente da API pode acompanhar este processo de forma transparente, co
 
 ## Consulta
 
-Para consultar uma NFe utilize a URL abaixo, alterando o ambiente de produção para homologação, caso esteja emitindo notas de teste.
 
-Consultar as informações de uma NFe:
-
-`https://api.focusnfe.com.br/v2/nfe/REFERENCIA`
-
-Utilize o comando HTTP GET para consultar a sua nota para nossa API.
+```shell
+curl -u token_enviado_pelo_suporte: \
+  http://homologacao.acrasnfe.acras.com.br/v2/nfe/12345
+```
 
 ```php
 <?php
@@ -702,13 +708,13 @@ public class NFe_consulta {
 
 		/* Substituir pela sua identificação interna da nota. */
 		String ref = "12345";
-		
+
 		/* Para ambiente de produção use a variável abaixo:
 		String server = "https://api.focusnfe.com.br/"; */
  		String server = "http://homologacao.acrasnfe.acras.com.br/";
- 		
+
 		String url = server.concat("v2/nfe/"+ref+"?completa=1");
-		
+
 		/* Configuração para realizar o HTTP BasicAuth. */
 		Object config = new DefaultClientConfig();
 		Client client = Client.create((ClientConfig) config);
@@ -718,17 +724,26 @@ public class NFe_consulta {
 
 		ClientResponse resposta = request.get(ClientResponse.class);
 
-		int HttpCode = resposta.getStatus(); 
+		int HttpCode = resposta.getStatus();
 
 		String body = resposta.getEntity(String.class);
 
-		/* As três linhas abaixo imprimem as informações retornadas pela API. 
+		/* As três linhas abaixo imprimem as informações retornadas pela API.
 		 * Aqui o seu sistema deverá interpretar e lidar com o retorno. */
 		System.out.print("HTTP Code: ");
 		System.out.print(HttpCode);
 		System.out.printf(body);
 	}
 }
+
+Para consultar uma NFe utilize a URL abaixo, alterando o ambiente de produção para homologação, caso esteja emitindo notas de teste.
+
+Consultar as informações de uma NFe:
+
+`https://api.focusnfe.com.br/v2/nfe/REFERENCIA`
+
+Utilize o comando HTTP GET para consultar a sua nota para nossa API.
+
 ```
 
 >Exemplo de resposta da consulta de NFe:
@@ -791,17 +806,11 @@ Quando houver uma tentativa anterior de emissão, conforme descrito na seção �
 
 ## Cancelamento
 
-Para cancelar uma NFe, basta fazer uma requisição à URL abaixo, alterando o ambiente de produção para homologação, caso esteja emitindo notas de teste.
-
-Cancelar uma NFe já autorizada:
-
-`https://api.focusnfe.com.br/v2/nfe/REFERENCIA`
-
-Utilize o comando HTTP DELETE para cancelar a sua nota para nossa API. Este método é síncrono, ou seja, a comunicação com a SEFAZ será feita imediatamente e devolvida a resposta na mesma requisição.
-
-O parâmetros de cancelamento deverão ser enviados da seguinte forma:
-
-* **justificativa**: Justificativa do cancelamento. Deverá conter de 15 a 255 caracteres.
+```shell
+curl -u token_enviado_pelo_suporte: \
+  -X DELETE -d '{"justificativa":"Teste de cancelamento de nota"}' \
+  http://homologacao.acrasnfe.acras.com.br/v2/nfe/12345
+```
 
 ```php
 <?php
@@ -844,38 +853,38 @@ import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 public class NFe_cancelamento {
 
 	public static void main(String[] args){
-		
+
 		String login = "Token_enviado_pelo_suporte";
 
 		/* Substituir pela sua identificação interna da nota. */
 		String ref = "12345";
-		
+
 		/* Para ambiente de produção use a variável abaixo:
 		String server = "https://api.focusnfe.com.br/"; */
  		String server = "http://homologacao.acrasnfe.acras.com.br/";
- 		
+
  		String url = server.concat("v2/nfe/"+ref);
  		/* Aqui criamos um hashmap para receber a chave "justificativa" e o valor desejado. */
 		HashMap<String, String> justificativa = new HashMap<String, String>();
 		justificativa.put("justificativa", "Informe aqui a sua justificativa para realizar o cancelamento da NFe.");
-		
+
 		/* Criamos um objeto JSON para receber a hash com os dados esperado pela API. */
 		JSONObject json = new JSONObject(justificativa);
-		
+
 		/* Configuração para realizar o HTTP BasicAuth. */
 		Object config = new DefaultClientConfig();
 		Client client = Client.create((ClientConfig) config);
 		client.addFilter(new HTTPBasicAuthFilter(login, ""));
-	
+
 		WebResource request = client.resource(url);
 
 		ClientResponse resposta = request.delete(ClientResponse.class, json);
 
-		int HttpCode = resposta.getStatus(); 
+		int HttpCode = resposta.getStatus();
 
 		String body = resposta.getEntity(String.class);
-		
-	   /* As três linhas abaixo imprimem as informações retornadas pela API. 
+
+	   /* As três linhas abaixo imprimem as informações retornadas pela API.
         * Aqui o seu sistema deverá interpretar e lidar com o retorno. */
 		System.out.print("HTTP Code: ");
 		System.out.print(HttpCode);
@@ -883,6 +892,19 @@ public class NFe_cancelamento {
 	}
 }
 ```
+
+Para cancelar uma NFe, basta fazer uma requisição à URL abaixo, alterando o ambiente de produção para homologação, caso esteja emitindo notas de teste.
+
+Cancelar uma NFe já autorizada:
+
+`https://api.focusnfe.com.br/v2/nfe/REFERENCIA`
+
+Utilize o comando HTTP DELETE para cancelar a sua nota para nossa API. Este método é síncrono, ou seja, a comunicação com a SEFAZ será feita imediatamente e devolvida a resposta na mesma requisição.
+
+O parâmetros de cancelamento deverão ser enviados da seguinte forma:
+
+* **justificativa**: Justificativa do cancelamento. Deverá conter de 15 a 255 caracteres.
+
 
 A API irá em seguida devolver os seguintes campos:
 
@@ -906,14 +928,11 @@ Não existe prazo especificado para emissão de cartas de correção. É possív
 
 ### Emissão de CCe
 
-`https://api.focusnfe.com.br/v2/nfe/REFERENCIA/carta_correcao`
-
-Utilize o comando HTTP POST para enviar a sua nota para nossa API. Este método é **síncrono**, ou seja, a comunicação com a SEFAZ será feita imediatamente e devolvida a resposta na mesma requisição.
-
-O parâmetros da carta de correção deverão ser enviados da seguinte forma:
-
-* **correcao**: Texto da carta de correção. Deverá conter de 15 a 255 caracteres.
-* **data_evento**: Campo opcional. Data do evento da carta de correção. Se não informado será usado a data atual
+```shell
+curl -u token_enviado_pelo_suporte: \
+  -X POST -d '{"correcao":"Teste de carta de correcao"}' \
+  http://homologacao.acrasnfe.acras.com.br/v2/nfe/12345/carta_correcao
+```
 
 ```php
 <?php
@@ -960,23 +979,23 @@ public class NFe_CCe {
 	public static void main(String[] args){
 
 		String login = "Token_enviado_pelo_suporte";
-		
+
 		/* Substituir pela sua identificação interna da nota. */
 		String ref = "12345";
-		
+
 		/* Para ambiente de produção use a variável abaixo:
 		String server = "https://api.focusnfe.com.br/"; */
 		String server = "http://homologacao.acrasnfe.acras.com.br/";
-		
+
 		String url = server.concat("v2/nfe/"+ref+"/carta_correcao");
 
 		/* Aqui criamos um hashmap para receber a chave "correcao" e o valor desejado. */
 		HashMap<String, String> correcao = new HashMap<String, String>();
 		correcao.put("correcao", "Informe aqui os campos que foram corrigidos na NFe.");
-		
+
 		/* Criamos um objeto JSON para receber a hash com os dados esperado pela API. */
 		JSONObject json = new JSONObject(correcao);
-		
+
 		/* Configuração para realizar o HTTP BasicAuth. */
 		Object config = new DefaultClientConfig();
 		Client client = Client.create((ClientConfig) config);
@@ -986,11 +1005,11 @@ public class NFe_CCe {
 
 		ClientResponse resposta = request.post(ClientResponse.class, json);
 
-		int HttpCode = resposta.getStatus(); 
+		int HttpCode = resposta.getStatus();
 
 		String body = resposta.getEntity(String.class);
 
-	   /* As três linhas abaixo imprimem as informações retornadas pela API. 
+	   /* As três linhas abaixo imprimem as informações retornadas pela API.
 		* Aqui o seu sistema deverá interpretar e lidar com o retorno. */
 		System.out.print("HTTP Code: ");
 		System.out.print(HttpCode);
@@ -998,6 +1017,15 @@ public class NFe_CCe {
 	}
 }
 ```
+
+`https://api.focusnfe.com.br/v2/nfe/REFERENCIA/carta_correcao`
+
+Utilize o comando HTTP POST para enviar a sua nota para nossa API. Este método é **síncrono**, ou seja, a comunicação com a SEFAZ será feita imediatamente e devolvida a resposta na mesma requisição.
+
+O parâmetros da carta de correção deverão ser enviados da seguinte forma:
+
+* **correcao**: Texto da carta de correção. Deverá conter de 15 a 255 caracteres.
+* **data_evento**: Campo opcional. Data do evento da carta de correção. Se não informado será usado a data atual
 
 
 A API irá em seguida devolver os seguintes campos:
@@ -1011,8 +1039,13 @@ A API irá em seguida devolver os seguintes campos:
 
 Para uma mesma nota fiscal é possível enviar mais de uma carta de correção, até o limite de 20 correções, sendo que a última sempre substitui a anterior.
 
-## Reenvio de email
+## Reenvio de e-mail
 
+```shell
+curl -u token_enviado_pelo_suporte: \
+  -X POST -d '{"emails":["alguem@example.org"]}' \
+  http://homologacao.acrasnfe.acras.com.br/v2/nfe/12345/email
+```
 
 ```php
 <?php
@@ -1061,29 +1094,29 @@ import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 public class NFe_envia_email {
 
 	public static void main(String[] args) throws JSONException{
-		
+
 		String login = "Token_enviado_pelo_suporte";
 
 		/* Substituir pela sua identificação interna da nota. */
 		String ref = "12345";
-		
+
 		/* Para ambiente de produção use a variável abaixo:
 		String server = "https://api.focusnfe.com.br/"; */
  		String server = "http://homologacao.acrasnfe.acras.com.br/";
- 		
+
 		String url = server.concat("v2/nfe/"+ref+"/email");
-		
+
 		/* Criamos o um objeto JSON que receberá um JSON Array com a lista de e-mails. */
-		JSONObject json = new JSONObject ();	
+		JSONObject json = new JSONObject ();
 		JSONArray ListaEmails = new JSONArray();
 		ListaEmails.put("email_01@acras.com.br");
 		ListaEmails.put("email_02@acras.com.br");
 		ListaEmails.put("email_03@acras.com.br");
-		json.put("emails", ListaEmails);	
-		
+		json.put("emails", ListaEmails);
+
 		/* Testar se o JSON gerado está dentro do formato esperado.
 		System.out.print(json); */
-		
+
 		/* Configuração para realizar o HTTP BasicAuth. */
 		Object config = new DefaultClientConfig();
 		Client client = Client.create((ClientConfig) config);
@@ -1093,15 +1126,15 @@ public class NFe_envia_email {
 
 		ClientResponse resposta = request.post(ClientResponse.class, json);
 
-		int HttpCode = resposta.getStatus(); 
+		int HttpCode = resposta.getStatus();
 
 		String body = resposta.getEntity(String.class);
-		
-		/* As três linhas abaixo imprimem as informações retornadas pela API. 
+
+		/* As três linhas abaixo imprimem as informações retornadas pela API.
 		 * Aqui o seu sistema deverá interpretar e lidar com o retorno. */
 		System.out.print("HTTP Code: ");
 		System.out.print(HttpCode);
-		System.out.printf(body); 
+		System.out.printf(body);
 	}
 }
 ```
@@ -1120,21 +1153,11 @@ A API imediatamente devolve a requisição com a confirmação dos emails. Os em
 
 ## Inutilização
 
-Em uma situação normal você não precisará informar ao SEFAZ a inutilização de um número da NFe, pois a API controla automaticamente a numeração das notas. Porém, se por alguma situação específica for necessário a inutilização de alguma faixa de números você poderá chamar as seguintes operações:
-
-Envio de inutilização de faixa de numeração:
-
-`https://api.focusnfe.com.br/v2/nfe/inutilizacao`
-
-Utilize o comando HTTP POST para enviar a sua inutilização para nossa API. Este método é **síncrono**, ou seja, a comunicação com a SEFAZ será feita imediatamente e devolvida a resposta na mesma requisição.
-
-A inutilização precisa dos seguintes parâmetros obrigatórios:
-
-* **cnpj**: CNPJ da empresa emitente
-* **serie**: Série da numeração da NFe que terá uma faixa de numeração inutilizada
-* **numero_inicial**: Número inicial a ser inutilizado
-* **numero_final**: Número final a ser inutilizado
-* **justificativa**: Justificativa da inutilização (mínimo 15 caracteres)
+```shell
+curl -u token_enviado_pelo_suporte: \
+  -X POST -d '{"cnpj":"51916585000125","serie":"1","numero_inicial":"7","numero_final":"9","justificativa":"Teste de inutilizacao de nota"}' \
+  http://homologacao.acrasnfe.acras.com.br/v2/nfe/inutilizacao
+```
 
 ```php
 <?php
@@ -1183,15 +1206,15 @@ import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 public class NFe_inutilizacao {
 
 	public static void main(String[] args) throws JSONException{
-		
+
 		String login = "Token_enviado_pelo_suporte";
-		
+
 		/* Para ambiente de produção use a variável abaixo:
 		String server = "https://api.focusnfe.com.br/"; */
  		String server = "http://homologacao.acrasnfe.acras.com.br/";
- 		
+
  		String url = server.concat("v2/nfe/inutilizacao");
- 		
+
  		/* Aqui criamos um hash que irá receber as chaves e valores esperados para gerar a inutilização. */
 		HashMap<String, String> DadosInutilizacao = new HashMap<String, String>();
 		DadosInutilizacao.put("cnpj", "51916585009999");
@@ -1199,13 +1222,13 @@ public class NFe_inutilizacao {
 		DadosInutilizacao.put("numero_inicial", "7730");
 		DadosInutilizacao.put("numero_final", "7732");
 		DadosInutilizacao.put("justificativa", "Informe aqui a justificativa para realizar a inutilizacao da numeracao.");
-		
+
 		/* Criamos um objeto JSON que irá receber o input dos dados, para então enviar a requisição. */
 		JSONObject json = new JSONObject (DadosInutilizacao);
-		
+
 		/* Testar se o JSON gerado está dentro do formato esperado.
 		System.out.print(json); */
-		
+
 		/* Configuração para realizar o HTTP BasicAuth. */
 		Object config = new DefaultClientConfig();
 		Client client = Client.create((ClientConfig) config);
@@ -1215,18 +1238,35 @@ public class NFe_inutilizacao {
 
 		ClientResponse resposta = request.post(ClientResponse.class, json);
 
-		int HttpCode = resposta.getStatus(); 
+		int HttpCode = resposta.getStatus();
 
 		String body = resposta.getEntity(String.class);
-		
-		 /* As três linhas abaixo imprimem as informações retornadas pela API. 
+
+		 /* As três linhas abaixo imprimem as informações retornadas pela API.
 		  * Aqui o seu sistema deverá interpretar e lidar com o retorno. */
 		System.out.print("HTTP Code: ");
 		System.out.print(HttpCode);
-		System.out.printf(body); 
+		System.out.printf(body);
 	}
 }
 ```
+
+Em uma situação normal você não precisará informar ao SEFAZ a inutilização de um número da NFe, pois a API controla automaticamente a numeração das notas. Porém, se por alguma situação específica for necessário a inutilização de alguma faixa de números você poderá chamar as seguintes operações:
+
+Envio de inutilização de faixa de numeração:
+
+`https://api.focusnfe.com.br/v2/nfe/inutilizacao`
+
+Utilize o comando HTTP POST para enviar a sua inutilização para nossa API. Este método é **síncrono**, ou seja, a comunicação com a SEFAZ será feita imediatamente e devolvida a resposta na mesma requisição.
+
+A inutilização precisa dos seguintes parâmetros obrigatórios:
+
+* **cnpj**: CNPJ da empresa emitente
+* **serie**: Série da numeração da NFe que terá uma faixa de numeração inutilizada
+* **numero_inicial**: Número inicial a ser inutilizado
+* **numero_final**: Número final a ser inutilizado
+* **justificativa**: Justificativa da inutilização (mínimo 15 caracteres)
+
 
 A API irá enviar uma resposta com os seguintes campos:
 
@@ -1255,7 +1295,7 @@ Sempre que o comunicador é chamado ele irá seguir os passos abaixo:
     1.  **Havendo retorno** o comunicador irá **gravar o arquivo de retorno** com o nome do identificador e a extensão (.ret). Por exemplo, para uma NFe com identificador único 99887766 será gravado o arquivo 99887766.ret no diretório de retorno.
     2. Se o retorno é referente a uma **emissão de NFe e esta nota foi autorizada**, o comunicador já irá fazer o download do **DANFe e do XML** gravando os dois arquivos em um subdiretório do diretório de retorno. Para o DANFe o nome do subdiretório será DANFEs e para o XML será XMLs.
 
-    
+
 **Envio do arquivo para emissão da NFe**
 
 A aplicação do cliente deverá gravar um arquivo contendo o conteúdo da NFe e cujo nome é composto de um identificador único e com extensão NFe. Por exemplo, se o identificador único da nota no sistema cliente é 99887766 deverá ser gravado no diretório de envio com a extensão nfe, ou seja 99887766.nfe.
@@ -1302,4 +1342,4 @@ O token é a chave de acesso, fornecida pelo suporte, que irá garantir que a ap
 
 **Download**
 
-O comunicador foi desenvolvido para uso em sistema operacional Windows, para fazer o download do comunicador [clique aqui](http://www.focusnfe.com.br/downloads/focusNfeFileCommunicator.exe) . 
+O comunicador foi desenvolvido para uso em sistema operacional Windows, para fazer o download do comunicador [clique aqui](http://www.focusnfe.com.br/downloads/focusNfeFileCommunicator.exe) .
