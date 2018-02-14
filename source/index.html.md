@@ -7,8 +7,6 @@ language_tabs: # must be one of https://git.io/vQNgJ
   - java
 
 toc_footers:
-  - <a href='#'>Sign Up for a Developer Key</a>
-  - <a href='https://github.com/lord/slate'>Documentation Powered by Slate</a>
 
 includes:
   - nfe
@@ -26,7 +24,7 @@ search: true
 
 # Introdução
 
-<aside class="warning">Esta é a API para a versão mais recente (v2). Para acessar a documentação da API v1 <a href='https://focusnfe.com.br/api/doc'>clique aqui</a>.</aside>
+<aside class="warning">Esta é a API para a versão mais recente (v2). Para acessar a documentação da API v1 <a href='https://focusnfe.com.br/doc/v1'>clique aqui</a>.</aside>
 
 A API do Focus NFe permite que você emita ou consulte documentos fiscais (NFe, NFSe, NFCe) a partir do seu sistema, seja qual for a tecnologia que ele utilize através da geração de dados em um formato simplificado, sem a necessidade de gerara a assinatura digital destes documentos. A API ainda gerencia toda a comunicação com os servidores da SEFAZ de cada estado ou com os servidores da prefeitura, no caso de NFSe.
 
