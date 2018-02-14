@@ -34,15 +34,15 @@ Através desta documentação deverá ser possível fazer a integração com a A
 
 ## Como ler este documento?
 
-Você deverá ler primeiramente a introdução, em seguida, a seção sobre o documento que você irá emitir ([NFe](#nfe), [NFCe](#nfce) ou [NFSe](#nfse)).
+Você deverá ler primeiramente a introdução, em seguida, a seção sobre o documento que você irá emitir ([NFe](#nfe_nfe), [NFCe](#nfce_nfce) ou [NFSe](#nfse_nfse)).
 
-Caso você emita NFe ou NFCe, você deverá ler também sobre os [backups](#backups-nfe-e-nfce).
+Caso você emita NFe ou NFCe, você deverá ler também sobre os [backups](#backups-nfe-e-nfce_backups-nfe-e-nfce).
 
-Caso você emita NFe ou NFSe, você poderá ler também sobre os [gatilhos](#gatilhos). O uso de gatilhos no sistema é opcional.
+Caso você emita NFe ou NFSe, você poderá ler também sobre os [gatilhos](#gatilhos_gatilhos). O uso de gatilhos no sistema é opcional.
 
-Caso você tenha interesse em obter as notas emitidas contra a sua empresa, leia a seção de [manifestação](#manifestacao).
+Caso você tenha interesse em obter as notas emitidas contra a sua empresa, leia a seção de [manifestação](#manifestacao_manifestacao).
 
-Se sua empresa irá administrar vários clientes que emitem notas, pode ser interessante você ler sobre a seção de [revenda](#revenda).
+Se sua empresa irá administrar vários clientes que emitem notas, pode ser interessante você ler sobre a seção de [revenda](#revenda_revenda).
 
 ## Qual documento fiscal você precisa emitir?
 
