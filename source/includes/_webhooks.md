@@ -294,11 +294,24 @@ public class ExemploExclusaoHook {
 }
 ```
 
+> Dados de resposta da exclusão de um gatilho
+
+```json
+{
+  "id": "Vj5rmkBq",
+  "url": "http://minha.url/nfe",
+  "authorization": null,
+  "event": "nfe",
+  "cnpj": "51916585000125",
+  "deleted": true
+}
+```
+
 Para excluir um gatilho, utilize a URL
 
 `https://api.focusnfe.com.br/v2/hooks/HOOK_ID`
 
-Utilize o método HTTP **DELETE** para excluir o gatilho. Em caso de sucesso será exibido apenas os dados do gatilho excluído.
+Utilize o método HTTP **DELETE** para excluir o gatilho. Em caso de sucesso será exibido os dados do gatilho excluído acrescentado do atributo "deleted" com o valor "true".
 
 ## Dados enviados pelo gatilho para sua aplicação
 
