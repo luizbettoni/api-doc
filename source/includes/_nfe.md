@@ -660,6 +660,13 @@ O sistema cliente da API pode acompanhar este processo de forma transparente, co
 
 ## Consulta
 
+Para consultar uma NFe utilize a URL abaixo, alterando o ambiente de produção para homologação, caso esteja emitindo notas de teste.
+
+Consultar as informações de uma NFe:
+
+https://api.focusnfe.com.br/v2/nfe/REFERENCIA?completa=(0|1)
+
+Utilize o comando HTTP GET para consultar a sua nota para nossa API.
 
 ```shell
 curl -u token_enviado_pelo_suporte: \
