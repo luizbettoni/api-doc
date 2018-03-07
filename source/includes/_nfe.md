@@ -1335,7 +1335,9 @@ public class NFe_inutilizacao {
 	}
 }
 ```
+
 > Resposta da API para a requisição de inutilização:
+
 ```json
  {
   "status_sefaz": "102",
