@@ -966,6 +966,15 @@ public class NFe_cancelamento {
 	}
 }
 ```
+> Resposta da API para a requisição de cancelamento:
+```json
+{
+  "status_sefaz": "135",
+  "mensagem_sefaz": "Evento registrado e vinculado a NF-e",
+  "status": "cancelado",
+  "caminho_xml_cancelamento": "/arquivos_development/77993353000000/204703/XMLs/41180377993353000000000030000000885414063742-can.xml"
+}
+```
 
 Para cancelar uma NFe, basta fazer uma requisição à URL abaixo, alterando o ambiente de produção para homologação, caso esteja emitindo notas de teste.
 
