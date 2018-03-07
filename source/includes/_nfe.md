@@ -750,18 +750,18 @@ Utilize o comando HTTP GET para consultar a sua nota para nossa API.
 
 ```json
 {
-  "status":"autorizado",
-  "status_sefaz":"100",
-  "mensagem_sefaz":"Autorizado o uso da NF-e",
-  "cnpj_emitente":"SEU_CNPJ",
-  "ref":"REFERENCIA",
-  "chave_nfe":"NFe41170777627353999172550010000003871980884091",
-  "numero":"387",
-  "serie":"1",
-  "caminho_xml_nota_fiscal":"/arquivos/733530172/201704/XMLs/41170777627353999172550010000003871980884091-nfe.xml",
-  "caminho_danfe":"/arquivos/733530172/201704/DANFEs/41170777627353999172550010000003871980884091.pdf",
-  "caminho_xml_carta_correcao": "/arquivos/733530172/201704/XMLs/41170777627353999172550010000003871980884091-cce-01.xml",
-  "caminho_pdf_carta_correcao": "/notas_fiscais/NFe41170777627353999172550010000003871980884091/cartas_correcao/1.pdf",
+  "cnpj_emitente": "CNPJ_DO_EMITENTE",
+  "ref": "REFERENCIA",
+  "status": "cancelado",
+  "status_sefaz": "135",
+  "mensagem_sefaz": "Evento registrado e vinculado a NF-e",
+  "numero": "25",
+  "serie": "3",
+  "chave_nfe": "NFe91180177643353000172550030000000251381549464",
+  "caminho_xml_nota_fiscal": "/arquivos_development/77623353000000/201201/XMLs/91180177643353000172550030000000251381549464-nfe.xml",
+  "caminho_xml_cancelamento": "/arquivos_development/77623353000000/201201/XMLs/91180177643353000172550030000000251381549464-can.xml",
+  "caminho_xml_carta_correcao": "/arquivos_development/77623353000000/201201/XMLs/91180177643353000172550030000000251381549464-cce-01.xml",
+  "caminho_pdf_carta_correcao": "/notas_fiscais/NFe91180177643353000172550030000000251381549464/cartas_correcao/1.pdf",
   "numero_carta_correcao": 1
 }
 ```
@@ -788,10 +788,77 @@ Campos de retorno:
 * **numero_carta_correcao**: o número da carta de correção, caso tenha sido emitida.
 * **caminho_xml_cancelamento**: Caso a nota esteja cancelada, é fornecido o caminho para fazer o download do XML de cancelamento.
 
-Caso na requisição seja passado o parâmetro `completa=1` será informado mais dois campos:
+Caso na requisição seja passado o parâmetro `completa=1` será adicionado mais 6 campos:
 
 * **requisicao_nota_fiscal**: Inclui os dados completos da requisição da nota fiscal, da mesma forma que constam no XML da nota.
 * **protocolo_nota_fiscal**: Inclui os dados completos do protocolo devolvido pela SEFAZ.
+* **requisicao_cancelamento**: Inclui os dados completos da requisição de cancelamento da nota fiscal.
+* **protocolo_cancelamento**: Inclui os dados completos do protocolo devolvido pela SEFAZ.
+* **requisicao_carta_correcao**: Inclui os dados completos da requisição de Carta de Correção Eletrônica da NFe.
+* **protocolo_carta_correcao**: Inclui os dados completos do protocolo devolvido pela SEFAZ.
+
+> Exemplo de campos extras na consulta completa
+
+```json
+{
+    "requisicao_cancelamento": {
+    "versao": "1.00",
+    "id_tag": "ID1101119118017764335300017255003000000025138154946401",
+    "codigo_orgao": "41",
+    "ambiente": "2",
+    "cnpj": "CNPJ_DO_EMITENTE",
+    "chave_nfe": "91180177643353000172550030000000251381549464",
+    "data_evento": "2012-01-17T16:00:28-02:00",
+    "tipo_evento": "110111",
+    "numero_sequencial_evento": "1",
+    "versao_evento": "1.00",
+    "descricao_evento": "Cancelamento",
+    "protocolo": "141180000026777",
+    "justificativa": "Informe aqui a sua justificativa para realizar o cancelamento da NFe."
+  },
+  "protocolo_cancelamento": {
+    "versao": "1.00",
+    "ambiente": "2",
+    "versao_aplicativo": "PR-v3_8_7",
+    "codigo_orgao": "41",
+    "status": "135",
+    "motivo": "Evento registrado e vinculado a NF-e",
+    "chave_nfe": "91180177643353000172550030000000251381549464",
+    "tipo_evento": "110111",
+    "descricao_evento": "Cancelamento",
+    "data_evento": "2012-01-17T16:00:31-02:00",
+    "numero_protocolo": "141180000026777"
+  },
+   "requisicao_carta_correcao": {
+    "versao": "1.00",
+    "id_tag": "ID1101109118017764335300017255003000000025138154946401",
+    "codigo_orgao": "41",
+    "ambiente": "2",
+    "cnpj": "CNPJ_DO_EMITENTE",
+    "chave_nfe": "91180177643353000172550030000000251381549464",
+    "data_evento": "2012-01-17T15:59:34-02:00",
+    "tipo_evento": "110110",
+    "numero_sequencial_evento": "1",
+    "versao_evento": "1.00",
+    "descricao_evento": "Carta de Correcao",
+    "correcao": "Informe aqui os campos que foram corrigidos na NFe.",
+    "condicoes_uso": "A Carta de Correcao e disciplinada pelo paragrafo 1o-A do art. 7o do Convenio S/N, de 15 de dezembro de 1970 e pode ser utilizada para regularizacao de erro ocorrido na emissao de documento fiscal, desde que o erro nao esteja relacionado com: I - as variaveis que determinam o valor do imposto tais como: base de calculo, aliquota, diferenca de preco, quantidade, valor da operacao ou da prestacao; II - a correcao de dados cadastrais que implique mudanca do remetente ou do destinatario; III - a data de emissao ou de saida."
+  },
+  "protocolo_carta_correcao": {
+    "versao": "1.00",
+    "ambiente": "2",
+    "versao_aplicativo": "PR-v3_8_7",
+    "codigo_orgao": "41",
+    "status": "135",
+    "motivo": "Evento registrado e vinculado a NF-e",
+    "chave_nfe": "91180177643353000172550030000000251381549464",
+    "tipo_evento": "110110",
+    "descricao_evento": "Carta de Correção",
+    "data_evento": "2012-01-17T15:59:37-02:00",
+    "numero_protocolo": "141180000026777"
+  }
+}
+```
 
 ### Reenvio Automático em Contingência – algumas considerações
 
