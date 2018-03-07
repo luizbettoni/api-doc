@@ -966,7 +966,9 @@ public class NFe_cancelamento {
 	}
 }
 ```
+
 > Resposta da API para a requisição de cancelamento:
+
 ```json
 {
   "status_sefaz": "135",
