@@ -1324,6 +1324,18 @@ public class NFe_inutilizacao {
 	}
 }
 ```
+> Resposta da API para a requisição de inutilização:
+```json
+ {
+  "status_sefaz": "102",
+  "mensagem_sefaz": "Inutilizacao de numero homologado",
+  "serie": "3",
+  "numero_inicial": "800",
+  "numero_final": "801",
+  "status": "autorizado",
+  "caminho_xml": "/arquivos_development/71113353000900/207701/XMLs/999992335309999955003000000800000000801-inu.xml"
+}
+```
 
 Em uma situação normal você não precisará informar ao SEFAZ a inutilização de um número da NFe, pois a API controla automaticamente a numeração das notas. Porém, se por alguma situação específica for necessário a inutilização de alguma faixa de números você poderá chamar as seguintes operações:
 
