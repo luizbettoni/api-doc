@@ -1103,6 +1103,19 @@ public class NFe_CCe {
 }
 ```
 
+> Resposta da API para a requisição de CCe:
+
+```json
+{
+  "status_sefaz": "135",
+  "mensagem_sefaz": "Evento registrado e vinculado a NF-e",
+  "status": "autorizado",
+  "caminho_xml_carta_correcao": "/arquivos_development/77793353000000/201803/XMLs/99180377993353000000550030000000271021711350-cce-01.xml",
+  "caminho_pdf_carta_correcao": "/notas_fiscais/NFe411803777933530000002550030000000277771711350/cartas_correcao/1.pdf",
+  "numero_carta_correcao": 1
+}
+```
+
 `https://api.focusnfe.com.br/v2/nfe/REFERENCIA/carta_correcao`
 
 Utilize o comando HTTP POST para enviar a sua nota para nossa API. Este método é **síncrono**, ou seja, a comunicação com a SEFAZ será feita imediatamente e devolvida a resposta na mesma requisição.
