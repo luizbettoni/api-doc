@@ -513,7 +513,7 @@ Para cancelar uma NFSe, basta fazer uma requisição à URL abaixo, alterando o 
 
 **Cancelar uma NFSe já autorizada:**
 
-`https://api.focusnfe.com.br/nfse/REFERENCIA.json`
+`https://api.focusnfe.com.br/v2/nfse/REFERENCIA.json`
 
 Utilize o comando **HTTP DELETE** para cancelar a sua nota para nossa API.
 Este método é síncrono, ou seja, a comunicação com a prefeitura será feita imediatamente e devolvida a resposta na mesma requisição.
