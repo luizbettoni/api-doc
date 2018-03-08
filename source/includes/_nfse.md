@@ -2,7 +2,7 @@
 
 Através da API NFSe é possível:
 
- * Emitir NFSe para qualquer município utilizando um único modelo de dados
+ * Emitir NFSe para qualquer município utilizando um único modelo de dados. Este processo é **assíncrono**. Ou seja, após a emissão a nota será enfileirada para processamento.
  * Cancelar NFSe
  * Consultar NFSe’s emitidas
  * Encaminhar uma NFSe autorizada por email
@@ -316,6 +316,14 @@ Envia uma NFSe para autorização:
 
 Utilize o comando **HTTP POST** para enviar a sua nota para nossa API.
 
+Nesta etapa, é feita uma primeira validação dos dados da nota. Caso ocorra algum problema, por exemplo, algum campo faltante, formato incorreto
+ou algum problema com o prestador a nota **não será aceita para processamento** e será devolvida a mensagem de erro apropriada. Veja a seção [erros](#introducao_erros).
+
+Caso a nota seja validada corretamente, a nota será **aceita para processamento**. Isto significa que a nota irá para uma fila de processamento
+onde eventualmente será processada (processamento assíncrono). Com isto, a nota poderá ser autorizada ou ocorrer um erro na autorização de acordo com a validação da prefeitura.
+
+Para verificar se a nota já foi autorizada, você terá que efetuar uma [consulta](#nfse_consulta) ou se utilizar de [gatilhos](#gatilhos_gatilhos).
+
 ## Consulta
 
 ```shell
@@ -409,6 +417,9 @@ public class NFSe_consulta {
 "caminho_xml_nota_fiscal":"/notas_fiscais_servico/NFSe191517072001883518800-1898781-9999-312276647.xml"
 }
 ```
+
+Após emitir uma nota, você poderá usar a operação de consulta para verificar se a nota já foi aceita para processamento, se está
+ainda em processamento ou se a nota já foi processada.
 
 Para consultar uma NFSe utilize a URL abaixo, alterando o ambiente de produção para homologação, caso esteja emitindo notas de teste.
 

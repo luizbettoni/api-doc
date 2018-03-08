@@ -7,6 +7,9 @@ Através da API NFCe é possível:
 * Reenviar uma NFCe por email.
 * Inutilizar o número de alguma série de NFCe.
 
+Todos os processos envolvendo NFCe são **síncronos**. Ou seja, a emissão não é feita em segundo plano, ao contrário da NFe
+e NFSe.
+
 ## URLs
 
 Método | URL (recurso) | Ação
