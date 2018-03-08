@@ -244,6 +244,9 @@
                   <li>
                     <a href="#introducao_padrao-rest" class="toc-h2 toc-link" data-title="padrao-rest">Padrão REST</a>
                   </li>
+                  <li>
+                    <a href="#introducao_erros" class="toc-h2 toc-link" data-title="erros">Erros</a>
+                  </li>
               </ul>
           </li>
           <li>
@@ -461,6 +464,26 @@ Este é o ambiente com validade fiscal e tributária, pois isso, recomendamos qu
 <p>Homologação: <code>http://homologacao.acrasnfe.acras.com.br</code> (note que não é utilizado SSL).</p>
 
 <p>Produção: <code>https://api.focusnfe.com.br</code> (obrigatório o uso de SSL).</p>
+
+<p><strong>Considerações sobre o uso de SSL</strong></p>
+<pre class="highlight php tab-php"><code><span class="cp">&lt;?php</span>
+<span class="c1"># Em PHP normalmente é necessária uma configuração adicional.
+# Em muitos sites você irá encontrar a solução abaixo,
+# para ignorar a validação do certificado:
+</span>
+<span class="nv">$ch</span> <span class="o">=</span> <span class="nb">curl_init</span><span class="p">();</span>
+<span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_SSL_VERIFYPEER</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
+
+<span class="c1"># Porém o correto seria indicar para confiar na unidade certificadora
+</span><span class="nv">$ch</span> <span class="o">=</span> <span class="nb">curl_init</span><span class="p">();</span>
+<span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_CAINFO</span><span class="p">,</span> <span class="s2">"/pasta/no/servidor/ca.crt"</span><span class="p">);</span>
+<span class="cp">?&gt;</span>
+
+</code></pre>
+<p>Verifique em sua linguagem de programação se é necessário alguma configuração adicional para uso de SSL em produção.
+Pode ser necessário indicar explicitamente a confiar na autoridade certificadora que emitiu o certificado SSL.</p>
+
+<p><a href="https://focusnfe.com.br/downloads/ca.crt">Você pode baixar a cadeia de certificados aqui</a></p>
 <h2 id='introducao_padrao-rest'>Padrão REST</h2>
 <p>A API utiliza o padrão de arquitetura REST <a href="https://pt.wikipedia.org/wiki/REST">https://pt.wikipedia.org/wiki/REST</a>. Neste padrão, são utilizados verbos ou métodos HTTP (GET, POST, DELETE) em conjunto com determinados recursos disponíveis através de uma URL para representar uma determinada ação. Por exemplo, o verbo GET é usado para representar algum tipo de visualização dos dados de um dado recurso, e o verbo POST é usado para criar um novo recurso e o verbo DELETE representa uma exclusão.</p>
 
@@ -525,7 +548,7 @@ Você deve substituir <code>REFERENCIA</code> pela referência gerada pela sua a
 <tr>
 <td>400</td>
 <td>Requisição inválida</td>
-<td>Este erro é devolvido quando falta alguma informação na requisição. Por exemplo quando falta algum parâmetro obrigatório.</td>
+<td>Este erro é devolvido quando falta alguma informação na requisição ou ela é inválida por algum outro motivo. Por exemplo quando falta algum parâmetro obrigatório.</td>
 </tr>
 <tr>
 <td>403</td>
@@ -543,9 +566,9 @@ Você deve substituir <code>REFERENCIA</code> pela referência gerada pela sua a
 <td>Este erro é devolvido quando não é reconhecido o formato JSON enviado, devido a alguma falha de sintaxe.</td>
 </tr>
 <tr>
-<td>429</td>
-<td>Muitas requisições</td>
-<td>Você ultrapassou o limite de requisições por minuto. Veja o <a href="#limite-de-requisicoes">limite de requisições</a></td>
+<td>422</td>
+<td>Entidade improcessável</td>
+<td>Não existe erro na requisição (sintaxe), porém há algum erro de semântica (por exemplo, tentar cancelar uma nota já cancelada)</td>
 </tr>
 <tr>
 <td>429</td>
@@ -560,11 +583,78 @@ Você deve substituir <code>REFERENCIA</code> pela referência gerada pela sua a
 </tbody></table>
 
 <p>Note que se o código HTTP devolvido for de sucesso não implica que uma nota tenha sido autorizada com sucesso. Por exemplo, você pode enviar uma nota fiscal para autorização, nossa API devolver o status 201 (criado) (pois não havia nenhum erro aparente na nota fiscal) porém ao ser processada pela SEFAZ ou prefeitura verificou-se que a data de emissão estava muito atrasada. Ou seja, os códigos HTTP são utilizados para verificar se a transação está ok no nível de comunicação da sua aplicação com a nossa API (e não com o SEFAZ).</p>
+<h2 id='introducao_erros'>Erros</h2>
+<blockquote>
+<p>Exemplo de mensagem de erro</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"codigo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"nao_encontrado"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"mensagem"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Nota fiscal não encontrada"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>As mensagens de erro serão apresentadas em qualquer operação sempre que for devolvido um código HTTP que começa com 4. A mensagem será um objeto com os seguintes atributos:</p>
+
+<ul>
+<li><strong>codigo</strong> - O código da mensagem</li>
+<li><strong>mensagem</strong> - A descrição mais detalhada do que ocorreu</li>
+<li><strong>erros</strong> - (Opcional) Quando for possível detalhar o erro, ele será informado neste array de objetos</li>
+</ul>
+
+<p>Abaixo listamos os códigos de erro mais comuns.</p>
+
+<table><thead>
+<tr>
+<th>Código HTTP</th>
+<th>Código do erro</th>
+<th>Significado</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>400</td>
+<td>requisicao_invalida</td>
+<td>Faltou informar algum campo na requisição. Este campo é informando na mensagem do erro</td>
+</tr>
+<tr>
+<td>400</td>
+<td>empresa_nao_habilitada</td>
+<td>Empresa ainda não habilitada para emitir o documento que você precisa. Habilite no seu painel ou contate o suporte técnico</td>
+</tr>
+<tr>
+<td>400</td>
+<td>nfe_cancelada</td>
+<td>Foi feita uma tentativa de cancelar uma nota já cancelada</td>
+</tr>
+<tr>
+<td>403</td>
+<td>permissao_negada</td>
+<td>Sua aplicação por algum motivo se encontra bloqueada para uso. Contate o nosso suporte</td>
+</tr>
+<tr>
+<td>404</td>
+<td>nao_encontrado</td>
+<td>Ocorre quando o recurso que você está procurando (NFe, NFCe ou NFSe) não é encontrado</td>
+</tr>
+<tr>
+<td>422</td>
+<td>nfe_nao_autorizada</td>
+<td>Foi feita alguma operação com a nota que só é aplicável se ela estiver autorizada (por exemplo a ação de cancelamento)</td>
+</tr>
+<tr>
+<td>422</td>
+<td>nfe_autorizada</td>
+<td>Foi solicitado o processamento de uma nota já autorizada</td>
+</tr>
+<tr>
+<td>422</td>
+<td>em_processamento</td>
+<td>Foi solicitado o processamento de uma nota que já está em processamento</td>
+</tr>
+</tbody></table>
 <h1 id='nfe_nfe'>NFe</h1>
 <p>Através da API NFe é possível:</p>
 
 <ul>
-<li>Emitir NFe utilizando dados simplificados.</li>
+<li>Emitir NFe utilizando dados simplificados. Este processo é <strong>assíncrono</strong>. Ou seja, após a emissão a nota será enfileirada para processamento.</li>
 <li>Cancelar NFe.</li>
 <li>Consultar o status de NFe emitidas.</li>
 <li>Encaminhar uma NFe por email</li>
@@ -1240,6 +1330,14 @@ $server = "https://api.focusnfe.com.br"; */</span>
 <p><code>https://api.focusnfe.com.br/v2/nfe?ref=REFERENCIA</code></p>
 
 <p>Utilize o comando HTTP POST para enviar a sua nota para nossa API. Envie como corpo do POST os dados em formato JSON da nota fiscal.</p>
+
+<p>Nesta etapa, é feita uma primeira validação dos dados da nota. Caso ocorra algum problema, por exemplo, algum campo faltante, formato incorreto
+ou algum problema com o emitente a nota <strong>não será aceita para processamento</strong> e será devolvida a mensagem de erro apropriada. Veja a seção <a href="#introducao_erros">erros</a>.</p>
+
+<p>Caso a nota seja validada corretamente, a nota será <strong>aceita para processamento</strong>. Isto significa que a nota irá para uma fila de processamento
+onde eventualmente será processada (processamento assíncrono). Com isto, a nota poderá ser autorizada ou ocorrer um erro na autorização, de acordo com a validação da SEFAZ.</p>
+
+<p>Para verificar se a nota já foi autorizada, você terá que efetuar uma <a href="#nfe_consulta">consulta</a> ou se utilizar de <a href="#gatilhos_gatilhos">gatilhos</a>.</p>
 <h3 id='nfe_reenvio-automatico-em-contingencia'>Reenvio automático em contingência</h3>
 <p>Caso nossa equipe de monitoramento detecte que o SEFAZ de algum estado esteja fora do ar as requisições são redirecionadas para o ambiente de contingência da SEFAZ do estado. É natural haver uma demora na SEFAZ em disponibilizar esse ambiente (eles realizam este processo manualmente) porém nossa API irá continuar tentando o reenvio até que seja possível, seja pela emissão normal ou em contingência. Isto é feito de forma transparente aos clientes da API.</p>
 
@@ -1248,7 +1346,15 @@ $server = "https://api.focusnfe.com.br"; */</span>
 <p>Quando isto ocorre nós não esperamos a SEFAZ do estado voltar e reenviamos assim que possível para o ambiente de contingência, autorizando a nota e evitando a espera para o cliente final. Isto tem como efeito colateral que pode ser que a nota original tenha sido autorizada. Nossa API irá automaticamente detectar esta situação e proceder com o cancelamento da tentativa anterior. Por consequência, será natural haver um “pulo” de numeração percebido pelo cliente final.</p>
 
 <p>O sistema cliente da API pode acompanhar este processo de forma transparente, conforme descrito na seção “Consulta” deste manual.</p>
-<h2 id='nfe_consulta'>Consulta</h2><pre class="highlight shell tab-shell"><code>curl -u token_enviado_pelo_suporte: <span class="se">\</span>
+<h2 id='nfe_consulta'>Consulta</h2>
+<p>Para consultar uma NFe utilize a URL abaixo, alterando o ambiente de produção para homologação, caso esteja emitindo notas de teste.</p>
+
+<p>Consultar as informações de uma NFe:</p>
+
+<p>https://api.focusnfe.com.br/v2/nfe/REFERENCIA?completa=(0|1)</p>
+
+<p>Utilize o comando HTTP GET para consultar a sua nota para nossa API.</p>
+<pre class="highlight shell tab-shell"><code>curl -u token_enviado_pelo_suporte: <span class="se">\</span>
   http://homologacao.acrasnfe.acras.com.br/v2/nfe/12345
 </code></pre><pre class="highlight php tab-php"><code><span class="cp">&lt;?php</span>
 <span class="cm">/* Você deve definir isso globalmente para sua aplicação.
@@ -1317,6 +1423,9 @@ $server = "https://api.focusnfe.com.br"; */</span>
     <span class="o">}</span>
 <span class="o">}</span>
 
+<span class="n">Ap</span><span class="err">ó</span><span class="n">s</span> <span class="n">emitir</span> <span class="n">uma</span> <span class="n">nota</span><span class="o">,</span> <span class="n">voc</span><span class="err">ê</span> <span class="n">poder</span><span class="err">á</span> <span class="n">usar</span> <span class="n">a</span> <span class="n">opera</span><span class="err">çã</span><span class="n">o</span> <span class="n">de</span> <span class="n">consulta</span> <span class="n">para</span> <span class="n">verificar</span> <span class="n">se</span> <span class="n">a</span> <span class="n">nota</span> <span class="n">j</span><span class="err">á</span> <span class="n">foi</span> <span class="n">aceita</span> <span class="n">para</span> <span class="n">processamento</span><span class="o">,</span> <span class="n">se</span> <span class="n">est</span><span class="err">á</span>
+<span class="n">ainda</span> <span class="n">em</span> <span class="n">processamento</span> <span class="n">ou</span> <span class="n">se</span> <span class="n">a</span> <span class="n">nota</span> <span class="n">j</span><span class="err">á</span> <span class="n">foi</span> <span class="n">processada</span><span class="o">.</span>
+
 <span class="n">Para</span> <span class="n">consultar</span> <span class="n">uma</span> <span class="n">NFe</span> <span class="n">utilize</span> <span class="n">a</span> <span class="n">URL</span> <span class="n">abaixo</span><span class="o">,</span> <span class="n">alterando</span> <span class="n">o</span> <span class="n">ambiente</span> <span class="n">de</span> <span class="n">produ</span><span class="err">çã</span><span class="n">o</span> <span class="n">para</span> <span class="n">homologa</span><span class="err">çã</span><span class="n">o</span><span class="o">,</span> <span class="n">caso</span> <span class="n">esteja</span> <span class="n">emitindo</span> <span class="n">notas</span> <span class="n">de</span> <span class="n">teste</span><span class="o">.</span>
 
 <span class="n">Consultar</span> <span class="n">as</span> <span class="n">informa</span><span class="err">çõ</span><span class="n">es</span> <span class="n">de</span> <span class="n">uma</span> <span class="nl">NFe:</span>
@@ -1330,18 +1439,18 @@ $server = "https://api.focusnfe.com.br"; */</span>
 <p>Exemplo de resposta da consulta de NFe:</p>
 </blockquote>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="s2">"status"</span><span class="p">:</span><span class="s2">"autorizado"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"status_sefaz"</span><span class="p">:</span><span class="s2">"100"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"mensagem_sefaz"</span><span class="p">:</span><span class="s2">"Autorizado o uso da NF-e"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"cnpj_emitente"</span><span class="p">:</span><span class="s2">"SEU_CNPJ"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"ref"</span><span class="p">:</span><span class="s2">"REFERENCIA"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"chave_nfe"</span><span class="p">:</span><span class="s2">"NFe41170777627353999172550010000003871980884091"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"numero"</span><span class="p">:</span><span class="s2">"387"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"serie"</span><span class="p">:</span><span class="s2">"1"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"caminho_xml_nota_fiscal"</span><span class="p">:</span><span class="s2">"/arquivos/733530172/201704/XMLs/41170777627353999172550010000003871980884091-nfe.xml"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"caminho_danfe"</span><span class="p">:</span><span class="s2">"/arquivos/733530172/201704/DANFEs/41170777627353999172550010000003871980884091.pdf"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"caminho_xml_carta_correcao"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/arquivos/733530172/201704/XMLs/41170777627353999172550010000003871980884091-cce-01.xml"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"caminho_pdf_carta_correcao"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/notas_fiscais/NFe41170777627353999172550010000003871980884091/cartas_correcao/1.pdf"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"cnpj_emitente"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CNPJ_DO_EMITENTE"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"REFERENCIA"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cancelado"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"status_sefaz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"135"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"mensagem_sefaz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Evento registrado e vinculado a NF-e"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"numero"</span><span class="p">:</span><span class="w"> </span><span class="s2">"25"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"serie"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"chave_nfe"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NFe91180177643353000172550030000000251381549464"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"caminho_xml_nota_fiscal"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/arquivos_development/77623353000000/201201/XMLs/91180177643353000172550030000000251381549464-nfe.xml"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"caminho_xml_cancelamento"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/arquivos_development/77623353000000/201201/XMLs/91180177643353000172550030000000251381549464-can.xml"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"caminho_xml_carta_correcao"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/arquivos_development/77623353000000/201201/XMLs/91180177643353000172550030000000251381549464-cce-01.xml"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"caminho_pdf_carta_correcao"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/notas_fiscais/NFe91180177643353000172550030000000251381549464/cartas_correcao/1.pdf"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"numero_carta_correcao"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
@@ -1372,13 +1481,79 @@ $server = "https://api.focusnfe.com.br"; */</span>
 <li><strong>caminho_xml_cancelamento</strong>: Caso a nota esteja cancelada, é fornecido o caminho para fazer o download do XML de cancelamento.</li>
 </ul>
 
-<p>Caso na requisição seja passado o parâmetro <code>completa=1</code> será informado mais dois campos:</p>
+<p>Caso na requisição seja passado o parâmetro <code>completa=1</code> será adicionado mais 6 campos:</p>
 
 <ul>
 <li><strong>requisicao_nota_fiscal</strong>: Inclui os dados completos da requisição da nota fiscal, da mesma forma que constam no XML da nota.</li>
 <li><strong>protocolo_nota_fiscal</strong>: Inclui os dados completos do protocolo devolvido pela SEFAZ.</li>
+<li><strong>requisicao_cancelamento</strong>: Inclui os dados completos da requisição de cancelamento da nota fiscal.</li>
+<li><strong>protocolo_cancelamento</strong>: Inclui os dados completos do protocolo devolvido pela SEFAZ.</li>
+<li><strong>requisicao_carta_correcao</strong>: Inclui os dados completos da requisição de Carta de Correção Eletrônica da NFe.</li>
+<li><strong>protocolo_carta_correcao</strong>: Inclui os dados completos do protocolo devolvido pela SEFAZ.</li>
 </ul>
-<h3 id='nfe_reenvio-automatico-em-contingencia-algumas-consideracoes'>Reenvio Automático em Contingência – algumas considerações</h3>
+
+<blockquote>
+<p>Exemplo de campos extras na consulta completa</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"requisicao_cancelamento"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"versao"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.00"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"id_tag"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ID1101119118017764335300017255003000000025138154946401"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"codigo_orgao"</span><span class="p">:</span><span class="w"> </span><span class="s2">"41"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"ambiente"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"cnpj"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CNPJ_DO_EMITENTE"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"chave_nfe"</span><span class="p">:</span><span class="w"> </span><span class="s2">"91180177643353000172550030000000251381549464"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"data_evento"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2012-01-17T16:00:28-02:00"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"tipo_evento"</span><span class="p">:</span><span class="w"> </span><span class="s2">"110111"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"numero_sequencial_evento"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"versao_evento"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.00"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"descricao_evento"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Cancelamento"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"protocolo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"141180000026777"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"justificativa"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Informe aqui a sua justificativa para realizar o cancelamento da NFe."</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="s2">"protocolo_cancelamento"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"versao"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.00"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"ambiente"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"versao_aplicativo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PR-v3_8_7"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"codigo_orgao"</span><span class="p">:</span><span class="w"> </span><span class="s2">"41"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"135"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"motivo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Evento registrado e vinculado a NF-e"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"chave_nfe"</span><span class="p">:</span><span class="w"> </span><span class="s2">"91180177643353000172550030000000251381549464"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"tipo_evento"</span><span class="p">:</span><span class="w"> </span><span class="s2">"110111"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"descricao_evento"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Cancelamento"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"data_evento"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2012-01-17T16:00:31-02:00"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"numero_protocolo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"141180000026777"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+   </span><span class="s2">"requisicao_carta_correcao"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"versao"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.00"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"id_tag"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ID1101109118017764335300017255003000000025138154946401"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"codigo_orgao"</span><span class="p">:</span><span class="w"> </span><span class="s2">"41"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"ambiente"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"cnpj"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CNPJ_DO_EMITENTE"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"chave_nfe"</span><span class="p">:</span><span class="w"> </span><span class="s2">"91180177643353000172550030000000251381549464"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"data_evento"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2012-01-17T15:59:34-02:00"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"tipo_evento"</span><span class="p">:</span><span class="w"> </span><span class="s2">"110110"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"numero_sequencial_evento"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"versao_evento"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.00"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"descricao_evento"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Carta de Correcao"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"correcao"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Informe aqui os campos que foram corrigidos na NFe."</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"condicoes_uso"</span><span class="p">:</span><span class="w"> </span><span class="s2">"A Carta de Correcao e disciplinada pelo paragrafo 1o-A do art. 7o do Convenio S/N, de 15 de dezembro de 1970 e pode ser utilizada para regularizacao de erro ocorrido na emissao de documento fiscal, desde que o erro nao esteja relacionado com: I - as variaveis que determinam o valor do imposto tais como: base de calculo, aliquota, diferenca de preco, quantidade, valor da operacao ou da prestacao; II - a correcao de dados cadastrais que implique mudanca do remetente ou do destinatario; III - a data de emissao ou de saida."</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="s2">"protocolo_carta_correcao"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"versao"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.00"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"ambiente"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"versao_aplicativo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PR-v3_8_7"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"codigo_orgao"</span><span class="p">:</span><span class="w"> </span><span class="s2">"41"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"135"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"motivo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Evento registrado e vinculado a NF-e"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"chave_nfe"</span><span class="p">:</span><span class="w"> </span><span class="s2">"91180177643353000172550030000000251381549464"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"tipo_evento"</span><span class="p">:</span><span class="w"> </span><span class="s2">"110110"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"descricao_evento"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Carta de Correção"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"data_evento"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2012-01-17T15:59:37-02:00"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"numero_protocolo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"141180000026777"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre><h3 id='nfe_reenvio-automatico-em-contingencia-algumas-consideracoes'>Reenvio Automático em Contingência – algumas considerações</h3>
 <p>Quando houver uma tentativa anterior de emissão, conforme descrito na seção “Reenvio automático em contingência”. A API irá devolver a chave <code>tentativa_anterior</code> que irá conter os seguintes campos:</p>
 
 <ul>
@@ -1469,6 +1644,16 @@ $server = "https://api.focusnfe.com.br"; */</span>
     <span class="o">}</span>
 <span class="o">}</span>
 </code></pre>
+<blockquote>
+<p>Resposta da API para a requisição de cancelamento:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"status_sefaz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"135"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"mensagem_sefaz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Evento registrado e vinculado a NF-e"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cancelado"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"caminho_xml_cancelamento"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/arquivos_development/77993353000000/204703/XMLs/41180377993353000000000030000000885414063742-can.xml"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
 <p>Para cancelar uma NFe, basta fazer uma requisição à URL abaixo, alterando o ambiente de produção para homologação, caso esteja emitindo notas de teste.</p>
 
 <p>Cancelar uma NFe já autorizada:</p>
@@ -1586,6 +1771,18 @@ $server = "https://api.focusnfe.com.br"; */</span>
     <span class="o">}</span>
 <span class="o">}</span>
 </code></pre>
+<blockquote>
+<p>Resposta da API para a requisição de CCe:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"status_sefaz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"135"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"mensagem_sefaz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Evento registrado e vinculado a NF-e"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"autorizado"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"caminho_xml_carta_correcao"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/arquivos_development/77793353000000/201803/XMLs/99180377993353000000550030000000271021711350-cce-01.xml"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"caminho_pdf_carta_correcao"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/notas_fiscais/NFe411803777933530000002550030000000277771711350/cartas_correcao/1.pdf"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"numero_carta_correcao"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
 <p><code>https://api.focusnfe.com.br/v2/nfe/REFERENCIA/carta_correcao</code></p>
 
 <p>Utilize o comando HTTP POST para enviar a sua nota para nossa API. Este método é <strong>síncrono</strong>, ou seja, a comunicação com a SEFAZ será feita imediatamente e devolvida a resposta na mesma requisição.</p>
@@ -1803,6 +2000,19 @@ $server = "https://api.focusnfe.com.br"; */</span>
     <span class="o">}</span>
 <span class="o">}</span>
 </code></pre>
+<blockquote>
+<p>Resposta da API para a requisição de inutilização:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="w"> </span><span class="p">{</span><span class="w">
+  </span><span class="s2">"status_sefaz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"102"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"mensagem_sefaz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Inutilizacao de numero homologado"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"serie"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"numero_inicial"</span><span class="p">:</span><span class="w"> </span><span class="s2">"800"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"numero_final"</span><span class="p">:</span><span class="w"> </span><span class="s2">"801"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"autorizado"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"caminho_xml"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/arquivos_development/71113353000900/207701/XMLs/999992335309999955003000000800000000801-inu.xml"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
 <p>Em uma situação normal você não precisará informar ao SEFAZ a inutilização de um número da NFe, pois a API controla automaticamente a numeração das notas. Porém, se por alguma situação específica for necessário a inutilização de alguma faixa de números você poderá chamar as seguintes operações:</p>
 
 <p>Envio de inutilização de faixa de numeração:</p>
@@ -1909,6 +2119,9 @@ token={token-enviado-pelo-suporte-focusnfe}
 <li>Reenviar uma NFCe por email.</li>
 <li>Inutilizar o número de alguma série de NFCe.</li>
 </ul>
+
+<p>Todos os processos envolvendo NFCe são <strong>síncronos</strong>. Ou seja, a emissão não é feita em segundo plano, ao contrário da NFe
+e NFSe.</p>
 <h2 id='nfce_urls'>URLs</h2>
 <table><thead>
 <tr>
@@ -2848,8 +3061,9 @@ $server = "https://api.focusnfe.com.br"; */</span>
 
 <p>Envia uma NFCe para autorização:</p>
 
-<p>https://api.focusnfe.com.br/v2/nfce?ref=REFERENCIA&amp;completa=(0|1)
-Utilize o comando HTTP POST para enviar a sua nota para nossa API. A URL recebe como parâmetro a referência no campo “ref” e pode ser informado opcionalmente o campo “completa” com o valor 1 (verdadeiro) ou 0 (falso). Este parâmetro indica se será exibida a nota completa caso ela seja autorizada. Esta operação é detalhada na próxima seção.</p>
+<p><code>https://api.focusnfe.com.br/v2/nfce?ref=REFERENCIA&amp;completa=(0|1)</code></p>
+
+<p>Utilize o comando HTTP POST para enviar a sua nota para nossa API. A URL recebe como parâmetro a referência no campo “ref” e pode ser informado opcionalmente o campo “completa” com o valor 1 (verdadeiro) ou 0 (falso). Este parâmetro indica se será exibida a nota completa caso ela seja autorizada. Esta operação é detalhada na próxima seção.</p>
 
 <p>Envie como corpo do POST os dados em formato JSON da nota fiscal.</p>
 
@@ -2934,7 +3148,7 @@ $server = "https://api.focusnfe.com.br"; */</span>
 <p>Utilize o comando HTTP <strong>GET</strong> para consultar a sua nota para nossa API.</p>
 
 <blockquote>
-<p>Exemplo de resposta da consulta de NFCe:</p>
+<p>Exemplo de resposta da consulta de NFCe (completa=0):</p>
 </blockquote>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
 </span><span class="s2">"status"</span><span class="p">:</span><span class="s2">"autorizado"</span><span class="p">,</span><span class="w">
@@ -2969,11 +3183,82 @@ $server = "https://api.focusnfe.com.br"; */</span>
 <li><strong>chave_nfe:</strong> A chave da NFe, caso ela tenha sido autorizada.</li>
 <li><strong>caminho_xml_nota_fiscal:</strong> caso a nota tenha sido autorizada, retorna o caminho para download do XML.</li>
 <li><strong>caminho_danfe:</strong> caso a nota tenha sido autorizada retorna o caminho para download do DANFe.</li>
-<li><p><strong>caminho_xml_cancelamento:</strong> Caso a nota esteja cancelada, é fornecido o caminho para fazer o download do XML de cancelamento. Caso na requisição seja passado o parâmetro “completa=1” será informado mais dois campos:</p></li>
-<li><p><strong>requisicao_nota_fiscal:</strong> Inclui os dados completos da requisição da nota fiscal, da mesma forma que constam no XML da nota.</p></li>
-<li><p><strong>protocolo_nota_fiscal:</strong> Inclui os dados completos do protocolo devolvido pela SEFAZ.</p></li>
+<li><strong>caminho_xml_cancelamento:</strong> Caso a nota esteja cancelada, é fornecido o caminho para fazer o download do XML de cancelamento. </li>
 </ul>
-<h2 id='nfce_cancelamento'>Cancelamento</h2><pre class="highlight shell tab-shell"><code>curl -u token_enviado_pelo_suporte: <span class="se">\</span>
+
+<p>Caso na requisição seja passado o parâmetro <code>completa=1</code> será adicionado mais 6 campos:</p>
+
+<ul>
+<li><strong>requisicao_nota_fiscal</strong>: Inclui os dados completos da requisição da nota fiscal, da mesma forma que constam no XML da nota.</li>
+<li><strong>protocolo_nota_fiscal</strong>: Inclui os dados completos do protocolo devolvido pela SEFAZ.</li>
+<li><strong>requisicao_cancelamento</strong>: Inclui os dados completos da requisição de cancelamento da nota fiscal.</li>
+<li><strong>protocolo_cancelamento</strong>: Inclui os dados completos do protocolo devolvido pela SEFAZ.</li>
+<li><strong>requisicao_carta_correcao</strong>: Inclui os dados completos da requisição de Carta de Correção Eletrônica da NFe.</li>
+<li><strong>protocolo_carta_correcao</strong>: Inclui os dados completos do protocolo devolvido pela SEFAZ.</li>
+</ul>
+
+<blockquote>
+<p>Exemplo de campos extras na consulta completa (completa=1):</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"requisicao_cancelamento"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"versao"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.00"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"id_tag"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ID1101119118017764335300017255003000000025138154946401"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"codigo_orgao"</span><span class="p">:</span><span class="w"> </span><span class="s2">"41"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"ambiente"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"cnpj"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CNPJ_DO_EMITENTE"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"chave_nfe"</span><span class="p">:</span><span class="w"> </span><span class="s2">"91180177643353000172550030000000251381549464"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"data_evento"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2012-01-17T16:00:28-02:00"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"tipo_evento"</span><span class="p">:</span><span class="w"> </span><span class="s2">"110111"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"numero_sequencial_evento"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"versao_evento"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.00"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"descricao_evento"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Cancelamento"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"protocolo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"141180000026777"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"justificativa"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Informe aqui a sua justificativa para realizar o cancelamento da NFe."</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="s2">"protocolo_cancelamento"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"versao"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.00"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"ambiente"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"versao_aplicativo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PR-v3_8_7"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"codigo_orgao"</span><span class="p">:</span><span class="w"> </span><span class="s2">"41"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"135"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"motivo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Evento registrado e vinculado a NF-e"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"chave_nfe"</span><span class="p">:</span><span class="w"> </span><span class="s2">"91180177643353000172550030000000251381549464"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"tipo_evento"</span><span class="p">:</span><span class="w"> </span><span class="s2">"110111"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"descricao_evento"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Cancelamento"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"data_evento"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2012-01-17T16:00:31-02:00"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"numero_protocolo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"141180000026777"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+   </span><span class="s2">"requisicao_carta_correcao"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"versao"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.00"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"id_tag"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ID1101109118017764335300017255003000000025138154946401"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"codigo_orgao"</span><span class="p">:</span><span class="w"> </span><span class="s2">"41"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"ambiente"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"cnpj"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CNPJ_DO_EMITENTE"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"chave_nfe"</span><span class="p">:</span><span class="w"> </span><span class="s2">"91180177643353000172550030000000251381549464"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"data_evento"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2012-01-17T15:59:34-02:00"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"tipo_evento"</span><span class="p">:</span><span class="w"> </span><span class="s2">"110110"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"numero_sequencial_evento"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"versao_evento"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.00"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"descricao_evento"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Carta de Correcao"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"correcao"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Informe aqui os campos que foram corrigidos na NFe."</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"condicoes_uso"</span><span class="p">:</span><span class="w"> </span><span class="s2">"A Carta de Correcao e disciplinada pelo paragrafo 1o-A do art. 7o do Convenio S/N, de 15 de dezembro de 1970 e pode ser utilizada para regularizacao de erro ocorrido na emissao de documento fiscal, desde que o erro nao esteja relacionado com: I - as variaveis que determinam o valor do imposto tais como: base de calculo, aliquota, diferenca de preco, quantidade, valor da operacao ou da prestacao; II - a correcao de dados cadastrais que implique mudanca do remetente ou do destinatario; III - a data de emissao ou de saida."</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="s2">"protocolo_carta_correcao"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"versao"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.00"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"ambiente"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"versao_aplicativo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PR-v3_8_7"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"codigo_orgao"</span><span class="p">:</span><span class="w"> </span><span class="s2">"41"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"135"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"motivo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Evento registrado e vinculado a NF-e"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"chave_nfe"</span><span class="p">:</span><span class="w"> </span><span class="s2">"91180177643353000172550030000000251381549464"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"tipo_evento"</span><span class="p">:</span><span class="w"> </span><span class="s2">"110110"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"descricao_evento"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Carta de Correção"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"data_evento"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2012-01-17T15:59:37-02:00"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"numero_protocolo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"141180000026777"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre><h2 id='nfce_cancelamento'>Cancelamento</h2><pre class="highlight shell tab-shell"><code>curl -u token_enviado_pelo_suporte: <span class="se">\</span>
   -X DELETE -d <span class="s1">'{"justificativa":"Teste de cancelamento de nota"}'</span> <span class="se">\</span>
   http://homologacao.acrasnfe.acras.com.br/v2/nfce/12345
 </code></pre><pre class="highlight java tab-java"><code>
@@ -3375,7 +3660,7 @@ Para realizar a reimpressão de determinada NFCe basta salvar um arquivo com nom
 <p>Através da API NFSe é possível:</p>
 
 <ul>
-<li>Emitir NFSe para qualquer município utilizando um único modelo de dados</li>
+<li>Emitir NFSe para qualquer município utilizando um único modelo de dados. Este processo é <strong>assíncrono</strong>. Ou seja, após a emissão a nota será enfileirada para processamento.</li>
 <li>Cancelar NFSe</li>
 <li>Consultar NFSe’s emitidas</li>
 <li>Encaminhar uma NFSe autorizada por email</li>
@@ -3723,6 +4008,14 @@ curl -u token_enviado_pelo_suporte: <span class="se">\</span>
 <p><code>https://api.focusnfe.com.br/v2/nfse.json?ref=REFERENCIA</code></p>
 
 <p>Utilize o comando <strong>HTTP POST</strong> para enviar a sua nota para nossa API.</p>
+
+<p>Nesta etapa, é feita uma primeira validação dos dados da nota. Caso ocorra algum problema, por exemplo, algum campo faltante, formato incorreto
+ou algum problema com o prestador a nota <strong>não será aceita para processamento</strong> e será devolvida a mensagem de erro apropriada. Veja a seção <a href="#introducao_erros">erros</a>.</p>
+
+<p>Caso a nota seja validada corretamente, a nota será <strong>aceita para processamento</strong>. Isto significa que a nota irá para uma fila de processamento
+onde eventualmente será processada (processamento assíncrono). Com isto, a nota poderá ser autorizada ou ocorrer um erro na autorização de acordo com a validação da prefeitura.</p>
+
+<p>Para verificar se a nota já foi autorizada, você terá que efetuar uma <a href="#nfse_consulta">consulta</a> ou se utilizar de <a href="#gatilhos_gatilhos">gatilhos</a>.</p>
 <h2 id='nfse_consulta'>Consulta</h2><pre class="highlight shell tab-shell"><code>curl -u token_enviado_pelo_suporte: <span class="se">\</span>
   http://homologacao.acrasnfe.acras.com.br/v2/nfse/12345
 </code></pre><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">com.sun.jersey.api.client.Client</span><span class="o">;</span>
@@ -3806,6 +4099,9 @@ curl -u token_enviado_pelo_suporte: <span class="se">\</span>
 </span><span class="s2">"caminho_xml_nota_fiscal"</span><span class="p">:</span><span class="s2">"/notas_fiscais_servico/NFSe191517072001883518800-1898781-9999-312276647.xml"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
+<p>Após emitir uma nota, você poderá usar a operação de consulta para verificar se a nota já foi aceita para processamento, se está
+ainda em processamento ou se a nota já foi processada.</p>
+
 <p>Para consultar uma NFSe utilize a URL abaixo, alterando o ambiente de produção para homologação, caso esteja emitindo notas de teste.</p>
 
 <p>Recupera informações sobre a NFSe:</p>
@@ -3898,7 +4194,7 @@ curl -u token_enviado_pelo_suporte: <span class="se">\</span>
 
 <p><strong>Cancelar uma NFSe já autorizada:</strong></p>
 
-<p><code>https://api.focusnfe.com.br/nfse/REFERENCIA.json</code></p>
+<p><code>https://api.focusnfe.com.br/v2/nfse/REFERENCIA.json</code></p>
 
 <p>Utilize o comando <strong>HTTP DELETE</strong> para cancelar a sua nota para nossa API.
 Este método é síncrono, ou seja, a comunicação com a prefeitura será feita imediatamente e devolvida a resposta na mesma requisição.</p>
