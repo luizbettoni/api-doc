@@ -4,7 +4,7 @@
 
 Através da API NFe é possível:
 
-* Emitir NFe utilizando dados simplificados.
+* Emitir NFe utilizando dados simplificados. Este processo é **assíncrono**. Ou seja, após a emissão a nota será enfileirada para processamento.
 * Cancelar NFe.
 * Consultar o status de NFe emitidas.
 * Encaminhar uma NFe por email
@@ -646,6 +646,13 @@ Envia uma NFe para autorização:
 
 Utilize o comando HTTP POST para enviar a sua nota para nossa API. Envie como corpo do POST os dados em formato JSON da nota fiscal.
 
+Nesta etapa, é feita uma primeira validação dos dados da nota. Caso ocorra algum problema, por exemplo, algum campo faltante, formato incorreto
+ou algum problema com o emitente a nota **não será aceita para processamento** e será devolvida a mensagem de erro apropriada. Veja a seção [erros](#introducao_erros).
+
+Caso a nota seja validada corretamente, a nota será **aceita para processamento**. Isto significa que a nota irá para uma fila de processamento
+onde eventualmente será processada (processamento assíncrono). Com isto, a nota poderá ser autorizada ou ocorrer um erro na autorização, de acordo com a validação da SEFAZ.
+
+Para verificar se a nota já foi autorizada, você terá que efetuar uma [consulta](#nfe_consulta) ou se utilizar de [gatilhos](#gatilhos_gatilhos).
 
 
 ### Reenvio automático em contingência
@@ -660,6 +667,13 @@ O sistema cliente da API pode acompanhar este processo de forma transparente, co
 
 ## Consulta
 
+Para consultar uma NFe utilize a URL abaixo, alterando o ambiente de produção para homologação, caso esteja emitindo notas de teste.
+
+Consultar as informações de uma NFe:
+
+https://api.focusnfe.com.br/v2/nfe/REFERENCIA?completa=(0|1)
+
+Utilize o comando HTTP GET para consultar a sua nota para nossa API.
 
 ```shell
 curl -u token_enviado_pelo_suporte: \
@@ -736,6 +750,9 @@ public class NFe_consulta {
 	}
 }
 
+Após emitir uma nota, você poderá usar a operação de consulta para verificar se a nota já foi aceita para processamento, se está
+ainda em processamento ou se a nota já foi processada.
+
 Para consultar uma NFe utilize a URL abaixo, alterando o ambiente de produção para homologação, caso esteja emitindo notas de teste.
 
 Consultar as informações de uma NFe:
@@ -750,18 +767,18 @@ Utilize o comando HTTP GET para consultar a sua nota para nossa API.
 
 ```json
 {
-  "status":"autorizado",
-  "status_sefaz":"100",
-  "mensagem_sefaz":"Autorizado o uso da NF-e",
-  "cnpj_emitente":"SEU_CNPJ",
-  "ref":"REFERENCIA",
-  "chave_nfe":"NFe41170777627353999172550010000003871980884091",
-  "numero":"387",
-  "serie":"1",
-  "caminho_xml_nota_fiscal":"/arquivos/733530172/201704/XMLs/41170777627353999172550010000003871980884091-nfe.xml",
-  "caminho_danfe":"/arquivos/733530172/201704/DANFEs/41170777627353999172550010000003871980884091.pdf",
-  "caminho_xml_carta_correcao": "/arquivos/733530172/201704/XMLs/41170777627353999172550010000003871980884091-cce-01.xml",
-  "caminho_pdf_carta_correcao": "/notas_fiscais/NFe41170777627353999172550010000003871980884091/cartas_correcao/1.pdf",
+  "cnpj_emitente": "CNPJ_DO_EMITENTE",
+  "ref": "REFERENCIA",
+  "status": "cancelado",
+  "status_sefaz": "135",
+  "mensagem_sefaz": "Evento registrado e vinculado a NF-e",
+  "numero": "25",
+  "serie": "3",
+  "chave_nfe": "NFe91180177643353000172550030000000251381549464",
+  "caminho_xml_nota_fiscal": "/arquivos_development/77623353000000/201201/XMLs/91180177643353000172550030000000251381549464-nfe.xml",
+  "caminho_xml_cancelamento": "/arquivos_development/77623353000000/201201/XMLs/91180177643353000172550030000000251381549464-can.xml",
+  "caminho_xml_carta_correcao": "/arquivos_development/77623353000000/201201/XMLs/91180177643353000172550030000000251381549464-cce-01.xml",
+  "caminho_pdf_carta_correcao": "/notas_fiscais/NFe91180177643353000172550030000000251381549464/cartas_correcao/1.pdf",
   "numero_carta_correcao": 1
 }
 ```
@@ -788,10 +805,77 @@ Campos de retorno:
 * **numero_carta_correcao**: o número da carta de correção, caso tenha sido emitida.
 * **caminho_xml_cancelamento**: Caso a nota esteja cancelada, é fornecido o caminho para fazer o download do XML de cancelamento.
 
-Caso na requisição seja passado o parâmetro `completa=1` será informado mais dois campos:
+Caso na requisição seja passado o parâmetro `completa=1` será adicionado mais 6 campos:
 
 * **requisicao_nota_fiscal**: Inclui os dados completos da requisição da nota fiscal, da mesma forma que constam no XML da nota.
 * **protocolo_nota_fiscal**: Inclui os dados completos do protocolo devolvido pela SEFAZ.
+* **requisicao_cancelamento**: Inclui os dados completos da requisição de cancelamento da nota fiscal.
+* **protocolo_cancelamento**: Inclui os dados completos do protocolo devolvido pela SEFAZ.
+* **requisicao_carta_correcao**: Inclui os dados completos da requisição de Carta de Correção Eletrônica da NFe.
+* **protocolo_carta_correcao**: Inclui os dados completos do protocolo devolvido pela SEFAZ.
+
+> Exemplo de campos extras na consulta completa
+
+```json
+{
+    "requisicao_cancelamento": {
+    "versao": "1.00",
+    "id_tag": "ID1101119118017764335300017255003000000025138154946401",
+    "codigo_orgao": "41",
+    "ambiente": "2",
+    "cnpj": "CNPJ_DO_EMITENTE",
+    "chave_nfe": "91180177643353000172550030000000251381549464",
+    "data_evento": "2012-01-17T16:00:28-02:00",
+    "tipo_evento": "110111",
+    "numero_sequencial_evento": "1",
+    "versao_evento": "1.00",
+    "descricao_evento": "Cancelamento",
+    "protocolo": "141180000026777",
+    "justificativa": "Informe aqui a sua justificativa para realizar o cancelamento da NFe."
+  },
+  "protocolo_cancelamento": {
+    "versao": "1.00",
+    "ambiente": "2",
+    "versao_aplicativo": "PR-v3_8_7",
+    "codigo_orgao": "41",
+    "status": "135",
+    "motivo": "Evento registrado e vinculado a NF-e",
+    "chave_nfe": "91180177643353000172550030000000251381549464",
+    "tipo_evento": "110111",
+    "descricao_evento": "Cancelamento",
+    "data_evento": "2012-01-17T16:00:31-02:00",
+    "numero_protocolo": "141180000026777"
+  },
+   "requisicao_carta_correcao": {
+    "versao": "1.00",
+    "id_tag": "ID1101109118017764335300017255003000000025138154946401",
+    "codigo_orgao": "41",
+    "ambiente": "2",
+    "cnpj": "CNPJ_DO_EMITENTE",
+    "chave_nfe": "91180177643353000172550030000000251381549464",
+    "data_evento": "2012-01-17T15:59:34-02:00",
+    "tipo_evento": "110110",
+    "numero_sequencial_evento": "1",
+    "versao_evento": "1.00",
+    "descricao_evento": "Carta de Correcao",
+    "correcao": "Informe aqui os campos que foram corrigidos na NFe.",
+    "condicoes_uso": "A Carta de Correcao e disciplinada pelo paragrafo 1o-A do art. 7o do Convenio S/N, de 15 de dezembro de 1970 e pode ser utilizada para regularizacao de erro ocorrido na emissao de documento fiscal, desde que o erro nao esteja relacionado com: I - as variaveis que determinam o valor do imposto tais como: base de calculo, aliquota, diferenca de preco, quantidade, valor da operacao ou da prestacao; II - a correcao de dados cadastrais que implique mudanca do remetente ou do destinatario; III - a data de emissao ou de saida."
+  },
+  "protocolo_carta_correcao": {
+    "versao": "1.00",
+    "ambiente": "2",
+    "versao_aplicativo": "PR-v3_8_7",
+    "codigo_orgao": "41",
+    "status": "135",
+    "motivo": "Evento registrado e vinculado a NF-e",
+    "chave_nfe": "91180177643353000172550030000000251381549464",
+    "tipo_evento": "110110",
+    "descricao_evento": "Carta de Correção",
+    "data_evento": "2012-01-17T15:59:37-02:00",
+    "numero_protocolo": "141180000026777"
+  }
+}
+```
 
 ### Reenvio Automático em Contingência – algumas considerações
 
@@ -890,6 +974,17 @@ public class NFe_cancelamento {
 		System.out.print(HttpCode);
 		System.out.printf(body);
 	}
+}
+```
+
+> Resposta da API para a requisição de cancelamento:
+
+```json
+{
+  "status_sefaz": "135",
+  "mensagem_sefaz": "Evento registrado e vinculado a NF-e",
+  "status": "cancelado",
+  "caminho_xml_cancelamento": "/arquivos_development/77993353000000/204703/XMLs/41180377993353000000000030000000885414063742-can.xml"
 }
 ```
 
@@ -1015,6 +1110,19 @@ public class NFe_CCe {
 		System.out.print(HttpCode);
 		System.out.printf(body);
 	}
+}
+```
+
+> Resposta da API para a requisição de CCe:
+
+```json
+{
+  "status_sefaz": "135",
+  "mensagem_sefaz": "Evento registrado e vinculado a NF-e",
+  "status": "autorizado",
+  "caminho_xml_carta_correcao": "/arquivos_development/77793353000000/201803/XMLs/99180377993353000000550030000000271021711350-cce-01.xml",
+  "caminho_pdf_carta_correcao": "/notas_fiscais/NFe411803777933530000002550030000000277771711350/cartas_correcao/1.pdf",
+  "numero_carta_correcao": 1
 }
 ```
 
@@ -1248,6 +1356,20 @@ public class NFe_inutilizacao {
 		System.out.print(HttpCode);
 		System.out.printf(body);
 	}
+}
+```
+
+> Resposta da API para a requisição de inutilização:
+
+```json
+ {
+  "status_sefaz": "102",
+  "mensagem_sefaz": "Inutilizacao de numero homologado",
+  "serie": "3",
+  "numero_inicial": "800",
+  "numero_final": "801",
+  "status": "autorizado",
+  "caminho_xml": "/arquivos_development/71113353000900/207701/XMLs/999992335309999955003000000800000000801-inu.xml"
 }
 ```
 
