@@ -107,6 +107,29 @@ Homologação: `http://homologacao.acrasnfe.acras.com.br` (note que não é util
 
 Produção: `https://api.focusnfe.com.br` (obrigatório o uso de SSL).
 
+**Considerações sobre o uso de SSL**
+
+```php
+<?php
+# Em PHP normalmente é necessária uma configuração adicional.
+# Em muitos sites você irá encontrar a solução abaixo,
+# para ignorar a validação do certificado:
+
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+
+# Porém o correto seria indicar para confiar na unidade certificadora
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_CAINFO, "/pasta/no/servidor/ca.crt");
+?>
+
+```
+
+Verifique em sua linguagem de programação se é necessário alguma configuração adicional para uso de SSL em produção.
+Pode ser necessário indicar explicitamente a confiar na autoridade certificadora que emitiu o certificado SSL.
+
+[Você pode baixar a cadeia de certificados aqui](https://focusnfe.com.br/downloads/ca.crt)
+
 
 ## Padrão REST
 
