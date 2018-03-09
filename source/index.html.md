@@ -107,6 +107,29 @@ Homologação: `http://homologacao.acrasnfe.acras.com.br` (note que não é util
 
 Produção: `https://api.focusnfe.com.br` (obrigatório o uso de SSL).
 
+**Considerações sobre o uso de SSL**
+
+```php
+<?php
+# Em PHP normalmente é necessária uma configuração adicional.
+# Em muitos sites você irá encontrar a solução abaixo,
+# para ignorar a validação do certificado:
+
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+
+# Porém o correto seria indicar para confiar na unidade certificadora
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_CAINFO, "/pasta/no/servidor/ca.crt");
+?>
+
+```
+
+Verifique em sua linguagem de programação se é necessário alguma configuração adicional para uso de SSL em produção.
+Pode ser necessário indicar explicitamente a confiar na autoridade certificadora que emitiu o certificado SSL.
+
+[Você pode baixar a cadeia de certificados aqui](https://focusnfe.com.br/downloads/ca.crt)
+
 
 ## Padrão REST
 
@@ -138,12 +161,41 @@ Código HTTP	| Significado	| Explicação
 ------ | ------------- | --------------
 200	| Ok | Este código é devolvido quando uma consulta resulta em sucesso.
 201	| Criado | Este código é devolvido quando uma requisição é aceita para processamento.
-400	| Requisição inválida |	Este erro é devolvido quando falta alguma informação na requisição. Por exemplo quando falta algum parâmetro obrigatório.
+400	| Requisição inválida |	Este erro é devolvido quando falta alguma informação na requisição ou ela é inválida por algum outro motivo. Por exemplo quando falta algum parâmetro obrigatório.
 403	| Permissão negada | Este erro é devolvido quando ocorre algum problema de permissão envolvendo o token de acesso.
 404	| Não encontrado | Este erro é devolvido quando não é encontrado algum recurso que é pesquisado.
 415	| Mídia inválida | Este erro é devolvido quando não é reconhecido o formato JSON enviado, devido a alguma falha de sintaxe.
-429 | Muitas requisições | Você ultrapassou o limite de requisições por minuto. Veja o [limite de requisições](#limite-de-requisicoes)
+422 | Entidade improcessável | Não existe erro na requisição (sintaxe), porém há algum erro de semântica (por exemplo, tentar cancelar uma nota já cancelada)
 429 | Muitas requisições | Você ultrapassou o limite de requisições por minuto. Veja o [limite de requisições](#limite-de-requisicoes)
 500 | Erro interno do servidor | Ocorreu algum erro inesperado. Contate o suporte técnico.
 
 Note que se o código HTTP devolvido for de sucesso não implica que uma nota tenha sido autorizada com sucesso. Por exemplo, você pode enviar uma nota fiscal para autorização, nossa API devolver o status 201 (criado) (pois não havia nenhum erro aparente na nota fiscal) porém ao ser processada pela SEFAZ ou prefeitura verificou-se que a data de emissão estava muito atrasada. Ou seja, os códigos HTTP são utilizados para verificar se a transação está ok no nível de comunicação da sua aplicação com a nossa API (e não com o SEFAZ).
+
+## Erros
+
+> Exemplo de mensagem de erro
+
+```json
+{
+  "codigo": "nao_encontrado",
+  "mensagem": "Nota fiscal não encontrada"
+}
+```
+As mensagens de erro serão apresentadas em qualquer operação sempre que for devolvido um código HTTP que começa com 4. A mensagem será um objeto com os seguintes atributos:
+
+* **codigo** - O código da mensagem
+* **mensagem** - A descrição mais detalhada do que ocorreu
+* **erros** - (Opcional) Quando for possível detalhar o erro, ele será informado neste array de objetos
+
+Abaixo listamos os códigos de erro mais comuns.
+
+Código HTTP | Código do erro | Significado
+|-----------|-------|------------
+400 | requisicao_invalida | Faltou informar algum campo na requisição. Este campo é informando na mensagem do erro
+400 | empresa_nao_habilitada | Empresa ainda não habilitada para emitir o documento que você precisa. Habilite no seu painel ou contate o suporte técnico
+400 | nfe_cancelada | Foi feita uma tentativa de cancelar uma nota já cancelada
+403 | permissao_negada | Sua aplicação por algum motivo se encontra bloqueada para uso. Contate o nosso suporte
+404 | nao_encontrado | Ocorre quando o recurso que você está procurando (NFe, NFCe ou NFSe) não é encontrado
+422 | nfe_nao_autorizada | Foi feita alguma operação com a nota que só é aplicável se ela estiver autorizada (por exemplo a ação de cancelamento)
+422 | nfe_autorizada | Foi solicitado o processamento de uma nota já autorizada
+422 | em_processamento | Foi solicitado o processamento de uma nota que já está em processamento
