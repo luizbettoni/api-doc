@@ -308,6 +308,16 @@ public class NFSe_autorizar {
  ?>
 ```
 
+> Resposta da API para a requisição de envio:
+
+```json
+{
+  "cnpj_prestador": "CNPJ_PRESTADOR",
+  "ref": "REFERENCIA",
+  "status": "processando_autorizacao"
+}
+```
+
 Para enviar uma NFSe utilize a URL abaixo, alterando o ambiente de produção para homologação, caso esteja emitindo notas de teste.
 
 Envia uma NFSe para autorização:
@@ -509,6 +519,13 @@ public class NFSe_cancelamento {
  ?>
 ```
 
+> Resposta da API para a requisição de cancelamento:
+
+```json
+{
+  "status": "cancelado"
+}
+```
 Para cancelar uma NFSe, basta fazer uma requisição à URL abaixo, alterando o ambiente de produção para homologação, caso esteja emitindo notas de teste.
 
 **Cancelar uma NFSe já autorizada:**

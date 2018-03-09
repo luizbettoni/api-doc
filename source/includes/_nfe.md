@@ -753,7 +753,7 @@ Utilize o comando HTTP GET para consultar a sua nota para nossa API.
 
 ```
 
->Exemplo de resposta da consulta de NFe:
+> Exemplo de resposta da consulta de NFe:
 
 ```json
 {
