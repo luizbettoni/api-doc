@@ -374,6 +374,14 @@
               </ul>
           </li>
           <li>
+            <a href="#consulta-de-ncm_consulta-de-ncm" class="toc-h1 toc-link" data-title="consulta-de-ncm">Consulta de NCM</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#consulta-de-ncm_paginacao" class="toc-h2 toc-link" data-title="paginacao">Paginação</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
             <a href="#revenda_revenda" class="toc-h1 toc-link" data-title="revenda">Revenda</a>
           </li>
           <li>
@@ -5327,6 +5335,159 @@ curl -u token_enviado_pelo_suporte: <span class="se">\</span>
 <li>NFSe: <a href="#nfse_consulta">Operação de consulta de uma NFSe</a></li>
 <li>Manifestação: <a href="#manifestacao_consulta-de-nfe-recebidas">Consulta de NFe Recebida</a></li>
 </ul>
+<h1 id='consulta-de-ncm_consulta-de-ncm'>Consulta de NCM</h1>
+<p>NCM significa &quot;Nomenclatura Comum do Mercosul&quot; e trata-se de um código de oito dígitos estabelecido pelo Governo Brasileiro para identificar a natureza das mercadorias. Este código é utilizado na emissão de NFe e de NFCe.</p>
+
+<p>Nós disponibilizamos uma API que você poderá utilizar para fornecer ao seu usuário final uma pesquisa de qual o código NCM correto do seu produto.</p>
+
+<p>O código NCM é formato por 8 dígitos no seguinte formato:</p>
+
+<p>CCPPSÇII, sendo:</p>
+
+<ul>
+<li>CC = Capitulo</li>
+<li>PP = Posição</li>
+<li>S  = Subposição 1</li>
+<li>Ç  = Subposição 2</li>
+<li>II = Item 1 e 2</li>
+</ul>
+<pre class="highlight shell tab-shell"><code><span class="c"># pesquisa por códigos NCM do capítulo 90</span>
+curl -u token_enviado_pelo_suporte: <span class="se">\</span>
+  http://homologacao.acrasnfe.acras.com.br/v2/ncms?capitulo<span class="o">=</span>90
+</code></pre><pre class="highlight php tab-php"><code><span class="cp">&lt;?php</span>
+<span class="nv">$ch</span> <span class="o">=</span> <span class="nb">curl_init</span><span class="p">();</span>
+<span class="nv">$server</span> <span class="o">=</span> <span class="s2">"http://homologacao.acrasnfe.acras.com.br"</span><span class="p">;</span>
+<span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_URL</span><span class="p">,</span> <span class="nv">$server</span><span class="o">.</span><span class="s2">"/v2/ncms?capitulo=90"</span><span class="p">);</span>
+<span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_RETURNTRANSFER</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+<span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_HTTPHEADER</span><span class="p">,</span> <span class="k">array</span><span class="p">());</span>
+<span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_HTTPAUTH</span><span class="p">,</span> <span class="nx">CURLAUTH_BASIC</span><span class="p">);</span>
+<span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_USERPWD</span><span class="p">,</span> <span class="s2">"token_enviado_pelo_suporte:"</span><span class="p">);</span>
+<span class="nv">$body</span> <span class="o">=</span> <span class="nb">curl_exec</span><span class="p">(</span><span class="nv">$ch</span><span class="p">);</span>
+<span class="nv">$http_code</span> <span class="o">=</span> <span class="nb">curl_getinfo</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLINFO_HTTP_CODE</span><span class="p">);</span>
+<span class="c1">// As próximas três linhas são um exemplo de como imprimir as informações de retorno da API.
+</span><span class="k">print</span><span class="p">(</span><span class="nv">$http_code</span><span class="o">.</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">);</span>
+<span class="k">print</span><span class="p">(</span><span class="nv">$body</span><span class="o">.</span><span class="s2">"</span><span class="se">\n\n</span><span class="s2">"</span><span class="p">);</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">""</span><span class="p">);</span>
+<span class="nb">curl_close</span><span class="p">(</span><span class="nv">$ch</span><span class="p">);</span>
+<span class="cp">?&gt;</span>
+</code></pre><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">com.sun.jersey.api.client.Client</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.sun.jersey.api.client.ClientResponse</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.sun.jersey.api.client.WebResource</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.sun.jersey.api.client.config.ClientConfig</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.sun.jersey.api.client.config.DefaultClientConfig</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.sun.jersey.api.client.filter.HTTPBasicAuthFilter</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ExemploConsultaHook</span> <span class="o">{</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">){</span>
+
+        <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_enviado_pelo_suporte"</span><span class="o">;</span>
+
+        <span class="cm">/* Para ambiente de produção use a variável abaixo:
+        String server = "https://api.focusnfe.com.br/"; */</span>
+        <span class="n">String</span> <span class="n">server</span> <span class="o">=</span> <span class="s">"http://homologacao.acrasnfe.acras.com.br/"</span><span class="o">;</span>
+
+        <span class="n">String</span> <span class="n">url</span> <span class="o">=</span> <span class="n">server</span><span class="o">.</span><span class="na">concat</span><span class="o">(</span><span class="s">"v2/ncms?capitulo=90"</span><span class="o">);</span>
+
+        <span class="cm">/* Configuração para realizar o HTTP BasicAuth. */</span>
+        <span class="n">Object</span> <span class="n">config</span> <span class="o">=</span> <span class="k">new</span> <span class="n">DefaultClientConfig</span><span class="o">();</span>
+        <span class="n">Client</span> <span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="o">.</span><span class="na">create</span><span class="o">((</span><span class="n">ClientConfig</span><span class="o">)</span> <span class="n">config</span><span class="o">);</span>
+        <span class="n">client</span><span class="o">.</span><span class="na">addFilter</span><span class="o">(</span><span class="k">new</span> <span class="n">HTTPBasicAuthFilter</span><span class="o">(</span><span class="n">login</span><span class="o">,</span> <span class="s">""</span><span class="o">));</span>
+
+        <span class="n">WebResource</span> <span class="n">request</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="na">resource</span><span class="o">(</span><span class="n">url</span><span class="o">);</span>
+
+        <span class="n">ClientResponse</span> <span class="n">resposta</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">ClientResponse</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+
+        <span class="kt">int</span> <span class="n">HttpCode</span> <span class="o">=</span> <span class="n">resposta</span><span class="o">.</span><span class="na">getStatus</span><span class="o">();</span>
+
+        <span class="n">String</span> <span class="n">body</span> <span class="o">=</span> <span class="n">resposta</span><span class="o">.</span><span class="na">getEntity</span><span class="o">(</span><span class="n">String</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+
+        <span class="cm">/* As três linhas abaixo imprimem as informações retornadas pela API.
+         * Aqui o seu sistema deverá interpretar e lidar com o retorno. */</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="s">"HTTP Code: "</span><span class="o">);</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="n">HttpCode</span><span class="o">);</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="n">body</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre>
+<blockquote>
+<p>Dados de resposta da consulta</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+ </span><span class="p">{</span><span class="w">
+   </span><span class="s2">"codigo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"90049090"</span><span class="p">,</span><span class="w">
+   </span><span class="s2">"descricao_completa"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Óculos para correção, proteção ou outros fins, e artigos semelhantes. Outros Outros"</span><span class="p">,</span><span class="w">
+   </span><span class="s2">"capitulo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"90"</span><span class="p">,</span><span class="w">
+   </span><span class="s2">"posicao"</span><span class="p">:</span><span class="w"> </span><span class="s2">"04"</span><span class="p">,</span><span class="w">
+   </span><span class="s2">"subposicao1"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9"</span><span class="p">,</span><span class="w">
+   </span><span class="s2">"subposicao2"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+   </span><span class="s2">"item1"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9"</span><span class="p">,</span><span class="w">
+   </span><span class="s2">"item2"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="w">
+ </span><span class="p">},</span><span class="w">
+ </span><span class="p">{</span><span class="w">
+   </span><span class="s2">"codigo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"90051000"</span><span class="p">,</span><span class="w">
+   </span><span class="s2">"descricao_completa"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Binóculos, lunetas, incluindo as astronômicas, telescópios ópticos, e suas armações, outros instrumentos de astronomia e suas armações, exceto os aparelhos de radioastronomia. Binóculos"</span><span class="p">,</span><span class="w">
+   </span><span class="s2">"capitulo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"90"</span><span class="p">,</span><span class="w">
+   </span><span class="s2">"posicao"</span><span class="p">:</span><span class="w"> </span><span class="s2">"05"</span><span class="p">,</span><span class="w">
+   </span><span class="s2">"subposicao1"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+   </span><span class="s2">"subposicao2"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+   </span><span class="s2">"item1"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+   </span><span class="s2">"item2"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="w">
+ </span><span class="p">},</span><span class="w">
+ </span><span class="p">{</span><span class="w">
+   </span><span class="s2">"codigo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"90058000"</span><span class="p">,</span><span class="w">
+   </span><span class="s2">"descricao_completa"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Binóculos, lunetas, incluindo as astronômicas, telescópios ópticos, e suas armações, outros instrumentos de astronomia e suas armações, exceto os aparelhos de radioastronomia. Outros instrumentos"</span><span class="p">,</span><span class="w">
+   </span><span class="s2">"capitulo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"90"</span><span class="p">,</span><span class="w">
+   </span><span class="s2">"posicao"</span><span class="p">:</span><span class="w"> </span><span class="s2">"05"</span><span class="p">,</span><span class="w">
+   </span><span class="s2">"subposicao1"</span><span class="p">:</span><span class="w"> </span><span class="s2">"8"</span><span class="p">,</span><span class="w">
+   </span><span class="s2">"subposicao2"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+   </span><span class="s2">"item1"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+   </span><span class="s2">"item2"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="w">
+ </span><span class="p">},</span><span class="w">
+ </span><span class="p">{</span><span class="w">
+   </span><span class="s2">"codigo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"90059010"</span><span class="p">,</span><span class="w">
+   </span><span class="s2">"descricao_completa"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Binóculos, lunetas, incluindo as astronômicas, telescópios ópticos, e suas armações, outros instrumentos de astronomia e suas armações, exceto os aparelhos de radioastronomia. Partes e acessórios (incluindo as armações) De binóculos"</span><span class="p">,</span><span class="w">
+   </span><span class="s2">"capitulo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"90"</span><span class="p">,</span><span class="w">
+   </span><span class="s2">"posicao"</span><span class="p">:</span><span class="w"> </span><span class="s2">"05"</span><span class="p">,</span><span class="w">
+   </span><span class="s2">"subposicao1"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9"</span><span class="p">,</span><span class="w">
+   </span><span class="s2">"subposicao2"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+   </span><span class="s2">"item1"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+   </span><span class="s2">"item2"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="w">
+ </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre>
+<p>Para consultar os NCMs disponíveis, utilize o endereço abaixo:</p>
+
+<p><code>http://homologacao.acrasnfe.acras.com.br/v2/ncms</code></p>
+
+<p>Utilize o método HTTP <strong>GET</strong>. São aceitos os seguintes parâmetros de pesquisa:</p>
+
+<ul>
+<li><strong>codigo</strong>: Pesquise <strong>pela parte inicial</strong> do código NCM</li>
+<li><strong>descricao</strong>: Pesquisa por parte da descrição do código NCM.</li>
+<li><strong>capitulo</strong>,<strong>posicao</strong>,<strong>subposicao1</strong>,<strong>subposicao2</strong>,<strong>item1</strong> e <strong>item2</strong>: Pesquisa exata informando qualquer uma das partes do código NCM.</li>
+</ul>
+
+<p>Caso já saiba o código NCM exato, e queira apenas recuperar sua descrição, utilize o link
+abaixo, substituindo CODIGO_NCM pelo código.</p>
+
+<p><code>http://homologacao.acrasnfe.acras.com.br/v2/ncms/CODIGO_NCM</code></p>
+<h2 id='consulta-de-ncm_paginacao'>Paginação</h2>
+<p>Ao fazer uma pesquisa, a API irá devolver o cabeçalho HTTP <em>X-Max-Count</em> que representa
+o número total de ocorrências da pesquisa, porém a API devolve apenas 50 registros por vez.
+Para buscar os demais registros, utilize o parâmetro <strong>offset</strong>. Exemplo:</p>
+
+<p>Vamos supor que a chamada abaixo devolva 123 ocorrências:</p>
+
+<p><code>http://homologacao.acrasnfe.acras.com.br/v2/ncms?codigo=7022</code></p>
+
+<p>A segunda e terceira páginas da consulta poderão ser acessados desta forma:</p>
+
+<p>Registros 51 a 100:
+<code>http://homologacao.acrasnfe.acras.com.br/v2/ncms?codigo=7022&amp;offset=50</code></p>
+
+<p>Registros 101 a 123:
+<code>http://homologacao.acrasnfe.acras.com.br/v2/ncms?codigo=7022&amp;offset=100</code></p>
 <h1 id='revenda_revenda'>Revenda</h1>
 <p>A API de Revenda ainda não foi migrada para a versão 2.0, você pode consultar a <a href="https://focusnfe.com.br/api/doc/revenda/">versão anterior aqui</a></p>
 <h1 id='limite-de-requisicoes_limite-de-requisicoes'>Limite de requisições</h1>
