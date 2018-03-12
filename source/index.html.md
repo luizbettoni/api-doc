@@ -15,6 +15,7 @@ includes:
   - nfse
   - manifestacao
   - webhooks
+  - ncm
   - revenda
   - limite-requisicoes
   - github
