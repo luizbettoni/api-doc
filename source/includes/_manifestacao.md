@@ -19,6 +19,38 @@ GET|/v2/nfes_recebidas/CHAVE/carta_correcao.xml|Se existir, baixa o XML da últi
 
 ## Manifestação
 
+```python
+# Faça o download e instalação da biblioteca requests, através do python-pip.
+import json
+import requests
+
+''' 
+Para ambiente de produção use a variável abaixo:
+url = "https://api.focusnfe.com.br"
+'''
+url = "http://homologacao.acrasnfe.acras.com.br/v2/nfes_recebidas/"
+
+token="token_enviado_pelo_suporte"
+
+chave = "chave_da_nota_fiscal"
+
+'''
+Usamos um dicionario para armazenar os campos e valores que em seguida,
+serao convertidos a JSON e enviados para nossa API
+'''
+manifesto = {}
+manifesto["tipo"] = "ciencia"
+
+r = requests.post(url+chave+"/manifesto", data=json.dumps(manifesto), auth=(token,""))
+
+# Mostra na tela o codigo HTTP da requisicao e a mensagem de retorno da API
+print(r.status_code, r.text)
+
+
+```
+
+
+
 ```shell
 
 # substitua CHAVE pela chave da nota
@@ -169,6 +201,28 @@ Na URL, informe em **CHAVE** a chave da nota fiscal recebida. O retorno será o 
 
 > Exemplo de como consultar a última manifestação de uma Nota Fiscal Eletrônica.
 
+```python
+# Faça o download e instalação da biblioteca requests, através do python-pip.
+import requests
+
+''' 
+Para ambiente de produção use a variável abaixo:
+url = "https://api.focusnfe.com.br"
+'''
+url = "http://homologacao.acrasnfe.acras.com.br/v2/nfes_recebidas/"
+
+token="token_enviado_pelo_suporte"
+
+chave = "chave_da_nota_fiscal"
+
+r = requests.get(url+chave+"/manifesto", auth=(token,""))
+
+# Mostra na tela o codigo HTTP da requisicao e a mensagem de retorno da API
+print(r.status_code, r.text)
+
+```
+
+
 ```java
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
@@ -247,6 +301,28 @@ A API busca as últimas atualizações da SEFAZ de hora em hora.
 **Método de consulta**
 
 > Exemplo de como consultar todas as notas recebidas de uma empresa.
+
+```python
+# Faça o download e instalação da biblioteca requests, através do python-pip.
+import requests
+
+''' 
+Para ambiente de produção use a variável abaixo:
+url = "https://api.focusnfe.com.br"
+'''
+url = "http://homologacao.acrasnfe.acras.com.br/v2/nfes_recebidas?cnpj="
+
+token="token_enviado_pelo_suporte"
+
+cnpj = "cnpj_do_destinatario_da_nota"
+
+r = requests.get(url+cnpj, auth=(token,""))
+
+# Mostra na tela o codigo HTTP da requisicao e a mensagem de retorno da API
+print(r.status_code, r.text)
+
+```
+
 
 ```shell
 curl -u token_enviado_pelo_suporte: \
@@ -418,6 +494,27 @@ Isto irá adicionar dois novos campos:
 
 > Exemplo de como realizar o download do XML de uma Nota Fiscal Eletrônica especifica.
 
+```python
+# Faça o download e instalação da biblioteca requests, através do python-pip.
+import requests
+
+''' 
+Para ambiente de produção use a variável abaixo:
+url = "https://api.focusnfe.com.br"
+'''
+url = "http://homologacao.acrasnfe.acras.com.br/v2/nfes_recebidas/"
+
+token="token_enviado_pelo_suporte"
+
+chave = "chave_da_nota_fiscal"
+
+r = requests.get(url+chave+".xml", auth=(token,""))
+
+# Mostra na tela o codigo HTTP da requisicao e a mensagem de retorno da API
+print(r.status_code, r.text)
+
+```
+
 ```shell
 curl -u token_enviado_pelo_suporte: \
   http://homologacao.acrasnfe.acras.com.br/v2/nfe_recebidas/CHAVE.xml
@@ -488,6 +585,29 @@ public class download_nota_especifica_xml {
 ```
 
 > Exemplo de como fazer o download, no formato JSON, do XML de uma Nota Fiscal Eletrônica especifica.
+
+```python
+# Faça o download e instalação da biblioteca requests, através do python-pip.
+import requests
+
+''' 
+Para ambiente de produção use a variável abaixo:
+url = "https://api.focusnfe.com.br"
+'''
+url = "http://homologacao.acrasnfe.acras.com.br/v2/nfes_recebidas/"
+
+token="token_enviado_pelo_suporte"
+
+chave = "chave_da_nota_fiscal"
+
+r = requests.get(url+chave+".json?completa=1", auth=(token,""))
+
+# Mostra na tela o codigo HTTP da requisicao e a mensagem de retorno da API
+print(r.status_code, r.text)l
+
+```
+
+
 
 ```shell
 curl -u token_enviado_pelo_suporte: \
@@ -560,6 +680,27 @@ public class download_nota_especifica {
 
 > Exemplo de como fazer o download do XML de cancelamento de uma Nota Fiscal Eletrônica.
 
+```python
+# Faça o download e instalação da biblioteca requests, através do python-pip.
+import requests
+
+''' 
+Para ambiente de produção use a variável abaixo:
+url = "https://api.focusnfe.com.br"
+'''
+url = "http://homologacao.acrasnfe.acras.com.br/v2/nfes_recebidas/"
+
+token="token_enviado_pelo_suporte"
+
+chave = "chave_da_nota_fiscal"
+
+r = requests.get(url+chave+"/cancelamento.xml", auth=(token,""))
+
+# Mostra na tela o codigo HTTP da requisicao e a mensagem de retorno da API
+print(r.status_code, r.text)
+
+```
+
 ```shell
 curl -u token_enviado_pelo_suporte: \
   http://homologacao.acrasnfe.acras.com.br/v2/nfe_recebidas/CHAVE/cancelamento.xml
@@ -630,6 +771,30 @@ public class download_cancelamento_xml {
 ```
 
 > Exemplo de como realizar o download do XML de uma Nota Fiscal Eletrônica especifica com Carta de Correção Eletrônica.
+
+```python
+# Faça o download e instalação da biblioteca requests, através do python-pip.
+import requests
+
+''' 
+Para ambiente de produção use a variável abaixo:
+url = "https://api.focusnfe.com.br"
+'''
+url = "http://homologacao.acrasnfe.acras.com.br/v2/nfes_recebidas/"
+
+token="token_enviado_pelo_suporte"
+
+chave = "chave_da_nota_fiscal"
+
+r = requests.get(url+chave+"/carta_correcao.xml", auth=(token,""))
+
+# Mostra na tela o codigo HTTP da requisicao e a mensagem de retorno da API
+print(r.status_code, r.text)
+
+```
+
+
+
 
 ```shell
 curl -u token_enviado_pelo_suporte: \

@@ -5,6 +5,7 @@ language_tabs: # must be one of https://git.io/vQNgJ
   - shell
   - php
   - java
+  - python
 
 toc_footers:
 

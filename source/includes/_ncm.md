@@ -1,6 +1,6 @@
 # Consulta de NCM
 
-NCM significa "Nomenclatura Comum do Mercosul" e trata-se de um código de oito dígitos estabelecido pelo Governo Brasileiro para identificar a natureza das mercadorias. Este código é utilizado na emissão de NFe e de NFCe.
+NCM significa "Nomenclatura Comum do Mercosul" e trata-se de um código de oito dígitos estabelecido através da convenção de categorização de mercadorias adotada desde 1995 pelo Uruguai, Paraguai, Brasil e Argentina e que toma por base o Sistema Harmonizado (SH).. Este código é utilizado na emissão de NFe e de NFCe.
 
 Nós disponibilizamos uma API que você poderá utilizar para fornecer ao seu usuário final uma pesquisa de qual o código NCM correto do seu produto.
 
