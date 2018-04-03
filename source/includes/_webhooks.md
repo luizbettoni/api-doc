@@ -20,6 +20,35 @@ Os seguintes eventos causam o acionamento do gatilho:
   * Recebimento de um novo documento fiscal
 
 ## Criação
+```python
+# Faça o download e instalação da biblioteca requests, através do python-pip.
+import json
+import requests
+
+''' 
+Para ambiente de produção use a variável abaixo:
+url = "https://api.focusnfe.com.br"
+'''
+url = "http://homologacao.acrasnfe.acras.com.br/v2/hooks"
+
+token="token_enviado_pelo_suporte"
+
+'''
+Usamos um dicionario para armazenar os campos e valores que em seguida,
+serao convertidos a JSON e enviados para nossa API
+'''
+dados = {}
+dados["cnpj"] = "51916585000125"
+dados["event"] = "nfe"
+dados["url"] = "http://minha.url/nfe"
+
+r = requests.post(url, data=json.dumps(dados), auth=(token,""))
+
+# Mostra na tela o codigo HTTP da requisicao e a mensagem de retorno da API
+print(r.status_code, r.text)
+
+
+```
 
 ```shell
 curl -u token_enviado_pelo_suporte: \
@@ -125,6 +154,29 @@ Utilize o método HTTP POST para criar um novo gatilho. Esta requisição aceita
 A API irá devolver como resposta o gatilho criado. É possível ter apenas um gatilho por evento
 
 ## Consulta
+```python
+# Faça o download e instalação da biblioteca requests, através do python-pip.
+import requests
+
+''' 
+Para ambiente de produção use a variável abaixo:
+url = "https://api.focusnfe.com.br"
+'''
+url = "http://homologacao.acrasnfe.acras.com.br/v2/hooks/"
+
+token="token_enviado_pelo_suporte"
+
+hook_id = "Vj5rmkBq"
+
+r = requests.get(url+hook_id, auth=(token,""))
+
+# Mostra na tela o codigo HTTP da requisicao e a mensagem de retorno da API
+print(r.status_code, r.text)l
+
+
+```
+
+
 
 ```shell
 curl -u token_enviado_pelo_suporte: \
@@ -221,6 +273,28 @@ Para consultar um gatilho individualmente, utilize a URL
 Substituindo HOOK_ID pelo identificador do gatilho.
 
 ## Exclusão
+```python
+ Faça o download e instalação da biblioteca requests, através do python-pip.
+import requests
+
+''' 
+Para ambiente de produção use a variável abaixo:
+url = "https://api.focusnfe.com.br"
+'''
+url = "http://homologacao.acrasnfe.acras.com.br/v2/hooks/"
+
+token="token_enviado_pelo_suporte"
+
+hook_id = "Vj5rmkBq"
+
+r = requests.delete(url+hook_id, auth=(token,""))
+
+# Mostra na tela o codigo HTTP da requisicao e a mensagem de retorno da API
+print(r.status_code, r.text)
+
+
+```
+
 
 ```shell
 curl -u token_enviado_pelo_suporte: -X DELETE \

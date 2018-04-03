@@ -120,7 +120,7 @@ um formato único de campos para todas as prefeituras. A listagem dos campos seg
 	- **valor_pis**: Valor do PIS.
 	- **valor_cofins**: Valor do COFINS.
 	- **valor_inss**: Valor do INSS.
-	- **valor_ir**: Valor do IS.
+	- **valor_ir**: Valor do IRRF.
 	- **valor_csll**: Valor do CSLL
 	- **iss_retido**(*): Informar verdadeiro ou falso se o ISS foi retido.
 	- **valor_iss**: Valor do ISS. Campo ignorado pelo município de São Paulo.
@@ -146,6 +146,66 @@ um formato único de campos para todas as prefeituras. A listagem dos campos seg
 	- **inscricao_municipal**: Inscrição municipal do intermediário do serviço, se aplicável. Caracteres não numéricos são ignorados.
 
 ## Envio
+```python
+# Faça o download e instalação da biblioteca requests, através do python-pip.
+import json
+import requests
+
+''' 
+Para ambiente de produção use a variável abaixo:
+url = "https://api.focusnfe.com.br"
+'''
+url = "http://homologacao.acrasnfe.acras.com.br/v2/nfse.json"
+
+# Substituir pela sua identificação interna da nota
+ref = {"ref":"12345"}
+
+token="token_enviado_pelo_suporte"
+ 
+'''
+Usamos dicionarios para armazenar os campos e valores que em seguida,
+serao convertidos em JSON e enviados para nossa API
+'''
+nfse = {}
+nfse["prestador"] = {}
+nfse["servico"] = {}
+nfse["tomador"] = {}
+nfse["tomador"]["endereco"] = {}
+
+nfse["razao_social"] = "ACME INK"
+nfse["data_emissao"] = "2018-02-26T12:00:00-03:00"
+nfse["incentivador_cultural"] =  "false"
+nfse["natureza_operacao"] = "1"
+nfse["optante_simples_nacional"] = "true"
+nfse["status"] = "1"
+nfse["prestador"]["cnpj"] = "99999999999999"
+nfse["prestador"]["inscricao_municipal"] = "99999999"
+nfse["prestador"]["codigo_municipio"] = "9999999"
+nfse["servico"]["aliquota"] = "2.92"
+nfse["servico"]["base_calculo"] = "1.00"
+nfse["servico"]["discriminacao"] = "SERVICOS E MAO DE OBRA"
+nfse["servico"]["iss_retido"] = "0"
+nfse["servico"]["item_lista_servico"] = "1412"
+nfse["servico"]["valor_iss"] = "11.68"
+nfse["servico"]["valor_liquido"] = "1.00"
+nfse["servico"]["valor_servicos"] = "1.00"
+nfse["tomador"]["cnpj"] = "99999999999999"
+nfse["tomador"]["razao_social"] = "Parkinson da silva coelho JR"
+nfse["tomador"]["endereco"]["bairro"] = "São Miriti"
+nfse["tomador"]["endereco"]["cep"] = "31999-000"
+nfse["tomador"]["endereco"]["codigo_municipio"] = "9999999"
+nfse["tomador"]["endereco"]["logradouro"] = "João Batista Netos"
+nfse["tomador"]["endereco"]["numero"] = "34"
+nfse["tomador"]["endereco"]["uf"] = "MG"
+
+#print (json.dumps(nfse))
+r = requests.post(url, params=ref, data=json.dumps(nfse), auth=(token,""))
+
+# Mostra na tela o codigo HTTP da requisicao e a mensagem de retorno da API
+print(r.status_code, r.text)
+
+
+```
 
 ```shell
 # arquivo.json deve conter os dados da NFSe
@@ -308,6 +368,16 @@ public class NFSe_autorizar {
  ?>
 ```
 
+> Resposta da API para a requisição de envio:
+
+```json
+{
+  "cnpj_prestador": "CNPJ_PRESTADOR",
+  "ref": "REFERENCIA",
+  "status": "processando_autorizacao"
+}
+```
+
 Para enviar uma NFSe utilize a URL abaixo, alterando o ambiente de produção para homologação, caso esteja emitindo notas de teste.
 
 Envia uma NFSe para autorização:
@@ -325,6 +395,30 @@ onde eventualmente será processada (processamento assíncrono). Com isto, a not
 Para verificar se a nota já foi autorizada, você terá que efetuar uma [consulta](#nfse_consulta) ou se utilizar de [gatilhos](#gatilhos_gatilhos).
 
 ## Consulta
+```python
+# Faça o download e instalação da biblioteca requests, através do python-pip.
+import requests
+
+''' 
+Para ambiente de produção use a variável abaixo:
+url = "https://api.focusnfe.com.br"
+'''
+url = "http://homologacao.acrasnfe.acras.com.br/v2/nfse/"
+
+# Substituir pela sua identificação interna da nota
+ref = "12345"
+
+token="token_enviado_pelo_suporte"
+
+r = requests.get(url+ref+".json", params=completa, auth=(token,""))
+
+# Mostra na tela o codigo HTTP da requisicao e a mensagem de retorno da API
+print(r.status_code, r.text)
+
+
+```
+
+
 
 ```shell
 curl -u token_enviado_pelo_suporte: \
@@ -430,6 +524,36 @@ Recupera informações sobre a NFSe:
 Utilize o comando **HTTP GET** para consultar a sua nota para nossa API.
 
 ## Cancelamento
+```python
+# Faça o download e instalação da biblioteca requests, através do python-pip.
+import json
+import requests
+
+''' 
+Para ambiente de produção use a variável abaixo:
+url = "https://api.focusnfe.com.br"
+'''
+url = "http://homologacao.acrasnfe.acras.com.br/v2/nfse/"
+
+# Substituir pela sua identificação interna da nota
+ref = "12345"
+
+token="token_enviado_pelo_suporte"
+
+'''
+Usamos um dicionario para armazenar os campos e valores que em seguida,
+serao convertidos a JSON e enviados para nossa API
+'''
+justificativa={}
+justificativa["justificativa"] = "Sua justificativa aqui!"
+
+r = requests.delete(url+ref+".json", data=json.dumps(justificativa), auth=(token,""))
+
+# Mostra na tela o codigo HTTP da requisicao e a mensagem de retorno da API
+print(r.status_code, r.text)
+
+
+```
 
 ```shell
 curl -u token_enviado_pelo_suporte: \
@@ -520,6 +644,13 @@ public class NFSe_cancelamento {
  ?>
 ```
 
+> Resposta da API para a requisição de cancelamento:
+
+```json
+{
+  "status": "cancelado"
+}
+```
 Para cancelar uma NFSe, basta fazer uma requisição à URL abaixo, alterando o ambiente de produção para homologação, caso esteja emitindo notas de teste.
 
 **Cancelar uma NFSe já autorizada:**
@@ -540,6 +671,39 @@ A NFSe não possui um prazo padrão para cancelamento como vemos na NFCe, por ex
 
 
 ## Reenvio de email
+```python
+# Faça o download e instalação da biblioteca requests, através do python-pip.
+import json
+import requests
+
+''' 
+Para ambiente de produção use a variável abaixo:
+url = "https://api.focusnfe.com.br"
+'''
+url = "http://homologacao.acrasnfe.acras.com.br/v2/nfse/"
+
+# Substituir pela sua identificação interna da nota
+ref = "12345"
+
+token="token_enviado_pelo_suporte"
+
+'''
+Usamos um dicionario para armazenar os campos e valores que em seguida,
+serao convertidos a JSON e enviados para nossa API
+'''
+emails = {}
+email = "suporte@acras.com.br"
+emails["emails"] = [email]
+
+r = requests.delete(url+ref+"/email", data=json.dumps(emails), auth=(token,""))
+
+# Mostra na tela o codigo HTTP da requisicao e a mensagem de retorno da API
+print(r.status_code, r.text)
+
+
+```
+
+
 
 ```shell
 curl -u token_enviado_pelo_suporte: \

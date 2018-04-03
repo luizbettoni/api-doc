@@ -27,9 +27,9 @@ POST |	/v2/nfe/inutilizacao	| Inutiliza uma numeração da nota fiscal
 
 Atualmente, a NFe possui centenas de campos para os mais variados tipos e formas de operações, por isso, criamos uma página exclusiva que mostra todos os campos da nossa API para o envio de NFe. Nela, você pode buscar os campos pela TAG XML ou pela nossa tradução para API.
 
-[Documentação completa dos campos (versão 4.00 da NFe)](https://focusnfe.com.br/nfe/4.0/NotaFiscalXML.html)
+[Documentação completa dos campos (versão 4.00 da NFe)](https://focusnfe.com.br/dsl/4.0/NotaFiscalXML.html)
 
-[Documentação completa dos campos – versão 3.10 da NFe – Disponível até 2/abril/2018](https://focusnfe.com.br/nfe/lang/NotaFiscalXML.html)
+[Documentação completa dos campos – versão 3.10 da NFe – Disponível até 2/abril/2018](https://focusnfe.com.br/dsl/lang/NotaFiscalXML.html)
 
 Abaixo, iremos mostrar os campos de uso obrigatório para emissão de uma Nota Fiscal Eletrônica.
 
@@ -763,7 +763,7 @@ Utilize o comando HTTP GET para consultar a sua nota para nossa API.
 
 ```
 
->Exemplo de resposta da consulta de NFe:
+> Exemplo de resposta da consulta de NFe:
 
 ```json
 {
