@@ -120,7 +120,7 @@ um formato único de campos para todas as prefeituras. A listagem dos campos seg
 	- **valor_pis**: Valor do PIS.
 	- **valor_cofins**: Valor do COFINS.
 	- **valor_inss**: Valor do INSS.
-	- **valor_ir**: Valor do IS.
+	- **valor_ir**: Valor do IRRF.
 	- **valor_csll**: Valor do CSLL
 	- **iss_retido**(*): Informar verdadeiro ou falso se o ISS foi retido.
 	- **valor_iss**: Valor do ISS. Campo ignorado pelo município de São Paulo.
