@@ -201,7 +201,7 @@
       <script src="javascripts/all.js"></script>
   </head>
 
-  <body class="index" data-languages="[&quot;shell&quot;,&quot;php&quot;,&quot;java&quot;]">
+  <body class="index" data-languages="[&quot;shell&quot;,&quot;php&quot;,&quot;java&quot;,&quot;python&quot;]">
     <a href="#" id="nav-button">
       <span>
         NAV
@@ -214,6 +214,7 @@
               <a href="#" data-language-name="shell">shell</a>
               <a href="#" data-language-name="php">php</a>
               <a href="#" data-language-name="java">java</a>
+              <a href="#" data-language-name="python">python</a>
         </div>
         <div class="search">
           <input type="text" class="search" id="input-search" placeholder="Buscar">
@@ -711,9 +712,9 @@ Você deve substituir <code>REFERENCIA</code> pela referência gerada pela sua a
 <h2 id='nfe_campos-obrigatorios-de-uma-nfe'>Campos obrigatórios de uma NFe</h2>
 <p>Atualmente, a NFe possui centenas de campos para os mais variados tipos e formas de operações, por isso, criamos uma página exclusiva que mostra todos os campos da nossa API para o envio de NFe. Nela, você pode buscar os campos pela TAG XML ou pela nossa tradução para API.</p>
 
-<p><a href="https://focusnfe.com.br/nfe/4.0/NotaFiscalXML.html">Documentação completa dos campos (versão 4.00 da NFe)</a></p>
+<p><a href="https://focusnfe.com.br/dsl/4.0/NotaFiscalXML.html">Documentação completa dos campos (versão 4.00 da NFe)</a></p>
 
-<p><a href="https://focusnfe.com.br/nfe/lang/NotaFiscalXML.html">Documentação completa dos campos – versão 3.10 da NFe – Disponível até 2/abril/2018</a></p>
+<p><a href="https://focusnfe.com.br/dsl/lang/NotaFiscalXML.html">Documentação completa dos campos – versão 3.10 da NFe – Disponível até 2/abril/2018</a></p>
 
 <p>Abaixo, iremos mostrar os campos de uso obrigatório para emissão de uma Nota Fiscal Eletrônica.</p>
 
@@ -2891,7 +2892,82 @@ e NFSe.</p>
 <li><strong>consumidor_final</strong> = 1, significando “Nota para consumidor final”</li>
 <li><strong>finalidade_emissao</strong> = 1, significando “Nota normal”</li>
 </ul>
-<h2 id='nfce_envio'>Envio</h2><pre class="highlight shell tab-shell"><code><span class="c"># arquivo.json deve conter os dados da NFCe</span>
+<h2 id='nfce_envio'>Envio</h2><pre class="highlight python tab-python"><code><span class="c"># Faça o download e instalação da biblioteca requests, através do python-pip.</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="s">''' 
+Para ambiente de produção use a variável abaixo:
+url = "https://api.focusnfe.com.br"
+'''</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s">"http://homologacao.acrasnfe.acras.com.br/v2/nfce"</span>
+
+<span class="c"># Substituir pela sua identificação interna da nota</span>
+<span class="n">ref</span> <span class="o">=</span> <span class="p">{</span><span class="s">"ref"</span><span class="p">:</span><span class="s">"1234"</span><span class="p">}</span>
+
+<span class="n">token</span><span class="o">=</span><span class="s">"token_enviado_pelo_suporte"</span>
+
+<span class="s">'''
+Usamos dicionarios para armazenar os campos e valores que em seguida,
+serao convertidos em JSON e enviados para nossa API
+'''</span>
+<span class="n">nfce</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">items</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">formas_pagamento</span><span class="o">=</span><span class="p">{}</span>
+
+<span class="n">nfce</span><span class="p">[</span><span class="s">"cnpj_emitente"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"99999999999999"</span>
+<span class="n">nfce</span><span class="p">[</span><span class="s">"nome_emitente"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"Acme ink"</span>
+<span class="n">nfce</span><span class="p">[</span><span class="s">"nome_fantasia_emitente"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"Acme ink"</span>
+<span class="n">nfce</span><span class="p">[</span><span class="s">"logradouro_emitente"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"Rua Tupiniquim"</span>
+<span class="n">nfce</span><span class="p">[</span><span class="s">"numero_emitente"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"4000"</span>
+<span class="n">nfce</span><span class="p">[</span><span class="s">"bairro_emitente"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"Brás"</span>
+<span class="n">nfce</span><span class="p">[</span><span class="s">"municipio_emitente"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"São Paulo"</span>
+<span class="n">nfce</span><span class="p">[</span><span class="s">"uf_emitente"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"SP"</span>
+<span class="n">nfce</span><span class="p">[</span><span class="s">"cep_emitente"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"99997-000"</span>
+<span class="n">nfce</span><span class="p">[</span><span class="s">"inscricao_estadual_emitente"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"111111111"</span>
+<span class="n">nfce</span><span class="p">[</span><span class="s">"data_emissao"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"2018-03-06T17:11:00.939-03:00"</span>
+<span class="n">nfce</span><span class="p">[</span><span class="s">"natureza_operacao"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"Venda ao Consumidor"</span>
+<span class="n">nfce</span><span class="p">[</span><span class="s">"tipo_documento"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"1"</span>
+<span class="n">nfce</span><span class="p">[</span><span class="s">"presenca_comprador"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"1"</span>
+<span class="n">nfce</span><span class="p">[</span><span class="s">"finalidade_emissao"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"1"</span>
+<span class="n">nfce</span><span class="p">[</span><span class="s">"modalidade_frete"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"9"</span>
+<span class="n">nfce</span><span class="p">[</span><span class="s">"forma_pagamento"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"0"</span>
+<span class="n">nfce</span><span class="p">[</span><span class="s">"nome_destinatario"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL"</span>
+<span class="n">nfce</span><span class="p">[</span><span class="s">"cpf_destinatario"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"99999999999"</span>
+<span class="n">nfce</span><span class="p">[</span><span class="s">"informacoes_adicionais_contribuinte"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"Informacoes adicionais do contribuinte"</span>
+<span class="n">nfce</span><span class="p">[</span><span class="s">"valor_produtos"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"15.0"</span>
+<span class="n">nfce</span><span class="p">[</span><span class="s">"valor_desconto"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"0.00"</span>
+<span class="n">nfce</span><span class="p">[</span><span class="s">"valor_total"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"15.0"</span>
+<span class="n">formas_pagamento</span><span class="p">[</span><span class="s">"forma_pagamento"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"4"</span>
+<span class="n">formas_pagamento</span><span class="p">[</span><span class="s">"valor_pagamento"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"15.00"</span>
+<span class="n">formas_pagamento</span><span class="p">[</span><span class="s">"bandeira_operadora"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"7"</span>
+<span class="n">formas_pagamento</span><span class="p">[</span><span class="s">"troco"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"0"</span>
+<span class="n">itens</span><span class="p">[</span><span class="s">"numero_item"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"1"</span>
+<span class="n">itens</span><span class="p">[</span><span class="s">"codigo_produto"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"353"</span>
+<span class="n">itens</span><span class="p">[</span><span class="s">"descricao"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"NOTA FISCAL EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL"</span>
+<span class="n">itens</span><span class="p">[</span><span class="s">"codigo_ncm"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"48024090"</span>
+<span class="n">itens</span><span class="p">[</span><span class="s">"cfop"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"5102"</span>
+<span class="n">itens</span><span class="p">[</span><span class="s">"valor_desconto"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"0.00"</span>
+<span class="n">itens</span><span class="p">[</span><span class="s">"icms_origem"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"0"</span>
+<span class="n">itens</span><span class="p">[</span><span class="s">"icms_situacao_tributaria"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"400"</span>
+<span class="n">itens</span><span class="p">[</span><span class="s">"unidade_comercial"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"UN"</span>
+<span class="n">itens</span><span class="p">[</span><span class="s">"unidade_tributavel"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"UN"</span>
+<span class="n">itens</span><span class="p">[</span><span class="s">"quantidade_comercial"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"10"</span>
+<span class="n">itens</span><span class="p">[</span><span class="s">"quantidade_tributavel"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"10"</span>
+<span class="n">itens</span><span class="p">[</span><span class="s">"valor_unitario_comercial"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"1.5"</span>
+<span class="n">itens</span><span class="p">[</span><span class="s">"valor_unitario_tributavel"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"1.5"</span>
+<span class="n">itens</span><span class="p">[</span><span class="s">"valor_bruto"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"15.00"</span>
+
+<span class="c"># Adicionamos os dados das variaveis itens e formas_pagamento como listas ao dicionario principal.</span>
+<span class="n">nfce</span><span class="p">[</span><span class="s">"items"</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">itens</span><span class="p">]</span>
+<span class="n">nfce</span><span class="p">[</span><span class="s">"formas_pagamento"</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">formas_pagamento</span><span class="p">]</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">ref</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">nfce</span><span class="p">),</span> <span class="n">auth</span><span class="o">=</span><span class="p">(</span><span class="n">token</span><span class="p">,</span><span class="s">""</span><span class="p">))</span>
+
+<span class="c"># Mostra na tela o codigo HTTP da requisicao e a mensagem de retorno da API</span>
+<span class="k">print</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+
+</code></pre><pre class="highlight shell tab-shell"><code><span class="c"># arquivo.json deve conter os dados da NFCe</span>
 curl -u token_enviado_pelo_suporte: <span class="se">\</span>
   -X POST -T arquivo.json http://homologacao.acrasnfe.acras.com.br/v2/nfce
 </code></pre><pre class="highlight java tab-java"><code>
@@ -3078,7 +3154,29 @@ $server = "https://api.focusnfe.com.br"; */</span>
 <p>A numeração da nota (número e série) pode ser definido automaticamente pela API, nós recomendamos que deixe a sua numeração sob nossa responsabilidade, por questões de simplicidade. Entretanto, você pode controlar o envio destas informações pela sua aplicação, basta informar os campos <strong>“numero”</strong> e <strong>“serie”</strong> nos dados de envio.</p>
 
 <p>O envio de uma NFCe é um processo <strong>síncrono</strong>, ou seja, diferente da NFe a nota é autorizada ou rejeitada na mesma requisição. A resposta da requisição irá conter o mesmo resultado que a operação da consulta, descrita a seguir.</p>
-<h2 id='nfce_consulta'>Consulta</h2><pre class="highlight shell tab-shell"><code>curl -u token_enviado_pelo_suporte: <span class="se">\</span>
+<h2 id='nfce_consulta'>Consulta</h2><pre class="highlight python tab-python"><code><span class="c"># Faça o download e instalação da biblioteca requests, através do python-pip.</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="s">''' 
+Para ambiente de produção use a variável abaixo:
+url = "https://api.focusnfe.com.br"
+'''</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s">"http://homologacao.acrasnfe.acras.com.br/v2/nfce/"</span>
+
+<span class="c"># Substituir pela sua identificação interna da nota</span>
+<span class="n">ref</span> <span class="o">=</span> <span class="s">"1234"</span>
+
+<span class="n">token</span><span class="o">=</span><span class="s">"token_enviado_pelo_suporte"</span>
+
+<span class="c"># Use este parametro para obter mais informacoes em suas consultas</span>
+<span class="n">completa</span> <span class="o">=</span> <span class="s">"completa=1"</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="o">+</span><span class="n">ref</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">completa</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="p">(</span><span class="n">token</span><span class="p">,</span><span class="s">""</span><span class="p">))</span>
+
+<span class="c"># Mostra na tela o codigo HTTP da requisicao e a mensagem de retorno da API</span>
+<span class="k">print</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span><span class="n">l</span>
+
+</code></pre><pre class="highlight shell tab-shell"><code>curl -u token_enviado_pelo_suporte: <span class="se">\</span>
   http://homologacao.acrasnfe.acras.com.br/v2/nfce/12345
 </code></pre><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">com.sun.jersey.api.client.Client</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">com.sun.jersey.api.client.ClientResponse</span><span class="o">;</span>
@@ -3266,7 +3364,35 @@ $server = "https://api.focusnfe.com.br"; */</span>
     </span><span class="s2">"numero_protocolo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"141180000026777"</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre><h2 id='nfce_cancelamento'>Cancelamento</h2><pre class="highlight shell tab-shell"><code>curl -u token_enviado_pelo_suporte: <span class="se">\</span>
+</span></code></pre><h2 id='nfce_cancelamento'>Cancelamento</h2><pre class="highlight python tab-python"><code><span class="c"># Faça o download e instalação da biblioteca requests, através do python-pip.</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="s">''' 
+Para ambiente de produção use a variável abaixo:
+url = "https://api.focusnfe.com.br"
+'''</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s">"http://homologacao.acrasnfe.acras.com.br/v2/nfce/"</span>
+
+<span class="c"># Substituir pela sua identificação interna da nota</span>
+<span class="n">ref</span> <span class="o">=</span> <span class="s">"12345"</span>
+
+<span class="n">token</span><span class="o">=</span><span class="s">"token_enviado_pelo_suporte"</span>
+
+<span class="s">'''
+Usamos um dicionario para armazenar os campos e valores que em seguida,
+serao convertidos a JSON e enviados para nossa API
+'''</span>
+<span class="n">justificativa</span><span class="o">=</span><span class="p">{}</span>
+<span class="n">justificativa</span><span class="p">[</span><span class="s">"justificativa"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"Sua justificativa aqui!"</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">url</span><span class="o">+</span><span class="n">ref</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">justificativa</span><span class="p">),</span> <span class="n">auth</span><span class="o">=</span><span class="p">(</span><span class="n">token</span><span class="p">,</span><span class="s">""</span><span class="p">))</span>
+
+<span class="c"># Mostra na tela o codigo HTTP da requisicao e a mensagem de retorno da API</span>
+<span class="k">print</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+
+
+</code></pre><pre class="highlight shell tab-shell"><code>curl -u token_enviado_pelo_suporte: <span class="se">\</span>
   -X DELETE -d <span class="s1">'{"justificativa":"Teste de cancelamento de nota"}'</span> <span class="se">\</span>
   http://homologacao.acrasnfe.acras.com.br/v2/nfce/12345
 </code></pre><pre class="highlight java tab-java"><code>
@@ -3374,7 +3500,36 @@ $server = "https://api.focusnfe.com.br"; */</span>
 <p><strong>Prazo de cancelamento</strong></p>
 
 <p>A NFCe poderá ser cancelada em até 24 horas após a emissão.</p>
-<h2 id='nfce_inutilizacao'>Inutilização</h2><pre class="highlight shell tab-shell"><code>curl -u token_enviado_pelo_suporte: <span class="se">\</span>
+<h2 id='nfce_inutilizacao'>Inutilização</h2><pre class="highlight python tab-python"><code><span class="c"># Faça o download e instalação da biblioteca requests, através do python-pip.</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="s">''' 
+Para ambiente de produção use a variável abaixo:
+url = "https://api.focusnfe.com.br"
+'''</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s">"http://homologacao.acrasnfe.acras.com.br/v2/nfce/inutilizacao"</span>
+
+<span class="n">token</span><span class="o">=</span><span class="s">"token_enviado_pelo_suporte"</span>
+
+<span class="s">'''
+Usamos dicionarios e listas para armazenar os campos e valores que em seguida,
+serao convertidos em JSON e enviados para nossa API
+'''</span>
+<span class="n">inutilizacao</span><span class="o">=</span><span class="p">{}</span>
+<span class="n">inutilizacao</span><span class="p">[</span><span class="s">"cnpj"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"CNPJ da empresa emitente"</span>
+<span class="n">inutilizacao</span><span class="p">[</span><span class="s">"serie"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"Serie da numeracao da NFCe que tera uma faixa de numeracao inutilizada"</span>
+<span class="n">inutilizacao</span><span class="p">[</span><span class="s">"numero_inicial"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"Numero inicial a ser inutilizado"</span>
+<span class="n">inutilizacao</span><span class="p">[</span><span class="s">"numero_final"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"Numero final a ser inutilizado"</span>
+<span class="n">inutilizacao</span><span class="p">[</span><span class="s">"justificativa"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"Justificativa da inutilizacao (minimo 15 caracteres)"</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">inutilizacao</span><span class="p">),</span> <span class="n">auth</span><span class="o">=</span><span class="p">(</span><span class="n">token</span><span class="p">,</span><span class="s">""</span><span class="p">))</span>
+
+<span class="c"># Mostra na tela o codigo HTTP da requisicao e a mensagem de retorno da API</span>
+<span class="k">print</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+
+
+</code></pre><pre class="highlight shell tab-shell"><code>curl -u token_enviado_pelo_suporte: <span class="se">\</span>
   -X POST -d <span class="s1">'{"cnpj":"51916585009999","serie":"9","numero_inicial":"7730","numero_final":"7732","justificativa":"Teste de inutilizacao de nota"}'</span> <span class="se">\</span>
   http://homologacao.acrasnfe.acras.com.br/v2/nfce/inutilizacao
 </code></pre><pre class="highlight java tab-java"><code>
@@ -3494,7 +3649,36 @@ $server = "https://api.focusnfe.com.br"; */</span>
 <li><strong>numero_final:</strong> Número final a ser inutilizado</li>
 <li><strong>caminho_xml:</strong> Caminho do XML para download caso a inutilização tenha sido autorizada pela SEFAZ.</li>
 </ul>
-<h2 id='nfce_reenvio-de-e-mail'>Reenvio de e-mail</h2><pre class="highlight shell tab-shell"><code>curl -u token_enviado_pelo_suporte: <span class="se">\</span>
+<h2 id='nfce_reenvio-de-e-mail'>Reenvio de e-mail</h2><pre class="highlight python tab-python"><code><span class="c"># Faça o download e instalação da biblioteca requests, através do python-pip.</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="s">''' 
+Para ambiente de produção use a variável abaixo:
+url = "https://api.focusnfe.com.br"
+'''</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s">"http://homologacao.acrasnfe.acras.com.br/v2/nfce/"</span>
+
+<span class="c"># Substituir pela sua identificação interna da nota</span>
+<span class="n">ref</span> <span class="o">=</span> <span class="s">"12345"</span>
+
+<span class="n">token</span><span class="o">=</span><span class="s">"token_enviado_pelo_suporte"</span>
+
+<span class="s">'''
+Usamos um dicionario para armazenar os campos e valores que em seguida,
+serao convertidos a JSON e enviados para nossa API
+'''</span>
+<span class="n">emails</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">email</span> <span class="o">=</span> <span class="s">"suporte@acras.com.br"</span>
+<span class="n">emails</span><span class="p">[</span><span class="s">"emails"</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">email</span><span class="p">]</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">url</span><span class="o">+</span><span class="n">ref</span><span class="o">+</span><span class="s">"/email"</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">emails</span><span class="p">),</span> <span class="n">auth</span><span class="o">=</span><span class="p">(</span><span class="n">token</span><span class="p">,</span><span class="s">""</span><span class="p">))</span>
+
+<span class="c"># Mostra na tela o codigo HTTP da requisicao e a mensagem de retorno da API</span>
+<span class="k">print</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span><span class="n">l</span>
+
+
+</code></pre><pre class="highlight shell tab-shell"><code>curl -u token_enviado_pelo_suporte: <span class="se">\</span>
   -X POST -d <span class="s1">'{"emails":["alguem@example.org"]}'</span> <span class="se">\</span>
   http://homologacao.acrasnfe.acras.com.br/v2/nfce/12345/email
 </code></pre><pre class="highlight java tab-java"><code>
@@ -3826,7 +4010,7 @@ um formato único de campos para todas as prefeituras. A listagem dos campos seg
 <li><strong>valor_pis</strong>: Valor do PIS.</li>
 <li><strong>valor_cofins</strong>: Valor do COFINS.</li>
 <li><strong>valor_inss</strong>: Valor do INSS.</li>
-<li><strong>valor_ir</strong>: Valor do IS.</li>
+<li><strong>valor_ir</strong>: Valor do IRRF.</li>
 <li><strong>valor_csll</strong>: Valor do CSLL</li>
 <li><strong>iss_retido</strong>(*): Informar verdadeiro ou falso se o ISS foi retido.</li>
 <li><strong>valor_iss</strong>: Valor do ISS. Campo ignorado pelo município de São Paulo.</li>
@@ -3856,7 +4040,65 @@ um formato único de campos para todas as prefeituras. A listagem dos campos seg
 <li><strong>inscricao_municipal</strong>: Inscrição municipal do intermediário do serviço, se aplicável. Caracteres não numéricos são ignorados.</li>
 </ul></li>
 </ul>
-<h2 id='nfse_envio'>Envio</h2><pre class="highlight shell tab-shell"><code><span class="c"># arquivo.json deve conter os dados da NFSe</span>
+<h2 id='nfse_envio'>Envio</h2><pre class="highlight python tab-python"><code><span class="c"># Faça o download e instalação da biblioteca requests, através do python-pip.</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="s">''' 
+Para ambiente de produção use a variável abaixo:
+url = "https://api.focusnfe.com.br"
+'''</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s">"http://homologacao.acrasnfe.acras.com.br/v2/nfse.json"</span>
+
+<span class="c"># Substituir pela sua identificação interna da nota</span>
+<span class="n">ref</span> <span class="o">=</span> <span class="p">{</span><span class="s">"ref"</span><span class="p">:</span><span class="s">"12345"</span><span class="p">}</span>
+
+<span class="n">token</span><span class="o">=</span><span class="s">"token_enviado_pelo_suporte"</span>
+
+<span class="s">'''
+Usamos dicionarios para armazenar os campos e valores que em seguida,
+serao convertidos em JSON e enviados para nossa API
+'''</span>
+<span class="n">nfse</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">nfse</span><span class="p">[</span><span class="s">"prestador"</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">nfse</span><span class="p">[</span><span class="s">"servico"</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">nfse</span><span class="p">[</span><span class="s">"tomador"</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">nfse</span><span class="p">[</span><span class="s">"tomador"</span><span class="p">][</span><span class="s">"endereco"</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="n">nfse</span><span class="p">[</span><span class="s">"razao_social"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"ACME INK"</span>
+<span class="n">nfse</span><span class="p">[</span><span class="s">"data_emissao"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"2018-02-26T12:00:00-03:00"</span>
+<span class="n">nfse</span><span class="p">[</span><span class="s">"incentivador_cultural"</span><span class="p">]</span> <span class="o">=</span>  <span class="s">"false"</span>
+<span class="n">nfse</span><span class="p">[</span><span class="s">"natureza_operacao"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"1"</span>
+<span class="n">nfse</span><span class="p">[</span><span class="s">"optante_simples_nacional"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"true"</span>
+<span class="n">nfse</span><span class="p">[</span><span class="s">"status"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"1"</span>
+<span class="n">nfse</span><span class="p">[</span><span class="s">"prestador"</span><span class="p">][</span><span class="s">"cnpj"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"99999999999999"</span>
+<span class="n">nfse</span><span class="p">[</span><span class="s">"prestador"</span><span class="p">][</span><span class="s">"inscricao_municipal"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"99999999"</span>
+<span class="n">nfse</span><span class="p">[</span><span class="s">"prestador"</span><span class="p">][</span><span class="s">"codigo_municipio"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"9999999"</span>
+<span class="n">nfse</span><span class="p">[</span><span class="s">"servico"</span><span class="p">][</span><span class="s">"aliquota"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"2.92"</span>
+<span class="n">nfse</span><span class="p">[</span><span class="s">"servico"</span><span class="p">][</span><span class="s">"base_calculo"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"1.00"</span>
+<span class="n">nfse</span><span class="p">[</span><span class="s">"servico"</span><span class="p">][</span><span class="s">"discriminacao"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"SERVICOS E MAO DE OBRA"</span>
+<span class="n">nfse</span><span class="p">[</span><span class="s">"servico"</span><span class="p">][</span><span class="s">"iss_retido"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"0"</span>
+<span class="n">nfse</span><span class="p">[</span><span class="s">"servico"</span><span class="p">][</span><span class="s">"item_lista_servico"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"1412"</span>
+<span class="n">nfse</span><span class="p">[</span><span class="s">"servico"</span><span class="p">][</span><span class="s">"valor_iss"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"11.68"</span>
+<span class="n">nfse</span><span class="p">[</span><span class="s">"servico"</span><span class="p">][</span><span class="s">"valor_liquido"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"1.00"</span>
+<span class="n">nfse</span><span class="p">[</span><span class="s">"servico"</span><span class="p">][</span><span class="s">"valor_servicos"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"1.00"</span>
+<span class="n">nfse</span><span class="p">[</span><span class="s">"tomador"</span><span class="p">][</span><span class="s">"cnpj"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"99999999999999"</span>
+<span class="n">nfse</span><span class="p">[</span><span class="s">"tomador"</span><span class="p">][</span><span class="s">"razao_social"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"Parkinson da silva coelho JR"</span>
+<span class="n">nfse</span><span class="p">[</span><span class="s">"tomador"</span><span class="p">][</span><span class="s">"endereco"</span><span class="p">][</span><span class="s">"bairro"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"São Miriti"</span>
+<span class="n">nfse</span><span class="p">[</span><span class="s">"tomador"</span><span class="p">][</span><span class="s">"endereco"</span><span class="p">][</span><span class="s">"cep"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"31999-000"</span>
+<span class="n">nfse</span><span class="p">[</span><span class="s">"tomador"</span><span class="p">][</span><span class="s">"endereco"</span><span class="p">][</span><span class="s">"codigo_municipio"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"9999999"</span>
+<span class="n">nfse</span><span class="p">[</span><span class="s">"tomador"</span><span class="p">][</span><span class="s">"endereco"</span><span class="p">][</span><span class="s">"logradouro"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"João Batista Netos"</span>
+<span class="n">nfse</span><span class="p">[</span><span class="s">"tomador"</span><span class="p">][</span><span class="s">"endereco"</span><span class="p">][</span><span class="s">"numero"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"34"</span>
+<span class="n">nfse</span><span class="p">[</span><span class="s">"tomador"</span><span class="p">][</span><span class="s">"endereco"</span><span class="p">][</span><span class="s">"uf"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"MG"</span>
+
+<span class="c">#print (json.dumps(nfse))</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">ref</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">nfse</span><span class="p">),</span> <span class="n">auth</span><span class="o">=</span><span class="p">(</span><span class="n">token</span><span class="p">,</span><span class="s">""</span><span class="p">))</span>
+
+<span class="c"># Mostra na tela o codigo HTTP da requisicao e a mensagem de retorno da API</span>
+<span class="k">print</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+
+
+</code></pre><pre class="highlight shell tab-shell"><code><span class="c"># arquivo.json deve conter os dados da NFSe</span>
 curl -u token_enviado_pelo_suporte: <span class="se">\</span>
   -X POST -T arquivo.json http://homologacao.acrasnfe.acras.com.br/v2/nfse
 </code></pre><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">java.util.HashMap</span><span class="o">;</span>
@@ -4009,6 +4251,15 @@ curl -u token_enviado_pelo_suporte: <span class="se">\</span>
  <span class="nb">curl_close</span><span class="p">(</span><span class="nv">$ch</span><span class="p">);</span>
  <span class="cp">?&gt;</span>
 </code></pre>
+<blockquote>
+<p>Resposta da API para a requisição de envio:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"cnpj_prestador"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CNPJ_PRESTADOR"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"REFERENCIA"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"processando_autorizacao"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
 <p>Para enviar uma NFSe utilize a URL abaixo, alterando o ambiente de produção para homologação, caso esteja emitindo notas de teste.</p>
 
 <p>Envia uma NFSe para autorização:</p>
@@ -4024,7 +4275,27 @@ ou algum problema com o prestador a nota <strong>não será aceita para processa
 onde eventualmente será processada (processamento assíncrono). Com isto, a nota poderá ser autorizada ou ocorrer um erro na autorização de acordo com a validação da prefeitura.</p>
 
 <p>Para verificar se a nota já foi autorizada, você terá que efetuar uma <a href="#nfse_consulta">consulta</a> ou se utilizar de <a href="#gatilhos_gatilhos">gatilhos</a>.</p>
-<h2 id='nfse_consulta'>Consulta</h2><pre class="highlight shell tab-shell"><code>curl -u token_enviado_pelo_suporte: <span class="se">\</span>
+<h2 id='nfse_consulta'>Consulta</h2><pre class="highlight python tab-python"><code><span class="c"># Faça o download e instalação da biblioteca requests, através do python-pip.</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="s">''' 
+Para ambiente de produção use a variável abaixo:
+url = "https://api.focusnfe.com.br"
+'''</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s">"http://homologacao.acrasnfe.acras.com.br/v2/nfse/"</span>
+
+<span class="c"># Substituir pela sua identificação interna da nota</span>
+<span class="n">ref</span> <span class="o">=</span> <span class="s">"12345"</span>
+
+<span class="n">token</span><span class="o">=</span><span class="s">"token_enviado_pelo_suporte"</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="o">+</span><span class="n">ref</span><span class="o">+</span><span class="s">".json"</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">completa</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="p">(</span><span class="n">token</span><span class="p">,</span><span class="s">""</span><span class="p">))</span>
+
+<span class="c"># Mostra na tela o codigo HTTP da requisicao e a mensagem de retorno da API</span>
+<span class="k">print</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+
+
+</code></pre><pre class="highlight shell tab-shell"><code>curl -u token_enviado_pelo_suporte: <span class="se">\</span>
   http://homologacao.acrasnfe.acras.com.br/v2/nfse/12345
 </code></pre><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">com.sun.jersey.api.client.Client</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">com.sun.jersey.api.client.ClientResponse</span><span class="o">;</span>
@@ -4117,7 +4388,35 @@ ainda em processamento ou se a nota já foi processada.</p>
 <p><code>https://api.focusnfe.com.br/v2/nfse/REFERENCIA.json</code></p>
 
 <p>Utilize o comando <strong>HTTP GET</strong> para consultar a sua nota para nossa API.</p>
-<h2 id='nfse_cancelamento'>Cancelamento</h2><pre class="highlight shell tab-shell"><code>curl -u token_enviado_pelo_suporte: <span class="se">\</span>
+<h2 id='nfse_cancelamento'>Cancelamento</h2><pre class="highlight python tab-python"><code><span class="c"># Faça o download e instalação da biblioteca requests, através do python-pip.</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="s">''' 
+Para ambiente de produção use a variável abaixo:
+url = "https://api.focusnfe.com.br"
+'''</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s">"http://homologacao.acrasnfe.acras.com.br/v2/nfse/"</span>
+
+<span class="c"># Substituir pela sua identificação interna da nota</span>
+<span class="n">ref</span> <span class="o">=</span> <span class="s">"12345"</span>
+
+<span class="n">token</span><span class="o">=</span><span class="s">"token_enviado_pelo_suporte"</span>
+
+<span class="s">'''
+Usamos um dicionario para armazenar os campos e valores que em seguida,
+serao convertidos a JSON e enviados para nossa API
+'''</span>
+<span class="n">justificativa</span><span class="o">=</span><span class="p">{}</span>
+<span class="n">justificativa</span><span class="p">[</span><span class="s">"justificativa"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"Sua justificativa aqui!"</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">url</span><span class="o">+</span><span class="n">ref</span><span class="o">+</span><span class="s">".json"</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">justificativa</span><span class="p">),</span> <span class="n">auth</span><span class="o">=</span><span class="p">(</span><span class="n">token</span><span class="p">,</span><span class="s">""</span><span class="p">))</span>
+
+<span class="c"># Mostra na tela o codigo HTTP da requisicao e a mensagem de retorno da API</span>
+<span class="k">print</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+
+
+</code></pre><pre class="highlight shell tab-shell"><code>curl -u token_enviado_pelo_suporte: <span class="se">\</span>
   -X DELETE -d <span class="s1">'{"justificativa":"Teste de cancelamento de nota"}'</span> <span class="se">\</span>
   http://homologacao.acrasnfe.acras.com.br/v2/nfse/12345
 </code></pre><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">java.util.HashMap</span><span class="o">;</span>
@@ -4198,6 +4497,13 @@ ainda em processamento ou se a nota já foi processada.</p>
  <span class="nb">curl_close</span><span class="p">(</span><span class="nv">$ch</span><span class="p">);</span>
  <span class="cp">?&gt;</span>
 </code></pre>
+<blockquote>
+<p>Resposta da API para a requisição de cancelamento:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cancelado"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
 <p>Para cancelar uma NFSe, basta fazer uma requisição à URL abaixo, alterando o ambiente de produção para homologação, caso esteja emitindo notas de teste.</p>
 
 <p><strong>Cancelar uma NFSe já autorizada:</strong></p>
@@ -4216,7 +4522,36 @@ Este método é síncrono, ou seja, a comunicação com a prefeitura será feita
 
 <p><strong>Prazo de cancelamento</strong>
 A NFSe não possui um prazo padrão para cancelamento como vemos na NFCe, por exemplo. Outro detalhe importante é que como alguns municípios não possuem ambiente de homologação, é preciso emitir as notas de teste em produção. Sendo assim, recomendamos que sempre consulte o seu município antes de emitir uma NFSe.</p>
-<h2 id='nfse_reenvio-de-email'>Reenvio de email</h2><pre class="highlight shell tab-shell"><code>curl -u token_enviado_pelo_suporte: <span class="se">\</span>
+<h2 id='nfse_reenvio-de-email'>Reenvio de email</h2><pre class="highlight python tab-python"><code><span class="c"># Faça o download e instalação da biblioteca requests, através do python-pip.</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="s">''' 
+Para ambiente de produção use a variável abaixo:
+url = "https://api.focusnfe.com.br"
+'''</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s">"http://homologacao.acrasnfe.acras.com.br/v2/nfse/"</span>
+
+<span class="c"># Substituir pela sua identificação interna da nota</span>
+<span class="n">ref</span> <span class="o">=</span> <span class="s">"12345"</span>
+
+<span class="n">token</span><span class="o">=</span><span class="s">"token_enviado_pelo_suporte"</span>
+
+<span class="s">'''
+Usamos um dicionario para armazenar os campos e valores que em seguida,
+serao convertidos a JSON e enviados para nossa API
+'''</span>
+<span class="n">emails</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">email</span> <span class="o">=</span> <span class="s">"suporte@acras.com.br"</span>
+<span class="n">emails</span><span class="p">[</span><span class="s">"emails"</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">email</span><span class="p">]</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">url</span><span class="o">+</span><span class="n">ref</span><span class="o">+</span><span class="s">"/email"</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">emails</span><span class="p">),</span> <span class="n">auth</span><span class="o">=</span><span class="p">(</span><span class="n">token</span><span class="p">,</span><span class="s">""</span><span class="p">))</span>
+
+<span class="c"># Mostra na tela o codigo HTTP da requisicao e a mensagem de retorno da API</span>
+<span class="k">print</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+
+
+</code></pre><pre class="highlight shell tab-shell"><code>curl -u token_enviado_pelo_suporte: <span class="se">\</span>
   -X POST -d <span class="s1">'{"emails":["alguem@example.org"]}'</span> <span class="se">\</span>
   http://homologacao.acrasnfe.acras.com.br/v2/nfse/12345/email
 </code></pre><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.codehaus.jettison.json.JSONArray</span><span class="o">;</span>
@@ -4368,7 +4703,34 @@ A NFSe não possui um prazo padrão para cancelamento como vemos na NFCe, por ex
 <td>Se existir, baixa o XML da última carta de correção da nota fiscal informada.</td>
 </tr>
 </tbody></table>
-<h2 id='manifestacao_manifestacao-2'>Manifestação</h2><pre class="highlight shell tab-shell"><code>
+<h2 id='manifestacao_manifestacao-2'>Manifestação</h2><pre class="highlight python tab-python"><code><span class="c"># Faça o download e instalação da biblioteca requests, através do python-pip.</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="s">''' 
+Para ambiente de produção use a variável abaixo:
+url = "https://api.focusnfe.com.br"
+'''</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s">"http://homologacao.acrasnfe.acras.com.br/v2/nfes_recebidas/"</span>
+
+<span class="n">token</span><span class="o">=</span><span class="s">"token_enviado_pelo_suporte"</span>
+
+<span class="n">chave</span> <span class="o">=</span> <span class="s">"chave_da_nota_fiscal"</span>
+
+<span class="s">'''
+Usamos um dicionario para armazenar os campos e valores que em seguida,
+serao convertidos a JSON e enviados para nossa API
+'''</span>
+<span class="n">manifesto</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">manifesto</span><span class="p">[</span><span class="s">"tipo"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"ciencia"</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="o">+</span><span class="n">chave</span><span class="o">+</span><span class="s">"/manifesto"</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">manifesto</span><span class="p">),</span> <span class="n">auth</span><span class="o">=</span><span class="p">(</span><span class="n">token</span><span class="p">,</span><span class="s">""</span><span class="p">))</span>
+
+<span class="c"># Mostra na tela o codigo HTTP da requisicao e a mensagem de retorno da API</span>
+<span class="k">print</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+
+
+</code></pre><pre class="highlight shell tab-shell"><code>
 <span class="c"># substitua CHAVE pela chave da nota</span>
 curl -u token_enviado_pelo_suporte: <span class="se">\</span>
   -X POST -d <span class="s1">'{"tipo":"confirmacao"}'</span> <span class="se">\</span>
@@ -4514,7 +4876,25 @@ curl -u token_enviado_pelo_suporte: <span class="se">\</span>
 <blockquote>
 <p>Exemplo de como consultar a última manifestação de uma Nota Fiscal Eletrônica.</p>
 </blockquote>
-<pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">com.sun.jersey.api.client.Client</span><span class="o">;</span>
+<pre class="highlight python tab-python"><code><span class="c"># Faça o download e instalação da biblioteca requests, através do python-pip.</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="s">''' 
+Para ambiente de produção use a variável abaixo:
+url = "https://api.focusnfe.com.br"
+'''</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s">"http://homologacao.acrasnfe.acras.com.br/v2/nfes_recebidas/"</span>
+
+<span class="n">token</span><span class="o">=</span><span class="s">"token_enviado_pelo_suporte"</span>
+
+<span class="n">chave</span> <span class="o">=</span> <span class="s">"chave_da_nota_fiscal"</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="o">+</span><span class="n">chave</span><span class="o">+</span><span class="s">"/manifesto"</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="p">(</span><span class="n">token</span><span class="p">,</span><span class="s">""</span><span class="p">))</span>
+
+<span class="c"># Mostra na tela o codigo HTTP da requisicao e a mensagem de retorno da API</span>
+<span class="k">print</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+
+</code></pre><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">com.sun.jersey.api.client.Client</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">com.sun.jersey.api.client.ClientResponse</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">com.sun.jersey.api.client.WebResource</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">com.sun.jersey.api.client.config.ClientConfig</span><span class="o">;</span>
@@ -4587,7 +4967,25 @@ curl -u token_enviado_pelo_suporte: <span class="se">\</span>
 <blockquote>
 <p>Exemplo de como consultar todas as notas recebidas de uma empresa.</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code>curl -u token_enviado_pelo_suporte: <span class="se">\</span>
+<pre class="highlight python tab-python"><code><span class="c"># Faça o download e instalação da biblioteca requests, através do python-pip.</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="s">''' 
+Para ambiente de produção use a variável abaixo:
+url = "https://api.focusnfe.com.br"
+'''</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s">"http://homologacao.acrasnfe.acras.com.br/v2/nfes_recebidas?cnpj="</span>
+
+<span class="n">token</span><span class="o">=</span><span class="s">"token_enviado_pelo_suporte"</span>
+
+<span class="n">cnpj</span> <span class="o">=</span> <span class="s">"cnpj_do_destinatario_da_nota"</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="o">+</span><span class="n">cnpj</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="p">(</span><span class="n">token</span><span class="p">,</span><span class="s">""</span><span class="p">))</span>
+
+<span class="c"># Mostra na tela o codigo HTTP da requisicao e a mensagem de retorno da API</span>
+<span class="k">print</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+
+</code></pre><pre class="highlight shell tab-shell"><code>curl -u token_enviado_pelo_suporte: <span class="se">\</span>
   <span class="s2">"http://homologacao.acrasnfe.acras.com.br/v2/nfes_recebidas?cnpj=SEU_CNPJ"</span>
 </code></pre><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">com.sun.jersey.api.client.Client</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">com.sun.jersey.api.client.ClientResponse</span><span class="o">;</span>
@@ -4758,7 +5156,25 @@ curl -u token_enviado_pelo_suporte: <span class="se">\</span>
 <blockquote>
 <p>Exemplo de como realizar o download do XML de uma Nota Fiscal Eletrônica especifica.</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code>curl -u token_enviado_pelo_suporte: <span class="se">\</span>
+<pre class="highlight python tab-python"><code><span class="c"># Faça o download e instalação da biblioteca requests, através do python-pip.</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="s">''' 
+Para ambiente de produção use a variável abaixo:
+url = "https://api.focusnfe.com.br"
+'''</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s">"http://homologacao.acrasnfe.acras.com.br/v2/nfes_recebidas/"</span>
+
+<span class="n">token</span><span class="o">=</span><span class="s">"token_enviado_pelo_suporte"</span>
+
+<span class="n">chave</span> <span class="o">=</span> <span class="s">"chave_da_nota_fiscal"</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="o">+</span><span class="n">chave</span><span class="o">+</span><span class="s">".xml"</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="p">(</span><span class="n">token</span><span class="p">,</span><span class="s">""</span><span class="p">))</span>
+
+<span class="c"># Mostra na tela o codigo HTTP da requisicao e a mensagem de retorno da API</span>
+<span class="k">print</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+
+</code></pre><pre class="highlight shell tab-shell"><code>curl -u token_enviado_pelo_suporte: <span class="se">\</span>
   http://homologacao.acrasnfe.acras.com.br/v2/nfe_recebidas/CHAVE.xml
 </code></pre><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">com.sun.jersey.api.client.Client</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">com.sun.jersey.api.client.ClientResponse</span><span class="o">;</span>
@@ -4822,7 +5238,25 @@ curl -u token_enviado_pelo_suporte: <span class="se">\</span>
 <blockquote>
 <p>Exemplo de como fazer o download, no formato JSON, do XML de uma Nota Fiscal Eletrônica especifica.</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code>curl -u token_enviado_pelo_suporte: <span class="se">\</span>
+<pre class="highlight python tab-python"><code><span class="c"># Faça o download e instalação da biblioteca requests, através do python-pip.</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="s">''' 
+Para ambiente de produção use a variável abaixo:
+url = "https://api.focusnfe.com.br"
+'''</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s">"http://homologacao.acrasnfe.acras.com.br/v2/nfes_recebidas/"</span>
+
+<span class="n">token</span><span class="o">=</span><span class="s">"token_enviado_pelo_suporte"</span>
+
+<span class="n">chave</span> <span class="o">=</span> <span class="s">"chave_da_nota_fiscal"</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="o">+</span><span class="n">chave</span><span class="o">+</span><span class="s">".json?completa=1"</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="p">(</span><span class="n">token</span><span class="p">,</span><span class="s">""</span><span class="p">))</span>
+
+<span class="c"># Mostra na tela o codigo HTTP da requisicao e a mensagem de retorno da API</span>
+<span class="k">print</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span><span class="n">l</span>
+
+</code></pre><pre class="highlight shell tab-shell"><code>curl -u token_enviado_pelo_suporte: <span class="se">\</span>
   <span class="s2">"http://homologacao.acrasnfe.acras.com.br/v2/nfe_recebidas/CHAVE.json?completa=1"</span>
 </code></pre><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">com.sun.jersey.api.client.Client</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">com.sun.jersey.api.client.ClientResponse</span><span class="o">;</span>
@@ -4886,7 +5320,25 @@ curl -u token_enviado_pelo_suporte: <span class="se">\</span>
 <blockquote>
 <p>Exemplo de como fazer o download do XML de cancelamento de uma Nota Fiscal Eletrônica.</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code>curl -u token_enviado_pelo_suporte: <span class="se">\</span>
+<pre class="highlight python tab-python"><code><span class="c"># Faça o download e instalação da biblioteca requests, através do python-pip.</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="s">''' 
+Para ambiente de produção use a variável abaixo:
+url = "https://api.focusnfe.com.br"
+'''</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s">"http://homologacao.acrasnfe.acras.com.br/v2/nfes_recebidas/"</span>
+
+<span class="n">token</span><span class="o">=</span><span class="s">"token_enviado_pelo_suporte"</span>
+
+<span class="n">chave</span> <span class="o">=</span> <span class="s">"chave_da_nota_fiscal"</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="o">+</span><span class="n">chave</span><span class="o">+</span><span class="s">"/cancelamento.xml"</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="p">(</span><span class="n">token</span><span class="p">,</span><span class="s">""</span><span class="p">))</span>
+
+<span class="c"># Mostra na tela o codigo HTTP da requisicao e a mensagem de retorno da API</span>
+<span class="k">print</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+
+</code></pre><pre class="highlight shell tab-shell"><code>curl -u token_enviado_pelo_suporte: <span class="se">\</span>
   http://homologacao.acrasnfe.acras.com.br/v2/nfe_recebidas/CHAVE/cancelamento.xml
 </code></pre><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">com.sun.jersey.api.client.Client</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">com.sun.jersey.api.client.ClientResponse</span><span class="o">;</span>
@@ -4950,7 +5402,25 @@ curl -u token_enviado_pelo_suporte: <span class="se">\</span>
 <blockquote>
 <p>Exemplo de como realizar o download do XML de uma Nota Fiscal Eletrônica especifica com Carta de Correção Eletrônica.</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code>curl -u token_enviado_pelo_suporte: <span class="se">\</span>
+<pre class="highlight python tab-python"><code><span class="c"># Faça o download e instalação da biblioteca requests, através do python-pip.</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="s">''' 
+Para ambiente de produção use a variável abaixo:
+url = "https://api.focusnfe.com.br"
+'''</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s">"http://homologacao.acrasnfe.acras.com.br/v2/nfes_recebidas/"</span>
+
+<span class="n">token</span><span class="o">=</span><span class="s">"token_enviado_pelo_suporte"</span>
+
+<span class="n">chave</span> <span class="o">=</span> <span class="s">"chave_da_nota_fiscal"</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="o">+</span><span class="n">chave</span><span class="o">+</span><span class="s">"/carta_correcao.xml"</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="p">(</span><span class="n">token</span><span class="p">,</span><span class="s">""</span><span class="p">))</span>
+
+<span class="c"># Mostra na tela o codigo HTTP da requisicao e a mensagem de retorno da API</span>
+<span class="k">print</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+
+</code></pre><pre class="highlight shell tab-shell"><code>curl -u token_enviado_pelo_suporte: <span class="se">\</span>
   http://homologacao.acrasnfe.acras.com.br/v2/nfe_recebidas/CHAVE/carta_correcao.xml
 </code></pre><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">com.sun.jersey.api.client.Client</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">com.sun.jersey.api.client.ClientResponse</span><span class="o">;</span>
@@ -5067,7 +5537,34 @@ curl -u token_enviado_pelo_suporte: <span class="se">\</span>
 <li>Recebimento de um novo documento fiscal</li>
 </ul></li>
 </ul>
-<h2 id='gatilhos_criacao'>Criação</h2><pre class="highlight shell tab-shell"><code>curl -u token_enviado_pelo_suporte: <span class="se">\</span>
+<h2 id='gatilhos_criacao'>Criação</h2><pre class="highlight python tab-python"><code><span class="c"># Faça o download e instalação da biblioteca requests, através do python-pip.</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="s">''' 
+Para ambiente de produção use a variável abaixo:
+url = "https://api.focusnfe.com.br"
+'''</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s">"http://homologacao.acrasnfe.acras.com.br/v2/hooks"</span>
+
+<span class="n">token</span><span class="o">=</span><span class="s">"token_enviado_pelo_suporte"</span>
+
+<span class="s">'''
+Usamos um dicionario para armazenar os campos e valores que em seguida,
+serao convertidos a JSON e enviados para nossa API
+'''</span>
+<span class="n">dados</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">dados</span><span class="p">[</span><span class="s">"cnpj"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"51916585000125"</span>
+<span class="n">dados</span><span class="p">[</span><span class="s">"event"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"nfe"</span>
+<span class="n">dados</span><span class="p">[</span><span class="s">"url"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"http://minha.url/nfe"</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">dados</span><span class="p">),</span> <span class="n">auth</span><span class="o">=</span><span class="p">(</span><span class="n">token</span><span class="p">,</span><span class="s">""</span><span class="p">))</span>
+
+<span class="c"># Mostra na tela o codigo HTTP da requisicao e a mensagem de retorno da API</span>
+<span class="k">print</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+
+
+</code></pre><pre class="highlight shell tab-shell"><code>curl -u token_enviado_pelo_suporte: <span class="se">\</span>
   -X POST -d <span class="s1">'{"cnpj":"51916585000125","event":"nfe","url":"http://minha.url/nfe"}'</span> <span class="se">\</span>
   http://homologacao.acrasnfe.acras.com.br/v2/hooks
 </code></pre><pre class="highlight php tab-php"><code><span class="cp">&lt;?php</span>
@@ -5162,7 +5659,26 @@ curl -u token_enviado_pelo_suporte: <span class="se">\</span>
 </ul>
 
 <p>A API irá devolver como resposta o gatilho criado. É possível ter apenas um gatilho por evento</p>
-<h2 id='gatilhos_consulta'>Consulta</h2><pre class="highlight shell tab-shell"><code>curl -u token_enviado_pelo_suporte: <span class="se">\</span>
+<h2 id='gatilhos_consulta'>Consulta</h2><pre class="highlight python tab-python"><code><span class="c"># Faça o download e instalação da biblioteca requests, através do python-pip.</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="s">''' 
+Para ambiente de produção use a variável abaixo:
+url = "https://api.focusnfe.com.br"
+'''</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s">"http://homologacao.acrasnfe.acras.com.br/v2/hooks/"</span>
+
+<span class="n">token</span><span class="o">=</span><span class="s">"token_enviado_pelo_suporte"</span>
+
+<span class="n">hook_id</span> <span class="o">=</span> <span class="s">"Vj5rmkBq"</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="o">+</span><span class="n">hook_id</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="p">(</span><span class="n">token</span><span class="p">,</span><span class="s">""</span><span class="p">))</span>
+
+<span class="c"># Mostra na tela o codigo HTTP da requisicao e a mensagem de retorno da API</span>
+<span class="k">print</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span><span class="n">l</span>
+
+
+</code></pre><pre class="highlight shell tab-shell"><code>curl -u token_enviado_pelo_suporte: <span class="se">\</span>
   http://homologacao.acrasnfe.acras.com.br/v2/hooks/Vj5rmkBq
 </code></pre><pre class="highlight php tab-php"><code><span class="cp">&lt;?php</span>
 <span class="nv">$ch</span> <span class="o">=</span> <span class="nb">curl_init</span><span class="p">();</span>
@@ -5246,7 +5762,26 @@ curl -u token_enviado_pelo_suporte: <span class="se">\</span>
 <p><code>https://api.focusnfe.com.br/v2/hooks/HOOK_ID</code></p>
 
 <p>Substituindo HOOK_ID pelo identificador do gatilho.</p>
-<h2 id='gatilhos_exclusao'>Exclusão</h2><pre class="highlight shell tab-shell"><code>curl -u token_enviado_pelo_suporte: -X DELETE <span class="se">\</span>
+<h2 id='gatilhos_exclusao'>Exclusão</h2><pre class="highlight python tab-python"><code> <span class="n">Fa</span><span class="err">ç</span><span class="n">a</span> <span class="n">o</span> <span class="n">download</span> <span class="n">e</span> <span class="n">instala</span><span class="err">çã</span><span class="n">o</span> <span class="n">da</span> <span class="n">biblioteca</span> <span class="n">requests</span><span class="p">,</span> <span class="n">atrav</span><span class="err">é</span><span class="n">s</span> <span class="n">do</span> <span class="n">python</span><span class="o">-</span><span class="n">pip</span><span class="o">.</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="s">''' 
+Para ambiente de produção use a variável abaixo:
+url = "https://api.focusnfe.com.br"
+'''</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s">"http://homologacao.acrasnfe.acras.com.br/v2/hooks/"</span>
+
+<span class="n">token</span><span class="o">=</span><span class="s">"token_enviado_pelo_suporte"</span>
+
+<span class="n">hook_id</span> <span class="o">=</span> <span class="s">"Vj5rmkBq"</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">url</span><span class="o">+</span><span class="n">hook_id</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="p">(</span><span class="n">token</span><span class="p">,</span><span class="s">""</span><span class="p">))</span>
+
+<span class="c"># Mostra na tela o codigo HTTP da requisicao e a mensagem de retorno da API</span>
+<span class="k">print</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+
+
+</code></pre><pre class="highlight shell tab-shell"><code>curl -u token_enviado_pelo_suporte: -X DELETE <span class="se">\</span>
  http://homologacao.acrasnfe.acras.com.br/v2/hooks/Vj5rmkBq
 </code></pre><pre class="highlight php tab-php"><code><span class="cp">&lt;?php</span>
 <span class="nv">$ch</span> <span class="o">=</span> <span class="nb">curl_init</span><span class="p">();</span>
@@ -5336,7 +5871,7 @@ curl -u token_enviado_pelo_suporte: <span class="se">\</span>
 <li>Manifestação: <a href="#manifestacao_consulta-de-nfe-recebidas">Consulta de NFe Recebida</a></li>
 </ul>
 <h1 id='consulta-de-ncm_consulta-de-ncm'>Consulta de NCM</h1>
-<p>NCM significa &quot;Nomenclatura Comum do Mercosul&quot; e trata-se de um código de oito dígitos estabelecido pelo Governo Brasileiro para identificar a natureza das mercadorias. Este código é utilizado na emissão de NFe e de NFCe.</p>
+<p>NCM significa &quot;Nomenclatura Comum do Mercosul&quot; e trata-se de um código de oito dígitos estabelecido através da convenção de categorização de mercadorias adotada desde 1995 pelo Uruguai, Paraguai, Brasil e Argentina e que toma por base o Sistema Harmonizado (SH).. Este código é utilizado na emissão de NFe e de NFCe.</p>
 
 <p>Nós disponibilizamos uma API que você poderá utilizar para fornecer ao seu usuário final uma pesquisa de qual o código NCM correto do seu produto.</p>
 
@@ -5506,6 +6041,7 @@ Para buscar os demais registros, utilize o parâmetro <strong>offset</strong>. E
 <ul>
 <li><a href="https://github.com/FocusNFe/java">https://github.com/FocusNFe/java</a></li>
 <li><a href="https://github.com/FocusNFe/php">https://github.com/FocusNFe/php</a></li>
+<li><a href="https://github.com/FocusNFe/javascript">https://github.com/FocusNFe/javascript</a></li>
 </ul>
 
       </div>
@@ -5514,6 +6050,7 @@ Para buscar os demais registros, utilize o parâmetro <strong>offset</strong>. E
                 <a href="#" data-language-name="shell">shell</a>
                 <a href="#" data-language-name="php">php</a>
                 <a href="#" data-language-name="java">java</a>
+                <a href="#" data-language-name="python">python</a>
           </div>
       </div>
     </div>
