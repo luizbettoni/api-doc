@@ -638,6 +638,96 @@ public class NFe_autorizar {
 
 ```
 
+```javascript
+
+/*
+As orientacoes a seguir foram extraidas do site do NPMJS: https://www.npmjs.com/package/xmlhttprequest
+Here's how to include the module in your project and use as the browser-based XHR object.
+Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensitive systems (eg Linux) using uppercase letters won't work.
+*/
+var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+
+var request = new XMLHttpRequest();
+
+var token = "Token_enviado_pelo_suporte";
+
+// Substituir pela sua identificação interna da nota.
+var ref = "12345";
+
+/*
+Para ambiente de producao use a URL abaixo:
+"https://api.focusnfe.com.br"
+*/
+var url = "http://homologacao.acrasnfe.acras.com.br/v2/nfe?ref=" + ref;
+
+/* 
+Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
+Passamos o token como quarto parametro deste metodo, como autenticador do HTTP Basic Authentication.
+*/
+request.open('POST', url, false, token);
+
+var nfe = {
+"natureza_operacao": "Remessa",
+"data_emissao": "2018-03-21T11:00:00",
+"data_entrada_saida": "2018-03-21T11:00:00",
+"tipo_documento": "1",
+"finalidade_emissao": "1",
+"cnpj_emitente": "51916585000125",
+"nome_emitente": "ACME LTDA",
+"nome_fantasia_emitente": "ACME LTDA",
+"logradouro_emitente": "R. Padre Natal Pigato",
+"numero_emitente": "100",
+"bairro_emitente": "Santa Felicidade",
+"municipio_emitente": "Curitiba",
+"uf_emitente": "PR",
+"cep_emitente": "82320030",
+"inscricao_estadual_emitente": "1234567",
+"nome_destinatario": "NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL",
+"cpf_destinatario": "51966818092",
+"telefone_destinatario": "1196185555",
+"logradouro_destinatario": "Rua S\u00e3o Janu\u00e1rio",
+"numero_destinatario": "99",
+"bairro_destinatario": "Crespo",
+"municipio_destinatario": "Manaus",
+"uf_destinatario": "AM",
+"pais_destinatario": "Brasil",
+"cep_destinatario": "69073178",
+"valor_frete": "0.0",
+"valor_seguro": "0",
+"valor_total": "47.23",
+"valor_produtos": "47.23",
+"modalidade_frete": "0",
+"items": [
+  	{
+      "numero_item": "1",
+      "codigo_produto": "1232",
+      "descricao": "Cartu00f5es de Visita",
+      "cfop": "6923",
+      "unidade_comercial": "un",
+      "quantidade_comercial": "100",
+      "valor_unitario_comercial": "0.4723",
+      "valor_unitario_tributavel": "0.4723",
+      "unidade_tributavel": "un",
+      "codigo_ncm": "49111090",
+      "quantidade_tributavel": "100",
+      "valor_bruto": "47.23",
+      "icms_situacao_tributaria": "400",
+      "icms_origem": "0",
+      "pis_situacao_tributaria": "07",
+      "cofins_situacao_tributaria": "07"
+    }
+  ]
+};
+
+// Aqui fazermos a serializacao do JSON com os dados da nota e enviamos atraves do metodo usado.
+request.send(JSON.stringify(nfe));
+
+// Sua aplicacao tera que ser capaz de tratar as respostas da API.
+console.log("HTTP code: " + request.status);
+console.log("Corpo: " + request.responseText);
+
+```
+
 Para enviar uma NFe utilize a URL abaixo, alterando o ambiente de produção para homologação, caso esteja emitindo notas de teste.
 
 Envia uma NFe para autorização:
@@ -760,6 +850,42 @@ Consultar as informações de uma NFe:
 `https://api.focusnfe.com.br/v2/nfe/REFERENCIA`
 
 Utilize o comando HTTP GET para consultar a sua nota para nossa API.
+
+```
+
+```javascript
+
+/*
+As orientacoes a seguir foram extraidas do site do NPMJS: https://www.npmjs.com/package/xmlhttprequest
+Here's how to include the module in your project and use as the browser-based XHR object.
+Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensitive systems (eg Linux) using uppercase letters won't work.
+*/
+var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+
+var request = new XMLHttpRequest();
+
+var token = "Token_enviado_pelo_suporte";
+
+// Substituir pela sua identificação interna da nota
+var ref = "12345";
+
+/*
+Para ambiente de producao use a URL abaixo:
+"https://api.focusnfe.com.br"
+*/
+var url = "http://homologacao.acrasnfe.acras.com.br/v2/nfe/" + ref + "?completa=1";
+
+/* 
+Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
+Passamos o token como quarto parametro deste metodo, como autenticador do HTTP Basic Authentication.
+*/
+request.open('GET', url, false, token);
+
+request.send();
+
+// Sua aplicacao tera que ser capaz de tratar as respostas da API.
+console.log("HTTP code: " + request.status);
+console.log("Corpo: " + request.responseText);
 
 ```
 
@@ -977,6 +1103,48 @@ public class NFe_cancelamento {
 }
 ```
 
+```javascript
+
+/*
+As orientacoes a seguir foram extraidas do site do NPMJS: https://www.npmjs.com/package/xmlhttprequest
+Here's how to include the module in your project and use as the browser-based XHR object.
+Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensitive systems (eg Linux) using uppercase letters won't work.
+*/
+var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+
+var request = new XMLHttpRequest();
+
+var token = "Token_enviado_pelo_suporte";
+
+// Substituir pela sua identificação interna da nota.
+var ref = "12345";
+
+/*
+Para ambiente de producao use a URL abaixo:
+"https://api.focusnfe.com.br"
+*/
+var url = "http://homologacao.acrasnfe.acras.com.br/v2/nfe/"+ ref;
+
+/* 
+Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
+Passamos o token como quarto parametro deste metodo, como autenticador do HTTP Basic Authentication.
+*/
+request.open('DELETE', url, false, token);
+
+var cancelar = {
+
+	"justificativa": "Sua justificativa aqui!"
+};
+
+// Aqui fazermos a serializacao do JSON com os dados da nota e enviamos atraves do metodo usado.
+request.send(JSON.stringify(cancelar));
+
+// Sua aplicacao tera que ser capaz de tratar as respostas da API.
+console.log("HTTP code: " + request.status);
+console.log("Corpo: " + request.responseText);
+
+```
+
 > Resposta da API para a requisição de cancelamento:
 
 ```json
@@ -1113,6 +1281,48 @@ public class NFe_CCe {
 }
 ```
 
+```javascript
+
+/*
+As orientacoes a seguir foram extraidas do site do NPMJS: https://www.npmjs.com/package/xmlhttprequest
+Here's how to include the module in your project and use as the browser-based XHR object.
+Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensitive systems (eg Linux) using uppercase letters won't work.
+*/
+var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+
+var request = new XMLHttpRequest();
+
+var token = "Token_enviado_pelo_suporte";
+
+// Substituir pela sua identificação interna da nota.
+var ref = "12345";
+
+/*
+Para ambiente de producao use a URL abaixo:
+"https://api.focusnfe.com.br"
+*/
+var url = "http://homologacao.acrasnfe.acras.com.br/v2/nfe/"+ ref + "/carta_correcao";
+
+/* 
+Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
+Passamos o token como quarto parametro deste metodo, como autenticador do HTTP Basic Authentication.
+*/
+request.open('POST', url, false, token);
+
+var cce = {
+
+	"correcao": "A sua correção aqui!"
+};
+
+// Aqui fazermos a serializacao do JSON com os dados da nota e enviamos atraves do metodo usado.
+request.send(JSON.stringify(cce));
+
+// Sua aplicacao tera que ser capaz de tratar as respostas da API.
+console.log("HTTP code: " + request.status);
+console.log("Corpo: " + request.responseText);
+
+```
+
 > Resposta da API para a requisição de CCe:
 
 ```json
@@ -1247,6 +1457,47 @@ public class NFe_envia_email {
 }
 ```
 
+```javascript
+
+/*
+As orientacoes a seguir foram extraidas do site do NPMJS: https://www.npmjs.com/package/xmlhttprequest
+Here's how to include the module in your project and use as the browser-based XHR object.
+Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensitive systems (eg Linux) using uppercase letters won't work.
+*/
+var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+
+var request = new XMLHttpRequest();
+
+var token = "Token_enviado_pelo_suporte";
+
+// Substituir pela sua identificação interna da nota.
+var ref = "12345";
+
+/*
+Para ambiente de producao use a URL abaixo:
+"https://api.focusnfe.com.br"
+*/
+var url = "http://homologacao.acrasnfe.acras.com.br/v2/nfe/" + ref + "/email";
+
+/* 
+Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
+Passamos o token como quarto parametro deste metodo, como autenticador do HTTP Basic Authentication.
+*/
+request.open('POST', url, false, token);
+
+var email = ["email1@acras.com.br", "email2@acras.com.br", "email3@acras.com.br"];
+
+// Aqui fazermos a serializacao do JSON com os dados da nota e enviamos atraves do metodo usado.
+var json = JSON.stringify({"emails": email});
+
+request.send(json);
+
+// Sua aplicacao tera que ser capaz de tratar as respostas da API.
+console.log("HTTP code: " + request.status);
+console.log("Corpo: " + request.responseText);
+
+```
+
 Para cada nota autorizada, cancelada ou que tenha sido emitida uma carta de correção o destinatário da nota é notificado via email. Porém eventualmente pode ser necessário enviar a nota fiscal para outras pessoas ou mesmo reenviar o email para o mesmo destinatário.
 
 Para enviar um ou mais emails:
@@ -1357,6 +1608,48 @@ public class NFe_inutilizacao {
 		System.out.printf(body);
 	}
 }
+```
+
+```javascript
+
+/*
+As orientacoes a seguir foram extraidas do site do NPMJS: https://www.npmjs.com/package/xmlhttprequest
+Here's how to include the module in your project and use as the browser-based XHR object.
+Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensitive systems (eg Linux) using uppercase letters won't work.
+*/
+var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+
+var request = new XMLHttpRequest();
+
+var token = "Token_enviado_pelo_suporte";
+
+/*
+Para ambiente de producao use a URL abaixo:
+"https://api.focusnfe.com.br"
+*/
+var url = "http://homologacao.acrasnfe.acras.com.br/v2/nfe/inutilizacao";
+
+/* 
+Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
+Passamos o token como quarto parametro deste metodo, como autenticador do HTTP Basic Authentication.
+*/
+request.open('POST', url, false, token);
+
+var inutiliza = {
+"cnpj": "51916585000125",
+"serie": "1",
+"numero_inicial": "700",
+"numero_final": "703",
+"justificativa": "Teste de inutilizacao de nota"
+};
+
+// Aqui fazermos a serializacao do JSON com os dados da nota e enviamos atraves do metodo usado.
+request.send(JSON.stringify(inutiliza));
+
+// Sua aplicacao tera que ser capaz de tratar as respostas da API.
+console.log("HTTP code: " + request.status);
+console.log("Corpo: " + request.responseText);
+
 ```
 
 > Resposta da API para a requisição de inutilização:
