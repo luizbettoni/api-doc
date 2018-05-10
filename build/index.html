@@ -201,7 +201,7 @@
       <script src="javascripts/all.js"></script>
   </head>
 
-  <body class="index" data-languages="[&quot;shell&quot;,&quot;php&quot;,&quot;java&quot;,&quot;python&quot;]">
+  <body class="index" data-languages="[&quot;shell&quot;,&quot;php&quot;,&quot;java&quot;,&quot;python&quot;,&quot;javascript&quot;]">
     <a href="#" id="nav-button">
       <span>
         NAV
@@ -215,6 +215,7 @@
               <a href="#" data-language-name="php">php</a>
               <a href="#" data-language-name="java">java</a>
               <a href="#" data-language-name="python">python</a>
+              <a href="#" data-language-name="javascript">javascript</a>
         </div>
         <div class="search">
           <input type="text" class="search" id="input-search" placeholder="Buscar">
@@ -1331,6 +1332,93 @@ $server = "https://api.focusnfe.com.br"; */</span>
     <span class="o">}</span>
 <span class="o">}</span>
 
+</code></pre><pre class="highlight javascript tab-javascript"><code>
+<span class="cm">/*
+As orientacoes a seguir foram extraidas do site do NPMJS: https://www.npmjs.com/package/xmlhttprequest
+Here's how to include the module in your project and use as the browser-based XHR object.
+Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensitive systems (eg Linux) using uppercase letters won't work.
+*/</span>
+<span class="kd">var</span> <span class="nx">XMLHttpRequest</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">"xmlhttprequest"</span><span class="p">).</span><span class="nx">XMLHttpRequest</span><span class="p">;</span>
+
+<span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
+
+<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_enviado_pelo_suporte"</span><span class="p">;</span>
+
+<span class="c1">// Substituir pela sua identificação interna da nota.</span>
+<span class="kd">var</span> <span class="nx">ref</span> <span class="o">=</span> <span class="s2">"12345"</span><span class="p">;</span>
+
+<span class="cm">/*
+Para ambiente de producao use a URL abaixo:
+"https://api.focusnfe.com.br"
+*/</span>
+<span class="kd">var</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">"http://homologacao.acrasnfe.acras.com.br/v2/nfe?ref="</span> <span class="o">+</span> <span class="nx">ref</span><span class="p">;</span>
+
+<span class="cm">/* 
+Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
+Passamos o token como quarto parametro deste metodo, como autenticador do HTTP Basic Authentication.
+*/</span>
+<span class="nx">request</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="nx">url</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="nx">token</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">nfe</span> <span class="o">=</span> <span class="p">{</span>
+<span class="s2">"natureza_operacao"</span><span class="p">:</span> <span class="s2">"Remessa"</span><span class="p">,</span>
+<span class="s2">"data_emissao"</span><span class="p">:</span> <span class="s2">"2018-03-21T11:00:00"</span><span class="p">,</span>
+<span class="s2">"data_entrada_saida"</span><span class="p">:</span> <span class="s2">"2018-03-21T11:00:00"</span><span class="p">,</span>
+<span class="s2">"tipo_documento"</span><span class="p">:</span> <span class="s2">"1"</span><span class="p">,</span>
+<span class="s2">"finalidade_emissao"</span><span class="p">:</span> <span class="s2">"1"</span><span class="p">,</span>
+<span class="s2">"cnpj_emitente"</span><span class="p">:</span> <span class="s2">"51916585000125"</span><span class="p">,</span>
+<span class="s2">"nome_emitente"</span><span class="p">:</span> <span class="s2">"ACME LTDA"</span><span class="p">,</span>
+<span class="s2">"nome_fantasia_emitente"</span><span class="p">:</span> <span class="s2">"ACME LTDA"</span><span class="p">,</span>
+<span class="s2">"logradouro_emitente"</span><span class="p">:</span> <span class="s2">"R. Padre Natal Pigato"</span><span class="p">,</span>
+<span class="s2">"numero_emitente"</span><span class="p">:</span> <span class="s2">"100"</span><span class="p">,</span>
+<span class="s2">"bairro_emitente"</span><span class="p">:</span> <span class="s2">"Santa Felicidade"</span><span class="p">,</span>
+<span class="s2">"municipio_emitente"</span><span class="p">:</span> <span class="s2">"Curitiba"</span><span class="p">,</span>
+<span class="s2">"uf_emitente"</span><span class="p">:</span> <span class="s2">"PR"</span><span class="p">,</span>
+<span class="s2">"cep_emitente"</span><span class="p">:</span> <span class="s2">"82320030"</span><span class="p">,</span>
+<span class="s2">"inscricao_estadual_emitente"</span><span class="p">:</span> <span class="s2">"1234567"</span><span class="p">,</span>
+<span class="s2">"nome_destinatario"</span><span class="p">:</span> <span class="s2">"NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL"</span><span class="p">,</span>
+<span class="s2">"cpf_destinatario"</span><span class="p">:</span> <span class="s2">"51966818092"</span><span class="p">,</span>
+<span class="s2">"telefone_destinatario"</span><span class="p">:</span> <span class="s2">"1196185555"</span><span class="p">,</span>
+<span class="s2">"logradouro_destinatario"</span><span class="p">:</span> <span class="s2">"Rua S\u00e3o Janu\u00e1rio"</span><span class="p">,</span>
+<span class="s2">"numero_destinatario"</span><span class="p">:</span> <span class="s2">"99"</span><span class="p">,</span>
+<span class="s2">"bairro_destinatario"</span><span class="p">:</span> <span class="s2">"Crespo"</span><span class="p">,</span>
+<span class="s2">"municipio_destinatario"</span><span class="p">:</span> <span class="s2">"Manaus"</span><span class="p">,</span>
+<span class="s2">"uf_destinatario"</span><span class="p">:</span> <span class="s2">"AM"</span><span class="p">,</span>
+<span class="s2">"pais_destinatario"</span><span class="p">:</span> <span class="s2">"Brasil"</span><span class="p">,</span>
+<span class="s2">"cep_destinatario"</span><span class="p">:</span> <span class="s2">"69073178"</span><span class="p">,</span>
+<span class="s2">"valor_frete"</span><span class="p">:</span> <span class="s2">"0.0"</span><span class="p">,</span>
+<span class="s2">"valor_seguro"</span><span class="p">:</span> <span class="s2">"0"</span><span class="p">,</span>
+<span class="s2">"valor_total"</span><span class="p">:</span> <span class="s2">"47.23"</span><span class="p">,</span>
+<span class="s2">"valor_produtos"</span><span class="p">:</span> <span class="s2">"47.23"</span><span class="p">,</span>
+<span class="s2">"modalidade_frete"</span><span class="p">:</span> <span class="s2">"0"</span><span class="p">,</span>
+<span class="s2">"items"</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="s2">"numero_item"</span><span class="p">:</span> <span class="s2">"1"</span><span class="p">,</span>
+      <span class="s2">"codigo_produto"</span><span class="p">:</span> <span class="s2">"1232"</span><span class="p">,</span>
+      <span class="s2">"descricao"</span><span class="p">:</span> <span class="s2">"Cartu00f5es de Visita"</span><span class="p">,</span>
+      <span class="s2">"cfop"</span><span class="p">:</span> <span class="s2">"6923"</span><span class="p">,</span>
+      <span class="s2">"unidade_comercial"</span><span class="p">:</span> <span class="s2">"un"</span><span class="p">,</span>
+      <span class="s2">"quantidade_comercial"</span><span class="p">:</span> <span class="s2">"100"</span><span class="p">,</span>
+      <span class="s2">"valor_unitario_comercial"</span><span class="p">:</span> <span class="s2">"0.4723"</span><span class="p">,</span>
+      <span class="s2">"valor_unitario_tributavel"</span><span class="p">:</span> <span class="s2">"0.4723"</span><span class="p">,</span>
+      <span class="s2">"unidade_tributavel"</span><span class="p">:</span> <span class="s2">"un"</span><span class="p">,</span>
+      <span class="s2">"codigo_ncm"</span><span class="p">:</span> <span class="s2">"49111090"</span><span class="p">,</span>
+      <span class="s2">"quantidade_tributavel"</span><span class="p">:</span> <span class="s2">"100"</span><span class="p">,</span>
+      <span class="s2">"valor_bruto"</span><span class="p">:</span> <span class="s2">"47.23"</span><span class="p">,</span>
+      <span class="s2">"icms_situacao_tributaria"</span><span class="p">:</span> <span class="s2">"400"</span><span class="p">,</span>
+      <span class="s2">"icms_origem"</span><span class="p">:</span> <span class="s2">"0"</span><span class="p">,</span>
+      <span class="s2">"pis_situacao_tributaria"</span><span class="p">:</span> <span class="s2">"07"</span><span class="p">,</span>
+      <span class="s2">"cofins_situacao_tributaria"</span><span class="p">:</span> <span class="s2">"07"</span>
+    <span class="p">}</span>
+  <span class="p">]</span>
+<span class="p">};</span>
+
+<span class="c1">// Aqui fazermos a serializacao do JSON com os dados da nota e enviamos atraves do metodo usado.</span>
+<span class="nx">request</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">nfe</span><span class="p">));</span>
+
+<span class="c1">// Sua aplicacao tera que ser capaz de tratar as respostas da API.</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"HTTP code: "</span> <span class="o">+</span> <span class="nx">request</span><span class="p">.</span><span class="nx">status</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Corpo: "</span> <span class="o">+</span> <span class="nx">request</span><span class="p">.</span><span class="nx">responseText</span><span class="p">);</span>
+
 </code></pre>
 <p>Para enviar uma NFe utilize a URL abaixo, alterando o ambiente de produção para homologação, caso esteja emitindo notas de teste.</p>
 
@@ -1442,6 +1530,39 @@ $server = "https://api.focusnfe.com.br"; */</span>
 <span class="err">`</span><span class="nl">https:</span><span class="c1">//api.focusnfe.com.br/v2/nfe/REFERENCIA`</span>
 
 <span class="n">Utilize</span> <span class="n">o</span> <span class="n">comando</span> <span class="n">HTTP</span> <span class="n">GET</span> <span class="n">para</span> <span class="n">consultar</span> <span class="n">a</span> <span class="n">sua</span> <span class="n">nota</span> <span class="n">para</span> <span class="n">nossa</span> <span class="n">API</span><span class="o">.</span>
+
+</code></pre><pre class="highlight javascript tab-javascript"><code>
+<span class="cm">/*
+As orientacoes a seguir foram extraidas do site do NPMJS: https://www.npmjs.com/package/xmlhttprequest
+Here's how to include the module in your project and use as the browser-based XHR object.
+Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensitive systems (eg Linux) using uppercase letters won't work.
+*/</span>
+<span class="kd">var</span> <span class="nx">XMLHttpRequest</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">"xmlhttprequest"</span><span class="p">).</span><span class="nx">XMLHttpRequest</span><span class="p">;</span>
+
+<span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
+
+<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_enviado_pelo_suporte"</span><span class="p">;</span>
+
+<span class="c1">// Substituir pela sua identificação interna da nota</span>
+<span class="kd">var</span> <span class="nx">ref</span> <span class="o">=</span> <span class="s2">"12345"</span><span class="p">;</span>
+
+<span class="cm">/*
+Para ambiente de producao use a URL abaixo:
+"https://api.focusnfe.com.br"
+*/</span>
+<span class="kd">var</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">"http://homologacao.acrasnfe.acras.com.br/v2/nfe/"</span> <span class="o">+</span> <span class="nx">ref</span> <span class="o">+</span> <span class="s2">"?completa=1"</span><span class="p">;</span>
+
+<span class="cm">/* 
+Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
+Passamos o token como quarto parametro deste metodo, como autenticador do HTTP Basic Authentication.
+*/</span>
+<span class="nx">request</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s1">'GET'</span><span class="p">,</span> <span class="nx">url</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="nx">token</span><span class="p">);</span>
+
+<span class="nx">request</span><span class="p">.</span><span class="nx">send</span><span class="p">();</span>
+
+<span class="c1">// Sua aplicacao tera que ser capaz de tratar as respostas da API.</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"HTTP code: "</span> <span class="o">+</span> <span class="nx">request</span><span class="p">.</span><span class="nx">status</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Corpo: "</span> <span class="o">+</span> <span class="nx">request</span><span class="p">.</span><span class="nx">responseText</span><span class="p">);</span>
 
 </code></pre>
 <blockquote>
@@ -1652,6 +1773,45 @@ $server = "https://api.focusnfe.com.br"; */</span>
         <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="n">body</span><span class="o">);</span>
     <span class="o">}</span>
 <span class="o">}</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code>
+<span class="cm">/*
+As orientacoes a seguir foram extraidas do site do NPMJS: https://www.npmjs.com/package/xmlhttprequest
+Here's how to include the module in your project and use as the browser-based XHR object.
+Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensitive systems (eg Linux) using uppercase letters won't work.
+*/</span>
+<span class="kd">var</span> <span class="nx">XMLHttpRequest</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">"xmlhttprequest"</span><span class="p">).</span><span class="nx">XMLHttpRequest</span><span class="p">;</span>
+
+<span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
+
+<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_enviado_pelo_suporte"</span><span class="p">;</span>
+
+<span class="c1">// Substituir pela sua identificação interna da nota.</span>
+<span class="kd">var</span> <span class="nx">ref</span> <span class="o">=</span> <span class="s2">"12345"</span><span class="p">;</span>
+
+<span class="cm">/*
+Para ambiente de producao use a URL abaixo:
+"https://api.focusnfe.com.br"
+*/</span>
+<span class="kd">var</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">"http://homologacao.acrasnfe.acras.com.br/v2/nfe/"</span><span class="o">+</span> <span class="nx">ref</span><span class="p">;</span>
+
+<span class="cm">/* 
+Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
+Passamos o token como quarto parametro deste metodo, como autenticador do HTTP Basic Authentication.
+*/</span>
+<span class="nx">request</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s1">'DELETE'</span><span class="p">,</span> <span class="nx">url</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="nx">token</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">cancelar</span> <span class="o">=</span> <span class="p">{</span>
+
+    <span class="s2">"justificativa"</span><span class="p">:</span> <span class="s2">"Sua justificativa aqui!"</span>
+<span class="p">};</span>
+
+<span class="c1">// Aqui fazermos a serializacao do JSON com os dados da nota e enviamos atraves do metodo usado.</span>
+<span class="nx">request</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">cancelar</span><span class="p">));</span>
+
+<span class="c1">// Sua aplicacao tera que ser capaz de tratar as respostas da API.</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"HTTP code: "</span> <span class="o">+</span> <span class="nx">request</span><span class="p">.</span><span class="nx">status</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Corpo: "</span> <span class="o">+</span> <span class="nx">request</span><span class="p">.</span><span class="nx">responseText</span><span class="p">);</span>
+
 </code></pre>
 <blockquote>
 <p>Resposta da API para a requisição de cancelamento:</p>
@@ -1779,6 +1939,45 @@ $server = "https://api.focusnfe.com.br"; */</span>
         <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="n">body</span><span class="o">);</span>
     <span class="o">}</span>
 <span class="o">}</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code>
+<span class="cm">/*
+As orientacoes a seguir foram extraidas do site do NPMJS: https://www.npmjs.com/package/xmlhttprequest
+Here's how to include the module in your project and use as the browser-based XHR object.
+Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensitive systems (eg Linux) using uppercase letters won't work.
+*/</span>
+<span class="kd">var</span> <span class="nx">XMLHttpRequest</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">"xmlhttprequest"</span><span class="p">).</span><span class="nx">XMLHttpRequest</span><span class="p">;</span>
+
+<span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
+
+<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_enviado_pelo_suporte"</span><span class="p">;</span>
+
+<span class="c1">// Substituir pela sua identificação interna da nota.</span>
+<span class="kd">var</span> <span class="nx">ref</span> <span class="o">=</span> <span class="s2">"12345"</span><span class="p">;</span>
+
+<span class="cm">/*
+Para ambiente de producao use a URL abaixo:
+"https://api.focusnfe.com.br"
+*/</span>
+<span class="kd">var</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">"http://homologacao.acrasnfe.acras.com.br/v2/nfe/"</span><span class="o">+</span> <span class="nx">ref</span> <span class="o">+</span> <span class="s2">"/carta_correcao"</span><span class="p">;</span>
+
+<span class="cm">/* 
+Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
+Passamos o token como quarto parametro deste metodo, como autenticador do HTTP Basic Authentication.
+*/</span>
+<span class="nx">request</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="nx">url</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="nx">token</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">cce</span> <span class="o">=</span> <span class="p">{</span>
+
+    <span class="s2">"correcao"</span><span class="p">:</span> <span class="s2">"A sua correção aqui!"</span>
+<span class="p">};</span>
+
+<span class="c1">// Aqui fazermos a serializacao do JSON com os dados da nota e enviamos atraves do metodo usado.</span>
+<span class="nx">request</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">cce</span><span class="p">));</span>
+
+<span class="c1">// Sua aplicacao tera que ser capaz de tratar as respostas da API.</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"HTTP code: "</span> <span class="o">+</span> <span class="nx">request</span><span class="p">.</span><span class="nx">status</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Corpo: "</span> <span class="o">+</span> <span class="nx">request</span><span class="p">.</span><span class="nx">responseText</span><span class="p">);</span>
+
 </code></pre>
 <blockquote>
 <p>Resposta da API para a requisição de CCe:</p>
@@ -1904,6 +2103,44 @@ $server = "https://api.focusnfe.com.br"; */</span>
         <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="n">body</span><span class="o">);</span>
     <span class="o">}</span>
 <span class="o">}</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code>
+<span class="cm">/*
+As orientacoes a seguir foram extraidas do site do NPMJS: https://www.npmjs.com/package/xmlhttprequest
+Here's how to include the module in your project and use as the browser-based XHR object.
+Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensitive systems (eg Linux) using uppercase letters won't work.
+*/</span>
+<span class="kd">var</span> <span class="nx">XMLHttpRequest</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">"xmlhttprequest"</span><span class="p">).</span><span class="nx">XMLHttpRequest</span><span class="p">;</span>
+
+<span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
+
+<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_enviado_pelo_suporte"</span><span class="p">;</span>
+
+<span class="c1">// Substituir pela sua identificação interna da nota.</span>
+<span class="kd">var</span> <span class="nx">ref</span> <span class="o">=</span> <span class="s2">"12345"</span><span class="p">;</span>
+
+<span class="cm">/*
+Para ambiente de producao use a URL abaixo:
+"https://api.focusnfe.com.br"
+*/</span>
+<span class="kd">var</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">"http://homologacao.acrasnfe.acras.com.br/v2/nfe/"</span> <span class="o">+</span> <span class="nx">ref</span> <span class="o">+</span> <span class="s2">"/email"</span><span class="p">;</span>
+
+<span class="cm">/* 
+Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
+Passamos o token como quarto parametro deste metodo, como autenticador do HTTP Basic Authentication.
+*/</span>
+<span class="nx">request</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="nx">url</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="nx">token</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">email</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"email1@acras.com.br"</span><span class="p">,</span> <span class="s2">"email2@acras.com.br"</span><span class="p">,</span> <span class="s2">"email3@acras.com.br"</span><span class="p">];</span>
+
+<span class="c1">// Aqui fazermos a serializacao do JSON com os dados da nota e enviamos atraves do metodo usado.</span>
+<span class="kd">var</span> <span class="nx">json</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span><span class="s2">"emails"</span><span class="p">:</span> <span class="nx">email</span><span class="p">});</span>
+
+<span class="nx">request</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">json</span><span class="p">);</span>
+
+<span class="c1">// Sua aplicacao tera que ser capaz de tratar as respostas da API.</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"HTTP code: "</span> <span class="o">+</span> <span class="nx">request</span><span class="p">.</span><span class="nx">status</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Corpo: "</span> <span class="o">+</span> <span class="nx">request</span><span class="p">.</span><span class="nx">responseText</span><span class="p">);</span>
+
 </code></pre>
 <p>Para cada nota autorizada, cancelada ou que tenha sido emitida uma carta de correção o destinatário da nota é notificado via email. Porém eventualmente pode ser necessário enviar a nota fiscal para outras pessoas ou mesmo reenviar o email para o mesmo destinatário.</p>
 
@@ -2008,6 +2245,45 @@ $server = "https://api.focusnfe.com.br"; */</span>
         <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="n">body</span><span class="o">);</span>
     <span class="o">}</span>
 <span class="o">}</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code>
+<span class="cm">/*
+As orientacoes a seguir foram extraidas do site do NPMJS: https://www.npmjs.com/package/xmlhttprequest
+Here's how to include the module in your project and use as the browser-based XHR object.
+Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensitive systems (eg Linux) using uppercase letters won't work.
+*/</span>
+<span class="kd">var</span> <span class="nx">XMLHttpRequest</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">"xmlhttprequest"</span><span class="p">).</span><span class="nx">XMLHttpRequest</span><span class="p">;</span>
+
+<span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
+
+<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_enviado_pelo_suporte"</span><span class="p">;</span>
+
+<span class="cm">/*
+Para ambiente de producao use a URL abaixo:
+"https://api.focusnfe.com.br"
+*/</span>
+<span class="kd">var</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">"http://homologacao.acrasnfe.acras.com.br/v2/nfe/inutilizacao"</span><span class="p">;</span>
+
+<span class="cm">/* 
+Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
+Passamos o token como quarto parametro deste metodo, como autenticador do HTTP Basic Authentication.
+*/</span>
+<span class="nx">request</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="nx">url</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="nx">token</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">inutiliza</span> <span class="o">=</span> <span class="p">{</span>
+<span class="s2">"cnpj"</span><span class="p">:</span> <span class="s2">"51916585000125"</span><span class="p">,</span>
+<span class="s2">"serie"</span><span class="p">:</span> <span class="s2">"1"</span><span class="p">,</span>
+<span class="s2">"numero_inicial"</span><span class="p">:</span> <span class="s2">"700"</span><span class="p">,</span>
+<span class="s2">"numero_final"</span><span class="p">:</span> <span class="s2">"703"</span><span class="p">,</span>
+<span class="s2">"justificativa"</span><span class="p">:</span> <span class="s2">"Teste de inutilizacao de nota"</span>
+<span class="p">};</span>
+
+<span class="c1">// Aqui fazermos a serializacao do JSON com os dados da nota e enviamos atraves do metodo usado.</span>
+<span class="nx">request</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">inutiliza</span><span class="p">));</span>
+
+<span class="c1">// Sua aplicacao tera que ser capaz de tratar as respostas da API.</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"HTTP code: "</span> <span class="o">+</span> <span class="nx">request</span><span class="p">.</span><span class="nx">status</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Corpo: "</span> <span class="o">+</span> <span class="nx">request</span><span class="p">.</span><span class="nx">responseText</span><span class="p">);</span>
+
 </code></pre>
 <blockquote>
 <p>Resposta da API para a requisição de inutilização:</p>
@@ -3140,6 +3416,84 @@ $server = "https://api.focusnfe.com.br"; */</span>
 <span class="k">print</span><span class="p">(</span><span class="s2">""</span><span class="p">);</span>
 <span class="nb">curl_close</span><span class="p">(</span><span class="nv">$ch</span><span class="p">);</span>
 <span class="cp">?&gt;</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code>
+<span class="cm">/*
+As orientacoes a seguir foram extraidas do site do NPMJS: https://www.npmjs.com/package/xmlhttprequest
+Here's how to include the module in your project and use as the browser-based XHR object.
+Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensitive systems (eg Linux) using uppercase letters won't work.
+*/</span>
+<span class="kd">var</span> <span class="nx">XMLHttpRequest</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">"xmlhttprequest"</span><span class="p">).</span><span class="nx">XMLHttpRequest</span><span class="p">;</span>
+
+<span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
+
+<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_enviado_pelo_suporte"</span><span class="p">;</span>
+
+<span class="c1">// Substituir pela sua identificação interna da nota</span>
+<span class="kd">var</span> <span class="nx">ref</span> <span class="o">=</span> <span class="s2">"12345"</span><span class="p">;</span>
+
+<span class="cm">/*
+Para ambiente de producao use a URL abaixo:
+"https://api.focusnfe.com.br"
+*/</span>
+<span class="kd">var</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">"http://homologacao.acrasnfe.acras.com.br/v2/nfce?ref="</span> <span class="o">+</span> <span class="nx">ref</span><span class="p">;</span>
+
+<span class="cm">/* 
+Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
+Passamos o token como quarto parametro deste metodo, como autenticador do HTTP Basic Authentication.
+*/</span>
+<span class="nx">request</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="nx">url</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="nx">token</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">nfce</span> <span class="o">=</span> <span class="p">{</span>
+<span class="s2">"natureza_operacao"</span><span class="p">:</span><span class="s2">"VENDA AO CONSUMIDOR"</span><span class="p">,</span>
+<span class="s2">"data_emissao"</span><span class="p">:</span><span class="s2">"2018-03-21T11:52:00-03:00"</span><span class="p">,</span>
+<span class="s2">"tipo_documento"</span><span class="p">:</span><span class="s2">"1"</span><span class="p">,</span>
+<span class="s2">"presenca_comprador"</span><span class="p">:</span><span class="s2">"1"</span><span class="p">,</span>
+<span class="s2">"consumidor_final"</span><span class="p">:</span><span class="s2">"1"</span><span class="p">,</span>
+<span class="s2">"finalidade_emissao"</span><span class="p">:</span><span class="s2">"1"</span><span class="p">,</span>
+<span class="s2">"cnpj_emitente"</span><span class="p">:</span><span class="s2">"51916585000125"</span><span class="p">,</span>
+<span class="s2">"nome_destinatario"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span>
+<span class="s2">"cpf_destinatario"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span>
+<span class="s2">"informacoes_adicionais_contribuinte"</span><span class="p">:</span><span class="s2">"RETIRADA POR CONTA DO DESTINATÁRIO"</span><span class="p">,</span>
+<span class="s2">"valor_produtos"</span><span class="p">:</span><span class="s2">"1.00"</span><span class="p">,</span>
+<span class="s2">"valor_desconto"</span><span class="p">:</span><span class="s2">"0.00"</span><span class="p">,</span>
+<span class="s2">"valor_total"</span><span class="p">:</span><span class="s2">"1.00"</span><span class="p">,</span>
+<span class="s2">"forma_pagamento"</span><span class="p">:</span><span class="s2">"0"</span><span class="p">,</span>
+<span class="s2">"icms_valor_total"</span><span class="p">:</span><span class="s2">"0"</span><span class="p">,</span>
+<span class="s2">"modalidade_frete"</span><span class="p">:</span> <span class="s2">"9"</span><span class="p">,</span>
+<span class="s2">"items"</span><span class="p">:[</span>
+    <span class="p">{</span><span class="s2">"numero_item"</span><span class="p">:</span><span class="s2">"1"</span><span class="p">,</span>
+     <span class="s2">"codigo_ncm"</span><span class="p">:</span><span class="s2">"84713012"</span><span class="p">,</span>
+     <span class="s2">"codigo_produto"</span><span class="p">:</span><span class="s2">"999"</span><span class="p">,</span>
+     <span class="s2">"descricao"</span><span class="p">:</span><span class="s2">"NOTA FISCAL EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL"</span><span class="p">,</span>
+     <span class="s2">"quantidade_comercial"</span><span class="p">:</span><span class="s2">"1.00"</span><span class="p">,</span>
+     <span class="s2">"quantidade_tributavel"</span><span class="p">:</span><span class="s2">"1.00"</span><span class="p">,</span>
+     <span class="s2">"cfop"</span><span class="p">:</span><span class="s2">"5102"</span><span class="p">,</span>
+     <span class="s2">"valor_unitario_comercial"</span><span class="p">:</span><span class="s2">"1.00"</span><span class="p">,</span>
+     <span class="s2">"valor_unitario_tributavel"</span><span class="p">:</span><span class="s2">"1.00"</span><span class="p">,</span>
+     <span class="s2">"valor_bruto"</span><span class="p">:</span><span class="s2">"1.00"</span><span class="p">,</span>
+     <span class="s2">"unidade_comercial"</span><span class="p">:</span><span class="s2">"un"</span><span class="p">,</span>
+     <span class="s2">"unidade_tributavel"</span><span class="p">:</span><span class="s2">"un"</span><span class="p">,</span>
+     <span class="s2">"icms_origem"</span><span class="p">:</span><span class="s2">"2"</span><span class="p">,</span>
+     <span class="s2">"icms_situacao_tributaria"</span><span class="p">:</span><span class="s2">"102"</span><span class="p">,</span>
+     <span class="s2">"icms_aliquota"</span><span class="p">:</span><span class="s2">"0"</span><span class="p">,</span>
+     <span class="s2">"icms_base_calculo"</span><span class="p">:</span><span class="s2">"0"</span><span class="p">,</span>
+     <span class="s2">"icms_modalidade_base_calculo"</span><span class="p">:</span><span class="s2">"3"</span>
+    <span class="p">}</span>        
+  <span class="p">],</span>
+    <span class="s2">"formas_pagamento"</span><span class="p">:[</span>
+        <span class="p">{</span><span class="s2">"forma_pagamento"</span><span class="p">:</span><span class="s2">"1"</span><span class="p">,</span>
+         <span class="s2">"valor_pagamento"</span><span class="p">:</span><span class="s2">"1.00"</span>
+        <span class="p">}</span>
+    <span class="p">]</span>
+<span class="p">};</span>
+
+<span class="c1">// Aqui fazermos a serializacao do JSON com os dados da nota e enviamos atraves do metodo usado.</span>
+<span class="nx">request</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">nfce</span><span class="p">));</span>
+
+<span class="c1">// Sua aplicacao tera que ser capaz de tratar as respostas da API.</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"HTTP code: "</span> <span class="o">+</span> <span class="nx">request</span><span class="p">.</span><span class="nx">status</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Corpo: "</span> <span class="o">+</span> <span class="nx">request</span><span class="p">.</span><span class="nx">responseText</span><span class="p">);</span>
+
 </code></pre>
 <p>Para enviar uma NFCe utilize a URL abaixo, alterando o ambiente de produção para homologação, caso esteja emitindo notas de teste.</p>
 
@@ -3244,6 +3598,39 @@ $server = "https://api.focusnfe.com.br"; */</span>
 <span class="k">print</span><span class="p">(</span><span class="s2">""</span><span class="p">);</span>
 <span class="nb">curl_close</span><span class="p">(</span><span class="nv">$ch</span><span class="p">);</span>
 <span class="cp">?&gt;</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code>
+<span class="cm">/*
+As orientacoes a seguir foram extraidas do site do NPMJS: https://www.npmjs.com/package/xmlhttprequest
+Here's how to include the module in your project and use as the browser-based XHR object.
+Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensitive systems (eg Linux) using uppercase letters won't work.
+*/</span>
+<span class="kd">var</span> <span class="nx">XMLHttpRequest</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">"xmlhttprequest"</span><span class="p">).</span><span class="nx">XMLHttpRequest</span><span class="p">;</span>
+
+<span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
+
+<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_enviado_pelo_suporte"</span><span class="p">;</span>
+
+<span class="c1">// Substituir pela sua identificação interna da nota</span>
+<span class="kd">var</span> <span class="nx">ref</span> <span class="o">=</span> <span class="s2">"12345"</span><span class="p">;</span>
+
+<span class="cm">/*
+Para ambiente de producao use a URL abaixo:
+"https://api.focusnfe.com.br"
+*/</span>
+<span class="kd">var</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">"http://homologacao.acrasnfe.acras.com.br/v2/nfce/"</span> <span class="o">+</span> <span class="nx">ref</span> <span class="o">+</span> <span class="s2">"?completa=1"</span><span class="p">;</span>
+
+<span class="cm">/* 
+Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
+Passamos o token como quarto parametro deste metodo, como autenticador do HTTP Basic Authentication.
+*/</span>
+<span class="nx">request</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s1">'GET'</span><span class="p">,</span> <span class="nx">url</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="nx">token</span><span class="p">);</span>
+
+<span class="nx">request</span><span class="p">.</span><span class="nx">send</span><span class="p">();</span>
+
+<span class="c1">// Sua aplicacao tera que ser capaz de tratar as respostas da API.</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"HTTP code: "</span> <span class="o">+</span> <span class="nx">request</span><span class="p">.</span><span class="nx">status</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Corpo: "</span> <span class="o">+</span> <span class="nx">request</span><span class="p">.</span><span class="nx">responseText</span><span class="p">);</span>
+
 </code></pre>
 <p>Para consultar uma NFCe utilize a URL abaixo, alterando o ambiente de produção para homologação, caso esteja emitindo notas de teste.</p>
 
@@ -3473,6 +3860,45 @@ $server = "https://api.focusnfe.com.br"; */</span>
 <span class="k">print</span><span class="p">(</span><span class="s2">""</span><span class="p">);</span>
 <span class="nb">curl_close</span><span class="p">(</span><span class="nv">$ch</span><span class="p">);</span>
 <span class="cp">?&gt;</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code>
+<span class="cm">/*
+As orientacoes a seguir foram extraidas do site do NPMJS: https://www.npmjs.com/package/xmlhttprequest
+Here's how to include the module in your project and use as the browser-based XHR object.
+Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensitive systems (eg Linux) using uppercase letters won't work.
+*/</span>
+<span class="kd">var</span> <span class="nx">XMLHttpRequest</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">"xmlhttprequest"</span><span class="p">).</span><span class="nx">XMLHttpRequest</span><span class="p">;</span>
+
+<span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
+
+<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_enviado_pelo_suporte"</span><span class="p">;</span>
+
+<span class="c1">// Substituir pela sua identificação interna da nota.</span>
+<span class="kd">var</span> <span class="nx">ref</span> <span class="o">=</span> <span class="s2">"12345"</span><span class="p">;</span>
+
+<span class="cm">/*
+Para ambiente de producao use a URL abaixo:
+"https://api.focusnfe.com.br"
+*/</span>
+<span class="kd">var</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">"http://homologacao.acrasnfe.acras.com.br/v2/nfe/"</span><span class="o">+</span> <span class="nx">ref</span><span class="p">;</span>
+
+<span class="cm">/* 
+Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
+Passamos o token como quarto parametro deste metodo, como autenticador do HTTP Basic Authentication.
+*/</span>
+<span class="nx">request</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s1">'DELETE'</span><span class="p">,</span> <span class="nx">url</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="nx">token</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">cancelar</span> <span class="o">=</span> <span class="p">{</span>
+
+    <span class="s2">"justificativa"</span><span class="p">:</span> <span class="s2">"Sua justificativa aqui!"</span>
+<span class="p">};</span>
+
+<span class="c1">// Aqui fazermos a serializacao do JSON com os dados da nota e enviamos atraves do metodo usado.</span>
+<span class="nx">request</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">cancelar</span><span class="p">));</span>
+
+<span class="c1">// Sua aplicacao tera que ser capaz de tratar as respostas da API.</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"HTTP code: "</span> <span class="o">+</span> <span class="nx">request</span><span class="p">.</span><span class="nx">status</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Corpo: "</span> <span class="o">+</span> <span class="nx">request</span><span class="p">.</span><span class="nx">responseText</span><span class="p">);</span>
+
 </code></pre>
 <p>Para cancelar uma NFCe, basta fazer uma requisição à URL abaixo, alterando o ambiente de produção para homologação, caso esteja emitindo notas de teste.</p>
 
@@ -3527,7 +3953,6 @@ serao convertidos em JSON e enviados para nossa API
 
 <span class="c"># Mostra na tela o codigo HTTP da requisicao e a mensagem de retorno da API</span>
 <span class="k">print</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
-
 
 </code></pre><pre class="highlight shell tab-shell"><code>curl -u token_enviado_pelo_suporte: <span class="se">\</span>
   -X POST -d <span class="s1">'{"cnpj":"51916585009999","serie":"9","numero_inicial":"7730","numero_final":"7732","justificativa":"Teste de inutilizacao de nota"}'</span> <span class="se">\</span>
@@ -3619,6 +4044,45 @@ $server = "https://api.focusnfe.com.br"; */</span>
 <span class="k">print</span><span class="p">(</span><span class="s2">""</span><span class="p">);</span>
 <span class="nb">curl_close</span><span class="p">(</span><span class="nv">$ch</span><span class="p">);</span>
 <span class="cp">?&gt;</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code>
+<span class="cm">/*
+As orientacoes a seguir foram extraidas do site do NPMJS: https://www.npmjs.com/package/xmlhttprequest
+Here's how to include the module in your project and use as the browser-based XHR object.
+Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensitive systems (eg Linux) using uppercase letters won't work.
+*/</span>
+<span class="kd">var</span> <span class="nx">XMLHttpRequest</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">"xmlhttprequest"</span><span class="p">).</span><span class="nx">XMLHttpRequest</span><span class="p">;</span>
+
+<span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
+
+<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_enviado_pelo_suporte"</span><span class="p">;</span>
+
+<span class="cm">/*
+Para ambiente de producao use a URL abaixo:
+"https://api.focusnfe.com.br"
+*/</span>
+<span class="kd">var</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">"http://homologacao.acrasnfe.acras.com.br/v2/nfce/inutilizacao"</span><span class="p">;</span>
+
+<span class="cm">/* 
+Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
+Passamos o token como quarto parametro deste metodo, como autenticador do HTTP Basic Authentication.
+*/</span>
+<span class="nx">request</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="nx">url</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="nx">token</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">inutiliza</span> <span class="o">=</span> <span class="p">{</span>
+<span class="s2">"cnpj"</span><span class="p">:</span> <span class="s2">"51916585000125"</span><span class="p">,</span>
+<span class="s2">"serie"</span><span class="p">:</span> <span class="s2">"1"</span><span class="p">,</span>
+<span class="s2">"numero_inicial"</span><span class="p">:</span> <span class="s2">"700"</span><span class="p">,</span>
+<span class="s2">"numero_final"</span><span class="p">:</span> <span class="s2">"703"</span><span class="p">,</span>
+<span class="s2">"justificativa"</span><span class="p">:</span> <span class="s2">"Teste de inutilizacao de nota"</span>
+<span class="p">};</span>
+
+<span class="c1">// Aqui fazermos a serializacao do JSON com os dados da nota e enviamos atraves do metodo usado.</span>
+<span class="nx">request</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">inutiliza</span><span class="p">));</span>
+
+<span class="c1">// Sua aplicacao tera que ser capaz de tratar as respostas da API.</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"HTTP code: "</span> <span class="o">+</span> <span class="nx">request</span><span class="p">.</span><span class="nx">status</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Corpo: "</span> <span class="o">+</span> <span class="nx">request</span><span class="p">.</span><span class="nx">responseText</span><span class="p">);</span>
+
 </code></pre>
 <p>Em uma situação normal você não precisará informar ao SEFAZ a inutilização de um número da NFCe, pois a API controla automaticamente a numeração das notas. Porém, se por alguma situação específica for necessário a inutilização de alguma faixa de números você poderá chamar as seguintes operações:</p>
 
@@ -3676,7 +4140,6 @@ serao convertidos a JSON e enviados para nossa API
 
 <span class="c"># Mostra na tela o codigo HTTP da requisicao e a mensagem de retorno da API</span>
 <span class="k">print</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span><span class="n">l</span>
-
 
 </code></pre><pre class="highlight shell tab-shell"><code>curl -u token_enviado_pelo_suporte: <span class="se">\</span>
   -X POST -d <span class="s1">'{"emails":["alguem@example.org"]}'</span> <span class="se">\</span>
@@ -3768,6 +4231,44 @@ $server = "https://api.focusnfe.com.br"; */</span>
 <span class="k">print</span><span class="p">(</span><span class="s2">""</span><span class="p">);</span>
 <span class="nb">curl_close</span><span class="p">(</span><span class="nv">$ch</span><span class="p">);</span>
 <span class="cp">?&gt;</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code>
+<span class="cm">/*
+As orientacoes a seguir foram extraidas do site do NPMJS: https://www.npmjs.com/package/xmlhttprequest
+Here's how to include the module in your project and use as the browser-based XHR object.
+Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensitive systems (eg Linux) using uppercase letters won't work.
+*/</span>
+<span class="kd">var</span> <span class="nx">XMLHttpRequest</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">"xmlhttprequest"</span><span class="p">).</span><span class="nx">XMLHttpRequest</span><span class="p">;</span>
+
+<span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
+
+<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_enviado_pelo_suporte"</span><span class="p">;</span>
+
+<span class="c1">// Substituir pela sua identificação interna da nota.</span>
+<span class="kd">var</span> <span class="nx">ref</span> <span class="o">=</span> <span class="s2">"12345"</span><span class="p">;</span>
+
+<span class="cm">/*
+Para ambiente de producao use a URL abaixo:
+"https://api.focusnfe.com.br"
+*/</span>
+<span class="kd">var</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">"http://homologacao.acrasnfe.acras.com.br/v2/nfce/"</span> <span class="o">+</span> <span class="nx">ref</span> <span class="o">+</span> <span class="s2">"/email"</span><span class="p">;</span>
+
+<span class="cm">/* 
+Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
+Passamos o token como quarto parametro deste metodo, como autenticador do HTTP Basic Authentication.
+*/</span>
+<span class="nx">request</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="nx">url</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="nx">token</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">email</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"email1@acras.com.br"</span><span class="p">,</span> <span class="s2">"email2@acras.com.br"</span><span class="p">,</span> <span class="s2">"email3@acras.com.br"</span><span class="p">];</span>
+
+<span class="c1">// Aqui fazermos a serializacao do JSON com os dados da nota e enviamos atraves do metodo usado.</span>
+<span class="kd">var</span> <span class="nx">json</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span><span class="s2">"emails"</span><span class="p">:</span> <span class="nx">email</span><span class="p">});</span>
+
+<span class="nx">request</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">json</span><span class="p">);</span>
+
+<span class="c1">// Sua aplicacao tera que ser capaz de tratar as respostas da API.</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"HTTP code: "</span> <span class="o">+</span> <span class="nx">request</span><span class="p">.</span><span class="nx">status</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Corpo: "</span> <span class="o">+</span> <span class="nx">request</span><span class="p">.</span><span class="nx">responseText</span><span class="p">);</span>
+
 </code></pre>
 <p>Para cada nota autorizada, cancelada ou que tenha sido emitida uma carta de correção o destinatário da nota é notificado via email. Porém eventualmente pode ser necessário enviar a nota fiscal para outras pessoas ou mesmo reenviar o email para o mesmo destinatário.</p>
 
@@ -3925,13 +4426,7 @@ um formato único de campos para todas as prefeituras. A listagem dos campos seg
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <ul>
-<li><strong>data_emissao</strong>(<em>): Data/hora de emissão da NFSe. Alguns municípios como São Paulo não utilizam hora e ela será descartada caso seja fornecida. Formato padrão ISO, exemplo: “2016-12-25T12:00-0300”.
--</em><em>status</em>*: Status da NFS-e. (Valor padrão: 1). Informar:
-
-<ul>
-<li>Normal;</li>
-<li>Cancelado;</li>
-</ul></li>
+<li><strong>data_emissao</strong>(*): Data/hora de emissão da NFSe. Alguns municípios como São Paulo não utilizam hora e ela será descartada caso seja fornecida. Formato padrão ISO, exemplo: “2016-12-25T12:00-0300”.</li>
 <li><strong>natureza_operacao</strong>(*): Natureza da operação. Informar um dos códigos abaixo. Campo ignorado para o município de São Paulo.
 
 <ul>
@@ -4044,7 +4539,7 @@ um formato único de campos para todas as prefeituras. A listagem dos campos seg
 <span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">requests</span>
 
-<span class="s">''' 
+<span class="s">'''
 Para ambiente de produção use a variável abaixo:
 url = "https://api.focusnfe.com.br"
 '''</span>
@@ -4250,6 +4745,71 @@ curl -u token_enviado_pelo_suporte: <span class="se">\</span>
  <span class="k">print</span><span class="p">(</span><span class="s2">""</span><span class="p">);</span>
  <span class="nb">curl_close</span><span class="p">(</span><span class="nv">$ch</span><span class="p">);</span>
  <span class="cp">?&gt;</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code>
+<span class="cm">/*
+As orientacoes a seguir foram extraidas do site do NPMJS: https://www.npmjs.com/package/xmlhttprequest
+Here's how to include the module in your project and use as the browser-based XHR object.
+Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensitive systems (eg Linux) using uppercase letters won't work.
+*/</span>
+<span class="kd">var</span> <span class="nx">XMLHttpRequest</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">"xmlhttprequest"</span><span class="p">).</span><span class="nx">XMLHttpRequest</span><span class="p">;</span>
+
+<span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
+
+<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_enviado_pelo_suporte"</span><span class="p">;</span>
+
+<span class="c1">// Substituir pela sua identificação interna da nota</span>
+<span class="kd">var</span> <span class="nx">ref</span> <span class="o">=</span> <span class="s2">"12345"</span><span class="p">;</span>
+
+<span class="cm">/*
+Para ambiente de producao use a URL abaixo:
+"https://api.focusnfe.com.br"
+*/</span>
+<span class="kd">var</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">"http://homologacao.acrasnfe.acras.com.br/v2/nfse?ref="</span> <span class="o">+</span> <span class="nx">ref</span><span class="p">;</span>
+
+<span class="cm">/* 
+Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
+Passamos o token como quarto parametro deste metodo, como autenticador do HTTP Basic Authentication.
+*/</span>
+<span class="nx">request</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="nx">url</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="nx">token</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">nfse</span> <span class="o">=</span> <span class="p">{</span>  
+   <span class="s2">"data_emissao"</span><span class="p">:</span><span class="s2">"2018-03-21"</span><span class="p">,</span>
+   <span class="s2">"prestador"</span><span class="p">:{</span>  
+      <span class="s2">"cnpj"</span><span class="p">:</span><span class="s2">"51916585000125"</span><span class="p">,</span>
+      <span class="s2">"inscricao_municipal"</span><span class="p">:</span><span class="s2">"12345"</span><span class="p">,</span>
+      <span class="s2">"codigo_municipio"</span><span class="p">:</span><span class="s2">"3518800"</span>
+   <span class="p">},</span>
+   <span class="s2">"tomador"</span><span class="p">:{</span>  
+      <span class="s2">"cnpj"</span><span class="p">:</span><span class="s2">"07504505000132"</span><span class="p">,</span>
+      <span class="s2">"razao_social"</span><span class="p">:</span><span class="s2">"Acras Tecnologia da Informacao LTDA"</span><span class="p">,</span>
+      <span class="s2">"email"</span><span class="p">:</span><span class="s2">"contato@acras.com.br"</span><span class="p">,</span>
+      <span class="s2">"endereco"</span><span class="p">:{</span>  
+         <span class="s2">"logradouro"</span><span class="p">:</span><span class="s2">"Rua Filho da Rocha Bage"</span><span class="p">,</span>
+         <span class="s2">"numero"</span><span class="p">:</span><span class="s2">"750"</span><span class="p">,</span>
+         <span class="s2">"complemento"</span><span class="p">:</span><span class="s2">"Sala 07"</span><span class="p">,</span>
+         <span class="s2">"bairro"</span><span class="p">:</span><span class="s2">"Alto da Rua XV"</span><span class="p">,</span>
+         <span class="s2">"codigo_municipio"</span><span class="p">:</span><span class="s2">"4106902"</span><span class="p">,</span>
+         <span class="s2">"uf"</span><span class="p">:</span><span class="s2">"PR"</span><span class="p">,</span>
+         <span class="s2">"cep"</span><span class="p">:</span><span class="s2">"80045165"</span>
+      <span class="p">}</span>
+   <span class="p">},</span>
+   <span class="s2">"servico"</span><span class="p">:{</span>  
+      <span class="s2">"aliquota"</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span>
+      <span class="s2">"discriminacao"</span><span class="p">:</span><span class="s2">"Nota fiscal referente a servicos prestados"</span><span class="p">,</span>
+      <span class="s2">"iss_retido"</span><span class="p">:</span><span class="s2">"false"</span><span class="p">,</span>
+      <span class="s2">"item_lista_servico"</span><span class="p">:</span><span class="s2">"1401"</span><span class="p">,</span>
+      <span class="s2">"codigo_tributario_municipio"</span><span class="p">:</span> <span class="s2">"452000100"</span><span class="p">,</span>
+      <span class="s2">"valor_servicos"</span><span class="p">:</span><span class="mf">1.0</span>
+   <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="c1">// Aqui fazermos a serializacao do JSON com os dados da nota e enviamos atraves do metodo usado.</span>
+<span class="nx">request</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">nfse</span><span class="p">));</span>
+
+<span class="c1">// Sua aplicacao tera que ser capaz de tratar as respostas da API.</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"HTTP code: "</span> <span class="o">+</span> <span class="nx">request</span><span class="p">.</span><span class="nx">status</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Corpo: "</span> <span class="o">+</span> <span class="nx">request</span><span class="p">.</span><span class="nx">responseText</span><span class="p">);</span>
+
 </code></pre>
 <blockquote>
 <p>Resposta da API para a requisição de envio:</p>
@@ -4278,7 +4838,7 @@ onde eventualmente será processada (processamento assíncrono). Com isto, a not
 <h2 id='nfse_consulta'>Consulta</h2><pre class="highlight python tab-python"><code><span class="c"># Faça o download e instalação da biblioteca requests, através do python-pip.</span>
 <span class="kn">import</span> <span class="nn">requests</span>
 
-<span class="s">''' 
+<span class="s">'''
 Para ambiente de produção use a variável abaixo:
 url = "https://api.focusnfe.com.br"
 '''</span>
@@ -4363,6 +4923,39 @@ url = "https://api.focusnfe.com.br"
  <span class="k">print</span><span class="p">(</span><span class="s2">""</span><span class="p">);</span>
  <span class="nb">curl_close</span><span class="p">(</span><span class="nv">$ch</span><span class="p">);</span>
  <span class="cp">?&gt;</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code>
+<span class="cm">/*
+As orientacoes a seguir foram extraidas do site do NPMJS: https://www.npmjs.com/package/xmlhttprequest
+Here's how to include the module in your project and use as the browser-based XHR object.
+Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensitive systems (eg Linux) using uppercase letters won't work.
+*/</span>
+<span class="kd">var</span> <span class="nx">XMLHttpRequest</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">"xmlhttprequest"</span><span class="p">).</span><span class="nx">XMLHttpRequest</span><span class="p">;</span>
+
+<span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
+
+<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_enviado_pelo_suporte"</span><span class="p">;</span>
+
+<span class="c1">// Substituir pela sua identificação interna da nota</span>
+<span class="kd">var</span> <span class="nx">ref</span> <span class="o">=</span> <span class="s2">"12345"</span><span class="p">;</span>
+
+<span class="cm">/*
+Para ambiente de producao use a URL abaixo:
+"https://api.focusnfe.com.br"
+*/</span>
+<span class="kd">var</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">"http://homologacao.acrasnfe.acras.com.br/v2/nfse/"</span> <span class="o">+</span> <span class="nx">ref</span> <span class="o">+</span> <span class="s2">"?completa=0"</span><span class="p">;</span>
+
+<span class="cm">/* 
+Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
+Passamos o token como quarto parametro deste metodo, como autenticador do HTTP Basic Authentication.
+*/</span>
+<span class="nx">request</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s1">'GET'</span><span class="p">,</span> <span class="nx">url</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="nx">token</span><span class="p">);</span>
+
+<span class="nx">request</span><span class="p">.</span><span class="nx">send</span><span class="p">();</span>
+
+<span class="c1">// Sua aplicacao tera que ser capaz de tratar as respostas da API.</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"HTTP code: "</span> <span class="o">+</span> <span class="nx">request</span><span class="p">.</span><span class="nx">status</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Corpo: "</span> <span class="o">+</span> <span class="nx">request</span><span class="p">.</span><span class="nx">responseText</span><span class="p">);</span>
+
 </code></pre>
 <blockquote>
 <p>Exemplo de resposta da consulta de NFSe:</p>
@@ -4392,7 +4985,7 @@ ainda em processamento ou se a nota já foi processada.</p>
 <span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">requests</span>
 
-<span class="s">''' 
+<span class="s">'''
 Para ambiente de produção use a variável abaixo:
 url = "https://api.focusnfe.com.br"
 '''</span>
@@ -4496,6 +5089,45 @@ serao convertidos a JSON e enviados para nossa API
  <span class="k">print</span><span class="p">(</span><span class="s2">""</span><span class="p">);</span>
  <span class="nb">curl_close</span><span class="p">(</span><span class="nv">$ch</span><span class="p">);</span>
  <span class="cp">?&gt;</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code>
+<span class="cm">/*
+As orientacoes a seguir foram extraidas do site do NPMJS: https://www.npmjs.com/package/xmlhttprequest
+Here's how to include the module in your project and use as the browser-based XHR object.
+Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensitive systems (eg Linux) using uppercase letters won't work.
+*/</span>
+<span class="kd">var</span> <span class="nx">XMLHttpRequest</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">"xmlhttprequest"</span><span class="p">).</span><span class="nx">XMLHttpRequest</span><span class="p">;</span>
+
+<span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
+
+<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_enviado_pelo_suporte"</span><span class="p">;</span>
+
+<span class="c1">// Substituir pela sua identificação interna da nota.</span>
+<span class="kd">var</span> <span class="nx">ref</span> <span class="o">=</span> <span class="s2">"12345"</span><span class="p">;</span>
+
+<span class="cm">/*
+Para ambiente de producao use a URL abaixo:
+"https://api.focusnfe.com.br"
+*/</span>
+<span class="kd">var</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">"http://homologacao.acrasnfe.acras.com.br/v2/nfse/"</span><span class="o">+</span> <span class="nx">ref</span><span class="p">;</span>
+
+<span class="cm">/* 
+Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
+Passamos o token como quarto parametro deste metodo, como autenticador do HTTP Basic Authentication.
+*/</span>
+<span class="nx">request</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s1">'DELETE'</span><span class="p">,</span> <span class="nx">url</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="nx">token</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">cancelar</span> <span class="o">=</span> <span class="p">{</span>
+
+    <span class="s2">"justificativa"</span><span class="p">:</span> <span class="s2">"Sua justificativa aqui!"</span>
+<span class="p">};</span>
+
+<span class="c1">// Aqui fazermos a serializacao do JSON com os dados da nota e enviamos atraves do metodo usado.</span>
+<span class="nx">request</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">cancelar</span><span class="p">));</span>
+
+<span class="c1">// Sua aplicacao tera que ser capaz de tratar as respostas da API.</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"HTTP code: "</span> <span class="o">+</span> <span class="nx">request</span><span class="p">.</span><span class="nx">status</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Corpo: "</span> <span class="o">+</span> <span class="nx">request</span><span class="p">.</span><span class="nx">responseText</span><span class="p">);</span>
+
 </code></pre>
 <blockquote>
 <p>Resposta da API para a requisição de cancelamento:</p>
@@ -4526,7 +5158,7 @@ A NFSe não possui um prazo padrão para cancelamento como vemos na NFCe, por ex
 <span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">requests</span>
 
-<span class="s">''' 
+<span class="s">'''
 Para ambiente de produção use a variável abaixo:
 url = "https://api.focusnfe.com.br"
 '''</span>
@@ -4641,6 +5273,44 @@ serao convertidos a JSON e enviados para nossa API
  <span class="k">print</span><span class="p">(</span><span class="s2">""</span><span class="p">);</span>
  <span class="nb">curl_close</span><span class="p">(</span><span class="nv">$ch</span><span class="p">);</span>
  <span class="cp">?&gt;</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code>
+<span class="cm">/*
+As orientacoes a seguir foram extraidas do site do NPMJS: https://www.npmjs.com/package/xmlhttprequest
+Here's how to include the module in your project and use as the browser-based XHR object.
+Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensitive systems (eg Linux) using uppercase letters won't work.
+*/</span>
+<span class="kd">var</span> <span class="nx">XMLHttpRequest</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">"xmlhttprequest"</span><span class="p">).</span><span class="nx">XMLHttpRequest</span><span class="p">;</span>
+
+<span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
+
+<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_enviado_pelo_suporte"</span><span class="p">;</span>
+
+<span class="c1">// Substituir pela sua identificação interna da nota.</span>
+<span class="kd">var</span> <span class="nx">ref</span> <span class="o">=</span> <span class="s2">"12345"</span><span class="p">;</span>
+
+<span class="cm">/*
+Para ambiente de producao use a URL abaixo:
+"https://api.focusnfe.com.br"
+*/</span>
+<span class="kd">var</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">"http://homologacao.acrasnfe.acras.com.br/v2/nfse/"</span> <span class="o">+</span> <span class="nx">ref</span> <span class="o">+</span> <span class="s2">"/email"</span><span class="p">;</span>
+
+<span class="cm">/* 
+Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
+Passamos o token como quarto parametro deste metodo, como autenticador do HTTP Basic Authentication.
+*/</span>
+<span class="nx">request</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="nx">url</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="nx">token</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">email</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"email1@acras.com.br"</span><span class="p">,</span> <span class="s2">"email2@acras.com.br"</span><span class="p">,</span> <span class="s2">"email3@acras.com.br"</span><span class="p">];</span>
+
+<span class="c1">// Aqui fazermos a serializacao do JSON com os dados da nota e enviamos atraves do metodo usado.</span>
+<span class="kd">var</span> <span class="nx">json</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span><span class="s2">"emails"</span><span class="p">:</span> <span class="nx">email</span><span class="p">});</span>
+
+<span class="nx">request</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">json</span><span class="p">);</span>
+
+<span class="c1">// Sua aplicacao tera que ser capaz de tratar as respostas da API.</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"HTTP code: "</span> <span class="o">+</span> <span class="nx">request</span><span class="p">.</span><span class="nx">status</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Corpo: "</span> <span class="o">+</span> <span class="nx">request</span><span class="p">.</span><span class="nx">responseText</span><span class="p">);</span>
+
 </code></pre>
 <p>Para cada nota autorizada, cancelada ou que tenha sido emitida uma carta de correção o destinatário da nota é notificado via email. Porém eventualmente pode ser necessário enviar a nota fiscal para outras pessoas ou mesmo reenviar o email para o mesmo destinatário.</p>
 
@@ -4809,6 +5479,44 @@ curl -u token_enviado_pelo_suporte: <span class="se">\</span>
 </span> <span class="k">print</span><span class="p">(</span><span class="nv">$body</span><span class="p">);</span>
  <span class="nb">curl_close</span><span class="p">(</span><span class="nv">$ch</span><span class="p">);</span>
 <span class="cp">?&gt;</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code>
+<span class="cm">/*
+As orientacoes a seguir foram extraidas do site do NPMJS: https://www.npmjs.com/package/xmlhttprequest
+Here's how to include the module in your project and use as the browser-based XHR object.
+Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensitive systems (eg Linux) using uppercase letters won't work.
+*/</span>
+<span class="kd">var</span> <span class="nx">XMLHttpRequest</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">"xmlhttprequest"</span><span class="p">).</span><span class="nx">XMLHttpRequest</span><span class="p">;</span>
+
+<span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
+
+<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_enviado_pelo_suporte"</span><span class="p">;</span>
+
+<span class="kd">var</span> <span class="nx">chave</span> <span class="o">=</span> <span class="s2">"chave_da_nota_fiscal"</span><span class="p">;</span>
+
+<span class="cm">/*
+Para ambiente de producao use a URL abaixo:
+"https://api.focusnfe.com.br"
+*/</span>
+<span class="kd">var</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">"http://homologacao.acrasnfe.acras.com.br/v2/nfes_recebidas/"</span> <span class="o">+</span> <span class="nx">chave</span> <span class="o">+</span> <span class="s2">"/manifesto"</span><span class="p">;</span>
+
+<span class="cm">/* 
+Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
+Passamos o token como quarto parametro deste metodo, como autenticador do HTTP Basic Authentication.
+*/</span>
+<span class="nx">request</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="nx">url</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="nx">token</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">manifesto</span> <span class="o">=</span> <span class="p">{</span>
+
+    <span class="s2">"tipo"</span><span class="p">:</span> <span class="s2">"ciencia"</span>
+<span class="p">};</span>
+
+<span class="c1">// Aqui fazermos a serializacao do JSON com os dados da nota e enviamos atraves do metodo usado.</span>
+<span class="nx">request</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">manifesto</span><span class="p">));</span>
+
+<span class="c1">// Sua aplicacao tera que ser capaz de tratar as respostas da API.</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"HTTP code: "</span> <span class="o">+</span> <span class="nx">request</span><span class="p">.</span><span class="nx">status</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Corpo: "</span> <span class="o">+</span> <span class="nx">request</span><span class="p">.</span><span class="nx">responseText</span><span class="p">);</span>
+
 </code></pre>
 <blockquote>
 <p>Outro exemplo de dados enviados</p>
@@ -5047,6 +5755,38 @@ url = "https://api.focusnfe.com.br"
 </span>   <span class="k">print</span><span class="p">(</span><span class="nv">$body</span><span class="p">);</span>
    <span class="nb">curl_close</span><span class="p">(</span><span class="nv">$ch</span><span class="p">);</span>
 <span class="cp">?&gt;</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code>
+<span class="cm">/*
+A orientacao a seguir foram extraidas do site do NPMJS: https://www.npmjs.com/package/xmlhttprequest
+Here's how to include the module in your project and use as the browser-based XHR object.
+Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensitive systems (eg Linux) using uppercase letters won't work.
+*/</span>
+<span class="kd">var</span> <span class="nx">XMLHttpRequest</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">"xmlhttprequest"</span><span class="p">).</span><span class="nx">XMLHttpRequest</span><span class="p">;</span>
+
+<span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
+
+<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_enviado_pelo_suporte"</span><span class="p">;</span>
+
+<span class="kd">var</span> <span class="nx">cnpj</span> <span class="o">=</span> <span class="s2">"cnpj_do_destinatario_da_nota"</span><span class="p">;</span>
+
+<span class="cm">/*
+Para ambiente de producao use a URL abaixo:
+"https://api.focusnfe.com.br"
+*/</span>
+<span class="kd">var</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">"http://homologacao.acrasnfe.acras.com.br/v2/nfes_recebidas?cnpj="</span> <span class="o">+</span> <span class="nx">cnpj</span><span class="p">;</span>
+
+<span class="cm">/* 
+Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
+Passamos o token como quarto parametro deste metodo, como autenticador do HTTP Basic Authentication.
+*/</span>
+<span class="nx">request</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s1">'GET'</span><span class="p">,</span> <span class="nx">url</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="nx">token</span><span class="p">);</span>
+
+<span class="nx">request</span><span class="p">.</span><span class="nx">send</span><span class="p">();</span>
+
+<span class="c1">// Sua aplicacao tera que ser capaz de tratar as respostas da API.</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"HTTP code: "</span> <span class="o">+</span> <span class="nx">request</span><span class="p">.</span><span class="nx">status</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Corpo: "</span> <span class="o">+</span> <span class="nx">request</span><span class="p">.</span><span class="nx">responseText</span><span class="p">);</span>
+
 </code></pre>
 <p>Para consultar os documentos fiscais recebidos, utilize o endereço abaixo:</p>
 
@@ -5156,7 +5896,38 @@ url = "https://api.focusnfe.com.br"
 <blockquote>
 <p>Exemplo de como realizar o download do XML de uma Nota Fiscal Eletrônica especifica.</p>
 </blockquote>
-<pre class="highlight python tab-python"><code><span class="c"># Faça o download e instalação da biblioteca requests, através do python-pip.</span>
+<pre class="highlight javascript tab-javascript"><code><span class="cm">/*
+As orientacoes a seguir foram extraidas do site do NPMJS: https://www.npmjs.com/package/xmlhttprequest
+Here's how to include the module in your project and use as the browser-based XHR object.
+Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensitive systems (eg Linux) using uppercase letters won't work.
+*/</span>
+<span class="kd">var</span> <span class="nx">XMLHttpRequest</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">"xmlhttprequest"</span><span class="p">).</span><span class="nx">XMLHttpRequest</span><span class="p">;</span>
+
+<span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
+
+<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_enviado_pelo_suporte"</span><span class="p">;</span>
+
+<span class="kd">var</span> <span class="nx">chave</span> <span class="o">=</span> <span class="s2">"chave_da_nota_fiscal"</span><span class="p">;</span>
+
+<span class="cm">/*
+Para ambiente de producao use a URL abaixo:
+"https://api.focusnfe.com.br"
+*/</span>
+<span class="kd">var</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">"http://homologacao.acrasnfe.acras.com.br/v2/nfes_recebidas/"</span> <span class="o">+</span> <span class="nx">chave</span> <span class="o">+</span> <span class="s2">".xml"</span><span class="p">;</span>
+
+<span class="cm">/* 
+Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
+Passamos o token como quarto parametro deste metodo, como autenticador do HTTP Basic Authentication.
+*/</span>
+<span class="nx">request</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s1">'GET'</span><span class="p">,</span> <span class="nx">url</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="nx">token</span><span class="p">);</span>
+
+<span class="nx">request</span><span class="p">.</span><span class="nx">send</span><span class="p">();</span>
+
+<span class="c1">// Sua aplicacao tera que ser capaz de tratar as respostas da API.</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"HTTP code: "</span> <span class="o">+</span> <span class="nx">request</span><span class="p">.</span><span class="nx">status</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Corpo: "</span> <span class="o">+</span> <span class="nx">request</span><span class="p">.</span><span class="nx">responseText</span><span class="p">);</span>
+
+</code></pre><pre class="highlight python tab-python"><code><span class="c"># Faça o download e instalação da biblioteca requests, através do python-pip.</span>
 <span class="kn">import</span> <span class="nn">requests</span>
 
 <span class="s">''' 
@@ -5238,7 +6009,39 @@ url = "https://api.focusnfe.com.br"
 <blockquote>
 <p>Exemplo de como fazer o download, no formato JSON, do XML de uma Nota Fiscal Eletrônica especifica.</p>
 </blockquote>
-<pre class="highlight python tab-python"><code><span class="c"># Faça o download e instalação da biblioteca requests, através do python-pip.</span>
+<pre class="highlight javascript tab-javascript"><code>
+<span class="cm">/*
+As orientacoes a seguir foram extraidas do site do NPMJS: https://www.npmjs.com/package/xmlhttprequest
+Here's how to include the module in your project and use as the browser-based XHR object.
+Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensitive systems (eg Linux) using uppercase letters won't work.
+*/</span>
+<span class="kd">var</span> <span class="nx">XMLHttpRequest</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">"xmlhttprequest"</span><span class="p">).</span><span class="nx">XMLHttpRequest</span><span class="p">;</span>
+
+<span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
+
+<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_enviado_pelo_suporte"</span><span class="p">;</span>
+
+<span class="kd">var</span> <span class="nx">chave</span> <span class="o">=</span> <span class="s2">"chave_da_nota_fiscal"</span><span class="p">;</span>
+
+<span class="cm">/*
+Para ambiente de producao use a URL abaixo:
+"https://api.focusnfe.com.br"
+*/</span>
+<span class="kd">var</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">"http://homologacao.acrasnfe.acras.com.br/v2/nfes_recebidas/"</span> <span class="o">+</span> <span class="nx">chave</span> <span class="o">+</span> <span class="s2">".json?completa=1"</span><span class="p">;</span>
+
+<span class="cm">/* 
+Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
+Passamos o token como quarto parametro deste metodo, como autenticador do HTTP Basic Authentication.
+*/</span>
+<span class="nx">request</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s1">'GET'</span><span class="p">,</span> <span class="nx">url</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="nx">token</span><span class="p">);</span>
+
+<span class="nx">request</span><span class="p">.</span><span class="nx">send</span><span class="p">();</span>
+
+<span class="c1">// Sua aplicacao tera que ser capaz de tratar as respostas da API.</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"HTTP code: "</span> <span class="o">+</span> <span class="nx">request</span><span class="p">.</span><span class="nx">status</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Corpo: "</span> <span class="o">+</span> <span class="nx">request</span><span class="p">.</span><span class="nx">responseText</span><span class="p">);</span>
+
+</code></pre><pre class="highlight python tab-python"><code><span class="c"># Faça o download e instalação da biblioteca requests, através do python-pip.</span>
 <span class="kn">import</span> <span class="nn">requests</span>
 
 <span class="s">''' 
@@ -5320,7 +6123,39 @@ url = "https://api.focusnfe.com.br"
 <blockquote>
 <p>Exemplo de como fazer o download do XML de cancelamento de uma Nota Fiscal Eletrônica.</p>
 </blockquote>
-<pre class="highlight python tab-python"><code><span class="c"># Faça o download e instalação da biblioteca requests, através do python-pip.</span>
+<pre class="highlight javascript tab-javascript"><code>
+<span class="cm">/*
+As orientacoes a seguir foram extraidas do site do NPMJS: https://www.npmjs.com/package/xmlhttprequest
+Here's how to include the module in your project and use as the browser-based XHR object.
+Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensitive systems (eg Linux) using uppercase letters won't work.
+*/</span>
+<span class="kd">var</span> <span class="nx">XMLHttpRequest</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">"xmlhttprequest"</span><span class="p">).</span><span class="nx">XMLHttpRequest</span><span class="p">;</span>
+
+<span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
+
+<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_enviado_pelo_suporte"</span><span class="p">;</span>
+
+<span class="kd">var</span> <span class="nx">chave</span> <span class="o">=</span> <span class="s2">"chave_da_nota_fiscal"</span><span class="p">;</span>
+
+<span class="cm">/*
+Para ambiente de producao use a URL abaixo:
+"https://api.focusnfe.com.br"
+*/</span>
+<span class="kd">var</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">"http://homologacao.acrasnfe.acras.com.br/v2/nfes_recebidas/"</span> <span class="o">+</span> <span class="nx">chave</span> <span class="o">+</span> <span class="s2">"/cancelamento.xml"</span><span class="p">;</span>
+
+<span class="cm">/* 
+Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
+Passamos o token como quarto parametro deste metodo, como autenticador do HTTP Basic Authentication.
+*/</span>
+<span class="nx">request</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s1">'GET'</span><span class="p">,</span> <span class="nx">url</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="nx">token</span><span class="p">);</span>
+
+<span class="nx">request</span><span class="p">.</span><span class="nx">send</span><span class="p">();</span>
+
+<span class="c1">// Sua aplicacao tera que ser capaz de tratar as respostas da API.</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"HTTP code: "</span> <span class="o">+</span> <span class="nx">request</span><span class="p">.</span><span class="nx">status</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Corpo: "</span> <span class="o">+</span> <span class="nx">request</span><span class="p">.</span><span class="nx">responseText</span><span class="p">);</span>
+
+</code></pre><pre class="highlight python tab-python"><code><span class="c"># Faça o download e instalação da biblioteca requests, através do python-pip.</span>
 <span class="kn">import</span> <span class="nn">requests</span>
 
 <span class="s">''' 
@@ -5402,7 +6237,39 @@ url = "https://api.focusnfe.com.br"
 <blockquote>
 <p>Exemplo de como realizar o download do XML de uma Nota Fiscal Eletrônica especifica com Carta de Correção Eletrônica.</p>
 </blockquote>
-<pre class="highlight python tab-python"><code><span class="c"># Faça o download e instalação da biblioteca requests, através do python-pip.</span>
+<pre class="highlight javascript tab-javascript"><code>
+<span class="cm">/*
+As orientacoes a seguir foram extraidas do site do NPMJS: https://www.npmjs.com/package/xmlhttprequest
+Here's how to include the module in your project and use as the browser-based XHR object.
+Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensitive systems (eg Linux) using uppercase letters won't work.
+*/</span>
+<span class="kd">var</span> <span class="nx">XMLHttpRequest</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">"xmlhttprequest"</span><span class="p">).</span><span class="nx">XMLHttpRequest</span><span class="p">;</span>
+
+<span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
+
+<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_enviado_pelo_suporte"</span><span class="p">;</span>
+
+<span class="kd">var</span> <span class="nx">chave</span> <span class="o">=</span> <span class="s2">"chave_da_nota_fiscal"</span><span class="p">;</span>
+
+<span class="cm">/*
+Para ambiente de producao use a URL abaixo:
+"https://api.focusnfe.com.br"
+*/</span>
+<span class="kd">var</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">"http://homologacao.acrasnfe.acras.com.br/v2/nfes_recebidas/"</span> <span class="o">+</span> <span class="nx">chave</span> <span class="o">+</span> <span class="s2">"carta_correcao.xml"</span><span class="p">;</span>
+
+<span class="cm">/* 
+Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
+Passamos o token como quarto parametro deste metodo, como autenticador do HTTP Basic Authentication.
+*/</span>
+<span class="nx">request</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s1">'GET'</span><span class="p">,</span> <span class="nx">url</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="nx">token</span><span class="p">);</span>
+
+<span class="nx">request</span><span class="p">.</span><span class="nx">send</span><span class="p">();</span>
+
+<span class="c1">// Sua aplicacao tera que ser capaz de tratar as respostas da API.</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"HTTP code: "</span> <span class="o">+</span> <span class="nx">request</span><span class="p">.</span><span class="nx">status</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Corpo: "</span> <span class="o">+</span> <span class="nx">request</span><span class="p">.</span><span class="nx">responseText</span><span class="p">);</span>
+
+</code></pre><pre class="highlight python tab-python"><code><span class="c"># Faça o download e instalação da biblioteca requests, através do python-pip.</span>
 <span class="kn">import</span> <span class="nn">requests</span>
 
 <span class="s">''' 
@@ -5634,6 +6501,40 @@ serao convertidos a JSON e enviados para nossa API
         <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="n">body</span><span class="o">);</span>
     <span class="o">}</span>
 <span class="o">}</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code>
+<span class="cm">/*
+As orientacoes a seguir foram extraidas do site do NPMJS: https://www.npmjs.com/package/xmlhttprequest
+Here's how to include the module in your project and use as the browser-based XHR object.
+Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensitive systems (eg Linux) using uppercase letters won't work.
+*/</span>
+<span class="kd">var</span> <span class="nx">XMLHttpRequest</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">"xmlhttprequest"</span><span class="p">).</span><span class="nx">XMLHttpRequest</span><span class="p">;</span>
+
+<span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
+
+<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_enviado_pelo_suporte"</span><span class="p">;</span>
+
+<span class="kd">var</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">"http://homologacao.acrasnfe.acras.com.br/v2/hooks"</span><span class="p">;</span>
+
+<span class="cm">/* 
+Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
+Passamos o token como quarto parametro deste metodo, como autenticador do HTTP Basic Authentication.
+*/</span>
+<span class="nx">request</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="nx">url</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="nx">token</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">gatilho</span> <span class="o">=</span> <span class="p">{</span>
+
+    <span class="s2">"cnpj"</span><span class="p">:</span><span class="s2">"51916585000125"</span><span class="p">,</span>
+    <span class="s2">"event"</span><span class="p">:</span><span class="s2">"nfe"</span><span class="p">,</span>
+    <span class="s2">"url"</span><span class="p">:</span><span class="s2">"http://minha.url/nfe"</span>
+<span class="p">};</span>
+
+<span class="c1">// Aqui fazermos a serializacao do JSON com os dados da nota e enviamos atraves do metodo usado.</span>
+<span class="nx">request</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">gatilho</span><span class="p">));</span>
+
+<span class="c1">// Sua aplicacao tera que ser capaz de tratar as respostas da API.</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"HTTP code: "</span> <span class="o">+</span> <span class="nx">request</span><span class="p">.</span><span class="nx">status</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Corpo: "</span> <span class="o">+</span> <span class="nx">request</span><span class="p">.</span><span class="nx">responseText</span><span class="p">);</span>
+
 </code></pre>
 <blockquote>
 <p>Dados de resposta de gatilho criado com sucesso</p>
@@ -5739,6 +6640,34 @@ url = "https://api.focusnfe.com.br"
         <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="n">body</span><span class="o">);</span>
     <span class="o">}</span>
 <span class="o">}</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code>
+<span class="cm">/*
+As orientacoes a seguir foram extraidas do site do NPMJS: https://www.npmjs.com/package/xmlhttprequest
+Here's how to include the module in your project and use as the browser-based XHR object.
+Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensitive systems (eg Linux) using uppercase letters won't work.
+*/</span>
+<span class="kd">var</span> <span class="nx">XMLHttpRequest</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">"xmlhttprequest"</span><span class="p">).</span><span class="nx">XMLHttpRequest</span><span class="p">;</span>
+
+<span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
+
+<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_enviado_pelo_suporte"</span><span class="p">;</span>
+
+<span class="kd">var</span> <span class="nx">hook_id</span> <span class="o">=</span> <span class="s2">"n65g0RP1"</span><span class="p">;</span>
+
+<span class="kd">var</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">"http://homologacao.acrasnfe.acras.com.br/v2/hooks/"</span> <span class="o">+</span> <span class="nx">hook_id</span><span class="p">;</span>
+
+<span class="cm">/* 
+Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
+Passamos o token como quarto parametro deste metodo, como autenticador do HTTP Basic Authentication.
+*/</span>
+<span class="nx">request</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s1">'GET'</span><span class="p">,</span> <span class="nx">url</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="nx">token</span><span class="p">);</span>
+
+<span class="nx">request</span><span class="p">.</span><span class="nx">send</span><span class="p">();</span>
+
+<span class="c1">// Sua aplicacao tera que ser capaz de tratar as respostas da API.</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"HTTP code: "</span> <span class="o">+</span> <span class="nx">request</span><span class="p">.</span><span class="nx">status</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Corpo: "</span> <span class="o">+</span> <span class="nx">request</span><span class="p">.</span><span class="nx">responseText</span><span class="p">);</span>
+
 </code></pre>
 <blockquote>
 <p>Dados de resposta de consulta de um gatilho individual</p>
@@ -5844,6 +6773,34 @@ url = "https://api.focusnfe.com.br"
         <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="n">body</span><span class="o">);</span>
     <span class="o">}</span>
 <span class="o">}</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code>
+<span class="cm">/*
+As orientacoes a seguir foram extraidas do site do NPMJS: https://www.npmjs.com/package/xmlhttprequest
+Here's how to include the module in your project and use as the browser-based XHR object.
+Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensitive systems (eg Linux) using uppercase letters won't work.
+*/</span>
+<span class="kd">var</span> <span class="nx">XMLHttpRequest</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">"xmlhttprequest"</span><span class="p">).</span><span class="nx">XMLHttpRequest</span><span class="p">;</span>
+
+<span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
+
+<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_enviado_pelo_suporte"</span><span class="p">;</span>
+
+<span class="kd">var</span> <span class="nx">hook_id</span> <span class="o">=</span> <span class="s2">"n65g0RP1"</span><span class="p">;</span>
+
+<span class="kd">var</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">"http://homologacao.acrasnfe.acras.com.br/v2/hooks/"</span> <span class="o">+</span> <span class="nx">hook_id</span><span class="p">;</span>
+
+<span class="cm">/* 
+Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
+Passamos o token como quarto parametro deste metodo, como autenticador do HTTP Basic Authentication.
+*/</span>
+<span class="nx">request</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s1">'DELETE'</span><span class="p">,</span> <span class="nx">url</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="nx">token</span><span class="p">);</span>
+
+<span class="nx">request</span><span class="p">.</span><span class="nx">send</span><span class="p">();</span>
+
+<span class="c1">// Sua aplicacao tera que ser capaz de tratar as respostas da API.</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"HTTP code: "</span> <span class="o">+</span> <span class="nx">request</span><span class="p">.</span><span class="nx">status</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Corpo: "</span> <span class="o">+</span> <span class="nx">request</span><span class="p">.</span><span class="nx">responseText</span><span class="p">);</span>
+
 </code></pre>
 <blockquote>
 <p>Dados de resposta da exclusão de um gatilho</p>
@@ -6051,6 +7008,7 @@ Para buscar os demais registros, utilize o parâmetro <strong>offset</strong>. E
                 <a href="#" data-language-name="php">php</a>
                 <a href="#" data-language-name="java">java</a>
                 <a href="#" data-language-name="python">python</a>
+                <a href="#" data-language-name="javascript">javascript</a>
           </div>
       </div>
     </div>
