@@ -59,10 +59,7 @@ um formato único de campos para todas as prefeituras. A listagem dos campos seg
 }
 ```
 
-* **data_emissao**(*): Data/hora de emissão da NFSe. Alguns municípios como São Paulo não utilizam hora e ela será descartada caso seja fornecida. Formato padrão ISO, exemplo: “2016-12-25T12:00-0300”.
- -**status**: Status da NFS-e. (Valor padrão: 1). Informar:
-   - Normal;
-   - Cancelado;
+- **data_emissao**(*): Data/hora de emissão da NFSe. Alguns municípios como São Paulo não utilizam hora e ela será descartada caso seja fornecida. Formato padrão ISO, exemplo: “2016-12-25T12:00-0300”.
 - **natureza_operacao**(*): Natureza da operação. Informar um dos códigos abaixo. Campo ignorado para o município de São Paulo.
   - **1**: Tributação no município;
   - **2**: Tributação fora do município;
@@ -151,7 +148,7 @@ um formato único de campos para todas as prefeituras. A listagem dos campos seg
 import json
 import requests
 
-''' 
+'''
 Para ambiente de produção use a variável abaixo:
 url = "https://api.focusnfe.com.br"
 '''
@@ -161,7 +158,7 @@ url = "http://homologacao.acrasnfe.acras.com.br/v2/nfse.json"
 ref = {"ref":"12345"}
 
 token="token_enviado_pelo_suporte"
- 
+
 '''
 Usamos dicionarios para armazenar os campos e valores que em seguida,
 serao convertidos em JSON e enviados para nossa API
@@ -468,7 +465,7 @@ Para verificar se a nota já foi autorizada, você terá que efetuar uma [consul
 # Faça o download e instalação da biblioteca requests, através do python-pip.
 import requests
 
-''' 
+'''
 Para ambiente de produção use a variável abaixo:
 url = "https://api.focusnfe.com.br"
 '''
@@ -636,7 +633,7 @@ Utilize o comando **HTTP GET** para consultar a sua nota para nossa API.
 import json
 import requests
 
-''' 
+'''
 Para ambiente de produção use a variável abaixo:
 url = "https://api.focusnfe.com.br"
 '''
@@ -827,7 +824,7 @@ A NFSe não possui um prazo padrão para cancelamento como vemos na NFCe, por ex
 import json
 import requests
 
-''' 
+'''
 Para ambiente de produção use a variável abaixo:
 url = "https://api.focusnfe.com.br"
 '''
