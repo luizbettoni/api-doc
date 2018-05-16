@@ -424,6 +424,52 @@ interno;
 
 9 – Sem frete;
 
+### Campos calculados automaticamente
+
+Para simplificar o envio da nota fiscal, alguns campos são calculados automaticamente a partir da versão 4.00 da NFe. Os campos calculados são somatórios de campos fornecidos nos itens da nota fiscal. Os campos serão calculados apenas se eles não forem informados na API.
+
+A lista de campos calculados automaticamente segue abaixo:
+
+| Campo                                     | Somatório de campo dos itens        | Observação                                                  |   |   |
+|-------------------------------------------|-------------------------------------|-------------------------------------------------------------|---|---|
+| icms_base_calculo                         | icms_base_calculo                   |                                                             |   |   |
+| valor_ipi                                 | ipi_valor                           |                                                             |   |   |
+| icms_valor_total_st                       | icms_valor_st                       |                                                             |   |   |
+| issqn_base_calculo                        | issqn_base_calculo                  |                                                             |   |   |
+| issqn_valor_total                         | issqn_valor                         |                                                             |   |   |
+| issqn_valor_total_deducao                 | issqn_valor_deducao                 |                                                             |   |   |
+| issqn_valor_total_outras_retencoes        | issqn_valor_outras_retencoes        |                                                             |   |   |
+| issqn_valor_total_desconto_incondicionado | issqn_valor_desconto_incondicionado |                                                             |   |   |
+| issqn_valor_total_desconto_condicionado   | issqn_valor_desconto_condicionado   |                                                             |   |   |
+| issqn_valor_total_retencao                | issqn_valor_retencao                |                                                             |   |   |
+| issqn_base_calculo                        | issqn_base_calculo                  |                                                             |   |   |
+| valor_total_ii                            | ii_valor                            |                                                             |   |   |
+| fcp_valor_total                           | fcp_valor                           |                                                             |   |   |
+| fcp_valor_total_uf_destino                | fcp_valor_uf_destino                |                                                             |   |   |
+| fcp_valor_total_st                        | fcp_valor_st                        |                                                             |   |   |
+| fcp_valor_total_retido_st                 | fcp_valor_retido_st                 |                                                             |   |   |
+| icms_valor_total_uf_destino               | icms_valor_uf_destino               |                                                             |   |   |
+| icms_valor_total_uf_remetente             | icms_valor_uf_remetente             |                                                             |   |   |
+| icms_base_calculo                         | icms_base_calculo                   |                                                             |   |   |
+| icms_valor_total                          | icms_valor                          |                                                             |   |   |
+| icms_valor_total_desonerado               | icms_valor_desonerado               |                                                             |   |   |
+| icms_base_calculo_st                      | icms_base_calculo_st                |                                                             |   |   |
+| icms_valor_total_st                       | icms_valor_st                       |                                                             |   |   |
+| valor_frete                               | valor_frete                         |                                                             |   |   |
+| valor_seguro                              | valor_seguro                        |                                                             |   |   |
+| valor_outras_despesas                     | valor_outras_despesas               |                                                             |   |   |
+| valor_desconto                            | valor_desconto                      |                                                             |   |   |
+| valor_ipi_devolvido                       | valor_ipi_devolvido                 |                                                             |   |   |
+| valor_total_tributos                      | valor_total_tributos                |                                                             |   |   |
+| valor_produtos                            | valor_bruto                         | Apenas se inclui_no_total=1                                 |   |   |
+| valor_total_servicos                      | valor_bruto                         | Apenas se inclui_no_total=1 e item de serviço               |   |   |
+| icms_valor_total                          | icms_valor                          | Apenas se icms_situacao_tributaria diferente de40, 41 e 50. |   |   |
+| valor_pis_servicos                        | pis_valor                           | Apenas se item de serviço                                   |   |   |
+| valor_cofins_servicos                     | cofins_valor                        | Apenas se item de serviço                                   |   |   |
+| valor_pis                                 | pis_valor                           | Apenas se não for item de serviço                           |   |   |
+| valor_cofins                              | cofins_valor                        | Apenas se não for item de serviço  
+
+
 ## Envio
 
 
