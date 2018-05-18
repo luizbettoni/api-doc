@@ -19,13 +19,15 @@ Os seguintes eventos causam o acionamento do gatilho:
 * Manifestação:
   * Recebimento de um novo documento fiscal
 
+Os gatilhos para autorização de CTe deverão ser disponibilizados em breve.
+
 ## Criação
 ```python
 # Faça o download e instalação da biblioteca requests, através do python-pip.
 import json
 import requests
 
-''' 
+'''
 Para ambiente de produção use a variável abaixo:
 url = "https://api.focusnfe.com.br"
 '''
@@ -143,7 +145,7 @@ var token = "Token_enviado_pelo_suporte";
 
 var url = "http://homologacao.acrasnfe.acras.com.br/v2/hooks";
 
-/* 
+/*
 Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
 Passamos o token como quarto parametro deste metodo, como autenticador do HTTP Basic Authentication.
 */
@@ -196,7 +198,7 @@ A API irá devolver como resposta o gatilho criado. É possível ter apenas um g
 # Faça o download e instalação da biblioteca requests, através do python-pip.
 import requests
 
-''' 
+'''
 Para ambiente de produção use a variável abaixo:
 url = "https://api.focusnfe.com.br"
 '''
@@ -301,7 +303,7 @@ var hook_id = "n65g0RP1";
 
 var url = "http://homologacao.acrasnfe.acras.com.br/v2/hooks/" + hook_id;
 
-/* 
+/*
 Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
 Passamos o token como quarto parametro deste metodo, como autenticador do HTTP Basic Authentication.
 */
@@ -345,7 +347,7 @@ Substituindo HOOK_ID pelo identificador do gatilho.
  Faça o download e instalação da biblioteca requests, através do python-pip.
 import requests
 
-''' 
+'''
 Para ambiente de produção use a variável abaixo:
 url = "https://api.focusnfe.com.br"
 '''
@@ -453,7 +455,7 @@ var hook_id = "n65g0RP1";
 
 var url = "http://homologacao.acrasnfe.acras.com.br/v2/hooks/" + hook_id;
 
-/* 
+/*
 Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
 Passamos o token como quarto parametro deste metodo, como autenticador do HTTP Basic Authentication.
 */
