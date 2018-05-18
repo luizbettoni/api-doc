@@ -144,7 +144,7 @@ A CTe possui vários campos para os mais variados tipos e formas de operações,
 
 Além dos campos descritos acima, cada CTe deverá obrigatoriamente informar um **modal**, que é a forma de transporte da carga. Você deverá informar uma das seguintes chaves nos dados, clique em cada link para visualizar os campos completos:
 
-* modal_rodoviario para transporte rodoviário. [Consulte campos para CTe](https://focusnfe.com.br/dsl/3.0/TransporteRodoviarioXML.html) e [Consulte campos para CTe OS](https://focusnfe.com.br/dsl/3.0/TransporteRodoviarioOsXM.html)
+* modal_rodoviario para transporte rodoviário. [Consulte campos para CTe](https://focusnfe.com.br/dsl/3.0/TransporteRodoviarioXML.html) e [Consulte campos para CTe OS](https://focusnfe.com.br/dsl/3.0/TransporteRodoviarioOsXML.html)
 * modal_aereo [para transporte aéreo.] (https://focusnfe.com.br/dsl/3.0/TransporteAereoXML.html)
 * modal_aquaviario [para transporte aquaviário.] (https://focusnfe.com.br/dsl/3.0/TransporteAquaviarioXML.html)
 * modal_ferroviario [para transporte ferroviário.] (https://focusnfe.com.br/dsl/3.0/TransporteFerroviarioXML.html)
