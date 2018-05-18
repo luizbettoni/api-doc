@@ -13,6 +13,7 @@ toc_footers:
 includes:
   - nfe
   - nfce
+  - cte
   - backups
   - nfse
   - manifestacao
