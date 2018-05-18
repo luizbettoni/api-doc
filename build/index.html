@@ -313,7 +313,33 @@
               </ul>
           </li>
           <li>
-            <a href="#backups-nfe-e-nfce_backups-nfe-e-nfce" class="toc-h1 toc-link" data-title="backups-nfe-e-nfce">Backups (NFe e NFCe)</a>
+            <a href="#cte-e-cte-os-beta_cte-e-cte-os-beta" class="toc-h1 toc-link" data-title="cte-e-cte-os-beta">CTe e CTe OS (beta)</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#cte-e-cte-os-beta_urls" class="toc-h2 toc-link" data-title="urls">URLs</a>
+                  </li>
+                  <li>
+                    <a href="#cte-e-cte-os-beta_campos-de-uma-cte" class="toc-h2 toc-link" data-title="campos-de-uma-cte">Campos de uma CTe</a>
+                  </li>
+                  <li>
+                    <a href="#cte-e-cte-os-beta_envio" class="toc-h2 toc-link" data-title="envio">Envio</a>
+                  </li>
+                  <li>
+                    <a href="#cte-e-cte-os-beta_consulta" class="toc-h2 toc-link" data-title="consulta">Consulta</a>
+                  </li>
+                  <li>
+                    <a href="#cte-e-cte-os-beta_cancelamento" class="toc-h2 toc-link" data-title="cancelamento">Cancelamento</a>
+                  </li>
+                  <li>
+                    <a href="#cte-e-cte-os-beta_carta-de-correcao-eletronica" class="toc-h2 toc-link" data-title="carta-de-correcao-eletronica">Carta de Correção Eletrônica</a>
+                  </li>
+                  <li>
+                    <a href="#cte-e-cte-os-beta_inutilizacao" class="toc-h2 toc-link" data-title="inutilizacao">Inutilização</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#backups-nfe-nfce-e-cte_backups-nfe-nfce-e-cte" class="toc-h1 toc-link" data-title="backups-nfe-nfce-e-cte">Backups (NFe, NFCe e CTe)</a>
           </li>
           <li>
             <a href="#nfse_nfse" class="toc-h1 toc-link" data-title="nfse">NFSe</a>
@@ -1130,6 +1156,199 @@ Você deve substituir <code>REFERENCIA</code> pela referência gerada pela sua a
 <p>2 – Por conta de terceiros;</p>
 
 <p>9 – Sem frete;</p>
+<h3 id='nfe_campos-calculados-automaticamente'>Campos calculados automaticamente</h3>
+<p>Para simplificar o envio da nota fiscal, alguns campos são calculados automaticamente a partir da versão 4.00 da NFe. Os campos calculados são somatórios de campos fornecidos nos itens da nota fiscal. Os campos serão calculados apenas se eles não forem informados na API.</p>
+
+<p>A lista de campos calculados automaticamente segue abaixo:</p>
+
+<table><thead>
+<tr>
+<th>Campo</th>
+<th>Somatório de campo dos itens</th>
+<th>Observação</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>icms_base_calculo</td>
+<td>icms_base_calculo</td>
+<td></td>
+</tr>
+<tr>
+<td>valor_ipi</td>
+<td>ipi_valor</td>
+<td></td>
+</tr>
+<tr>
+<td>icms_valor_total_st</td>
+<td>icms_valor_st</td>
+<td></td>
+</tr>
+<tr>
+<td>issqn_base_calculo</td>
+<td>issqn_base_calculo</td>
+<td></td>
+</tr>
+<tr>
+<td>issqn_valor_total</td>
+<td>issqn_valor</td>
+<td></td>
+</tr>
+<tr>
+<td>issqn_valor_total_deducao</td>
+<td>issqn_valor_deducao</td>
+<td></td>
+</tr>
+<tr>
+<td>issqn_valor_total_outras_retencoes</td>
+<td>issqn_valor_outras_retencoes</td>
+<td></td>
+</tr>
+<tr>
+<td>issqn_valor_total_desconto_incondicionado</td>
+<td>issqn_valor_desconto_incondicionado</td>
+<td></td>
+</tr>
+<tr>
+<td>issqn_valor_total_desconto_condicionado</td>
+<td>issqn_valor_desconto_condicionado</td>
+<td></td>
+</tr>
+<tr>
+<td>issqn_valor_total_retencao</td>
+<td>issqn_valor_retencao</td>
+<td></td>
+</tr>
+<tr>
+<td>issqn_base_calculo</td>
+<td>issqn_base_calculo</td>
+<td></td>
+</tr>
+<tr>
+<td>valor_total_ii</td>
+<td>ii_valor</td>
+<td></td>
+</tr>
+<tr>
+<td>fcp_valor_total</td>
+<td>fcp_valor</td>
+<td></td>
+</tr>
+<tr>
+<td>fcp_valor_total_uf_destino</td>
+<td>fcp_valor_uf_destino</td>
+<td></td>
+</tr>
+<tr>
+<td>fcp_valor_total_st</td>
+<td>fcp_valor_st</td>
+<td></td>
+</tr>
+<tr>
+<td>fcp_valor_total_retido_st</td>
+<td>fcp_valor_retido_st</td>
+<td></td>
+</tr>
+<tr>
+<td>icms_valor_total_uf_destino</td>
+<td>icms_valor_uf_destino</td>
+<td></td>
+</tr>
+<tr>
+<td>icms_valor_total_uf_remetente</td>
+<td>icms_valor_uf_remetente</td>
+<td></td>
+</tr>
+<tr>
+<td>icms_base_calculo</td>
+<td>icms_base_calculo</td>
+<td></td>
+</tr>
+<tr>
+<td>icms_valor_total</td>
+<td>icms_valor</td>
+<td></td>
+</tr>
+<tr>
+<td>icms_valor_total_desonerado</td>
+<td>icms_valor_desonerado</td>
+<td></td>
+</tr>
+<tr>
+<td>icms_base_calculo_st</td>
+<td>icms_base_calculo_st</td>
+<td></td>
+</tr>
+<tr>
+<td>icms_valor_total_st</td>
+<td>icms_valor_st</td>
+<td></td>
+</tr>
+<tr>
+<td>valor_frete</td>
+<td>valor_frete</td>
+<td></td>
+</tr>
+<tr>
+<td>valor_seguro</td>
+<td>valor_seguro</td>
+<td></td>
+</tr>
+<tr>
+<td>valor_outras_despesas</td>
+<td>valor_outras_despesas</td>
+<td></td>
+</tr>
+<tr>
+<td>valor_desconto</td>
+<td>valor_desconto</td>
+<td></td>
+</tr>
+<tr>
+<td>valor_ipi_devolvido</td>
+<td>valor_ipi_devolvido</td>
+<td></td>
+</tr>
+<tr>
+<td>valor_total_tributos</td>
+<td>valor_total_tributos</td>
+<td></td>
+</tr>
+<tr>
+<td>valor_produtos</td>
+<td>valor_bruto</td>
+<td>Apenas se inclui_no_total=1</td>
+</tr>
+<tr>
+<td>valor_total_servicos</td>
+<td>valor_bruto</td>
+<td>Apenas se inclui_no_total=1 e item de serviço</td>
+</tr>
+<tr>
+<td>icms_valor_total</td>
+<td>icms_valor</td>
+<td>Apenas se icms_situacao_tributaria diferente de40, 41 e 50.</td>
+</tr>
+<tr>
+<td>valor_pis_servicos</td>
+<td>pis_valor</td>
+<td>Apenas se item de serviço</td>
+</tr>
+<tr>
+<td>valor_cofins_servicos</td>
+<td>cofins_valor</td>
+<td>Apenas se item de serviço</td>
+</tr>
+<tr>
+<td>valor_pis</td>
+<td>pis_valor</td>
+<td>Apenas se não for item de serviço</td>
+</tr>
+<tr>
+<td>valor_cofins</td>
+<td>cofins_valor</td>
+<td>Apenas se não for item de serviço</td>
+</tr>
+</tbody></table>
 <h2 id='nfe_envio'>Envio</h2><pre class="highlight shell tab-shell"><code><span class="c"># arquivo.json deve conter os dados da NFe</span>
 curl -u token_enviado_pelo_suporte: <span class="se">\</span>
   -X POST -T arquivo.json http://homologacao.acrasnfe.acras.com.br/v2/nfe
@@ -2899,261 +3118,187 @@ e NFSe.</p>
 <th>Campo</th>
 <th>Somatório de campo dos itens</th>
 <th>Observação</th>
-<th></th>
-<th></th>
 </tr>
 </thead><tbody>
 <tr>
 <td>icms_base_calculo</td>
 <td>icms_base_calculo</td>
 <td></td>
-<td></td>
-<td></td>
 </tr>
 <tr>
 <td>valor_ipi</td>
 <td>ipi_valor</td>
-<td></td>
-<td></td>
 <td></td>
 </tr>
 <tr>
 <td>icms_valor_total_st</td>
 <td>icms_valor_st</td>
 <td></td>
-<td></td>
-<td></td>
 </tr>
 <tr>
 <td>issqn_base_calculo</td>
 <td>issqn_base_calculo</td>
-<td></td>
-<td></td>
 <td></td>
 </tr>
 <tr>
 <td>issqn_valor_total</td>
 <td>issqn_valor</td>
 <td></td>
-<td></td>
-<td></td>
 </tr>
 <tr>
 <td>issqn_valor_total_deducao</td>
 <td>issqn_valor_deducao</td>
-<td></td>
-<td></td>
 <td></td>
 </tr>
 <tr>
 <td>issqn_valor_total_outras_retencoes</td>
 <td>issqn_valor_outras_retencoes</td>
 <td></td>
-<td></td>
-<td></td>
 </tr>
 <tr>
 <td>issqn_valor_total_desconto_incondicionado</td>
 <td>issqn_valor_desconto_incondicionado</td>
-<td></td>
-<td></td>
 <td></td>
 </tr>
 <tr>
 <td>issqn_valor_total_desconto_condicionado</td>
 <td>issqn_valor_desconto_condicionado</td>
 <td></td>
-<td></td>
-<td></td>
 </tr>
 <tr>
 <td>issqn_valor_total_retencao</td>
 <td>issqn_valor_retencao</td>
 <td></td>
-<td></td>
-<td></td>
 </tr>
 <tr>
 <td>issqn_base_calculo</td>
 <td>issqn_base_calculo</td>
-<td></td>
-<td></td>
 <td></td>
 </tr>
 <tr>
 <td>valor_total_ii</td>
 <td>ii_valor</td>
 <td></td>
-<td></td>
-<td></td>
 </tr>
 <tr>
 <td>fcp_valor_total</td>
 <td>fcp_valor</td>
-<td></td>
-<td></td>
 <td></td>
 </tr>
 <tr>
 <td>fcp_valor_total_uf_destino</td>
 <td>fcp_valor_uf_destino</td>
 <td></td>
-<td></td>
-<td></td>
 </tr>
 <tr>
 <td>fcp_valor_total_st</td>
 <td>fcp_valor_st</td>
-<td></td>
-<td></td>
 <td></td>
 </tr>
 <tr>
 <td>fcp_valor_total_retido_st</td>
 <td>fcp_valor_retido_st</td>
 <td></td>
-<td></td>
-<td></td>
 </tr>
 <tr>
 <td>icms_valor_total_uf_destino</td>
 <td>icms_valor_uf_destino</td>
-<td></td>
-<td></td>
 <td></td>
 </tr>
 <tr>
 <td>icms_valor_total_uf_remetente</td>
 <td>icms_valor_uf_remetente</td>
 <td></td>
-<td></td>
-<td></td>
 </tr>
 <tr>
 <td>icms_base_calculo</td>
 <td>icms_base_calculo</td>
-<td></td>
-<td></td>
 <td></td>
 </tr>
 <tr>
 <td>icms_valor_total</td>
 <td>icms_valor</td>
-<td></td>
-<td></td>
 <td></td>
 </tr>
 <tr>
 <td>icms_valor_total_desonerado</td>
 <td>icms_valor_desonerado</td>
 <td></td>
-<td></td>
-<td></td>
 </tr>
 <tr>
 <td>icms_base_calculo_st</td>
 <td>icms_base_calculo_st</td>
-<td></td>
-<td></td>
 <td></td>
 </tr>
 <tr>
 <td>icms_valor_total_st</td>
 <td>icms_valor_st</td>
 <td></td>
-<td></td>
-<td></td>
 </tr>
 <tr>
 <td>valor_frete</td>
 <td>valor_frete</td>
-<td></td>
-<td></td>
 <td></td>
 </tr>
 <tr>
 <td>valor_seguro</td>
 <td>valor_seguro</td>
 <td></td>
-<td></td>
-<td></td>
 </tr>
 <tr>
 <td>valor_outras_despesas</td>
 <td>valor_outras_despesas</td>
-<td></td>
-<td></td>
 <td></td>
 </tr>
 <tr>
 <td>valor_desconto</td>
 <td>valor_desconto</td>
 <td></td>
-<td></td>
-<td></td>
 </tr>
 <tr>
 <td>valor_ipi_devolvido</td>
 <td>valor_ipi_devolvido</td>
 <td></td>
-<td></td>
-<td></td>
 </tr>
 <tr>
 <td>valor_total_tributos</td>
 <td>valor_total_tributos</td>
-<td></td>
-<td></td>
 <td></td>
 </tr>
 <tr>
 <td>valor_produtos</td>
 <td>valor_bruto</td>
 <td>Apenas se inclui_no_total=1</td>
-<td></td>
-<td></td>
 </tr>
 <tr>
 <td>valor_total_servicos</td>
 <td>valor_bruto</td>
 <td>Apenas se inclui_no_total=1 e item de serviço</td>
-<td></td>
-<td></td>
 </tr>
 <tr>
 <td>icms_valor_total</td>
 <td>icms_valor</td>
 <td>Apenas se icms_situacao_tributaria diferente de40, 41 e 50.</td>
-<td></td>
-<td></td>
 </tr>
 <tr>
 <td>valor_pis_servicos</td>
 <td>pis_valor</td>
 <td>Apenas se item de serviço</td>
-<td></td>
-<td></td>
 </tr>
 <tr>
 <td>valor_cofins_servicos</td>
 <td>cofins_valor</td>
 <td>Apenas se item de serviço</td>
-<td></td>
-<td></td>
 </tr>
 <tr>
 <td>valor_pis</td>
 <td>pis_valor</td>
 <td>Apenas se não for item de serviço</td>
-<td></td>
-<td></td>
 </tr>
 <tr>
 <td>valor_cofins</td>
 <td>cofins_valor</td>
 <td>Apenas se não for item de serviço</td>
-<td></td>
-<td></td>
 </tr>
 </tbody></table>
 
@@ -4325,7 +4470,473 @@ O Enviador de Arquivos não possui um instalador específico, ele é apenas um e
 
 <p><strong>Reimpressão</strong>
 Para realizar a reimpressão de determinada NFCe basta salvar um arquivo com nome igual à ref usada no envio e extensão .reimp.</p>
-<h1 id='backups-nfe-e-nfce_backups-nfe-e-nfce'>Backups (NFe e NFCe)</h1>
+<h1 id='cte-e-cte-os-beta_cte-e-cte-os-beta'>CTe e CTe OS (beta)</h1>
+<p>Através da API CTe é possível:</p>
+
+<ul>
+<li>Emitir CTe (Conhecimento de Transporte Eletrônico) utilizando dados simplificados. Este processo é <strong>assíncrono</strong>. Ou seja, após a emissão a nota será enfileirada para processamento.</li>
+<li>Emitir CTe OS (outros serviços) utilizando dados simplificados. Este processo é <strong>síncrono</strong>. Ou seja, na mesma requisição é feito processamento da CTe.</li>
+<li>Cancelar uma CTe de qualquer modelo.</li>
+<li>Consultar o status de CTe emitidas.</li>
+<li>Emitir os eventos: carta de correção, prestação em desacordo, registro multimodal e informações GTV (apenas CTe OS)</li>
+<li>Inutilizar uma faixa de numeração de CTe de qualquer modelo</li>
+</ul>
+<h2 id='cte-e-cte-os-beta_urls'>URLs</h2>
+<table><thead>
+<tr>
+<th>Método</th>
+<th>URL (recurso)</th>
+<th>Ação</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>POST</td>
+<td>/v2/cte?ref=REFERENCIA</td>
+<td>Cria uma CTe a envia para processamento.</td>
+</tr>
+<tr>
+<td>POST</td>
+<td>/v2/cte_os?ref=REFERENCIA</td>
+<td>Emite uma CTe OS.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td>/v2/cfe/REFERENCIA</td>
+<td>Consulta a CTe com a referência informada e o seu status de processamento</td>
+</tr>
+<tr>
+<td>DELETE</td>
+<td>/v2/cfe/REFERENCIA</td>
+<td>Cancela uma CTe com a referência informada</td>
+</tr>
+<tr>
+<td>POST</td>
+<td>/v2/cte/REFERENCIA/carta_correcao</td>
+<td>Cria uma carta de correção para a CTe com a referência informada.</td>
+</tr>
+<tr>
+<td>POST</td>
+<td>/v2/cte/inutilizacao</td>
+<td>Inutiliza uma numeração da CTe</td>
+</tr>
+</tbody></table>
+<h2 id='cte-e-cte-os-beta_campos-de-uma-cte'>Campos de uma CTe</h2>
+<blockquote>
+<blockquote>
+<p>Abaixo um exemplo de dados de uma CTe:</p>
+</blockquote>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="w">
+</span><span class="p">{</span><span class="w">
+  </span><span class="s2">"modal_aereo"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"numero_minuta"</span><span class="p">:</span><span class="w"> </span><span class="s2">"000001234"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"numero_operacional"</span><span class="p">:</span><span class="w"> </span><span class="s2">"12345678901"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"data_prevista_entrega"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-01-01"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"dimensao_carga"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1234X1234X1234"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"informacoes_manuseio"</span><span class="p">:</span><span class="w"> </span><span class="s2">"03"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"classe_tarifa"</span><span class="p">:</span><span class="w"> </span><span class="s2">"G"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"codigo_tarifa"</span><span class="p">:</span><span class="w"> </span><span class="s2">"123"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"valor_tarifa"</span><span class="p">:</span><span class="w"> </span><span class="s2">"123.00"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="s2">"cfop"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5353"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"natureza_operacao"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PREST. DE SERV. TRANSPORTE A ESTAB. COMERCIAL"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"data_emissao"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-05-17T11:13:04-03:00"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"tipo_documento"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"codigo_municipio_envio"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2927408"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"municipio_envio"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Salvador"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"uf_envio"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BA"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"codigo_municipio_inicio"</span><span class="p">:</span><span class="w"> </span><span class="mi">2927408</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"tipo_servico"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"municipio_inicio"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Salvador"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"uf_inicio"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BA"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"codigo_municipio_fim"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2927408"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"municipio_fim"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Salvador"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"uf_fim"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BA"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"retirar_mercadoria"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"detalhes_retirar"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Teste detalhes retirar"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"indicador_inscricao_estadual_tomador"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"tomador"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"caracterisca_adicional_transporte"</span><span class="p">:</span><span class="w"> </span><span class="s2">"c.adic.transp."</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"caracterisca_adicional_servico"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Teste caract add servico"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"funcionario_emissor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"func.emiss"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"codigo_interno_origem"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Teste codigo interno origem"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"codigo_interno_passagem"</span><span class="p">:</span><span class="w"> </span><span class="s2">"codIntPass"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"codigo_interno_destino"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Teste codigo interno destino"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"codigo_rota"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cod rota"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"tipo_programacao_entrega"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"sem_hora_tipo_hora_programada"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"cnpj_emitente"</span><span class="p">:</span><span class="w"> </span><span class="s2">"11111451000111"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"cpf_remetente"</span><span class="p">:</span><span class="w"> </span><span class="s2">"08111727908"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"nome_remetente"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CT-E EMITIDO EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"telefone_remetente"</span><span class="p">:</span><span class="w"> </span><span class="s2">"7734629600"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"logradouro_remetente"</span><span class="p">:</span><span class="w"> </span><span class="s2">"R. XYZ"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"numero_remetente"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1205"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"bairro_remetente"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Vila Perneta"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"codigo_municipio_remetente"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4119152"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"municipio_remetente"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Pinhais"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"uf_remetente"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PR"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"cep_remetente"</span><span class="p">:</span><span class="w"> </span><span class="s2">"83124310"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"codigo_pais_remetente"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1058"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"pais_remetente"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Brasil"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"cnpj_destinatario"</span><span class="p">:</span><span class="w"> </span><span class="s2">"00112222000149"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"inscricao_estadual_destinatario"</span><span class="p">:</span><span class="w"> </span><span class="s2">"02220020926081"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"nome_destinatario"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CT-E EMITIDO EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"telefone_destinatario"</span><span class="p">:</span><span class="w"> </span><span class="s2">"7333332600"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"logradouro_destinatario"</span><span class="p">:</span><span class="w"> </span><span class="s2">"R. Alto Parana"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"numero_destinatario"</span><span class="p">:</span><span class="w"> </span><span class="s2">"190"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"bairro_destinatario"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Sao Cristovao"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"codigo_municipio_destinatario"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2927408"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"municipio_destinatario"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Salvador"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"uf_destinatario"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BA"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"cep_destinatario"</span><span class="p">:</span><span class="w"> </span><span class="s2">"83222380"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"codigo_pais_destinatario"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1058"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"pais_destinatario"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Brasil"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"email_destinatario"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fiscal@example.com"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"valor_total"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1500.00"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"valor_receber"</span><span class="p">:</span><span class="w"> </span><span class="s2">"750.00"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"icms_situacao_tributaria"</span><span class="p">:</span><span class="w"> </span><span class="s2">"00"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"icms_base_calculo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"50635.27"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"icms_aliquota"</span><span class="p">:</span><span class="w"> </span><span class="s2">"17.00"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"icms_valor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"8608.00"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"valor_total_carga"</span><span class="p">:</span><span class="w"> </span><span class="s2">"200000.00"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"produto_predominante"</span><span class="p">:</span><span class="w"> </span><span class="s2">"teste produto carga"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"outras_caracteristicas_carga"</span><span class="p">:</span><span class="w"> </span><span class="s2">"teste caracteristicas carga"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"cargas"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"codigo_unidade_medida"</span><span class="p">:</span><span class="w"> </span><span class="s2">"01"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"tipo_medida"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PESO BRUTO"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"quantidade"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.0000"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"codigo_unidade_medida"</span><span class="p">:</span><span class="w"> </span><span class="s2">"02"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"tipo_medida"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PESO BRUTO"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"quantidade"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2.0000"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"valor_carga_averbacao"</span><span class="p">:</span><span class="w"> </span><span class="s2">"200000.00"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"nfes"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"chave_nfe"</span><span class="p">:</span><span class="w"> </span><span class="s2">"35122225222278000855550010000002821510931504"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"pin_suframa"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1234"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"data_prevista"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-05-07"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"valor_original_fatura"</span><span class="p">:</span><span class="w"> </span><span class="s2">"12000.00"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"valor_desconto_fatura"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1000.00"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"valor_liquido_fatura"</span><span class="p">:</span><span class="w"> </span><span class="s2">"11000.00"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"duplicatas"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"data_vencimento"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-05-07"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"valor_duplicata"</span><span class="p">:</span><span class="w"> </span><span class="s2">"13000.00"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>A CTe possui vários campos para os mais variados tipos e formas de operações, por isso, criamos uma página exclusiva que mostra todos os campos da nossa API para o envio de CTe. Nela, você pode buscar os campos pela TAG XML ou pela nossa tradução para API.</p>
+
+<p><a href="https://focusnfe.com.br/dsl/3.0/ConhecimentoTransporteXML.html">Documentação completa dos campos CTe</a></p>
+
+<p><a href="https://focusnfe.com.br/dsl/3.0/ConhecimentoTransporteOsXML.html">Documentação completa dos campos CTe OS</a></p>
+
+<p>Além dos campos descritos acima, cada CTe deverá obrigatoriamente informar um <strong>modal</strong>, que é a forma de transporte da carga. Você deverá informar uma das seguintes chaves nos dados, clique em cada link para visualizar os campos completos:</p>
+
+<ul>
+<li>modal_rodoviario para transporte rodoviário. <a href="https://focusnfe.com.br/dsl/3.0/TransporteRodoviarioXML.html">Consulte campos para CTe</a> e <a href="https://focusnfe.com.br/dsl/3.0/TransporteRodoviarioOsXM.html">Consulte campos para CTe OS</a></li>
+<li>modal_aereo <a href="https://focusnfe.com.br/dsl/3.0/TransporteAereoXML.html">para transporte aéreo.</a></li>
+<li>modal_aquaviario <a href="https://focusnfe.com.br/dsl/3.0/TransporteAquaviarioXML.html">para transporte aquaviário.</a></li>
+<li>modal_ferroviario <a href="https://focusnfe.com.br/dsl/3.0/TransporteFerroviarioXML.html">para transporte ferroviário.</a></li>
+<li>modal_dutoviario <a href="https://focusnfe.com.br/dsl/3.0/TransporteDutoviarioXML.html">para transporte dutoviário.</a></li>
+<li>modal_multimodal <a href="https://focusnfe.com.br/dsl/3.0/TransporteMultimodalXML.html">para transporte que utilize mais de um modal.</a></li>
+</ul>
+<h2 id='cte-e-cte-os-beta_envio'>Envio</h2><pre class="highlight shell tab-shell"><code><span class="c"># arquivo.json deve conter os dados da CTe</span>
+curl -u token_enviado_pelo_suporte: <span class="se">\</span>
+  -X POST -T cte.json http://homologacao.acrasnfe.acras.com.br/v2/cte?ref<span class="o">=</span>12345
+curl -u token_enviado_pelo_suporte: <span class="se">\</span>
+  -X POST -T cte_os.json http://homologacao.acrasnfe.acras.com.br/v2/cte_os?ref<span class="o">=</span>12345
+</code></pre>
+<p>Para enviar uma CTe utilize a URL abaixo, alterando o ambiente de produção para homologação, caso esteja emitindo notas de teste.</p>
+
+<p>Envia uma CTe para autorização:</p>
+
+<p><code>https://api.focusnfe.com.br/v2/cte?ref=REFERENCIA</code></p>
+
+<p>Utilize o comando HTTP POST para enviar a sua nota para nossa API. Envie como corpo do POST os dados em formato JSON da CTe.</p>
+
+<p>Nesta etapa, é feita uma primeira validação dos dados da nota. Caso ocorra algum problema, por exemplo, algum campo faltante, formato incorreto
+ou algum problema com o emitente a nota <strong>não será aceita para processamento</strong> e será devolvida a mensagem de erro apropriada. Veja a seção <a href="#introducao_erros">erros</a>.</p>
+
+<p>Caso a nota seja validada corretamente, a nota será <strong>aceita para processamento</strong>. Isto significa que a nota irá para uma fila de processamento
+onde eventualmente será processada (processamento assíncrono). Com isto, a nota poderá ser autorizada ou ocorrer um erro na autorização, de acordo com a validação da SEFAZ.</p>
+
+<p>Para verificar se a nota já foi autorizada, você terá que efetuar uma <a href="#cte_consulta">consulta</a>.</p>
+
+<p>Envia uma CTe OS para autorização:</p>
+
+<p><code>https://api.focusnfe.com.br/v2/cte_os?ref=REFERENCIA</code></p>
+
+<p>Utilize o comando HTTP POST para enviar a sua nota para nossa API. Ao contrátio da CTe convencional, a CTe OS é processada de forma <strong>síncrona</strong>, na mesma requição em que os dados são enviadas.</p>
+<h2 id='cte-e-cte-os-beta_consulta'>Consulta</h2>
+<p>Para consultar uma CTe utilize a URL abaixo, alterando o ambiente de produção para homologação, caso esteja emitindo notas de teste.</p>
+
+<p>Consultar as informações de uma CTe:</p>
+
+<p>https://api.focusnfe.com.br/v2/cte/REFERENCIA?completo=(0|1)</p>
+
+<p>Utilize o comando HTTP GET para consultar a sua nota para nossa API.</p>
+<pre class="highlight shell tab-shell"><code>curl -u token_enviado_pelo_suporte: <span class="se">\</span>
+  http://homologacao.acrasnfe.acras.com.br/v2/cte/12345
+</code></pre><pre class="highlight plaintext"><code>&gt; Exemplo de resposta da consulta de CTe:
+
+```json
+{
+    "cnpj_emitente": "11111151000119",
+    "ref": "ref123",
+    "status": "autorizado",
+    "status_sefaz": "100",
+    "mensagem_sefaz": "Autorizado o uso do CT-e",
+    "chave": "CTe21111114611151000119570010000000111973476363",
+    "numero": "11",
+    "serie": "1",
+    "modelo": "57",
+    "caminho_xml": "https://focusnfe.s3-sa-east-1.amazonaws.com/arquivos_development/11111151000119/201805/XMLs/311110000007009_v03.00-protCTe.xml",
+    "caminho_xml_carta_correcao": "https://focusnfe.s3-sa-east-1.amazonaws.com/arquivos_development/11111151000119/201805/XMLs/311110000007012_v03.00-eventoCTe.xml"
+}
+</code></pre>
+<p>Campos de retorno:</p>
+
+<ul>
+<li><strong>cnpj_emitente</strong>: O CNPJ emitente da CTe (o CNPJ de sua empresa).</li>
+<li><strong>ref</strong>:A referência da emissão.</li>
+<li><strong>status</strong>: A situação da CTe, podendo ser:
+
+<ul>
+<li><strong>processando_autorizacao</strong>: A nota ainda está em processamento pela API. Você deverá aguardar o processamento pela SEFAZ.</li>
+<li><strong>autorizado</strong>: A nota foi autorizada, neste caso é fornecido os dados completos da nota como chave e arquivos para download</li>
+<li><strong>cancelado</strong>: O documento foi cancelado, neste caso é fornecido o caminho para download do XML de cancelamento (caminho_xml_cancelamento).</li>
+<li><strong>erro_autorizacao</strong>: Houve um erro de autorização por parte da SEFAZ. A mensagem de erro você encontrará nos campos status_sefaz e mensagem_sefaz. É possível fazer o reenvio da nota com a mesma referência se ela estiver neste estado.</li>
+<li><strong>denegado</strong>: O documento foi denegado. Uma SEFAZ pode denegar uma nota se houver algum erro cadastral nos dados do destinatário ou do emitente. A mensagem de erro você encontrará nos campos status_sefaz e mensagem_sefaz. Não é possível reenviar a nota caso este estado seja alcançado pois é gerado um número, série, chave de CTe e XML para esta nota. O XML deverá ser armazenado pelo mesmo período de uma nota autorizada ou cancelada.</li>
+</ul></li>
+<li><strong>status_sefaz</strong>: O status da nota na SEFAZ.</li>
+<li><strong>mensagem_sefaz</strong>: Mensagem descritiva da SEFAZ detalhando o status.</li>
+<li><strong>serie</strong>: A série da CTe, caso ela tenha sido autorizada.</li>
+<li><strong>numero</strong>: O número da CTe, caso ela tenha sido autorizada.</li>
+<li><strong>modelo</strong>: O modelo da CTe, caso ela tenha sido autorizada.</li>
+<li><strong>chave_cte</strong>: A chave da CTe, caso ela tenha sido autorizada.</li>
+<li><strong>caminho_xml_nota_fiscal</strong>: caso a nota tenha sido autorizada, retorna o caminho para download do XML.</li>
+<li><strong>caminho_danfe</strong>: caso a nota tenha sido autorizada retorna o caminho para download do DACTe.</li>
+<li><strong>caminho_xml</strong>: caso tenha sido emitida alguma carta de correção, aqui aparecerá o caminho para fazer o download do XML.</li>
+<li><strong>caminho_xml_carta_correcao</strong>: caso tenha sido emitida alguma carta de correção, aqui aparecerá o caminho para fazer o download do XML da carta.</li>
+<li><strong>caminho_xml_cancelamento</strong>: Caso a nota esteja cancelada, é fornecido o caminho para fazer o download do XML de cancelamento.</li>
+</ul>
+
+<p>Caso na requisição seja passado o parâmetro <code>completo=1</code> será adicionado mais 6 campos:</p>
+
+<ul>
+<li><strong>requisicao</strong>: Inclui os dados completos da requisição da CTe, da mesma forma que constam no XML da nota.</li>
+<li><strong>protocolo</strong>: Inclui os dados completos do protocolo devolvido pela SEFAZ.</li>
+<li><strong>requisicao_cancelamento</strong>: Inclui os dados completos da requisição de cancelamento da CTe.</li>
+<li><strong>protocolo_cancelamento</strong>: Inclui os dados completos do protocolo devolvido pela SEFAZ.</li>
+<li><strong>requisicao_carta_correcao</strong>: Inclui os dados completos da requisição de Carta de Correção Eletrônica da CTe.</li>
+<li><strong>protocolo_carta_correcao</strong>: Inclui os dados completos do protocolo devolvido pela SEFAZ.</li>
+</ul>
+
+<blockquote>
+<p>Exemplo de campos extras na consulta completa</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+
+  </span><span class="s2">"cnpj_emitente"</span><span class="p">:</span><span class="w"> </span><span class="s2">"11111151000119"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ref123"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"autorizado"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"status_sefaz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"100"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"mensagem_sefaz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Autorizado o uso do CT-e"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"chave"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CTe21111114611151000119570010000000111973476363"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"numero"</span><span class="p">:</span><span class="w"> </span><span class="s2">"11"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"serie"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"modelo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"57"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"caminho_xml"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://focusnfe.s3-sa-east-1.amazonaws.com/arquivos_development/11111151000119/201805/XMLs/311110000007009_v03.00-protCTe.xml"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"caminho_xml_carta_correcao"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://focusnfe.s3-sa-east-1.amazonaws.com/arquivos_development/11111151000119/201805/XMLs/311110000007012_v03.00-eventoCTe.xml"</span><span class="w">
+  </span><span class="s2">"requisicao"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="err">/*</span><span class="w"> </span><span class="err">campos</span><span class="w"> </span><span class="err">da</span><span class="w"> </span><span class="err">CTe</span><span class="w"> </span><span class="err">aqui</span><span class="w"> </span><span class="err">omitida</span><span class="w"> </span><span class="err">*/</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+  </span><span class="s2">"protocolo"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"versao"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3.00"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"id_tag"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CTe329180000007009"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"ambiente"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"versao_aplicativo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"RS20180430143216"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"chave"</span><span class="p">:</span><span class="w"> </span><span class="s2">"21111114611151000119570010000000111973476363"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"data_recimento"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-05-10T15:23:36-03:00"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"protocolo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"329180000007009"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"digest_value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PsPzcf7bCOwvNW+v2F+ZAzJPXJE="</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"100"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"motivo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Autorizado o uso do CT-e"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="s2">"requisicao_carta_correcao"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"versao"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3.00"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"id_tag"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ID21111114611151000119570010000000111973476363"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"codigo_orgao"</span><span class="p">:</span><span class="w"> </span><span class="s2">"29"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"ambiente"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"cnpj"</span><span class="p">:</span><span class="w"> </span><span class="s2">"14674451000119"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"chave_cte"</span><span class="p">:</span><span class="w"> </span><span class="s2">"21111114611151000119570010000000111973476363"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"data_evento"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-05-10T16:25:42-03:00"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"tipo_evento"</span><span class="p">:</span><span class="w"> </span><span class="s2">"110110"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"numero_sequencial_evento"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"versao_evento"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3.00"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="s2">"protocolo_carta_correcao"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"versao"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3.00"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"id_tag"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ID329180000007012"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"ambiente"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"versao_aplicativo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"RS20171205135830"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"codigo_orgao"</span><span class="p">:</span><span class="w"> </span><span class="s2">"29"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"135"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"motivo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Evento registrado e vinculado a CT-e"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"chave_cte"</span><span class="p">:</span><span class="w"> </span><span class="s2">"21111114611151000119570010000000111973476363"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"tipo_evento"</span><span class="p">:</span><span class="w"> </span><span class="s2">"110110"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"descricao_evento"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Carta Correção Registrada"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"numero_sequencial_evento"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"data_evento"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-05-10T16:25:43-03:00"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"protocolo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"329180000007012"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre><h2 id='cte-e-cte-os-beta_cancelamento'>Cancelamento</h2><pre class="highlight shell tab-shell"><code>curl -u token_enviado_pelo_suporte: <span class="se">\</span>
+  -X DELETE -d <span class="s1">'{"justificativa":"Teste de cancelamento de nota"}'</span> <span class="se">\</span>
+  http://homologacao.acrasnfe.acras.com.br/v2/cte/12345
+</code></pre>
+<blockquote>
+<p>Resposta da API para a requisição de cancelamento:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"status_sefaz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"135"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"mensagem_sefaz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Evento registrado e vinculado a CT-e"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cancelado"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"caminho_xml"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://focusnfe.s3-sa-east-1.amazonaws.com/arquivos_development/14674451000119/201805/XMLs/329180000006929_v03.00-eventoCTe.xml"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>Para cancelar uma CTe, basta fazer uma requisição à URL abaixo, alterando o ambiente de produção para homologação, caso esteja emitindo notas de teste.</p>
+
+<p>Cancelar uma CTe já autorizada:</p>
+
+<p><code>https://api.focusnfe.com.br/v2/nfe/REFERENCIA</code></p>
+
+<p>Utilize o comando HTTP DELETE para cancelar a sua nota para nossa API. Este método é síncrono, ou seja, a comunicação com a SEFAZ será feita imediatamente e devolvida a resposta na mesma requisição.</p>
+
+<p>O parâmetros de cancelamento deverão ser enviados da seguinte forma:</p>
+
+<ul>
+<li><strong>justificativa</strong>: Justificativa do cancelamento. Deverá conter de 15 a 255 caracteres.</li>
+</ul>
+
+<p>A API irá em seguida devolver os seguintes campos:</p>
+
+<ul>
+<li><strong>status</strong>: cancelado, se a nota pode ser cancelada, ou erro_cancelamento, se houve algum erro ao cancelar a nota.</li>
+<li><strong>status_sefaz</strong>: O status do cancelamento na SEFAZ.</li>
+<li><strong>mensagem_sefaz</strong>: Mensagem descritiva da SEFAZ detalhando o status.</li>
+<li><strong>caminho_xml</strong>: Caso a nota tenha sido cancelada, será informado aqui o caminho para download do XML de cancelamento.</li>
+</ul>
+<h3 id='cte-e-cte-os-beta_prazo-de-cancelamento'>Prazo de cancelamento</h3>
+<p>A CTe poderá ser cancelada em até 7 dias após a emissão.</p>
+<h2 id='cte-e-cte-os-beta_carta-de-correcao-eletronica'>Carta de Correção Eletrônica</h2>
+<p>Uma Carta de Correção eletrônica (CCe) pode ser utilizada para corrigir eventuais erros na CTe. As seguintes informações <strong>não podem ser corrigidas</strong>:</p>
+
+<ul>
+<li>As variáveis que determinam o valor do imposto tais como: base de cálculo, alíquota, diferença de preço, quantidade, valor da operação ou da prestação;</li>
+<li>A correção de dados cadastrais que implique mudança do remetente ou do destinatário;</li>
+<li>A data de emissão ou de saída.</li>
+</ul>
+
+<p>Não existe prazo especificado para emissão de cartas de correção. É possível enviar até 20 correções diferentes, sendo que será válido sempre a última correção enviada.</p>
+<h3 id='cte-e-cte-os-beta_emissao-de-cce'>Emissão de CCe</h3><pre class="highlight shell tab-shell"><code>curl -u token_enviado_pelo_suporte: <span class="se">\</span>
+  -X POST -d <span class="s1">'{"campo_corrigido":"observacoes","valor_corrigido":"Nova observação"}'</span> <span class="se">\</span>
+  http://homologacao.acrasnfe.acras.com.br/v2/cte/12345/carta_correcao
+</code></pre>
+<blockquote>
+<p>Resposta da API para a requisição de CCe:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="w">
+</span><span class="p">{</span><span class="w">
+  </span><span class="s2">"status_sefaz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"135"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"mensagem_sefaz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Evento registrado e vinculado a CT-e"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"autorizado"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"caminho_xml"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://focusnfe.s3-sa-east-1.amazonaws.com/arquivos_development/11111151000119/201805/XMLs/321110000006913_v03.00-eventoCTe.xml"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"numero_carta_correcao"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre>
+<p><code>https://api.focusnfe.com.br/v2/cte/REFERENCIA/carta_correcao</code></p>
+
+<p>Utilize o comando HTTP POST para enviar a sua correção para nossa API. Este método é <strong>síncrono</strong>, ou seja, a comunicação com a SEFAZ será feita imediatamente e devolvida a resposta na mesma requisição.</p>
+
+<p>Ao contrário da NFe, na CTe é obrigatório informar especificamente o campo que será alterado. Você poderá usar os próprios nomes
+dos campos da API.</p>
+
+<p>O parâmetros da carta de correção deverão ser enviados da seguinte forma:</p>
+
+<ul>
+<li><strong>grupo_corrigido</strong>: Opcional. Indica o grupo onde se encontra o campo, por exemplo &quot;cargas&quot;. Pode ser omitido se não houver grupo relacionado.</li>
+<li><strong>campo_corrigido</strong>: Indica o campo a ser corrigido.</li>
+<li><strong>valor_corrigido</strong>: Indica o novo valor do campo.</li>
+<li><strong>numero_item_grupo_corrigido</strong>: Opcional. Caso o campo pertença a uma lista de itens, o número do item a ser corrigido é informado aqui. O primeiro número começa em 1.</li>
+<li><strong>campo_api</strong>: Opcional. Se igual a 1 será usado o nome do campo da API nos campos &#39;grupo_corrigido&#39; e &#39;campo_corrigido&#39;. Se igual a 0 você deverá informar a tag XML. Valor default é 1.</li>
+</ul>
+
+<p>A API irá em seguida devolver os seguintes campos:</p>
+
+<ul>
+<li><strong>status</strong>: autorizado, se a carta de correção foi aceita pela SEFAZ, ou erro_autorizacao, se houve algum erro ao cancelar a nota.</li>
+<li><strong>status_sefaz</strong>: O status da carta de correção na SEFAZ.</li>
+<li><strong>mensagem_sefaz</strong>: Mensagem descritiva da SEFAZ detalhando o status.</li>
+<li><strong>caminho_xml</strong>: Informa o caminho do XML da carta de correção, caso ela tenha sido autorizada.</li>
+<li><strong>numero_carta_correcao</strong>: Informa o número da carta de correção, caso ela tenha sido autorizada.</li>
+</ul>
+
+<p>Para uma mesma CTe é possível enviar mais de uma carta de correção, sendo que a última sempre substitui a anterior.</p>
+<h2 id='cte-e-cte-os-beta_inutilizacao'>Inutilização</h2>
+<blockquote>
+<p>Resposta da API para a requisição de inutilização:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="w"> </span><span class="p">{</span><span class="w">
+  </span><span class="s2">"status_sefaz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"102"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"mensagem_sefaz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Inutilizacao de numero homologado"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"serie"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"numero_inicial"</span><span class="p">:</span><span class="w"> </span><span class="s2">"800"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"numero_final"</span><span class="p">:</span><span class="w"> </span><span class="s2">"801"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"autorizado"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"caminho_xml"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://focusnfe.s3-sa-east-1.amazonaws.com/arquivos_development/11111353000900/207701/XMLs/999992335309999955003000000800000000801-inu.xml"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>Em uma situação normal você não precisará informar ao SEFAZ a inutilização de um número da CTe, pois a API controla automaticamente a numeração das notas. Porém, se por alguma situação específica for necessário a inutilização de alguma faixa de números você poderá chamar as seguintes operações:</p>
+
+<p>Envio de inutilização de faixa de numeração:</p>
+
+<p><code>https://api.focusnfe.com.br/v2/cte/inutilizacao</code></p>
+
+<p>Utilize o comando HTTP POST para enviar a sua inutilização para nossa API. Este método é <strong>síncrono</strong>, ou seja, a comunicação com a SEFAZ será feita imediatamente e devolvida a resposta na mesma requisição.</p>
+
+<p>A inutilização precisa dos seguintes parâmetros obrigatórios:</p>
+
+<ul>
+<li><strong>cnpj</strong>: CNPJ da empresa emitente</li>
+<li><strong>serie</strong>: Série da numeração da CTe que terá uma faixa de numeração inutilizada</li>
+<li><strong>numero_inicial</strong>: Número inicial a ser inutilizado</li>
+<li><strong>numero_final</strong>: Número final a ser inutilizado</li>
+<li><strong>justificativa</strong>: Justificativa da inutilização (mínimo 15 caracteres)</li>
+<li><strong>modelo</strong>: Informe o modelo da CTe. Se igual a 57 será a CTe normal, se igual a 67 será a CTe OS. Valor default é 57.</li>
+</ul>
+
+<p>A API irá enviar uma resposta com os seguintes campos:</p>
+
+<ul>
+<li><strong>status</strong>: autorizado, se a inutilização foi aceita pela SEFAZ, ou erro_autorizacao, se houve algum erro ao inutilizar os números.</li>
+<li><strong>status_sefaz</strong>: O status da carta de correção na SEFAZ.</li>
+<li><strong>mensagem_sefaz</strong>: Mensagem descritiva da SEFAZ detalhando o status.</li>
+<li><strong>serie</strong>: Série da numeração da CTe que terá uma faixa de numeração inutilizada</li>
+<li><strong>numero_inicial</strong>: Número inicial a ser inutilizado</li>
+<li><strong>numero_final</strong>: Número final a ser inutilizado</li>
+<li><strong>caminho_xml</strong>: Caminho do XML para download caso a inutilização tenha sido autorizada pela SEFAZ.</li>
+</ul>
+<h1 id='backups-nfe-nfce-e-cte_backups-nfe-nfce-e-cte'>Backups (NFe, NFCe e CTe)</h1>
 <p>Atualmente, realizamos o backup de todos os arquivos XML’s das notas fiscais emitidas pela nossa API. Vale lembrar que o XML é um arquivo com validade legal e deve ser armazenado pelos emitentes, para fins fiscais, por no mínimo 5 anos após a emissão.</p>
 
 <p>Mensalmente a API (primeira hora do primeiro dia de cada mês) gera um arquivo compactado em formato ZIP com todos os arquivos gerados de cada empresa.</p>
@@ -6404,11 +7015,13 @@ url = "https://api.focusnfe.com.br"
 <li>Recebimento de um novo documento fiscal</li>
 </ul></li>
 </ul>
+
+<p>Os gatilhos para autorização de CTe deverão ser disponibilizados em breve.</p>
 <h2 id='gatilhos_criacao'>Criação</h2><pre class="highlight python tab-python"><code><span class="c"># Faça o download e instalação da biblioteca requests, através do python-pip.</span>
 <span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">requests</span>
 
-<span class="s">''' 
+<span class="s">'''
 Para ambiente de produção use a variável abaixo:
 url = "https://api.focusnfe.com.br"
 '''</span>
@@ -6515,7 +7128,7 @@ Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensi
 
 <span class="kd">var</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">"http://homologacao.acrasnfe.acras.com.br/v2/hooks"</span><span class="p">;</span>
 
-<span class="cm">/* 
+<span class="cm">/*
 Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
 Passamos o token como quarto parametro deste metodo, como autenticador do HTTP Basic Authentication.
 */</span>
@@ -6563,7 +7176,7 @@ Passamos o token como quarto parametro deste metodo, como autenticador do HTTP B
 <h2 id='gatilhos_consulta'>Consulta</h2><pre class="highlight python tab-python"><code><span class="c"># Faça o download e instalação da biblioteca requests, através do python-pip.</span>
 <span class="kn">import</span> <span class="nn">requests</span>
 
-<span class="s">''' 
+<span class="s">'''
 Para ambiente de produção use a variável abaixo:
 url = "https://api.focusnfe.com.br"
 '''</span>
@@ -6656,7 +7269,7 @@ Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensi
 
 <span class="kd">var</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">"http://homologacao.acrasnfe.acras.com.br/v2/hooks/"</span> <span class="o">+</span> <span class="nx">hook_id</span><span class="p">;</span>
 
-<span class="cm">/* 
+<span class="cm">/*
 Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
 Passamos o token como quarto parametro deste metodo, como autenticador do HTTP Basic Authentication.
 */</span>
@@ -6694,7 +7307,7 @@ Passamos o token como quarto parametro deste metodo, como autenticador do HTTP B
 <h2 id='gatilhos_exclusao'>Exclusão</h2><pre class="highlight python tab-python"><code> <span class="n">Fa</span><span class="err">ç</span><span class="n">a</span> <span class="n">o</span> <span class="n">download</span> <span class="n">e</span> <span class="n">instala</span><span class="err">çã</span><span class="n">o</span> <span class="n">da</span> <span class="n">biblioteca</span> <span class="n">requests</span><span class="p">,</span> <span class="n">atrav</span><span class="err">é</span><span class="n">s</span> <span class="n">do</span> <span class="n">python</span><span class="o">-</span><span class="n">pip</span><span class="o">.</span>
 <span class="kn">import</span> <span class="nn">requests</span>
 
-<span class="s">''' 
+<span class="s">'''
 Para ambiente de produção use a variável abaixo:
 url = "https://api.focusnfe.com.br"
 '''</span>
@@ -6789,7 +7402,7 @@ Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensi
 
 <span class="kd">var</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">"http://homologacao.acrasnfe.acras.com.br/v2/hooks/"</span> <span class="o">+</span> <span class="nx">hook_id</span><span class="p">;</span>
 
-<span class="cm">/* 
+<span class="cm">/*
 Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
 Passamos o token como quarto parametro deste metodo, como autenticador do HTTP Basic Authentication.
 */</span>
