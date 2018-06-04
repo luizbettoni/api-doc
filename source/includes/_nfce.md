@@ -25,7 +25,7 @@ POST | /v2/nfce/inutilizacao | Inutiliza uma numeração da nota fiscal
 
 Atualmente, a NFe possui centenas de campos para os mais variados tipos e formas de operações, por isso, criamos uma página exclusiva que mostra todos os campos da nossa API para o envio de NFe. Nela, você pode buscar os campos pela TAG XML ou pela nossa tradução para API.
 
-[Documentação completa dos campos (versão 4.00 da NFe)] (https://focusnfe.com.br/dls/4.0/NotaFiscalXML.html)
+[Documentação completa dos campos (versão 4.00 da NFe)] (https://focusnfe.com.br/dsl/4.0/NotaFiscalXML.html)
 
 [Documentação completa dos campos – versão 3.10 da NFe – Disponível até 2/julho/2018] (https://focusnfe.com.br/dsl/lang/NotaFiscalXML.html)
 
