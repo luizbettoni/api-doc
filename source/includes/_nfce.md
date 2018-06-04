@@ -25,9 +25,9 @@ POST | /v2/nfce/inutilizacao | Inutiliza uma numeração da nota fiscal
 
 Atualmente, a NFe possui centenas de campos para os mais variados tipos e formas de operações, por isso, criamos uma página exclusiva que mostra todos os campos da nossa API para o envio de NFe. Nela, você pode buscar os campos pela TAG XML ou pela nossa tradução para API.
 
-[Documentação completa dos campos (versão 4.00 da NFe)] (https://focusnfe.com.br/nfe/4.0/NotaFiscalXML.html)
+[Documentação completa dos campos (versão 4.00 da NFe)] (https://focusnfe.com.br/dls/4.0/NotaFiscalXML.html)
 
-[Documentação completa dos campos – versão 3.10 da NFe – Disponível até 2/julho/2018] (https://focusnfe.com.br/nfe/lang/NotaFiscalXML.html)
+[Documentação completa dos campos – versão 3.10 da NFe – Disponível até 2/julho/2018] (https://focusnfe.com.br/dsl/lang/NotaFiscalXML.html)
 
 Abaixo, iremos mostrar todos os campos de uso mais comum para emissão de uma NFCe.
 
@@ -225,7 +225,7 @@ Além dos campos acima, os campos abaixo são preenchidos automaticament para NF
 import json
 import requests
 
-''' 
+'''
 Para ambiente de produção use a variável abaixo:
 url = "https://api.focusnfe.com.br"
 '''
@@ -235,7 +235,7 @@ url = "http://homologacao.acrasnfe.acras.com.br/v2/nfce"
 ref = {"ref":"1234"}
 
 token="token_enviado_pelo_suporte"
- 
+
 '''
 Usamos dicionarios para armazenar os campos e valores que em seguida,
 serao convertidos em JSON e enviados para nossa API
@@ -502,7 +502,7 @@ Para ambiente de producao use a URL abaixo:
 */
 var url = "http://homologacao.acrasnfe.acras.com.br/v2/nfce?ref=" + ref;
 
-/* 
+/*
 Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
 Passamos o token como quarto parametro deste metodo, como autenticador do HTTP Basic Authentication.
 */
@@ -581,7 +581,7 @@ O envio de uma NFCe é um processo **síncrono**, ou seja, diferente da NFe a no
 # Faça o download e instalação da biblioteca requests, através do python-pip.
 import requests
 
-''' 
+'''
 Para ambiente de produção use a variável abaixo:
 url = "https://api.focusnfe.com.br"
 '''
@@ -701,7 +701,7 @@ Para ambiente de producao use a URL abaixo:
 */
 var url = "http://homologacao.acrasnfe.acras.com.br/v2/nfce/" + ref + "?completa=1";
 
-/* 
+/*
 Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
 Passamos o token como quarto parametro deste metodo, como autenticador do HTTP Basic Authentication.
 */
@@ -757,7 +757,7 @@ Campos de retorno:
 * **chave_nfe:** A chave da NFe, caso ela tenha sido autorizada.
 * **caminho_xml_nota_fiscal:** caso a nota tenha sido autorizada, retorna o caminho para download do XML.
 * **caminho_danfe:** caso a nota tenha sido autorizada retorna o caminho para download do DANFe.
-* **caminho_xml_cancelamento:** Caso a nota esteja cancelada, é fornecido o caminho para fazer o download do XML de cancelamento. 
+* **caminho_xml_cancelamento:** Caso a nota esteja cancelada, é fornecido o caminho para fazer o download do XML de cancelamento.
 
 Caso na requisição seja passado o parâmetro `completa=1` será adicionado mais 6 campos:
 
@@ -837,7 +837,7 @@ Caso na requisição seja passado o parâmetro `completa=1` será adicionado mai
 import json
 import requests
 
-''' 
+'''
 Para ambiente de produção use a variável abaixo:
 url = "https://api.focusnfe.com.br"
 '''
@@ -975,7 +975,7 @@ Para ambiente de producao use a URL abaixo:
 */
 var url = "http://homologacao.acrasnfe.acras.com.br/v2/nfe/"+ ref;
 
-/* 
+/*
 Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
 Passamos o token como quarto parametro deste metodo, como autenticador do HTTP Basic Authentication.
 */
@@ -1025,7 +1025,7 @@ A NFCe poderá ser cancelada em até 24 horas após a emissão.
 import json
 import requests
 
-''' 
+'''
 Para ambiente de produção use a variável abaixo:
 url = "https://api.focusnfe.com.br"
 '''
@@ -1169,7 +1169,7 @@ Para ambiente de producao use a URL abaixo:
 */
 var url = "http://homologacao.acrasnfe.acras.com.br/v2/nfce/inutilizacao";
 
-/* 
+/*
 Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
 Passamos o token como quarto parametro deste metodo, como autenticador do HTTP Basic Authentication.
 */
@@ -1226,7 +1226,7 @@ A API irá enviar uma resposta com os seguintes campos:
 import json
 import requests
 
-''' 
+'''
 Para ambiente de produção use a variável abaixo:
 url = "https://api.focusnfe.com.br"
 '''
@@ -1372,7 +1372,7 @@ Para ambiente de producao use a URL abaixo:
 */
 var url = "http://homologacao.acrasnfe.acras.com.br/v2/nfce/" + ref + "/email";
 
-/* 
+/*
 Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
 Passamos o token como quarto parametro deste metodo, como autenticador do HTTP Basic Authentication.
 */

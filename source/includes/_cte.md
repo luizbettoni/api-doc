@@ -151,6 +151,8 @@ Além dos campos descritos acima, cada CTe deverá obrigatoriamente informar um 
 * modal_dutoviario [para transporte dutoviário.] (https://focusnfe.com.br/dsl/3.0/TransporteDutoviarioXML.html)
 * modal_multimodal [para transporte que utilize mais de um modal.] (https://focusnfe.com.br/dsl/3.0/TransporteMultimodalXML.html)
 
+Para CTe-OS é necessário informar dados adicionais do modal **apenas quando este for rodoviário**. Nos outros casos não é necessário.
+
 
 
 ## Envio
