@@ -2663,9 +2663,9 @@ e NFSe.</p>
 <h2 id='nfce_campos-obrigatorios-de-uma-nfce'>Campos obrigatórios de uma NFCe</h2>
 <p>Atualmente, a NFe possui centenas de campos para os mais variados tipos e formas de operações, por isso, criamos uma página exclusiva que mostra todos os campos da nossa API para o envio de NFe. Nela, você pode buscar os campos pela TAG XML ou pela nossa tradução para API.</p>
 
-<p><a href="https://focusnfe.com.br/nfe/4.0/NotaFiscalXML.html">Documentação completa dos campos (versão 4.00 da NFe)</a></p>
+<p><a href="https://focusnfe.com.br/dls/4.0/NotaFiscalXML.html">Documentação completa dos campos (versão 4.00 da NFe)</a></p>
 
-<p><a href="https://focusnfe.com.br/nfe/lang/NotaFiscalXML.html">Documentação completa dos campos – versão 3.10 da NFe – Disponível até 2/julho/2018</a></p>
+<p><a href="https://focusnfe.com.br/dsl/lang/NotaFiscalXML.html">Documentação completa dos campos – versão 3.10 da NFe – Disponível até 2/julho/2018</a></p>
 
 <p>Abaixo, iremos mostrar todos os campos de uso mais comum para emissão de uma NFCe.</p>
 
@@ -3317,7 +3317,7 @@ e NFSe.</p>
 <span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">requests</span>
 
-<span class="s">''' 
+<span class="s">'''
 Para ambiente de produção use a variável abaixo:
 url = "https://api.focusnfe.com.br"
 '''</span>
@@ -3582,7 +3582,7 @@ Para ambiente de producao use a URL abaixo:
 */</span>
 <span class="kd">var</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">"http://homologacao.acrasnfe.acras.com.br/v2/nfce?ref="</span> <span class="o">+</span> <span class="nx">ref</span><span class="p">;</span>
 
-<span class="cm">/* 
+<span class="cm">/*
 Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
 Passamos o token como quarto parametro deste metodo, como autenticador do HTTP Basic Authentication.
 */</span>
@@ -3656,7 +3656,7 @@ Passamos o token como quarto parametro deste metodo, como autenticador do HTTP B
 <h2 id='nfce_consulta'>Consulta</h2><pre class="highlight python tab-python"><code><span class="c"># Faça o download e instalação da biblioteca requests, através do python-pip.</span>
 <span class="kn">import</span> <span class="nn">requests</span>
 
-<span class="s">''' 
+<span class="s">'''
 Para ambiente de produção use a variável abaixo:
 url = "https://api.focusnfe.com.br"
 '''</span>
@@ -3764,7 +3764,7 @@ Para ambiente de producao use a URL abaixo:
 */</span>
 <span class="kd">var</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">"http://homologacao.acrasnfe.acras.com.br/v2/nfce/"</span> <span class="o">+</span> <span class="nx">ref</span> <span class="o">+</span> <span class="s2">"?completa=1"</span><span class="p">;</span>
 
-<span class="cm">/* 
+<span class="cm">/*
 Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
 Passamos o token como quarto parametro deste metodo, como autenticador do HTTP Basic Authentication.
 */</span>
@@ -3821,7 +3821,7 @@ Passamos o token como quarto parametro deste metodo, como autenticador do HTTP B
 <li><strong>chave_nfe:</strong> A chave da NFe, caso ela tenha sido autorizada.</li>
 <li><strong>caminho_xml_nota_fiscal:</strong> caso a nota tenha sido autorizada, retorna o caminho para download do XML.</li>
 <li><strong>caminho_danfe:</strong> caso a nota tenha sido autorizada retorna o caminho para download do DANFe.</li>
-<li><strong>caminho_xml_cancelamento:</strong> Caso a nota esteja cancelada, é fornecido o caminho para fazer o download do XML de cancelamento. </li>
+<li><strong>caminho_xml_cancelamento:</strong> Caso a nota esteja cancelada, é fornecido o caminho para fazer o download do XML de cancelamento.</li>
 </ul>
 
 <p>Caso na requisição seja passado o parâmetro <code>completa=1</code> será adicionado mais 6 campos:</p>
@@ -3900,7 +3900,7 @@ Passamos o token como quarto parametro deste metodo, como autenticador do HTTP B
 <span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">requests</span>
 
-<span class="s">''' 
+<span class="s">'''
 Para ambiente de produção use a variável abaixo:
 url = "https://api.focusnfe.com.br"
 '''</span>
@@ -4026,7 +4026,7 @@ Para ambiente de producao use a URL abaixo:
 */</span>
 <span class="kd">var</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">"http://homologacao.acrasnfe.acras.com.br/v2/nfe/"</span><span class="o">+</span> <span class="nx">ref</span><span class="p">;</span>
 
-<span class="cm">/* 
+<span class="cm">/*
 Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
 Passamos o token como quarto parametro deste metodo, como autenticador do HTTP Basic Authentication.
 */</span>
@@ -4075,7 +4075,7 @@ Passamos o token como quarto parametro deste metodo, como autenticador do HTTP B
 <span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">requests</span>
 
-<span class="s">''' 
+<span class="s">'''
 Para ambiente de produção use a variável abaixo:
 url = "https://api.focusnfe.com.br"
 '''</span>
@@ -4207,7 +4207,7 @@ Para ambiente de producao use a URL abaixo:
 */</span>
 <span class="kd">var</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">"http://homologacao.acrasnfe.acras.com.br/v2/nfce/inutilizacao"</span><span class="p">;</span>
 
-<span class="cm">/* 
+<span class="cm">/*
 Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
 Passamos o token como quarto parametro deste metodo, como autenticador do HTTP Basic Authentication.
 */</span>
@@ -4262,7 +4262,7 @@ Passamos o token como quarto parametro deste metodo, como autenticador do HTTP B
 <span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">requests</span>
 
-<span class="s">''' 
+<span class="s">'''
 Para ambiente de produção use a variável abaixo:
 url = "https://api.focusnfe.com.br"
 '''</span>
@@ -4397,7 +4397,7 @@ Para ambiente de producao use a URL abaixo:
 */</span>
 <span class="kd">var</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">"http://homologacao.acrasnfe.acras.com.br/v2/nfce/"</span> <span class="o">+</span> <span class="nx">ref</span> <span class="o">+</span> <span class="s2">"/email"</span><span class="p">;</span>
 
-<span class="cm">/* 
+<span class="cm">/*
 Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
 Passamos o token como quarto parametro deste metodo, como autenticador do HTTP Basic Authentication.
 */</span>
@@ -4648,6 +4648,8 @@ Para realizar a reimpressão de determinada NFCe basta salvar um arquivo com nom
 <li>modal_dutoviario <a href="https://focusnfe.com.br/dsl/3.0/TransporteDutoviarioXML.html">para transporte dutoviário.</a></li>
 <li>modal_multimodal <a href="https://focusnfe.com.br/dsl/3.0/TransporteMultimodalXML.html">para transporte que utilize mais de um modal.</a></li>
 </ul>
+
+<p>Para CTe-OS é necessário informar dados adicionais do modal <strong>apenas quando este for rodoviário</strong>. Nos outros casos não é necessário.</p>
 <h2 id='cte-e-cte-os-beta_envio'>Envio</h2><pre class="highlight shell tab-shell"><code><span class="c"># arquivo.json deve conter os dados da CTe</span>
 curl -u token_enviado_pelo_suporte: <span class="se">\</span>
   -X POST -T cte.json http://homologacao.acrasnfe.acras.com.br/v2/cte?ref<span class="o">=</span>12345
