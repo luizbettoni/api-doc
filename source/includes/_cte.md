@@ -340,7 +340,7 @@ Para cancelar uma CTe, basta fazer uma requisição à URL abaixo, alterando o a
 
 Cancelar uma CTe já autorizada:
 
-`https://api.focusnfe.com.br/v2/nfe/REFERENCIA`
+`https://api.focusnfe.com.br/v2/cte/REFERENCIA`
 
 Utilize o comando HTTP DELETE para cancelar a sua nota para nossa API. Este método é síncrono, ou seja, a comunicação com a SEFAZ será feita imediatamente e devolvida a resposta na mesma requisição.
 
@@ -357,7 +357,7 @@ A API irá em seguida devolver os seguintes campos:
 * **caminho_xml**: Caso a nota tenha sido cancelada, será informado aqui o caminho para download do XML de cancelamento.
 
 ### Prazo de cancelamento
-A CTe poderá ser cancelada em até 7 dias após a emissão.
+A CTe poderá ser cancelada em até 7 dias após a emissão, na maioria dos Estados.
 
 ## Carta de Correção Eletrônica
 
