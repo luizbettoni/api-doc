@@ -195,7 +195,7 @@ Consultar as informações de uma CTe:
 
 `https://api.focusnfe.com.br/v2/cte/REFERENCIA?completo=(0|1)`
 
-Utilize o comando HTTP GET para consultar a sua nota para nossa API.
+Utilize o comando **HTTP GET** para consultar a sua nota para nossa API.
 
 Parâmetro Opcional | Ação
 -------|-------|-----

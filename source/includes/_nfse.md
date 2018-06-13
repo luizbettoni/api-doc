@@ -627,6 +627,11 @@ Recupera informações sobre a NFSe:
 
 Utilize o comando **HTTP GET** para consultar a sua nota para nossa API.
 
+Parâmetro Opcional | Ação
+-------|-------|-----
+completo = 0 ou 1 | Habilita a API há mostrar campos adicionais na requisição de consulta.
+
+
 ## Cancelamento
 ```python
 # Faça o download e instalação da biblioteca requests, através do python-pip.

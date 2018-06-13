@@ -807,9 +807,14 @@ Para consultar uma NFe utilize a URL abaixo, alterando o ambiente de produção 
 
 Consultar as informações de uma NFe:
 
-https://api.focusnfe.com.br/v2/nfe/REFERENCIA?completa=(0|1)
+`https://api.focusnfe.com.br/v2/nfe/REFERENCIA?completa=(0|1)`
 
-Utilize o comando HTTP GET para consultar a sua nota para nossa API.
+Utilize o comando **HTTP GET** para consultar a sua nota para nossa API.
+
+Parâmetro Opcional | Ação
+-------|-------|-----
+completo = 0 ou 1 | Habilita a API há mostrar campos adicionais na requisição de consulta.
+
 
 ```shell
 curl -u token_enviado_pelo_suporte: \
