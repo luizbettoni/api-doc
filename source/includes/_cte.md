@@ -154,9 +154,7 @@ Além dos campos descritos acima, cada CTe deverá obrigatoriamente informar um 
 Para CTe-OS é necessário informar dados adicionais do modal **apenas quando este for rodoviário**. Nos outros casos não é necessário.
 
 
-
 ## Envio
-
 
 ```shell
 # arquivo.json deve conter os dados da CTe
@@ -195,9 +193,14 @@ Para consultar uma CTe utilize a URL abaixo, alterando o ambiente de produção 
 
 Consultar as informações de uma CTe:
 
-https://api.focusnfe.com.br/v2/cte/REFERENCIA?completo=(0|1)
+`https://api.focusnfe.com.br/v2/cte/REFERENCIA?completo=(0|1)`
 
 Utilize o comando HTTP GET para consultar a sua nota para nossa API.
+
+Parâmetro Opcional | Ação
+-------|-------|-----
+completo = 0 ou 1 | Habilita a API há mostrar campos adicionais na requisição de consulta.
+
 
 ```shell
 curl -u token_enviado_pelo_suporte: \
