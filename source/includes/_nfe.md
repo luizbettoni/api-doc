@@ -900,18 +900,6 @@ O sistema cliente da API pode acompanhar este processo de forma transparente, co
 
 ## Consulta
 
-Para consultar uma NFe utilize a URL abaixo, alterando o ambiente de produção para homologação, caso esteja emitindo notas de teste.
-
-Consultar as informações de uma NFe:
-
-`https://api.focusnfe.com.br/v2/nfe/REFERENCIA?completa=(0|1)`
-
-Utilize o comando **HTTP GET** para consultar a sua nota para nossa API.
-
-Parâmetro Opcional | Ação
--------|-------|-----
-completa = 0 ou 1 | Habilita a API há mostrar campos adicionais na requisição de consulta.
-
 ```python
 # Faça o download e instalação da biblioteca requests, através do python-pip.
 import requests
@@ -967,6 +955,7 @@ print("");
 curl_close($ch);
 ?>
 ```
+
 ```java
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
@@ -1010,18 +999,6 @@ public class NFe_consulta {
 		System.out.printf(body);
 	}
 }
-
-Após emitir uma nota, você poderá usar a operação de consulta para verificar se a nota já foi aceita para processamento, se está
-ainda em processamento ou se a nota já foi processada.
-
-Para consultar uma NFe utilize a URL abaixo, alterando o ambiente de produção para homologação, caso esteja emitindo notas de teste.
-
-Consultar as informações de uma NFe:
-
-`https://api.focusnfe.com.br/v2/nfe/REFERENCIA`
-
-Utilize o comando HTTP GET para consultar a sua nota para nossa API.
-
 ```
 
 ```javascript
@@ -1079,6 +1056,21 @@ console.log("Corpo: " + request.responseText);
   "numero_carta_correcao": 1
 }
 ```
+
+Após emitir uma nota, você poderá usar a operação de consulta para verificar se a nota já foi aceita para processamento, se está
+ainda em processamento ou se a nota já foi processada.
+
+Para consultar uma NFe utilize a URL abaixo, alterando o ambiente de produção para homologação, caso esteja emitindo notas de teste.
+
+Consultar as informações de uma NFe:
+
+`https://api.focusnfe.com.br/v2/nfe/REFERENCIA?completa=(0|1)`
+
+Utilize o comando **HTTP GET** para consultar a sua nota para nossa API.
+
+Parâmetro Opcional | Ação
+-------|-------|-----
+completa = 0 ou 1 | Habilita a API há mostrar campos adicionais na requisição de consulta.
 
 Campos de retorno:
 
@@ -1381,16 +1373,6 @@ A NFe poderá ser cancelada em até 24 horas após a emissão. No entanto, algun
 
 ## Carta de Correção Eletrônica
 
-Uma Carta de Correção eletrônica (CCe) pode ser utilizada para corrigir eventuais erros na NFe. As seguintes informações **não podem ser corrigidas**:
-
-* As variáveis que determinam o valor do imposto tais como: base de cálculo, alíquota, diferença de preço, quantidade, valor da operação ou da prestação;
-* A correção de dados cadastrais que implique mudança do remetente ou do destinatário;
-* A data de emissão ou de saída.
-
-Não existe prazo especificado para emissão de cartas de correção. É possível enviar até 20 correções diferentes, sendo que será válido sempre a última correção enviada.
-
-### Emissão de CCe
-
 ```shell
 curl -u token_enviado_pelo_suporte: \
   -X POST -d '{"correcao":"Teste de carta de correcao"}' \
@@ -1565,6 +1547,16 @@ print(r.status_code, r.text)
   "numero_carta_correcao": 1
 }
 ```
+
+Uma Carta de Correção eletrônica (CCe) pode ser utilizada para corrigir eventuais erros na NFe. As seguintes informações **não podem ser corrigidas**:
+
+* As variáveis que determinam o valor do imposto tais como: base de cálculo, alíquota, diferença de preço, quantidade, valor da operação ou da prestação;
+* A correção de dados cadastrais que implique mudança do remetente ou do destinatário;
+* A data de emissão ou de saída.
+
+Não existe prazo especificado para emissão de cartas de correção. É possível enviar até 20 correções diferentes, sendo que será válido sempre a última correção enviada.
+
+### Emissão de CCe
 
 `https://api.focusnfe.com.br/v2/nfe/REFERENCIA/carta_correcao`
 
