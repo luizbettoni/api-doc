@@ -620,7 +620,7 @@ print(r.status_code, r.text)
 
 Para enviar uma CTe utilize a URL abaixo, alterando o ambiente de produção para homologação, caso esteja emitindo notas de teste.
 
-Envia uma CTe para autorização:
+Envia uma **CTe** para autorização:
 
 `https://api.focusnfe.com.br/v2/cte?ref=REFERENCIA`
 
@@ -634,12 +634,12 @@ onde eventualmente será processada (processamento assíncrono). Com isto, a not
 
 Para verificar se a nota já foi autorizada, você terá que efetuar uma [consulta](#cte_consulta).
 
-Envia uma CTe OS para autorização:
+Envia uma **CTe OS** para autorização:
 
 `https://api.focusnfe.com.br/v2/cte_os?ref=REFERENCIA`
 
-Utilize o comando HTTP POST para enviar a sua nota para nossa API. Ao contrátio da CTe convencional, a CTe OS é processada de forma **síncrona**, na mesma requição em que os dados são enviadas.
-
+Utilize o comando **HTTP POST** para enviar a sua nota para nossa API. 
+Ao contrátio da CTe convencional, a CTe OS é processada de forma **síncrona**, na mesma requição em que os dados são enviadas.
 
 ## Consulta
 
@@ -798,7 +798,7 @@ Utilize o comando **HTTP GET** para consultar a sua nota para nossa API.
 
 Parâmetro Opcional | Ação
 -------|-------|-----
-completo = 0 ou 1 | Habilita a API há mostrar campos adicionais na requisição de consulta.
+completa = 0 ou 1 | Habilita a API há mostrar campos adicionais na requisição de consulta.
 
 Campos de retorno:
 

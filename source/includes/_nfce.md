@@ -715,7 +715,6 @@ console.log("Corpo: " + request.responseText);
 
 ```
 
-
 Para consultar uma NFCe utilize a URL abaixo, alterando o ambiente de produção para homologação, caso esteja emitindo notas de teste.
 
 Consultar as informações de uma NFCe:
@@ -726,7 +725,7 @@ Utilize o comando **HTTP GET** para consultar a sua nota para nossa API.
 
 Parâmetro Opcional | Ação
 -------|-------|-----
-completo = 0 ou 1 | Habilita a API há mostrar campos adicionais na requisição de consulta.
+completa = 0 ou 1 | Habilita a API há mostrar campos adicionais na requisição de consulta.
 
 
 > Exemplo de resposta da consulta de NFCe (completa=0):
@@ -773,7 +772,7 @@ Caso na requisição seja passado o parâmetro `completa=1` será adicionado mai
 * **requisicao_carta_correcao**: Inclui os dados completos da requisição de Carta de Correção Eletrônica da NFe.
 * **protocolo_carta_correcao**: Inclui os dados completos do protocolo devolvido pela SEFAZ.
 
-> Exemplo de campos extras na consulta completa (completa=1):
+> Exemplo de resposta usando o parâmetro opcional, completa, recebendo o valor "1":
 
 ```json
 {
