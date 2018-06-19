@@ -186,6 +186,459 @@ Envia uma CTe OS para autorização:
 
 Utilize o comando HTTP POST para enviar a sua nota para nossa API. Ao contrátio da CTe convencional, a CTe OS é processada de forma **síncrona**, na mesma requição em que os dados são enviadas.
 
+```java
+
+import java.util.HashMap;
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.client.WebResource;
+import com.sun.jersey.api.client.config.ClientConfig;
+import com.sun.jersey.api.client.config.DefaultClientConfig;
+import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
+
+public class autorizar {
+
+  public static void main(String[] args) throws JSONException{
+    
+    String login = "Token_enviado_pelo_suporte";
+
+    /* Substituir pela sua identificação interno do CTe. */
+    String ref = "12345";
+    
+    /* Para ambiente de produção use a variável abaixo:
+    String server = "https://api.focusnfe.com.br/"; */
+    String server = "http://homologacao.acrasnfe.acras.com.br/";
+    
+    String url = server.concat("v2/cte_os?ref="+ref);
+  
+    /* Configuração para realizar o HTTP BasicAuth. */
+    Object config = new DefaultClientConfig();
+    Client client = Client.create((ClientConfig) config);
+    client.addFilter(new HTTPBasicAuthFilter(login, ""));
+    
+    /* Aqui são criados as hash's que receberão os dados do CTe. */
+    HashMap<String, String> cte = new HashMap<String, String>();
+    HashMap<String, String> seguros_carga = new HashMap<String, String>();
+    HashMap<String, String> documentos_referenciados = new HashMap<String, String>();
+   
+    cte.put("bairro_emitente","Sao Cristova");
+    cte.put("bairro_tomador","Bacacheri");
+    cte.put("cep_emitente","99880077");
+    cte.put("cep_tomador","88991188");
+    cte.put("cfop","5353");
+    cte.put("cnpj_emitente","51916585000125");
+    cte.put("cnpj_tomador","51966818092777");
+    cte.put("codigo_municipio_emitente","2927408");
+    cte.put("codigo_municipio_envio","5200050");
+    cte.put("codigo_municipio_fim","3100104");
+    cte.put("codigo_municipio_inicio","5200050");
+    cte.put("codigo_municipio_tomador","4106902");
+    cte.put("codigo_pais_tomador","1058");
+    cte.put("complemento_emitente","Andar 19 - sala 23");
+    cte.put("data_emissao","2018-06-18T09:17:00");
+    cte.put("descricao_servico","Descricao do seu servico aqui");
+    cte.put("funcionario_emissor","Nome do funcionario que fez a emissao");
+    cte.put("icms_aliquota","17.00");
+    cte.put("icms_base_calculo","1.00");
+    cte.put("icms_situacao_tributaria","00");
+    cte.put("icms_valor","0.17");
+    cte.put("indicador_inscricao_estadual_tomador","9");
+    cte.put("inscricao_estadual_emitente","12345678");
+    cte.put("logradouro_emitente","Aeroporto Internacional de Salvador");
+    cte.put("logradouro_tomador","Rua Joao Dalegrave");
+    cte.put("modal","02");
+    cte.put("municipio_emitente","Salvador");
+    cte.put("municipio_envio","Abadia de Goias");
+    cte.put("municipio_fim","Abadia dos Dourados");
+    cte.put("municipio_inicio","Abadia de Goias");
+    cte.put("municipio_tomador","Curitiba");
+    cte.put("natureza_operacao","PREST. DE SERV. TRANSPORTE A ESTAB. COMERCIAL");
+    cte.put("nome_emitente","ACME LTDA");
+    cte.put("nome_fantasia_emitente","ACME");
+    cte.put("nome_fantasia_tomador","Nome do tomador do servico aqui");
+    cte.put("nome_tomador","NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL");
+    cte.put("numero_emitente","S/N");
+    cte.put("numero_fatura","1");
+    cte.put("numero_tomador","1");
+    cte.put("pais_tomador","BRASIL");
+    cte.put("quantidade","1.0000");
+    cte.put("telefone_emitente","4133336666");
+    cte.put("tipo_documento","0");
+    cte.put("tipo_servico","6");
+    cte.put("uf_emitente","BA");
+    cte.put("uf_envio","GO");
+    cte.put("uf_fim","MG");
+    cte.put("uf_inicio","GO");
+    cte.put("uf_tomador","PR");
+    cte.put("valor_desconto_fatura","0.00");
+    cte.put("valor_inss","0.10");
+    cte.put("valor_liquido_fatura","1.00");
+    cte.put("valor_original_fatura","1.00");
+    cte.put("valor_receber","1.00");
+    cte.put("valor_total","1.00");
+    cte.put("valor_total_tributos","0.00");
+    seguros_carga.put("nome_seguradora","Nome da seguradora aqui");
+    seguros_carga.put("numero_apolice","12345");
+    seguros_carga.put("responsavel_seguro","4");
+    documentos_referenciados.put("data_emissao","2018-06-18");
+    documentos_referenciados.put("numero","1");
+    documentos_referenciados.put("serie","1");
+    documentos_referenciados.put("subserie","1");
+    documentos_referenciados.put("valor","1.00");
+    
+    /* Depois de fazer o input dos dados, são criados os objetos JSON já com os valores das hash's. */
+    JSONObject json = new JSONObject (cte);
+    JSONObject JsonSeguros_carga = new JSONObject (seguros_carga);
+    JSONObject JsonDocumentos_referenciados = new JSONObject (documentos_referenciados);
+    
+    /* Aqui adicionamos os objetos JSON nos campos da API como array no JSON principal. */
+    json.append("seguros_carga", JsonSeguros_carga);
+    json.append("documentos_referenciados", JsonDocumentos_referenciados);
+
+    /* É recomendado verificar como os dados foram gerados em JSON e se ele está seguindo a estrutura especificada em nossa documentação.*/
+    //System.out.print(json); 
+    
+    WebResource request = client.resource(url);
+
+    ClientResponse resposta = request.post(ClientResponse.class, json);
+
+    int HttpCode = resposta.getStatus(); 
+
+    String body = resposta.getEntity(String.class);
+    
+    /* As três linhas a seguir exibem as informações retornadas pela nossa API. 
+     * Aqui o seu sistema deverá interpretar e lidar com o retorno. */
+    System.out.print("HTTP Code: ");
+    System.out.print(HttpCode);
+    System.out.printf(body);
+  }
+}
+
+```
+
+```javascript
+/*
+As orientacoes a seguir foram extraidas do site do NPMJS: https://www.npmjs.com/package/xmlhttprequest
+Here's how to include the module in your project and use as the browser-based XHR object.
+Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensitive systems (eg Linux) using uppercase letters won't work.
+*/
+var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+
+var request = new XMLHttpRequest();
+
+var token = "Token_enviado_pelo_suporte";
+
+// Substituir pela sua identificação interno do CTe.
+var ref = "12345";
+
+/*
+Para ambiente de producao use a URL abaixo:
+"https://api.focusnfe.com.br"
+*/
+var url = "http://homologacao.acrasnfe.acras.com.br/v2/cte_os?ref=" + ref;
+
+/* 
+Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API.
+Passamos o token como quarto parametro deste metodo, como autenticador do HTTP Basic Authentication.
+*/
+request.open('POST', url, false, token);
+
+var cte = {  
+   "bairro_emitente":"S\u00e3o Cristov\u00e3o",
+   "bairro_tomador":"Bacacheri",
+   "cep_emitente":"99880077",
+   "cep_tomador":"88991188",
+   "cfop":"5353",
+   "cnpj_emitente":"51916585000125",
+   "cnpj_tomador":"51966818092777",
+   "codigo_municipio_emitente":"2927408",
+   "codigo_municipio_envio":"5200050",
+   "codigo_municipio_fim":"3100104",
+   "codigo_municipio_inicio":"5200050",
+   "codigo_municipio_tomador":"4106902",
+   "codigo_pais_tomador":"1058",
+   "complemento_emitente":"Andar 19 - sala 23",
+   "data_emissao":"2018-06-18T09:17:00",
+   "descricao_servico":"Descricao do seu servico aqui",
+   "documentos_referenciados":[  
+      {  
+         "data_emissao":"2018-06-10",
+         "numero":"1",
+         "serie":"1",
+         "subserie":"1",
+         "valor":"1.00"
+      }
+   ],
+   "funcionario_emissor":"Nome do funcionario que fez a emissao",
+   "icms_aliquota":"17.00",
+   "icms_base_calculo":"1.00",
+   "icms_situacao_tributaria":"00",
+   "icms_valor":"0.17",
+   "indicador_inscricao_estadual_tomador":"9",
+   "inscricao_estadual_emitente":"12345678",
+   "logradouro_emitente":"Aeroporto Internacional de Salvador",
+   "logradouro_tomador":"Rua Jo\u00e3o Dalegrave",
+   "modal":"02",
+   "municipio_emitente":"Salvador",
+   "municipio_envio":"Abadia de Goi\u00e1s",
+   "municipio_fim":"Abadia dos Dourados",
+   "municipio_inicio":"Abadia de Goi\u00e1s",
+   "municipio_tomador":"Curitiba",
+   "natureza_operacao":"PREST. DE SERV. TRANSPORTE A ESTAB. COMERCIAL",
+   "nome_emitente":"ACME LTDA",
+   "nome_fantasia_emitente":"ACME",
+   "nome_fantasia_tomador":"Nome do tomador do servico aqui",
+   "nome_tomador":"NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL",
+   "numero_emitente":"S/N",
+   "numero_fatura":"1",
+   "numero_tomador":"1",
+   "pais_tomador":"BRASIL",
+   "quantidade":"1.00",
+   "seguros_carga":[  
+      {  
+         "nome_seguradora":"Nome da seguradora aqui",
+         "numero_apolice":"12345",
+         "responsavel_seguro":4
+      }
+   ],
+   "telefone_emitente":"4133336666",
+   "tipo_documento":0,
+   "tipo_servico":6,
+   "uf_emitente":"BA",
+   "uf_envio":"GO",
+   "uf_fim":"MG",
+   "uf_inicio":"GO",
+   "uf_tomador":"PR",
+   "valor_desconto_fatura":"0.00",
+   "valor_inss":"0.10",
+   "valor_liquido_fatura":"1.00",
+   "valor_original_fatura":"1.00",
+   "valor_receber":"1.00",
+   "valor_total":"1.00",
+   "valor_total_tributos":"0.00"
+};
+
+// Aqui fazermos a serializacao do JSON com os dados do CTe e enviamos para API.
+request.send(JSON.stringify(cte));
+
+// Sua aplicacao tera que ser capaz de tratar as respostas da API.
+console.log("HTTP code: " + request.status);
+console.log("Corpo: " + request.responseText);
+
+```
+
+```php
+<?php
+
+// Para ambiente de produção use a variável abaixo:
+// $server = "https://api.focusnfe.com.br/";
+
+$server = "http://homologacao.acrasnfe.acras.com.br";
+
+// Substituir pela sua identificação interno do CTe.
+$ref = "12345";
+
+$login = "Token_enviado_pelo_suporte";
+
+$password = "";
+
+$cte = array (
+   "bairro_emitente" => "S\u00e3o Cristov\u00e3o",
+   "bairro_tomador" => "Bacacheri",
+   "cep_emitente" => "99880077",
+   "cep_tomador" => "88991188",
+   "cfop" => "5353",
+   "cnpj_emitente" => "51916585000125",
+   "cnpj_tomador" => "51966818092777",
+   "codigo_municipio_emitente" => "2927408",
+   "codigo_municipio_envio" => "5200050",
+   "codigo_municipio_fim" => "3100104",
+   "codigo_municipio_inicio" => "5200050",
+   "codigo_municipio_tomador" => "4106902",
+   "codigo_pais_tomador" => "1058",
+   "complemento_emitente" => "Andar 19 - sala 23",
+   "data_emissao" => "2018-06-18T09:17:00",
+   "descricao_servico" => "Descricao do seu servico aqui",
+   "documentos_referenciados" => array(  
+      array (  
+         "data_emissao" => "2018-06-10",
+         "numero" => "1",
+         "serie" => "1",
+         "subserie" => "1",
+         "valor" => "1.00"
+      )
+   ),
+   "funcionario_emissor" => "Nome do funcionario que fez a emissao",
+   "icms_aliquota" => "17.00",
+   "icms_base_calculo" => "1.00",
+   "icms_situacao_tributaria" => "00",
+   "icms_valor" => "0.17",
+   "indicador_inscricao_estadual_tomador" => "9",
+   "inscricao_estadual_emitente" => "12345678",
+   "logradouro_emitente" => "Aeroporto Internacional de Salvador",
+   "logradouro_tomador" => "Rua Jo\u00e3o Dalegrave",
+   "modal" => "02",
+   "municipio_emitente" => "Salvador",
+   "municipio_envio" => "Abadia de Goi\u00e1s",
+   "municipio_fim" => "Abadia dos Dourados",
+   "municipio_inicio" => "Abadia de Goi\u00e1s",
+   "municipio_tomador" => "Curitiba",
+   "natureza_operacao" => "PREST. DE SERV. TRANSPORTE A ESTAB. COMERCIAL",
+   "nome_emitente" => "ACME LTDA",
+   "nome_fantasia_emitente" => "ACME",
+   "nome_fantasia_tomador" => "Nome do tomador do servico aqui",
+   "nome_tomador" => "NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL",
+   "numero_emitente" => "S/N",
+   "numero_fatura" => "1",
+   "numero_tomador" => "1",
+   "pais_tomador" => "BRASIL",
+   "quantidade" => "1.00",
+   "seguros_carga" => array(  
+      array (  
+         "nome_seguradora" => "Nome da seguradora aqui",
+         "numero_apolice" => "12345",
+         "responsavel_seguro" => 4
+      )
+   ),
+   "telefone_emitente" => "4133336666",
+   "tipo_documento" => 0,
+   "tipo_servico" => 6,
+   "uf_emitente" => "BA",
+   "uf_envio" => "GO",
+   "uf_fim" => "MG",
+   "uf_inicio" => "GO",
+   "uf_tomador" => "PR",
+   "valor_desconto_fatura" => "0.00",
+   "valor_inss" => "0.10",
+   "valor_liquido_fatura" => "1.00",
+   "valor_original_fatura" => "1.00",
+   "valor_receber" => "1.00",
+   "valor_total" => "1.00",
+   "valor_total_tributos" => "0.00"
+);
+
+// Inicia o processo de envio das informações usando o cURL
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, $server."/v2/cte?ref=" . $ref);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($ch, CURLOPT_POST, 1);
+curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($cte));
+curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+curl_setopt($ch, CURLOPT_USERPWD, "$login:$password");
+$body = curl_exec($ch);
+$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+//As três linhas abaixo imprimem as informações retornadas pela API, aqui o seu sistema devera interpretar e lidar com o retorno.
+print($http_code."\n");
+print($body."\n\n");
+print("");
+curl_close($ch);
+?>
+
+
+
+```
+
+```python
+import json
+import requests
+
+''' 
+Para ambiente de produção use a variável abaixo:
+url = "https://api.focusnfe.com.br"
+'''
+url = "http://homologacao.acrasnfe.acras.com.br/v2/cte_os"
+
+# Substituir pela sua identificação interno do CTe.
+ref = {"ref":"12345"}
+
+token="Token_enviado_pelo_suporte"
+ 
+'''
+Usamos dicionarios para armazenar os campos e valores que em seguida,
+serao convertidos em JSON e enviados para nossa API.
+'''
+cte_os = {}
+seguros_carga = {}
+documentos_referenciados ={}
+
+cte_os["bairro_emitente"] = "S\u00e3o Cristov\u00e3o"
+cte_os["bairro_tomador"] = "Bacacheri"
+cte_os["cep_emitente"] = "99880077"
+cte_os["cep_tomador"] = "88991188"
+cte_os["cfop"] = "5353"
+cte_os["cnpj_emitente"] = "51916585000125"
+cte_os["cnpj_tomador"] = "51966818092777"
+cte_os["codigo_municipio_emitente"] = "2927408"
+cte_os["codigo_municipio_envio"] = "5200050"
+cte_os["codigo_municipio_fim"] = "3100104"
+cte_os["codigo_municipio_inicio"] = "5200050"
+cte_os["codigo_municipio_tomador"] = "4106902"
+cte_os["codigo_pais_tomador"] = "1058"
+cte_os["complemento_emitente"] = "Andar 19 - sala 23"
+cte_os["data_emissao"] = "2018-06-18T09:17:00"
+cte_os["descricao_servico"] = "Descricao do seu servico aqui"
+documentos_referenciados["data_emissao"] = "2018-06-10"
+documentos_referenciados["numero"] = "1"
+documentos_referenciados["serie"] = "1"
+documentos_referenciados["subserie"] = "1"
+documentos_referenciados["valor"] = "1.00"
+cte_os["funcionario_emissor"] = "Nome do funcionario que fez a emissao"
+cte_os["icms_aliquota"] = "17.00"
+cte_os["icms_base_calculo"] = "1.00"
+cte_os["icms_situacao_tributaria"] = "00"
+cte_os["icms_valor"] = "0.17"
+cte_os["indicador_inscricao_estadual_tomador"] = "9"
+cte_os["inscricao_estadual_emitente"] = "12345678"
+cte_os["logradouro_emitente"] = "Aeroporto Internacional de Salvador"
+cte_os["logradouro_tomador"] = "Rua Jo\u00e3o"
+cte_os["modal"] = "02"
+cte_os["municipio_emitente"] = "Salvador"
+cte_os["municipio_envio"] = "Abadia de Goi\u00e1s"
+cte_os["municipio_fim"] = "Abadia dos Dourados"
+cte_os["municipio_inicio"] = "Abadia de Goi\u00e1s"
+cte_os["municipio_tomador"] = "Curitiba"
+cte_os["natureza_operacao"] = "PREST. DE SERV. TRANSPORTE A ESTAB. COMERCIAL"
+cte_os["nome_emitente"] = "ACME LTDA"
+cte_os["nome_fantasia_emitente"] = "ACME"
+cte_os["nome_fantasia_tomador"] = "Nome do tomador do servico aqui"
+cte_os["nome_tomador"] = "NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL"
+cte_os["numero_emitente"] = "S/N"
+cte_os["numero_fatura"] = "1"
+cte_os["numero_tomador"] = "1"
+cte_os["pais_tomador"] = "BRASIL"
+cte_os["quantidade"] = "1.00"
+seguros_carga["nome_seguradora"] = "Nome da seguradora aqui"
+seguros_carga["numero_apolice"] = "12345"
+seguros_carga["responsavel_seguro"] = "4"
+cte_os["telefone_emitente"] = "4133336666"
+cte_os["tipo_documento"] = "0"
+cte_os["tipo_servico"] = "6"
+cte_os["uf_emitente"] = "BA"
+cte_os["uf_envio"] = "GO"
+cte_os["uf_fim"] = "MG"
+cte_os["uf_inicio"] = "GO"
+cte_os["uf_tomador"] = "PR"
+cte_os["valor_desconto_fatura"] = "0.00"
+cte_os["valor_inss"] = "0.10"
+cte_os["valor_liquido_fatura"] = "1.00"
+cte_os["valor_original_fatura"] = "1.00"
+cte_os["valor_receber"] = "1.00"
+cte_os["valor_total"] = "1.00"
+cte_os["valor_total_tributos"] = "0.00"
+
+# Adicionamos os dados das variaveis seguros_carga e documentos_referenciados como listas ao dicionario principal.
+cte_os["seguros_carga"] = [seguros_carga]
+cte_os["documentos_referenciados"] = [documentos_referenciados]
+
+r = requests.post(url, params=ref, data=json.dumps(cte_os), auth=(token,""))
+
+# Mostra na tela o codigo HTTP da requisicao e a mensagem de retorno da API.
+print(r.status_code, r.text)
+
+```
 
 ## Consulta
 
@@ -193,7 +646,7 @@ Para consultar uma CTe utilize a URL abaixo, alterando o ambiente de produção 
 
 Consultar as informações de uma CTe:
 
-`https://api.focusnfe.com.br/v2/cte/REFERENCIA?completo=(0|1)`
+`https://api.focusnfe.com.br/v2/cte/REFERENCIA?completa=(0|1)`
 
 Utilize o comando **HTTP GET** para consultar a sua nota para nossa API.
 
@@ -207,7 +660,6 @@ curl -u token_enviado_pelo_suporte: \
   http://homologacao.acrasnfe.acras.com.br/v2/cte/12345
 ```
 
-```
 > Exemplo de resposta da consulta de CTe:
 
 ```json
@@ -225,6 +677,147 @@ curl -u token_enviado_pelo_suporte: \
     "caminho_xml_carta_correcao": "https://focusnfe.s3-sa-east-1.amazonaws.com/arquivos_development/11111151000119/201805/XMLs/311110000007012_v03.00-eventoCTe.xml"
 }
 ```
+
+```java
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.client.WebResource;
+import com.sun.jersey.api.client.config.ClientConfig;
+import com.sun.jersey.api.client.config.DefaultClientConfig;
+import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
+
+public class consulta {
+
+  public static void main(String[] args){
+
+    String login = "Token_enviado_pelo_suporte";
+
+    /* Substituir pela sua identificação interno do CTe. */
+    String ref = "12345";
+    
+    /* Para ambiente de produção use a variável abaixo:
+    String server = "https://api.focusnfe.com.br/"; */
+    String server = "http://homologacao.acrasnfe.acras.com.br/";
+    
+    String url = server.concat("v2/cte/"+ref+"?completa=1");
+    
+    /* Configuração para realizar o HTTP BasicAuth. */
+    Object config = new DefaultClientConfig();
+    Client client = Client.create((ClientConfig) config);
+    client.addFilter(new HTTPBasicAuthFilter(login, ""));
+
+    WebResource request = client.resource(url);
+
+    ClientResponse resposta = request.get(ClientResponse.class);
+
+    int HttpCode = resposta.getStatus(); 
+
+    String body = resposta.getEntity(String.class);
+
+    /* As três linhas abaixo imprimem as informações retornadas pela API. 
+     * Aqui o seu sistema deverá interpretar e lidar com o retorno. */
+    System.out.print("HTTP Code: ");
+    System.out.print(HttpCode);
+    System.out.printf(body);
+  }
+}
+
+
+```
+
+```javascript
+/*
+As orientacoes a seguir foram extraidas do site do NPMJS: https://www.npmjs.com/package/xmlhttprequest
+Here's how to include the module in your project and use as the browser-based XHR object.
+Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensitive systems (eg Linux) using uppercase letters won't work.
+*/
+var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+
+var request = new XMLHttpRequest();
+
+var token = "Token_enviado_pelo_suporte";
+
+// Substituir pela sua identificação interno do CTe.
+var ref = "12345";
+
+/*
+Para ambiente de producao use a URL abaixo:
+"https://api.focusnfe.com.br"
+*/
+var url = "http://homologacao.acrasnfe.acras.com.br/v2/cte/" + ref + "?completa=1";
+
+/* 
+Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API.
+Passamos o token como quarto parametro deste metodo, como autenticador do HTTP Basic Authentication.
+*/
+request.open('GET', url, false, token);
+
+request.send();
+
+// Sua aplicacao tera que ser capaz de tratar as respostas da API.
+console.log("HTTP code: " + request.status);
+console.log("Corpo: " + request.responseText);
+
+```
+
+```php
+
+<?php
+
+// Substituir pela sua identificação interno do CTe.
+$ref = "12345";
+
+$login = "Token_enviado_pelo_suporte";
+$password = "";
+
+// Para ambiente de produção use a variável abaixo:
+// $server = "https://api.focusnfe.com.br";
+
+$server = "http://homologacao.acrasnfe.acras.com.br";
+
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, $server."/v2/cte/" . $ref."?completa=1");
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($ch, CURLOPT_HTTPHEADER, array());
+curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+curl_setopt($ch, CURLOPT_USERPWD, "$login:$password");
+$body = curl_exec($ch);
+$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+//As três linhas abaixo imprimem as informações retornadas pela API, aqui o seu sistema devera interpretar e lidar com o retorno.
+print($http_code."\n");
+print($body."\n\n");
+print("");
+curl_close($ch);
+?>
+
+```
+
+```python
+# Faça o download e instalação da biblioteca requests, através do python-pip.
+import requests
+
+''' 
+Para ambiente de produção use a variável abaixo:
+url = "https://api.focusnfe.com.br"
+'''
+url = "http://homologacao.acrasnfe.acras.com.br/v2/cte/"
+
+# Substituir pela sua identificação interno do CTe.
+ref = "12345"
+
+token="Token_enviado_pelo_suporte"
+
+# Use este parametro para obter mais informacoes em suas consultas.
+completa = "completa=1"
+
+r = requests.get(url+ref, params=completa, auth=(token,""))
+
+# Mostra na tela o codigo HTTP da requisicao e a mensagem de retorno da API.
+print(r.status_code, r.text)
+
+```
+
 
 Campos de retorno:
 
@@ -321,24 +914,6 @@ Caso na requisição seja passado o parâmetro `completo=1` será adicionado mai
 
 ## Cancelamento
 
-```shell
-curl -u token_enviado_pelo_suporte: \
-  -X DELETE -d '{"justificativa":"Teste de cancelamento de nota"}' \
-  http://homologacao.acrasnfe.acras.com.br/v2/cte/12345
-```
-
-
-> Resposta da API para a requisição de cancelamento:
-
-```json
-{
-  "status_sefaz": "135",
-  "mensagem_sefaz": "Evento registrado e vinculado a CT-e",
-  "status": "cancelado",
-  "caminho_xml": "https://focusnfe.s3-sa-east-1.amazonaws.com/arquivos_development/14674451000119/201805/XMLs/329180000006929_v03.00-eventoCTe.xml"
-}
-```
-
 Para cancelar uma CTe, basta fazer uma requisição à URL abaixo, alterando o ambiente de produção para homologação, caso esteja emitindo notas de teste.
 
 Cancelar uma CTe já autorizada:
@@ -359,6 +934,187 @@ A API irá em seguida devolver os seguintes campos:
 * **mensagem_sefaz**: Mensagem descritiva da SEFAZ detalhando o status.
 * **caminho_xml**: Caso a nota tenha sido cancelada, será informado aqui o caminho para download do XML de cancelamento.
 
+```shell
+curl -u token_enviado_pelo_suporte: \
+  -X DELETE -d '{"justificativa":"Teste de cancelamento de nota"}' \
+  http://homologacao.acrasnfe.acras.com.br/v2/cte/12345
+```
+
+
+> Resposta da API para a requisição de cancelamento:
+
+```json
+{
+  "status_sefaz": "135",
+  "mensagem_sefaz": "Evento registrado e vinculado a CT-e",
+  "status": "cancelado",
+  "caminho_xml": "https://focusnfe.s3-sa-east-1.amazonaws.com/arquivos_development/14674451000119/201805/XMLs/329180000006929_v03.00-eventoCTe.xml"
+}
+```
+
+
+```java
+import java.util.HashMap;
+import org.codehaus.jettison.json.JSONObject;
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.client.WebResource;
+import com.sun.jersey.api.client.config.ClientConfig;
+import com.sun.jersey.api.client.config.DefaultClientConfig;
+import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
+
+public class cancelar {
+
+  public static void main(String[] args){
+    
+    String login = "Token_enviado_pelo_suporte";
+
+    /* Substituir pela sua identificação interno do CTe. */
+    String ref = "12345";
+    
+    /* Para ambiente de produção use a variável abaixo:
+    String server = "https://api.focusnfe.com.br/"; */
+    String server = "http://homologacao.acrasnfe.acras.com.br/";
+    
+    String url = server.concat("v2/cte/"+ref);
+    /* Aqui criamos um hashmap para receber a chave "justificativa" e o valor desejado. */
+    HashMap<String, String> justificativa = new HashMap<String, String>();
+    justificativa.put("justificativa", "Informe aqui a sua justificativa para realizar o cancelamento da NFe.");
+    
+    /* Criamos um objeto JSON para receber a hash com os dados esperado pela API. */
+    JSONObject json = new JSONObject(justificativa);
+    
+    /* Configuração para realizar o HTTP BasicAuth. */
+    Object config = new DefaultClientConfig();
+    Client client = Client.create((ClientConfig) config);
+    client.addFilter(new HTTPBasicAuthFilter(login, ""));
+  
+    WebResource request = client.resource(url);
+
+    ClientResponse resposta = request.delete(ClientResponse.class, json);
+
+    int HttpCode = resposta.getStatus(); 
+
+    String body = resposta.getEntity(String.class);
+    
+     /* As três linhas abaixo imprimem as informações retornadas pela API. 
+        * Aqui o seu sistema deverá interpretar e lidar com o retorno. */
+    System.out.print("HTTP Code: ");
+    System.out.print(HttpCode);
+    System.out.printf(body);
+  }
+}
+
+```
+
+```javascript
+/*
+As orientacoes a seguir foram extraidas do site do NPMJS: https://www.npmjs.com/package/xmlhttprequest
+Here's how to include the module in your project and use as the browser-based XHR object.
+Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensitive systems (eg Linux) using uppercase letters won't work.
+*/
+var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+
+var request = new XMLHttpRequest();
+
+var token = "Token_enviado_pelo_suporte";
+
+// Substituir pela sua identificação interno do CTe.
+var ref = "12345";
+
+/*
+Para ambiente de producao use a URL abaixo:
+"https://api.focusnfe.com.br"
+*/
+var url = "http://homologacao.acrasnfe.acras.com.br/v2/cte/"+ ref;
+
+/* 
+Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da AP
+Passamos o token como quarto parametro deste metodo, como autenticador do HTTP Basic Authentication.
+*/
+request.open('DELETE', url, false, token);
+
+var cancelar = {
+
+  "justificativa": "Sua justificativa aqui!"
+};
+
+// Aqui fazermos a serializacao do JSON com o campo de cancelamento e enviamos para API.
+request.send(JSON.stringify(cancelar));
+
+// Sua aplicacao tera que ser capaz de tratar as respostas da API.
+console.log("HTTP code: " + request.status);
+console.log("Corpo: " + request.responseText);
+
+```
+
+```php
+<?php
+
+$ch = curl_init();
+
+// Substituir pela sua identificação interno do CTe.
+$ref   = "12345";
+
+// Para ambiente de produção use a variável abaixo:
+// $server = "https://api.focusnfe.com.br";
+
+$server = "http://homologacao.acrasnfe.acras.com.br";
+
+$justificativa = array ("justificativa" => "A sua justificativa de cancelamento aqui.");
+
+$login = "Token_enviado_pelo_suporte";
+$password = "";
+
+curl_setopt($ch, CURLOPT_URL, $server . "/v2/cte/" . $ref);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
+curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($justificativa));
+curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+curl_setopt($ch, CURLOPT_USERPWD, "$login:$password");
+$body = curl_exec($ch);
+$result = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+//As três linhas abaixo imprimem as informações retornadas pela API, aqui o seu sistema devera interpretar e lidar com o retorno.
+print($result."\n");
+print($body."\n\n");
+print("");
+curl_close($ch);
+?>
+
+```
+
+```python
+
+# Faça o download e instalação da biblioteca requests, através do python-pip.
+import json
+import requests
+
+''' 
+Para ambiente de produção use a variável abaixo:
+url = "https://api.focusnfe.com.br"
+'''
+url = "http://homologacao.acrasnfe.acras.com.br/v2/cte/"
+
+# Substituir pela sua identificação interno do CTe.
+ref = "12345"
+
+token="Token_enviado_pelo_suporte"
+
+'''
+Usamos um dicionario para armazenar os campos e valores que em seguida,
+serao convertidos a JSON e enviados para nossa API.
+'''
+justificativa={}
+justificativa["justificativa"] = "Sua justificativa aqui!"
+
+r = requests.delete(url+ref, data=json.dumps(justificativa), auth=(token,""))
+
+# Mostra na tela o codigo HTTP da requisicao e a mensagem de retorno da API.
+print(r.status_code, r.text)
+
+```
+
 ### Prazo de cancelamento
 A CTe poderá ser cancelada em até 7 dias após a emissão, na maioria dos Estados.
 
@@ -373,26 +1129,6 @@ Uma Carta de Correção eletrônica (CCe) pode ser utilizada para corrigir event
 Não existe prazo especificado para emissão de cartas de correção. É possível enviar até 20 correções diferentes, sendo que será válido sempre a última correção enviada.
 
 ### Emissão de CCe
-
-```shell
-curl -u token_enviado_pelo_suporte: \
-  -X POST -d '{"campo_corrigido":"observacoes","valor_corrigido":"Nova observação"}' \
-  http://homologacao.acrasnfe.acras.com.br/v2/cte/12345/carta_correcao
-```
-
-> Resposta da API para a requisição de CCe:
-
-```json
-
-{
-  "status_sefaz": "135",
-  "mensagem_sefaz": "Evento registrado e vinculado a CT-e",
-  "status": "autorizado",
-  "caminho_xml": "https://focusnfe.s3-sa-east-1.amazonaws.com/arquivos_development/11111151000119/201805/XMLs/321110000006913_v03.00-eventoCTe.xml",
-  "numero_carta_correcao": 2
-}
-
-```
 
 `https://api.focusnfe.com.br/v2/cte/REFERENCIA/carta_correcao`
 
@@ -419,6 +1155,188 @@ A API irá em seguida devolver os seguintes campos:
 * **numero_carta_correcao**: Informa o número da carta de correção, caso ela tenha sido autorizada.
 
 Para uma mesma CTe é possível enviar mais de uma carta de correção, sendo que a última sempre substitui a anterior.
+
+```shell
+curl -u token_enviado_pelo_suporte: \
+  -X POST -d '{"campo_corrigido":"observacoes","valor_corrigido":"Nova observação"}' \
+  http://homologacao.acrasnfe.acras.com.br/v2/cte/12345/carta_correcao
+```
+
+> Resposta da API para a requisição de CCe:
+
+```json
+
+{
+  "status_sefaz": "135",
+  "mensagem_sefaz": "Evento registrado e vinculado a CT-e",
+  "status": "autorizado",
+  "caminho_xml": "https://focusnfe.s3-sa-east-1.amazonaws.com/arquivos_development/11111151000119/201805/XMLs/321110000006913_v03.00-eventoCTe.xml",
+  "numero_carta_correcao": 2
+}
+
+```
+
+```java
+import java.util.HashMap;
+import org.codehaus.jettison.json.JSONObject;
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.client.WebResource;
+import com.sun.jersey.api.client.config.ClientConfig;
+import com.sun.jersey.api.client.config.DefaultClientConfig;
+import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
+
+public class emitir_cce {
+
+  public static void main(String[] args){
+
+    String login = "Token_enviado_pelo_suporte";
+    
+    /* Substituir pela sua identificação interno do CTe. */
+    String ref = "12345";
+    
+    /* Para ambiente de produção use a variável abaixo:
+    String server = "https://api.focusnfe.com.br/"; */
+    String server = "http://homologacao.acrasnfe.acras.com.br/";
+    
+    String url = server.concat("v2/cte/"+ref+"/carta_correcao");
+
+    /* Aqui criamos um hashmap para receber a chave "correcao" e o valor desejado. */
+    HashMap<String, String> correcao = new HashMap<String, String>();
+    correcao.put("campo_corrigido", "uf_inicio");
+    correcao.put("valor_corrigido", "PR");
+    
+    /* Criamos um objeto JSON para receber a hash com os dados esperado pela API. */
+    JSONObject json = new JSONObject(correcao);
+    
+    /* Configuração para realizar o HTTP BasicAuth. */
+    Object config = new DefaultClientConfig();
+    Client client = Client.create((ClientConfig) config);
+    client.addFilter(new HTTPBasicAuthFilter(login, ""));
+
+    WebResource request = client.resource(url);
+
+    ClientResponse resposta = request.post(ClientResponse.class, json);
+
+    int HttpCode = resposta.getStatus(); 
+
+    String body = resposta.getEntity(String.class);
+
+     /* As três linhas abaixo imprimem as informações retornadas pela API. 
+    * Aqui o seu sistema deverá interpretar e lidar com o retorno. */
+    System.out.print("HTTP Code: ");
+    System.out.print(HttpCode);
+    System.out.printf(body);
+  }
+}
+
+```
+
+```javascript
+/*
+As orientacoes a seguir foram extraidas do site do NPMJS: https://www.npmjs.com/package/xmlhttprequest
+Here's how to include the module in your project and use as the browser-based XHR object.
+Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensitive systems (eg Linux) using uppercase letters won't work.
+*/
+var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+
+var request = new XMLHttpRequest();
+
+var token = "Token_enviado_pelo_suporte";
+
+// Substituir pela sua identificação interno do CTe.
+var ref = "12345";
+
+var cce = {"campo_corrigido": "uf_inicio", "valor_corrigido": "PR"};
+
+/*
+Para ambiente de producao use a URL abaixo:
+"https://api.focusnfe.com.br"
+*/
+var url = "http://homologacao.acrasnfe.acras.com.br/v2/cte/"+ ref + "/carta_correcao";
+
+/* 
+Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API.
+Passamos o token como quarto parametro deste metodo, como autenticador do HTTP Basic Authentication.
+*/
+request.open('POST', url, false, token);
+
+// Aqui fazermos a serializacao do JSON com os campos de CCe e enviamos para API.
+request.send(JSON.stringify(cce));
+
+// Sua aplicacao tera que ser capaz de tratar as respostas da API.
+console.log("HTTP code: " + request.status);
+console.log("Corpo: " + request.responseText);
+
+```
+
+```php
+<?php
+
+// Para ambiente de produção use a variável abaixo:
+// $server = "https://api.focusnfe.com.br";
+
+$server = "http://homologacao.acrasnfe.acras.com.br";
+
+// Substituir pela sua identificação interno do CTe.
+$ref = "12345";
+
+$login = "Token_enviado_pelo_suporte";
+$password = "";
+
+$correcao = array (
+  "campo_corrigido" => "uf_inicio",
+  "valor_corrigido" => "PR"
+);
+
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, $server . "/v2/cte/" . $ref  . "/carta_correcao");
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($ch, CURLOPT_POST, 1);
+curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($correcao));
+curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+curl_setopt($ch, CURLOPT_USERPWD, "$login:$password");
+$body = curl_exec($ch);
+$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+//As três linhas abaixo imprimem as informações retornadas pela API, aqui o seu sistema devera interpretar e lidar com o retorno.
+print($http_code."\n");
+print($body."\n\n");
+print("");
+curl_close($ch);
+?>
+
+```
+
+```python
+# Faça o download e instalação da biblioteca requests, através do python-pip.
+import json
+import requests
+
+''' 
+Para ambiente de produção use a variável abaixo:
+url = "https://api.focusnfe.com.br"
+'''
+url = "http://homologacao.acrasnfe.acras.com.br/v2/cte/"
+
+# Substituir pela sua identificação interno do CTe.
+ref = "12345"
+
+token="Token_enviado_pelo_suporte"
+
+'''
+Usamos um dicionario para armazenar os campos e valores que em seguida,
+serao convertidos a JSON e enviados para nossa API.
+'''
+cce = {"campo_corrigido": "uf_inicio", "valor_corrigido": "PR"}
+
+r = requests.post(url+ref+"/carta_correcao", data=json.dumps(cce), auth=(token,""))
+
+# Mostra na tela o codigo HTTP da requisicao e a mensagem de retorno da API.
+print(r.status_code, r.text)
+
+```
+
 
 ## Inutilização
 
@@ -464,3 +1382,179 @@ A API irá enviar uma resposta com os seguintes campos:
 * **numero_inicial**: Número inicial a ser inutilizado
 * **numero_final**: Número final a ser inutilizado
 * **caminho_xml**: Caminho do XML para download caso a inutilização tenha sido autorizada pela SEFAZ.
+
+```java
+import java.util.HashMap;
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.client.WebResource;
+import com.sun.jersey.api.client.config.ClientConfig;
+import com.sun.jersey.api.client.config.DefaultClientConfig;
+import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
+
+public class inutilizar {
+
+  public static void main(String[] args) throws JSONException{
+    
+    String login = "Token_enviado_pelo_suporte";
+    
+    /* Para ambiente de produção use a variável abaixo:
+    String server = "https://api.focusnfe.com.br/"; */
+    String server = "http://homologacao.acrasnfe.acras.com.br/";
+    
+    String url = server.concat("v2/cte/inutilizacao");
+    
+    /* Aqui criamos um hash que irá receber as chaves e valores esperados para gerar a inutilização. */
+    HashMap<String, String> DadosInutilizacao = new HashMap<String, String>();
+    DadosInutilizacao.put("cnpj", "51916585000125");
+    DadosInutilizacao.put("serie", "1");
+    DadosInutilizacao.put("numero_inicial", "1");
+    DadosInutilizacao.put("numero_final", "3");
+    DadosInutilizacao.put("justificativa", "Informe aqui a justificativa para realizar a inutilizacao da numeracao.");
+    DadosInutilizacao.put("modelo", "67");
+    
+    /* Criamos um objeto JSON que irá receber o input dos dados, para então enviar a requisição. */
+    JSONObject json = new JSONObject (DadosInutilizacao);
+    
+    /* Testar se o JSON gerado está dentro do formato esperado.
+    System.out.print(json); */
+    
+    /* Configuração para realizar o HTTP BasicAuth. */
+    Object config = new DefaultClientConfig();
+    Client client = Client.create((ClientConfig) config);
+    client.addFilter(new HTTPBasicAuthFilter(login, ""));
+
+    WebResource request = client.resource(url);
+
+    ClientResponse resposta = request.post(ClientResponse.class, json);
+
+    int HttpCode = resposta.getStatus(); 
+
+    String body = resposta.getEntity(String.class);
+    
+     /* As três linhas abaixo imprimem as informações retornadas pela API. 
+      * Aqui o seu sistema deverá interpretar e lidar com o retorno. */
+    System.out.print("HTTP Code: ");
+    System.out.print(HttpCode);
+    System.out.printf(body); 
+  }
+}
+
+```
+
+```javascript
+/*
+As orientacoes a seguir foram extraidas do site do NPMJS: https://www.npmjs.com/package/xmlhttprequest
+Here's how to include the module in your project and use as the browser-based XHR object.
+Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensitive systems (eg Linux) using uppercase letters won't work.
+*/
+var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+
+var request = new XMLHttpRequest();
+
+var token = "Token_enviado_pelo_suporte";
+
+/*
+Para ambiente de producao use a URL abaixo:
+"https://api.focusnfe.com.br"
+*/
+var url = "http://homologacao.acrasnfe.acras.com.br/v2/cte/inutilizacao";
+
+/* 
+Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
+Passamos o token como quarto parametro deste metodo, como autenticador do HTTP Basic Authentication.
+*/
+request.open('POST', url, false, token);
+
+var inutiliza = {
+"cnpj": "14674451000119",
+"serie": "1",
+"numero_inicial": "700",
+"numero_final": "703",
+"justificativa": "Teste de inutilizacao de nota",
+"modelo": 67
+};
+
+// Aqui fazermos a serializacao do JSON com os de inutilizacao e enviamos para API.
+request.send(JSON.stringify(inutiliza));
+
+// Sua aplicacao tera que ser capaz de tratar as respostas da API.
+console.log("HTTP code: " + request.status);
+console.log("Corpo: " + request.responseText);
+
+```
+
+```php
+<?php
+
+// Para ambiente de produção use a variável abaixo:
+// $server = "https://api.focusnfe.com.br";
+
+$server = "http://homologacao.acrasnfe.acras.com.br";
+
+$login = "Token_enviado_pelo_suporte";
+$password = "";
+
+$inutiliza = array (
+  "cnpj" => "51916585000125",
+  "serie" => "1",
+  "numero_inicial" => "1",
+  "numero_final" => "3",
+  "justificativa" => "A sua justificativa de cancelamento aqui.",
+  "modelo" => 67  
+);
+
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, $server."/v2/cte/inutilizacao");
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($ch, CURLOPT_POST, 1);
+curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($inutiliza));
+curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+curl_setopt($ch, CURLOPT_USERPWD, "$login:$password");
+$body = curl_exec($ch);
+$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+//As três linhas abaixo imprimem as informações retornadas pela API, aqui o seu sistema devera interpretar e lidar com o retorno.
+print($http_code."\n");
+print($body."\n\n");
+print("");
+curl_close($ch);
+?>
+
+
+
+```
+
+```python
+# Faça o download e instalação da biblioteca requests, através do python-pip.
+import json
+import requests
+
+''' 
+Para ambiente de produção use a variável abaixo:
+url = "https://api.focusnfe.com.br"
+''' 
+url = "http://homologacao.acrasnfe.acras.com.br/v2/cte/inutilizacao"
+
+token="Token_enviado_pelo_suporte"
+
+'''
+Usamos um dicionario para armazenar os campos e valores que em seguida,
+serao convertidos a JSON e enviados para nossa API.
+'''
+inutilizacao={}
+inutilizacao["cnpj"] = "51916585000125"
+inutilizacao["serie"] = "1"
+inutilizacao["numero_inicial"] = "1"
+inutilizacao["numero_final"] = "3"
+inutilizacao["justificativa"] = "Justificativa da inutilizacao minimo 15 caracteres"
+inutilizacao["modelo"] = "67"
+
+r = requests.post(url, data=json.dumps(inutilizacao), auth=(token,""))
+
+# Mostra na tela o codigo HTTP da requisicao e a mensagem de retorno da API.
+print(r.status_code, r.text)
+
+```
