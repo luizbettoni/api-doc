@@ -25,7 +25,7 @@ POST |	/v2/cte/inutilizacao	| Inutiliza uma numeração da CTe
 
 ## Campos de uma CTe
 
->> Abaixo um exemplo de dados de uma CTe:
+> Abaixo um exemplo de dados de uma CTe:
 
 ```json
 
@@ -163,28 +163,6 @@ curl -u token_enviado_pelo_suporte: \
 curl -u token_enviado_pelo_suporte: \
   -X POST -T cte_os.json http://homologacao.acrasnfe.acras.com.br/v2/cte_os?ref=12345
 ```
-
-Para enviar uma CTe utilize a URL abaixo, alterando o ambiente de produção para homologação, caso esteja emitindo notas de teste.
-
-Envia uma CTe para autorização:
-
-`https://api.focusnfe.com.br/v2/cte?ref=REFERENCIA`
-
-Utilize o comando HTTP POST para enviar a sua nota para nossa API. Envie como corpo do POST os dados em formato JSON da CTe.
-
-Nesta etapa, é feita uma primeira validação dos dados da nota. Caso ocorra algum problema, por exemplo, algum campo faltante, formato incorreto
-ou algum problema com o emitente a nota **não será aceita para processamento** e será devolvida a mensagem de erro apropriada. Veja a seção [erros](#introducao_erros).
-
-Caso a nota seja validada corretamente, a nota será **aceita para processamento**. Isto significa que a nota irá para uma fila de processamento
-onde eventualmente será processada (processamento assíncrono). Com isto, a nota poderá ser autorizada ou ocorrer um erro na autorização, de acordo com a validação da SEFAZ.
-
-Para verificar se a nota já foi autorizada, você terá que efetuar uma [consulta](#cte_consulta).
-
-Envia uma CTe OS para autorização:
-
-`https://api.focusnfe.com.br/v2/cte_os?ref=REFERENCIA`
-
-Utilize o comando HTTP POST para enviar a sua nota para nossa API. Ao contrátio da CTe convencional, a CTe OS é processada de forma **síncrona**, na mesma requição em que os dados são enviadas.
 
 ```java
 
@@ -640,42 +618,34 @@ print(r.status_code, r.text)
 
 ```
 
+Para enviar uma CTe utilize a URL abaixo, alterando o ambiente de produção para homologação, caso esteja emitindo notas de teste.
+
+Envia uma CTe para autorização:
+
+`https://api.focusnfe.com.br/v2/cte?ref=REFERENCIA`
+
+Utilize o comando **HTTP POST** para enviar a sua nota para nossa API. Envie como corpo do POST os dados em formato JSON da CTe.
+
+Nesta etapa, é feita uma primeira validação dos dados da nota. Caso ocorra algum problema, por exemplo, algum campo faltante, formato incorreto
+ou algum problema com o emitente a nota **não será aceita para processamento** e será devolvida a mensagem de erro apropriada. Veja a seção [erros](#introducao_erros).
+
+Caso a nota seja validada corretamente, a nota será **aceita para processamento**. Isto significa que a nota irá para uma fila de processamento
+onde eventualmente será processada (processamento assíncrono). Com isto, a nota poderá ser autorizada ou ocorrer um erro na autorização, de acordo com a validação da SEFAZ.
+
+Para verificar se a nota já foi autorizada, você terá que efetuar uma [consulta](#cte_consulta).
+
+Envia uma CTe OS para autorização:
+
+`https://api.focusnfe.com.br/v2/cte_os?ref=REFERENCIA`
+
+Utilize o comando HTTP POST para enviar a sua nota para nossa API. Ao contrátio da CTe convencional, a CTe OS é processada de forma **síncrona**, na mesma requição em que os dados são enviadas.
+
+
 ## Consulta
-
-Para consultar uma CTe utilize a URL abaixo, alterando o ambiente de produção para homologação, caso esteja emitindo notas de teste.
-
-Consultar as informações de uma CTe:
-
-`https://api.focusnfe.com.br/v2/cte/REFERENCIA?completa=(0|1)`
-
-Utilize o comando **HTTP GET** para consultar a sua nota para nossa API.
-
-Parâmetro Opcional | Ação
--------|-------|-----
-completo = 0 ou 1 | Habilita a API há mostrar campos adicionais na requisição de consulta.
-
 
 ```shell
 curl -u token_enviado_pelo_suporte: \
   http://homologacao.acrasnfe.acras.com.br/v2/cte/12345
-```
-
-> Exemplo de resposta da consulta de CTe:
-
-```json
-{
-    "cnpj_emitente": "11111151000119",
-    "ref": "ref123",
-    "status": "autorizado",
-    "status_sefaz": "100",
-    "mensagem_sefaz": "Autorizado o uso do CT-e",
-    "chave": "CTe21111114611151000119570010000000111973476363",
-    "numero": "11",
-    "serie": "1",
-    "modelo": "57",
-    "caminho_xml": "https://focusnfe.s3-sa-east-1.amazonaws.com/arquivos_development/11111151000119/201805/XMLs/311110000007009_v03.00-protCTe.xml",
-    "caminho_xml_carta_correcao": "https://focusnfe.s3-sa-east-1.amazonaws.com/arquivos_development/11111151000119/201805/XMLs/311110000007012_v03.00-eventoCTe.xml"
-}
 ```
 
 ```java
@@ -818,6 +788,17 @@ print(r.status_code, r.text)
 
 ```
 
+Para consultar uma CTe utilize a URL abaixo, alterando o ambiente de produção para homologação, caso esteja emitindo notas de teste.
+
+Consultar as informações de uma CTe:
+
+`https://api.focusnfe.com.br/v2/cte/REFERENCIA?completa=(0|1)`
+
+Utilize o comando **HTTP GET** para consultar a sua nota para nossa API.
+
+Parâmetro Opcional | Ação
+-------|-------|-----
+completo = 0 ou 1 | Habilita a API há mostrar campos adicionais na requisição de consulta.
 
 Campos de retorno:
 
@@ -850,7 +831,25 @@ Caso na requisição seja passado o parâmetro `completo=1` será adicionado mai
 * **requisicao_carta_correcao**: Inclui os dados completos da requisição de Carta de Correção Eletrônica da CTe.
 * **protocolo_carta_correcao**: Inclui os dados completos do protocolo devolvido pela SEFAZ.
 
-> Exemplo de campos extras na consulta completa
+> Exemplo de resposta da consulta de CTe:
+
+```json
+{
+    "cnpj_emitente": "11111151000119",
+    "ref": "ref123",
+    "status": "autorizado",
+    "status_sefaz": "100",
+    "mensagem_sefaz": "Autorizado o uso do CT-e",
+    "chave": "CTe21111114611151000119570010000000111973476363",
+    "numero": "11",
+    "serie": "1",
+    "modelo": "57",
+    "caminho_xml": "https://focusnfe.s3-sa-east-1.amazonaws.com/arquivos_development/11111151000119/201805/XMLs/311110000007009_v03.00-protCTe.xml",
+    "caminho_xml_carta_correcao": "https://focusnfe.s3-sa-east-1.amazonaws.com/arquivos_development/11111151000119/201805/XMLs/311110000007012_v03.00-eventoCTe.xml"
+}
+```
+
+> Exemplo de resposta com o parâmetro, completa, recebendo o valor "1":
 
 ```json
 {
@@ -913,45 +912,6 @@ Caso na requisição seja passado o parâmetro `completo=1` será adicionado mai
 
 
 ## Cancelamento
-
-Para cancelar uma CTe, basta fazer uma requisição à URL abaixo, alterando o ambiente de produção para homologação, caso esteja emitindo notas de teste.
-
-Cancelar uma CTe já autorizada:
-
-`https://api.focusnfe.com.br/v2/cte/REFERENCIA`
-
-Utilize o comando HTTP DELETE para cancelar a sua nota para nossa API. Este método é síncrono, ou seja, a comunicação com a SEFAZ será feita imediatamente e devolvida a resposta na mesma requisição.
-
-O parâmetros de cancelamento deverão ser enviados da seguinte forma:
-
-* **justificativa**: Justificativa do cancelamento. Deverá conter de 15 a 255 caracteres.
-
-
-A API irá em seguida devolver os seguintes campos:
-
-* **status**: cancelado, se a nota pode ser cancelada, ou erro_cancelamento, se houve algum erro ao cancelar a nota.
-* **status_sefaz**: O status do cancelamento na SEFAZ.
-* **mensagem_sefaz**: Mensagem descritiva da SEFAZ detalhando o status.
-* **caminho_xml**: Caso a nota tenha sido cancelada, será informado aqui o caminho para download do XML de cancelamento.
-
-```shell
-curl -u token_enviado_pelo_suporte: \
-  -X DELETE -d '{"justificativa":"Teste de cancelamento de nota"}' \
-  http://homologacao.acrasnfe.acras.com.br/v2/cte/12345
-```
-
-
-> Resposta da API para a requisição de cancelamento:
-
-```json
-{
-  "status_sefaz": "135",
-  "mensagem_sefaz": "Evento registrado e vinculado a CT-e",
-  "status": "cancelado",
-  "caminho_xml": "https://focusnfe.s3-sa-east-1.amazonaws.com/arquivos_development/14674451000119/201805/XMLs/329180000006929_v03.00-eventoCTe.xml"
-}
-```
-
 
 ```java
 import java.util.HashMap;
@@ -1115,6 +1075,42 @@ print(r.status_code, r.text)
 
 ```
 
+```shell
+curl -u token_enviado_pelo_suporte: \
+  -X DELETE -d '{"justificativa":"Teste de cancelamento de nota"}' \
+  http://homologacao.acrasnfe.acras.com.br/v2/cte/12345
+```
+
+> Resposta da API para a requisição de cancelamento:
+
+```json
+{
+  "status_sefaz": "135",
+  "mensagem_sefaz": "Evento registrado e vinculado a CT-e",
+  "status": "cancelado",
+  "caminho_xml": "https://focusnfe.s3-sa-east-1.amazonaws.com/arquivos_development/14674451000119/201805/XMLs/329180000006929_v03.00-eventoCTe.xml"
+}
+```
+
+Para cancelar uma CTe, basta fazer uma requisição à URL abaixo, alterando o ambiente de produção para homologação, caso esteja emitindo notas de teste.
+
+Cancelar uma CTe já autorizada:
+
+`https://api.focusnfe.com.br/v2/cte/REFERENCIA`
+
+Utilize o comando **HTTP DELETE** para cancelar a sua nota para nossa API. Este método é síncrono, ou seja, a comunicação com a SEFAZ será feita imediatamente e devolvida a resposta na mesma requisição.
+
+O parâmetros de cancelamento deverão ser enviados da seguinte forma:
+
+* **justificativa**: Justificativa do cancelamento. Deverá conter de 15 a 255 caracteres.
+
+A API irá em seguida devolver os seguintes campos:
+
+* **status**: cancelado, se a nota pode ser cancelada, ou erro_cancelamento, se houve algum erro ao cancelar a nota.
+* **status_sefaz**: O status do cancelamento na SEFAZ.
+* **mensagem_sefaz**: Mensagem descritiva da SEFAZ detalhando o status.
+* **caminho_xml**: Caso a nota tenha sido cancelada, será informado aqui o caminho para download do XML de cancelamento.
+
 ### Prazo de cancelamento
 A CTe poderá ser cancelada em até 7 dias após a emissão, na maioria dos Estados.
 
@@ -1129,52 +1125,6 @@ Uma Carta de Correção eletrônica (CCe) pode ser utilizada para corrigir event
 Não existe prazo especificado para emissão de cartas de correção. É possível enviar até 20 correções diferentes, sendo que será válido sempre a última correção enviada.
 
 ### Emissão de CCe
-
-`https://api.focusnfe.com.br/v2/cte/REFERENCIA/carta_correcao`
-
-Utilize o comando HTTP POST para enviar a sua correção para nossa API. Este método é **síncrono**, ou seja, a comunicação com a SEFAZ será feita imediatamente e devolvida a resposta na mesma requisição.
-
-Ao contrário da NFe, na CTe é obrigatório informar especificamente o campo que será alterado. Você poderá usar os próprios nomes
-dos campos da API.
-
-O parâmetros da carta de correção deverão ser enviados da seguinte forma:
-
-* **grupo_corrigido**: Opcional. Indica o grupo onde se encontra o campo, por exemplo "cargas". Pode ser omitido se não houver grupo relacionado.
-* **campo_corrigido**: Indica o campo a ser corrigido.
-* **valor_corrigido**: Indica o novo valor do campo.
-* **numero_item_grupo_corrigido**: Opcional. Caso o campo pertença a uma lista de itens, o número do item a ser corrigido é informado aqui. O primeiro número começa em 1.
-* **campo_api**: Opcional. Se igual a 1 será usado o nome do campo da API nos campos 'grupo_corrigido' e 'campo_corrigido'. Se igual a 0 você deverá informar a tag XML. Valor default é 1.
-
-
-A API irá em seguida devolver os seguintes campos:
-
-* **status**: autorizado, se a carta de correção foi aceita pela SEFAZ, ou erro_autorizacao, se houve algum erro ao cancelar a nota.
-* **status_sefaz**: O status da carta de correção na SEFAZ.
-* **mensagem_sefaz**: Mensagem descritiva da SEFAZ detalhando o status.
-* **caminho_xml**: Informa o caminho do XML da carta de correção, caso ela tenha sido autorizada.
-* **numero_carta_correcao**: Informa o número da carta de correção, caso ela tenha sido autorizada.
-
-Para uma mesma CTe é possível enviar mais de uma carta de correção, sendo que a última sempre substitui a anterior.
-
-```shell
-curl -u token_enviado_pelo_suporte: \
-  -X POST -d '{"campo_corrigido":"observacoes","valor_corrigido":"Nova observação"}' \
-  http://homologacao.acrasnfe.acras.com.br/v2/cte/12345/carta_correcao
-```
-
-> Resposta da API para a requisição de CCe:
-
-```json
-
-{
-  "status_sefaz": "135",
-  "mensagem_sefaz": "Evento registrado e vinculado a CT-e",
-  "status": "autorizado",
-  "caminho_xml": "https://focusnfe.s3-sa-east-1.amazonaws.com/arquivos_development/11111151000119/201805/XMLs/321110000006913_v03.00-eventoCTe.xml",
-  "numero_carta_correcao": 2
-}
-
-```
 
 ```java
 import java.util.HashMap;
@@ -1337,51 +1287,52 @@ print(r.status_code, r.text)
 
 ```
 
-
-## Inutilização
-
-> Resposta da API para a requisição de inutilização:
-
-```json
- {
-  "status_sefaz": "102",
-  "mensagem_sefaz": "Inutilizacao de numero homologado",
-  "serie": "3",
-  "numero_inicial": "800",
-  "numero_final": "801",
-  "status": "autorizado",
-  "caminho_xml": "https://focusnfe.s3-sa-east-1.amazonaws.com/arquivos_development/11111353000900/207701/XMLs/999992335309999955003000000800000000801-inu.xml"
-}
+```shell
+curl -u token_enviado_pelo_suporte: \
+  -X POST -d '{"campo_corrigido":"observacoes","valor_corrigido":"Nova observação"}' \
+  http://homologacao.acrasnfe.acras.com.br/v2/cte/12345/carta_correcao
 ```
 
+> Resposta da API para a requisição de CCe:
 
-Em uma situação normal você não precisará informar ao SEFAZ a inutilização de um número da CTe, pois a API controla automaticamente a numeração das notas. Porém, se por alguma situação específica for necessário a inutilização de alguma faixa de números você poderá chamar as seguintes operações:
+```json
 
-Envio de inutilização de faixa de numeração:
+{
+  "status_sefaz": "135",
+  "mensagem_sefaz": "Evento registrado e vinculado a CT-e",
+  "status": "autorizado",
+  "caminho_xml": "https://focusnfe.s3-sa-east-1.amazonaws.com/arquivos_development/11111151000119/201805/XMLs/321110000006913_v03.00-eventoCTe.xml",
+  "numero_carta_correcao": 2
+}
 
-`https://api.focusnfe.com.br/v2/cte/inutilizacao`
+```
 
-Utilize o comando HTTP POST para enviar a sua inutilização para nossa API. Este método é **síncrono**, ou seja, a comunicação com a SEFAZ será feita imediatamente e devolvida a resposta na mesma requisição.
+`https://api.focusnfe.com.br/v2/cte/REFERENCIA/carta_correcao`
 
-A inutilização precisa dos seguintes parâmetros obrigatórios:
+Utilize o comando **HTTP POST** para enviar a sua correção para nossa API. Este método é **síncrono**, ou seja, a comunicação com a SEFAZ será feita imediatamente e devolvida a resposta na mesma requisição.
 
-* **cnpj**: CNPJ da empresa emitente
-* **serie**: Série da numeração da CTe que terá uma faixa de numeração inutilizada
-* **numero_inicial**: Número inicial a ser inutilizado
-* **numero_final**: Número final a ser inutilizado
-* **justificativa**: Justificativa da inutilização (mínimo 15 caracteres)
-* **modelo**: Informe o modelo da CTe. Se igual a 57 será a CTe normal, se igual a 67 será a CTe OS. Valor default é 57.
+Ao contrário da NFe, na CTe é obrigatório informar especificamente o campo que será alterado. Você poderá usar os próprios nomes
+dos campos da API.
 
+O parâmetros da carta de correção deverão ser enviados da seguinte forma:
 
-A API irá enviar uma resposta com os seguintes campos:
+* **grupo_corrigido**: Opcional. Indica o grupo onde se encontra o campo, por exemplo "cargas". Pode ser omitido se não houver grupo relacionado.
+* **campo_corrigido**: Indica o campo a ser corrigido.
+* **valor_corrigido**: Indica o novo valor do campo.
+* **numero_item_grupo_corrigido**: Opcional. Caso o campo pertença a uma lista de itens, o número do item a ser corrigido é informado aqui. O primeiro número começa em 1.
+* **campo_api**: Opcional. Se igual a 1 será usado o nome do campo da API nos campos 'grupo_corrigido' e 'campo_corrigido'. Se igual a 0 você deverá informar a tag XML. Valor default é 1.
 
-* **status**: autorizado, se a inutilização foi aceita pela SEFAZ, ou erro_autorizacao, se houve algum erro ao inutilizar os números.
+A API irá em seguida devolver os seguintes campos:
+
+* **status**: autorizado, se a carta de correção foi aceita pela SEFAZ, ou erro_autorizacao, se houve algum erro ao cancelar a nota.
 * **status_sefaz**: O status da carta de correção na SEFAZ.
 * **mensagem_sefaz**: Mensagem descritiva da SEFAZ detalhando o status.
-* **serie**: Série da numeração da CTe que terá uma faixa de numeração inutilizada
-* **numero_inicial**: Número inicial a ser inutilizado
-* **numero_final**: Número final a ser inutilizado
-* **caminho_xml**: Caminho do XML para download caso a inutilização tenha sido autorizada pela SEFAZ.
+* **caminho_xml**: Informa o caminho do XML da carta de correção, caso ela tenha sido autorizada.
+* **numero_carta_correcao**: Informa o número da carta de correção, caso ela tenha sido autorizada.
+
+Para uma mesma CTe é possível enviar mais de uma carta de correção, sendo que a última sempre substitui a anterior.
+
+## Inutilização
 
 ```java
 import java.util.HashMap;
@@ -1558,3 +1509,47 @@ r = requests.post(url, data=json.dumps(inutilizacao), auth=(token,""))
 print(r.status_code, r.text)
 
 ```
+
+> Resposta da API para a requisição de inutilização:
+
+```json
+ {
+  "status_sefaz": "102",
+  "mensagem_sefaz": "Inutilizacao de numero homologado",
+  "serie": "3",
+  "numero_inicial": "800",
+  "numero_final": "801",
+  "status": "autorizado",
+  "caminho_xml": "https://focusnfe.s3-sa-east-1.amazonaws.com/arquivos_development/11111353000900/207701/XMLs/999992335309999955003000000800000000801-inu.xml"
+}
+```
+
+Em uma situação normal você não precisará informar ao SEFAZ a inutilização de um número da CTe, pois a API controla automaticamente a numeração das notas. Porém, se por alguma situação específica for necessário a inutilização de alguma faixa de números você poderá chamar as seguintes operações:
+
+Envio de inutilização de faixa de numeração:
+
+`https://api.focusnfe.com.br/v2/cte/inutilizacao`
+
+Utilize o comando **HTTP POST** para enviar a sua inutilização para nossa API. Este método é **síncrono**, ou seja, a comunicação com a SEFAZ será feita imediatamente e devolvida a resposta na mesma requisição.
+
+A inutilização precisa dos seguintes parâmetros obrigatórios:
+
+* **cnpj**: CNPJ da empresa emitente
+* **serie**: Série da numeração da CTe que terá uma faixa de numeração inutilizada
+* **numero_inicial**: Número inicial a ser inutilizado
+* **numero_final**: Número final a ser inutilizado
+* **justificativa**: Justificativa da inutilização (mínimo 15 caracteres)
+* **modelo**: Informe o modelo da CTe. Se igual a 57 será a CTe normal, se igual a 67 será a CTe OS. Valor default é 57.
+
+
+A API irá enviar uma resposta com os seguintes campos:
+
+* **status**: autorizado, se a inutilização foi aceita pela SEFAZ, ou erro_autorizacao, se houve algum erro ao inutilizar os números.
+* **status_sefaz**: O status da carta de correção na SEFAZ.
+* **mensagem_sefaz**: Mensagem descritiva da SEFAZ detalhando o status.
+* **serie**: Série da numeração da CTe que terá uma faixa de numeração inutilizada
+* **numero_inicial**: Número inicial a ser inutilizado
+* **numero_final**: Número final a ser inutilizado
+* **caminho_xml**: Caminho do XML para download caso a inutilização tenha sido autorizada pela SEFAZ.
+
+
