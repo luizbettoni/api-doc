@@ -6,7 +6,7 @@ Mensalmente a API (primeira hora do primeiro dia de cada mês) gera um arquivo c
 
 A consulta dos arquivos de backup pode ser feito com a URL abaixo:
 
-`https://api.focusnfe.com.br/backups/CNPJ.json`
+`https://api.focusnfe.com.br/v2/backups/CNPJ.json`
 
 Utilize o comando HTTP GET para consultar o seu backup em nossa API.
 
