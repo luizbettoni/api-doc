@@ -774,13 +774,111 @@ console.log("Corpo: " + request.responseText);
 
 ```
 
+
+```python
+# Faça o download e instalação da biblioteca requests, através do python-pip.
+import json
+import requests
+
+''' 
+Para ambiente de produção use a variável abaixo:
+url = "https://api.focusnfe.com.br"
+'''
+url = "http://homologacao.acrasnfe.acras.com.br/v2/nfe"
+
+# Substituir pela sua identificação interna da nota
+ref = {"ref":"12345"}
+
+token="token_enviado_pelo_suporte"
+ 
+'''
+Usamos dicionarios para armazenar os campos e valores que em seguida,
+serao convertidos em JSON e enviados para nossa API
+'''
+nfe = {}
+itens = {}
+notas_referenciadas ={}
+
+nfe["natureza_operacao"] = "Venda"
+nfe["forma_pagamento"] = "0"
+nfe["data_emissao"] = "2018-03-07T10:20:00-03:00"
+nfe["tipo_documento"] = "0"
+nfe["local_destino"] = "1"
+nfe["finalidade_emissao"] = "4"
+nfe["consumidor_final"] = "0"
+nfe["presenca_comprador"] = "9"
+nfe["cnpj_emitente"] = "99999999999999"
+nfe["logradouro_emitente"] = "R. Padre Pigato"
+nfe["numero_emitente"] = "9236"
+nfe["bairro_emitente"] = "Santa Gula"
+nfe["municipio_emitente"] = "Curitiba"
+nfe["uf_emitente"] = "PR"
+nfe["cep_emitente"] = "82320999"
+nfe["telefone_emitente"] = "4199999999"
+nfe["inscricao_estadual_emitente"] = "999999999"
+nfe["regime_tributario_emitente"] = "1"
+nfe["cpf_destinatario"] = "99999999999"
+nfe["nome_destinatario"] = "NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL"
+nfe["logradouro_destinatario"] = "Rua Prof. Yolanda Romeu Lugarini"
+nfe["numero_destinatario"] = "1"
+nfe["bairro_destinatario"] = "JD SANTA CECILIA"
+nfe["municipio_destinatario"] = "CAMPO MAGRO"
+nfe["uf_destinatario"] = "PR"
+nfe["cep_destinatario"] = "83000000"
+nfe["indicador_inscricao_estadual_destinatario"] = "2"
+nfe["icms_base_calculo"] = "0"
+nfe["icms_valor_total"] = "0"
+nfe["icms_valor_total_desonerado"] = "0"
+nfe["icms_base_calculo_st"] = "0"
+nfe["icms_valor_total_st"] = "0"
+nfe["valor_produtos"] = "1.00"
+nfe["valor_frete"] = "0"
+nfe["valor_seguro"] = "0"
+nfe["valor_desconto"] = "0"
+nfe["valor_total_ii"] = "0"
+nfe["valor_ipi"] = "0"
+nfe["valor_pis"] = "0"
+nfe["valor_cofins"] = "0"
+nfe["valor_outras_despesas"] = "0"
+nfe["valor_total"] = "1.00"
+nfe["modalidade_frete"] = "0"
+notas_referenciadas["chave_nfe"] = 41170599999999999999550020000001111337477298
+itens["numero_item"] = "1"
+itens["codigo_produto"] = "ESSP"
+itens["descricao"] = "Carrinho de corrida"
+itens["cfop"] = "1202"
+itens["unidade_comercial"] = "UN"
+itens["quantidade_comercial"] = "1.00"
+itens["valor_unitario_comercial"] = "1.00"
+itens["valor_bruto"] = "1.00"
+itens["valor_desconto"] = "0"
+itens["unidade_tributavel"] = "UN"
+itens["codigo_ncm"] = "49119900"
+itens["quantidade_tributavel"] = "1.00"
+itens["valor_unitario_tributavel"] = "1.00"
+itens["inclui_no_total"] = "1"
+itens["icms_origem"] = "0"
+itens["icms_situacao_tributaria"] = "103"
+itens["pis_situacao_tributaria"] = "99"
+itens["cofins_situacao_tributaria"] = "99"
+
+# Adicionamos os dados das variaveis itens e notas_referenciadas como listas ao dicionario principal.
+nfe["items"] = [itens]
+nfe["notas_referenciadas"] = [notas_referenciadas]
+
+r = requests.post(url, params=ref, data=json.dumps(nfe), auth=(token,""))
+
+# Mostra na tela o codigo HTTP da requisicao e a mensagem de retorno da API
+print(r.status_code, r.text)
+```
+
 Para enviar uma NFe utilize a URL abaixo, alterando o ambiente de produção para homologação, caso esteja emitindo notas de teste.
 
 Envia uma NFe para autorização:
 
 `https://api.focusnfe.com.br/v2/nfe?ref=REFERENCIA`
 
-Utilize o comando HTTP POST para enviar a sua nota para nossa API. Envie como corpo do POST os dados em formato JSON da nota fiscal.
+Utilize o comando **HTTP POST** para enviar a sua nota para nossa API. Envie como corpo do POST os dados em formato JSON da nota fiscal.
 
 Nesta etapa, é feita uma primeira validação dos dados da nota. Caso ocorra algum problema, por exemplo, algum campo faltante, formato incorreto
 ou algum problema com o emitente a nota **não será aceita para processamento** e será devolvida a mensagem de erro apropriada. Veja a seção [erros](#introducao_erros).
@@ -789,7 +887,6 @@ Caso a nota seja validada corretamente, a nota será **aceita para processamento
 onde eventualmente será processada (processamento assíncrono). Com isto, a nota poderá ser autorizada ou ocorrer um erro na autorização, de acordo com a validação da SEFAZ.
 
 Para verificar se a nota já foi autorizada, você terá que efetuar uma [consulta](#nfe_consulta) ou se utilizar de [gatilhos](#gatilhos_gatilhos).
-
 
 ### Reenvio automático em contingência
 
@@ -803,13 +900,29 @@ O sistema cliente da API pode acompanhar este processo de forma transparente, co
 
 ## Consulta
 
-Para consultar uma NFe utilize a URL abaixo, alterando o ambiente de produção para homologação, caso esteja emitindo notas de teste.
+```python
+# Faça o download e instalação da biblioteca requests, através do python-pip.
+import requests
 
-Consultar as informações de uma NFe:
+''' 
+Para ambiente de produção use a variável abaixo:
+url = "https://api.focusnfe.com.br"
+'''
+url = "http://homologacao.acrasnfe.acras.com.br/v2/nfe/"
 
-https://api.focusnfe.com.br/v2/nfe/REFERENCIA?completa=(0|1)
+# Substituir pela sua identificação interna da nota
+ref = "12345"
 
-Utilize o comando HTTP GET para consultar a sua nota para nossa API.
+token="token_enviado_pelo_suporte"
+
+# Use este parametro para obter mais informacoes em suas consultas
+completa = "completa=1"
+
+r = requests.get(url+ref, params=completa, auth=(token,""))
+
+# Mostra na tela o codigo HTTP da requisicao e a mensagem de retorno da API
+print(r.status_code, r.text)
+```
 
 ```shell
 curl -u token_enviado_pelo_suporte: \
@@ -842,6 +955,7 @@ print("");
 curl_close($ch);
 ?>
 ```
+
 ```java
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
@@ -885,18 +999,6 @@ public class NFe_consulta {
 		System.out.printf(body);
 	}
 }
-
-Após emitir uma nota, você poderá usar a operação de consulta para verificar se a nota já foi aceita para processamento, se está
-ainda em processamento ou se a nota já foi processada.
-
-Para consultar uma NFe utilize a URL abaixo, alterando o ambiente de produção para homologação, caso esteja emitindo notas de teste.
-
-Consultar as informações de uma NFe:
-
-`https://api.focusnfe.com.br/v2/nfe/REFERENCIA`
-
-Utilize o comando HTTP GET para consultar a sua nota para nossa API.
-
 ```
 
 ```javascript
@@ -955,6 +1057,21 @@ console.log("Corpo: " + request.responseText);
 }
 ```
 
+Após emitir uma nota, você poderá usar a operação de consulta para verificar se a nota já foi aceita para processamento, se está
+ainda em processamento ou se a nota já foi processada.
+
+Para consultar uma NFe utilize a URL abaixo, alterando o ambiente de produção para homologação, caso esteja emitindo notas de teste.
+
+Consultar as informações de uma NFe:
+
+`https://api.focusnfe.com.br/v2/nfe/REFERENCIA?completa=(0|1)`
+
+Utilize o comando **HTTP GET** para consultar a sua nota para nossa API.
+
+Parâmetro Opcional | Ação
+-------|-------|-----
+completa = 0 ou 1 | Habilita a API há mostrar campos adicionais na requisição de consulta.
+
 Campos de retorno:
 
 * **status**: A situação da NFe, podendo ser:
@@ -986,7 +1103,7 @@ Caso na requisição seja passado o parâmetro `completa=1` será adicionado mai
 * **requisicao_carta_correcao**: Inclui os dados completos da requisição de Carta de Correção Eletrônica da NFe.
 * **protocolo_carta_correcao**: Inclui os dados completos do protocolo devolvido pela SEFAZ.
 
-> Exemplo de campos extras na consulta completa
+> Exemplo de resposta com o parâmetro opcional, completa, recebendo o valor "1":
 
 ```json
 {
@@ -1096,6 +1213,7 @@ print("");
 curl_close($ch);
 ?>
 ```
+
 ```java
 import java.util.HashMap;
 import org.codehaus.jettison.json.JSONObject;
@@ -1191,6 +1309,35 @@ console.log("Corpo: " + request.responseText);
 
 ```
 
+```python
+# Faça o download e instalação da biblioteca requests, através do python-pip.
+import json
+import requests
+
+''' 
+Para ambiente de produção use a variável abaixo:
+url = "https://api.focusnfe.com.br"
+'''
+url = "http://homologacao.acrasnfe.acras.com.br/v2/nfe/"
+
+# Substituir pela sua identificação interna da nota
+ref = "12345"
+
+token="token_enviado_pelo_suporte"
+
+'''
+Usamos um dicionario para armazenar os campos e valores que em seguida,
+serao convertidos a JSON e enviados para nossa API
+'''
+justificativa={}
+justificativa["justificativa"] = "Sua justificativa aqui!"
+
+r = requests.delete(url+ref, data=json.dumps(justificativa), auth=(token,""))
+
+# Mostra na tela o codigo HTTP da requisicao e a mensagem de retorno da API
+print(r.status_code, r.text)
+```
+
 > Resposta da API para a requisição de cancelamento:
 
 ```json
@@ -1208,12 +1355,11 @@ Cancelar uma NFe já autorizada:
 
 `https://api.focusnfe.com.br/v2/nfe/REFERENCIA`
 
-Utilize o comando HTTP DELETE para cancelar a sua nota para nossa API. Este método é síncrono, ou seja, a comunicação com a SEFAZ será feita imediatamente e devolvida a resposta na mesma requisição.
+Utilize o comando **HTTP DELETE** para cancelar a sua nota para nossa API. Este método é síncrono, ou seja, a comunicação com a SEFAZ será feita imediatamente e devolvida a resposta na mesma requisição.
 
 O parâmetros de cancelamento deverão ser enviados da seguinte forma:
 
 * **justificativa**: Justificativa do cancelamento. Deverá conter de 15 a 255 caracteres.
-
 
 A API irá em seguida devolver os seguintes campos:
 
@@ -1226,16 +1372,6 @@ A API irá em seguida devolver os seguintes campos:
 A NFe poderá ser cancelada em até 24 horas após a emissão. No entanto, alguns estados podem permitir um prazo maior para o cancelamento.
 
 ## Carta de Correção Eletrônica
-
-Uma Carta de Correção eletrônica (CCe) pode ser utilizada para corrigir eventuais erros na NFe. As seguintes informações **não podem ser corrigidas**:
-
-* As variáveis que determinam o valor do imposto tais como: base de cálculo, alíquota, diferença de preço, quantidade, valor da operação ou da prestação;
-* A correção de dados cadastrais que implique mudança do remetente ou do destinatário;
-* A data de emissão ou de saída.
-
-Não existe prazo especificado para emissão de cartas de correção. É possível enviar até 20 correções diferentes, sendo que será válido sempre a última correção enviada.
-
-### Emissão de CCe
 
 ```shell
 curl -u token_enviado_pelo_suporte: \
@@ -1273,6 +1409,7 @@ print("");
 curl_close($ch);
 ?>
 ```
+
 ```java
 import java.util.HashMap;
 import org.codehaus.jettison.json.JSONObject;
@@ -1369,6 +1506,35 @@ console.log("Corpo: " + request.responseText);
 
 ```
 
+```python
+# Faça o download e instalação da biblioteca requests, através do python-pip.
+import json
+import requests
+
+''' 
+Para ambiente de produção use a variável abaixo:
+url = "https://api.focusnfe.com.br"
+'''
+url = "http://homologacao.acrasnfe.acras.com.br/v2/nfe/"
+
+# Substituir pela sua identificação interna da nota
+ref = "12345"
+
+token="token_enviado_pelo_suporte"
+
+'''
+Usamos um dicionario para armazenar os campos e valores que em seguida,
+serao convertidos a JSON e enviados para nossa API
+'''
+cce={}
+cce["correcao"] = "A sua correção aqui!"
+
+r = requests.post(url+ref+"/carta_correcao", data=json.dumps(cce), auth=(token,""))
+
+# Mostra na tela o codigo HTTP da requisicao e a mensagem de retorno da API
+print(r.status_code, r.text)
+```
+
 > Resposta da API para a requisição de CCe:
 
 ```json
@@ -1382,15 +1548,24 @@ console.log("Corpo: " + request.responseText);
 }
 ```
 
+Uma Carta de Correção eletrônica (CCe) pode ser utilizada para corrigir eventuais erros na NFe. As seguintes informações **não podem ser corrigidas**:
+
+* As variáveis que determinam o valor do imposto tais como: base de cálculo, alíquota, diferença de preço, quantidade, valor da operação ou da prestação;
+* A correção de dados cadastrais que implique mudança do remetente ou do destinatário;
+* A data de emissão ou de saída.
+
+Não existe prazo especificado para emissão de cartas de correção. É possível enviar até 20 correções diferentes, sendo que será válido sempre a última correção enviada.
+
+### Emissão de CCe
+
 `https://api.focusnfe.com.br/v2/nfe/REFERENCIA/carta_correcao`
 
-Utilize o comando HTTP POST para enviar a sua nota para nossa API. Este método é **síncrono**, ou seja, a comunicação com a SEFAZ será feita imediatamente e devolvida a resposta na mesma requisição.
+Utilize o comando **HTTP POST** para enviar a sua nota para nossa API. Este método é **síncrono**, ou seja, a comunicação com a SEFAZ será feita imediatamente e devolvida a resposta na mesma requisição.
 
 O parâmetros da carta de correção deverão ser enviados da seguinte forma:
 
 * **correcao**: Texto da carta de correção. Deverá conter de 15 a 255 caracteres.
 * **data_evento**: Campo opcional. Data do evento da carta de correção. Se não informado será usado a data atual
-
 
 A API irá em seguida devolver os seguintes campos:
 
@@ -1544,13 +1719,43 @@ console.log("Corpo: " + request.responseText);
 
 ```
 
+```python
+# Faça o download e instalação da biblioteca requests, através do python-pip.
+import json
+import requests
+
+''' 
+Para ambiente de produção use a variável abaixo:
+url = "https://api.focusnfe.com.br"
+'''
+url = "http://homologacao.acrasnfe.acras.com.br/v2/nfe/"
+
+# Substituir pela sua identificação interna da nota
+ref = "12345"
+
+token="token_enviado_pelo_suporte"
+
+'''
+Usamos um dicionario para armazenar os campos e valores que em seguida,
+serao convertidos a JSON e enviados para nossa API
+'''
+emails = {}
+email = "suporte@acras.com.br"
+emails["emails"] = [email]
+
+r = requests.delete(url+ref+"/email", data=json.dumps(emails), auth=(token,""))
+
+# Mostra na tela o codigo HTTP da requisicao e a mensagem de retorno da API
+print(r.status_code, r.text)
+```
+
 Para cada nota autorizada, cancelada ou que tenha sido emitida uma carta de correção o destinatário da nota é notificado via email. Porém eventualmente pode ser necessário enviar a nota fiscal para outras pessoas ou mesmo reenviar o email para o mesmo destinatário.
 
 Para enviar um ou mais emails:
 
 `https://api.focusnfe.com.br/v2/nfe/REFERENCIA/email`
 
-Utilize o comando HTTP POST para enviar os emails. Esta operação aceita apenas um parâmetro:
+Utilize o comando **HTTP POST** para enviar os emails. Esta operação aceita apenas um parâmetro:
 
 * **emails**: Array com uma lista de emails que deverão receber uma cópia da nota. Limitado a 10 emails por vez.
 
@@ -1597,6 +1802,7 @@ print("");
 curl_close($ch);
 ?>
 ```
+
 ```java
 import java.util.HashMap;
 import org.codehaus.jettison.json.JSONException;
@@ -1698,6 +1904,36 @@ console.log("Corpo: " + request.responseText);
 
 ```
 
+```python
+# Faça o download e instalação da biblioteca requests, através do python-pip.
+import json
+import requests
+
+''' 
+Para ambiente de produção use a variável abaixo:
+url = "https://api.focusnfe.com.br"
+''' 
+url = "http://homologacao.acrasnfe.acras.com.br/v2/nfe/inutilizacao"
+
+token="token_enviado_pelo_suporte"
+
+'''
+Usamos um dicionario para armazenar os campos e valores que em seguida,
+serao convertidos a JSON e enviados para nossa API
+'''
+inutilizacao={}
+inutilizacao["cnpj"] = "CNPJ da empresa emitente"
+inutilizacao["serie"] = "Serie da numeracao da NFCe que tera uma faixa de numeracao inutilizada"
+inutilizacao["numero_inicial"] = "Numero inicial a ser inutilizado"
+inutilizacao["numero_final"] = "Numero final a ser inutilizado"
+inutilizacao["justificativa"] = "Justificativa da inutilizacao (minimo 15 caracteres)"
+
+r = requests.post(url, data=json.dumps(inutilizacao), auth=(token,""))
+
+# Mostra na tela o codigo HTTP da requisicao e a mensagem de retorno da API
+print(r.status_code, r.text)
+```
+
 > Resposta da API para a requisição de inutilização:
 
 ```json
@@ -1718,7 +1954,7 @@ Envio de inutilização de faixa de numeração:
 
 `https://api.focusnfe.com.br/v2/nfe/inutilizacao`
 
-Utilize o comando HTTP POST para enviar a sua inutilização para nossa API. Este método é **síncrono**, ou seja, a comunicação com a SEFAZ será feita imediatamente e devolvida a resposta na mesma requisição.
+Utilize o comando **HTTP POST** para enviar a sua inutilização para nossa API. Este método é **síncrono**, ou seja, a comunicação com a SEFAZ será feita imediatamente e devolvida a resposta na mesma requisição.
 
 A inutilização precisa dos seguintes parâmetros obrigatórios:
 
@@ -1727,7 +1963,6 @@ A inutilização precisa dos seguintes parâmetros obrigatórios:
 * **numero_inicial**: Número inicial a ser inutilizado
 * **numero_final**: Número final a ser inutilizado
 * **justificativa**: Justificativa da inutilização (mínimo 15 caracteres)
-
 
 A API irá enviar uma resposta com os seguintes campos:
 

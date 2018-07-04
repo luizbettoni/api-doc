@@ -24,7 +24,7 @@ GET|/v2/nfes_recebidas/CHAVE/carta_correcao.xml|Se existir, baixa o XML da últi
 import json
 import requests
 
-''' 
+'''
 Para ambiente de produção use a variável abaixo:
 url = "https://api.focusnfe.com.br"
 '''
@@ -160,7 +160,7 @@ Para ambiente de producao use a URL abaixo:
 */
 var url = "http://homologacao.acrasnfe.acras.com.br/v2/nfes_recebidas/" + chave + "/manifesto";
 
-/* 
+/*
 Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
 Passamos o token como quarto parametro deste metodo, como autenticador do HTTP Basic Authentication.
 */
@@ -247,7 +247,7 @@ Na URL, informe em **CHAVE** a chave da nota fiscal recebida. O retorno será o 
 # Faça o download e instalação da biblioteca requests, através do python-pip.
 import requests
 
-''' 
+'''
 Para ambiente de produção use a variável abaixo:
 url = "https://api.focusnfe.com.br"
 '''
@@ -348,7 +348,7 @@ A API busca as últimas atualizações da SEFAZ de hora em hora.
 # Faça o download e instalação da biblioteca requests, através do python-pip.
 import requests
 
-''' 
+'''
 Para ambiente de produção use a variável abaixo:
 url = "https://api.focusnfe.com.br"
 '''
@@ -458,7 +458,7 @@ Para ambiente de producao use a URL abaixo:
 */
 var url = "http://homologacao.acrasnfe.acras.com.br/v2/nfes_recebidas?cnpj=" + cnpj;
 
-/* 
+/*
 Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
 Passamos o token como quarto parametro deste metodo, como autenticador do HTTP Basic Authentication.
 */
@@ -562,10 +562,14 @@ Isto irá devolver os mesmos campos descritos no item 2.2. Você pode solicitar 
 
 Utilize o método **HTTP GET** para consultar os dados da nota fiscal.
 
-Isto irá adicionar dois novos campos:
+Isto irá adicionar 6 novos campos:
 
 * **requisicao_nota_fiscal**: Dados completos da nota fiscal em formato JSON.
 * **protocolo_nota_fiscal**: Dados completos do retorno do SEFAZ em formato JSON.
+* **requisicao_carta_correcao**: Dados completos da carta de correção em formato JSON se aplicável.
+* **protocolo_carta_correcao**: Dados completos do retorno do envio da carta de correção em formato JSON se aplicável.
+* **requisicao_cancelamento**: Dados completos do cancelamento em formato JSON se aplicável.
+* **protocolo_cancelamento**: Dados completos do retorno do cancelamento em formato JSON se aplicável.
 
 ## Download de XML
 
@@ -592,7 +596,7 @@ Para ambiente de producao use a URL abaixo:
 */
 var url = "http://homologacao.acrasnfe.acras.com.br/v2/nfes_recebidas/" + chave + ".xml";
 
-/* 
+/*
 Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
 Passamos o token como quarto parametro deste metodo, como autenticador do HTTP Basic Authentication.
 */
@@ -611,7 +615,7 @@ console.log("Corpo: " + request.responseText);
 # Faça o download e instalação da biblioteca requests, através do python-pip.
 import requests
 
-''' 
+'''
 Para ambiente de produção use a variável abaixo:
 url = "https://api.focusnfe.com.br"
 '''
@@ -721,7 +725,7 @@ Para ambiente de producao use a URL abaixo:
 */
 var url = "http://homologacao.acrasnfe.acras.com.br/v2/nfes_recebidas/" + chave + ".json?completa=1";
 
-/* 
+/*
 Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
 Passamos o token como quarto parametro deste metodo, como autenticador do HTTP Basic Authentication.
 */
@@ -740,7 +744,7 @@ console.log("Corpo: " + request.responseText);
 # Faça o download e instalação da biblioteca requests, através do python-pip.
 import requests
 
-''' 
+'''
 Para ambiente de produção use a variável abaixo:
 url = "https://api.focusnfe.com.br"
 '''
@@ -851,7 +855,7 @@ Para ambiente de producao use a URL abaixo:
 */
 var url = "http://homologacao.acrasnfe.acras.com.br/v2/nfes_recebidas/" + chave + "/cancelamento.xml";
 
-/* 
+/*
 Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
 Passamos o token como quarto parametro deste metodo, como autenticador do HTTP Basic Authentication.
 */
@@ -871,7 +875,7 @@ console.log("Corpo: " + request.responseText);
 # Faça o download e instalação da biblioteca requests, através do python-pip.
 import requests
 
-''' 
+'''
 Para ambiente de produção use a variável abaixo:
 url = "https://api.focusnfe.com.br"
 '''
@@ -980,7 +984,7 @@ Para ambiente de producao use a URL abaixo:
 */
 var url = "http://homologacao.acrasnfe.acras.com.br/v2/nfes_recebidas/" + chave + "carta_correcao.xml";
 
-/* 
+/*
 Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
 Passamos o token como quarto parametro deste metodo, como autenticador do HTTP Basic Authentication.
 */
@@ -998,7 +1002,7 @@ console.log("Corpo: " + request.responseText);
 # Faça o download e instalação da biblioteca requests, através do python-pip.
 import requests
 
-''' 
+'''
 Para ambiente de produção use a variável abaixo:
 url = "https://api.focusnfe.com.br"
 '''
