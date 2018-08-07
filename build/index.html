@@ -4843,7 +4843,7 @@ Para realizar a reimpressão de determinada NFCe basta salvar um arquivo com nom
   </span><span class="s2">"valor_total_carga"</span><span class="p">:</span><span class="w"> </span><span class="s2">"200000.00"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"produto_predominante"</span><span class="p">:</span><span class="w"> </span><span class="s2">"teste produto carga"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"outras_caracteristicas_carga"</span><span class="p">:</span><span class="w"> </span><span class="s2">"teste caracteristicas carga"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"cargas"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+  </span><span class="s2">"quantidades"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
     </span><span class="p">{</span><span class="w">
       </span><span class="s2">"codigo_unidade_medida"</span><span class="p">:</span><span class="w"> </span><span class="s2">"01"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"tipo_medida"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PESO BRUTO"</span><span class="p">,</span><span class="w">
@@ -4869,7 +4869,7 @@ Para realizar a reimpressão de determinada NFCe basta salvar um arquivo com nom
   </span><span class="s2">"duplicatas"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
     </span><span class="p">{</span><span class="w">
       </span><span class="s2">"data_vencimento"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-05-07"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"valor_duplicata"</span><span class="p">:</span><span class="w"> </span><span class="s2">"13000.00"</span><span class="w">
+      </span><span class="s2">"valor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"13000.00"</span><span class="w">
     </span><span class="p">}</span><span class="w">
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
@@ -5008,17 +5008,17 @@ curl -u token_enviado_pelo_suporte: <span class="se">\</span>
     <span class="n">json</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">"documentos_referenciados"</span><span class="o">,</span> <span class="n">JsonDocumentos_referenciados</span><span class="o">);</span>
 
     <span class="cm">/* É recomendado verificar como os dados foram gerados em JSON e se ele está seguindo a estrutura especificada em nossa documentação.*/</span>
-    <span class="c1">//System.out.print(json); </span>
+    <span class="c1">//System.out.print(json);</span>
 
     <span class="n">WebResource</span> <span class="n">request</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="na">resource</span><span class="o">(</span><span class="n">url</span><span class="o">);</span>
 
     <span class="n">ClientResponse</span> <span class="n">resposta</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">post</span><span class="o">(</span><span class="n">ClientResponse</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">json</span><span class="o">);</span>
 
-    <span class="kt">int</span> <span class="n">HttpCode</span> <span class="o">=</span> <span class="n">resposta</span><span class="o">.</span><span class="na">getStatus</span><span class="o">();</span> 
+    <span class="kt">int</span> <span class="n">HttpCode</span> <span class="o">=</span> <span class="n">resposta</span><span class="o">.</span><span class="na">getStatus</span><span class="o">();</span>
 
     <span class="n">String</span> <span class="n">body</span> <span class="o">=</span> <span class="n">resposta</span><span class="o">.</span><span class="na">getEntity</span><span class="o">(</span><span class="n">String</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
 
-    <span class="cm">/* As três linhas a seguir exibem as informações retornadas pela nossa API. 
+    <span class="cm">/* As três linhas a seguir exibem as informações retornadas pela nossa API.
      * Aqui o seu sistema deverá interpretar e lidar com o retorno. */</span>
     <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="s">"HTTP Code: "</span><span class="o">);</span>
     <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="n">HttpCode</span><span class="o">);</span>
@@ -5046,7 +5046,7 @@ Para ambiente de producao use a URL abaixo:
 */</span>
 <span class="kd">var</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">"http://homologacao.acrasnfe.acras.com.br/v2/cte_os?ref="</span> <span class="o">+</span> <span class="nx">ref</span><span class="p">;</span>
 
-<span class="cm">/* 
+<span class="cm">/*
 Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API.
 Passamos o token como quarto parametro deste metodo, como autenticador do HTTP Basic Authentication.
 */</span>
@@ -5246,7 +5246,7 @@ Passamos o token como quarto parametro deste metodo, como autenticador do HTTP B
 </code></pre><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">requests</span>
 
-<span class="s">''' 
+<span class="s">'''
 Para ambiente de produção use a variável abaixo:
 url = "https://api.focusnfe.com.br"
 '''</span>
@@ -5360,7 +5360,7 @@ onde eventualmente será processada (processamento assíncrono). Com isto, a not
 
 <p><code>https://api.focusnfe.com.br/v2/cte_os?ref=REFERENCIA</code></p>
 
-<p>Utilize o comando <strong>HTTP POST</strong> para enviar a sua nota para nossa API. 
+<p>Utilize o comando <strong>HTTP POST</strong> para enviar a sua nota para nossa API.
 Ao contrátio da CTe convencional, a CTe OS é processada de forma <strong>síncrona</strong>, na mesma requição em que os dados são enviadas.</p>
 <h2 id='cte-e-cte-os-beta_consulta'>Consulta</h2><pre class="highlight shell tab-shell"><code>curl -u token_enviado_pelo_suporte: <span class="se">\</span>
   http://homologacao.acrasnfe.acras.com.br/v2/cte/12345
@@ -5395,11 +5395,11 @@ Ao contrátio da CTe convencional, a CTe OS é processada de forma <strong>sínc
 
     <span class="n">ClientResponse</span> <span class="n">resposta</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">ClientResponse</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
 
-    <span class="kt">int</span> <span class="n">HttpCode</span> <span class="o">=</span> <span class="n">resposta</span><span class="o">.</span><span class="na">getStatus</span><span class="o">();</span> 
+    <span class="kt">int</span> <span class="n">HttpCode</span> <span class="o">=</span> <span class="n">resposta</span><span class="o">.</span><span class="na">getStatus</span><span class="o">();</span>
 
     <span class="n">String</span> <span class="n">body</span> <span class="o">=</span> <span class="n">resposta</span><span class="o">.</span><span class="na">getEntity</span><span class="o">(</span><span class="n">String</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
 
-    <span class="cm">/* As três linhas abaixo imprimem as informações retornadas pela API. 
+    <span class="cm">/* As três linhas abaixo imprimem as informações retornadas pela API.
      * Aqui o seu sistema deverá interpretar e lidar com o retorno. */</span>
     <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="s">"HTTP Code: "</span><span class="o">);</span>
     <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="n">HttpCode</span><span class="o">);</span>
@@ -5428,7 +5428,7 @@ Para ambiente de producao use a URL abaixo:
 */</span>
 <span class="kd">var</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">"http://homologacao.acrasnfe.acras.com.br/v2/cte/"</span> <span class="o">+</span> <span class="nx">ref</span> <span class="o">+</span> <span class="s2">"?completa=1"</span><span class="p">;</span>
 
-<span class="cm">/* 
+<span class="cm">/*
 Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API.
 Passamos o token como quarto parametro deste metodo, como autenticador do HTTP Basic Authentication.
 */</span>
@@ -5473,7 +5473,7 @@ Passamos o token como quarto parametro deste metodo, como autenticador do HTTP B
 </code></pre><pre class="highlight python tab-python"><code><span class="c"># Faça o download e instalação da biblioteca requests, através do python-pip.</span>
 <span class="kn">import</span> <span class="nn">requests</span>
 
-<span class="s">''' 
+<span class="s">'''
 Para ambiente de produção use a variável abaixo:
 url = "https://api.focusnfe.com.br"
 '''</span>
@@ -5666,11 +5666,11 @@ url = "https://api.focusnfe.com.br"
 
     <span class="n">ClientResponse</span> <span class="n">resposta</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">delete</span><span class="o">(</span><span class="n">ClientResponse</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">json</span><span class="o">);</span>
 
-    <span class="kt">int</span> <span class="n">HttpCode</span> <span class="o">=</span> <span class="n">resposta</span><span class="o">.</span><span class="na">getStatus</span><span class="o">();</span> 
+    <span class="kt">int</span> <span class="n">HttpCode</span> <span class="o">=</span> <span class="n">resposta</span><span class="o">.</span><span class="na">getStatus</span><span class="o">();</span>
 
     <span class="n">String</span> <span class="n">body</span> <span class="o">=</span> <span class="n">resposta</span><span class="o">.</span><span class="na">getEntity</span><span class="o">(</span><span class="n">String</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
 
-     <span class="cm">/* As três linhas abaixo imprimem as informações retornadas pela API. 
+     <span class="cm">/* As três linhas abaixo imprimem as informações retornadas pela API.
         * Aqui o seu sistema deverá interpretar e lidar com o retorno. */</span>
     <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="s">"HTTP Code: "</span><span class="o">);</span>
     <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="n">HttpCode</span><span class="o">);</span>
@@ -5698,7 +5698,7 @@ Para ambiente de producao use a URL abaixo:
 */</span>
 <span class="kd">var</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">"http://homologacao.acrasnfe.acras.com.br/v2/cte/"</span><span class="o">+</span> <span class="nx">ref</span><span class="p">;</span>
 
-<span class="cm">/* 
+<span class="cm">/*
 Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da AP
 Passamos o token como quarto parametro deste metodo, como autenticador do HTTP Basic Authentication.
 */</span>
@@ -5754,7 +5754,7 @@ Passamos o token como quarto parametro deste metodo, como autenticador do HTTP B
 <span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">requests</span>
 
-<span class="s">''' 
+<span class="s">'''
 Para ambiente de produção use a variável abaixo:
 url = "https://api.focusnfe.com.br"
 '''</span>
@@ -5866,11 +5866,11 @@ serao convertidos a JSON e enviados para nossa API.
 
     <span class="n">ClientResponse</span> <span class="n">resposta</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">post</span><span class="o">(</span><span class="n">ClientResponse</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">json</span><span class="o">);</span>
 
-    <span class="kt">int</span> <span class="n">HttpCode</span> <span class="o">=</span> <span class="n">resposta</span><span class="o">.</span><span class="na">getStatus</span><span class="o">();</span> 
+    <span class="kt">int</span> <span class="n">HttpCode</span> <span class="o">=</span> <span class="n">resposta</span><span class="o">.</span><span class="na">getStatus</span><span class="o">();</span>
 
     <span class="n">String</span> <span class="n">body</span> <span class="o">=</span> <span class="n">resposta</span><span class="o">.</span><span class="na">getEntity</span><span class="o">(</span><span class="n">String</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
 
-     <span class="cm">/* As três linhas abaixo imprimem as informações retornadas pela API. 
+     <span class="cm">/* As três linhas abaixo imprimem as informações retornadas pela API.
     * Aqui o seu sistema deverá interpretar e lidar com o retorno. */</span>
     <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="s">"HTTP Code: "</span><span class="o">);</span>
     <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="n">HttpCode</span><span class="o">);</span>
@@ -5900,7 +5900,7 @@ Para ambiente de producao use a URL abaixo:
 */</span>
 <span class="kd">var</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">"http://homologacao.acrasnfe.acras.com.br/v2/cte/"</span><span class="o">+</span> <span class="nx">ref</span> <span class="o">+</span> <span class="s2">"/carta_correcao"</span><span class="p">;</span>
 
-<span class="cm">/* 
+<span class="cm">/*
 Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API.
 Passamos o token como quarto parametro deste metodo, como autenticador do HTTP Basic Authentication.
 */</span>
@@ -5952,7 +5952,7 @@ Passamos o token como quarto parametro deste metodo, como autenticador do HTTP B
 <span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">requests</span>
 
-<span class="s">''' 
+<span class="s">'''
 Para ambiente de produção use a variável abaixo:
 url = "https://api.focusnfe.com.br"
 '''</span>
@@ -6065,15 +6065,15 @@ dos campos da API.</p>
 
     <span class="n">ClientResponse</span> <span class="n">resposta</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">post</span><span class="o">(</span><span class="n">ClientResponse</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">json</span><span class="o">);</span>
 
-    <span class="kt">int</span> <span class="n">HttpCode</span> <span class="o">=</span> <span class="n">resposta</span><span class="o">.</span><span class="na">getStatus</span><span class="o">();</span> 
+    <span class="kt">int</span> <span class="n">HttpCode</span> <span class="o">=</span> <span class="n">resposta</span><span class="o">.</span><span class="na">getStatus</span><span class="o">();</span>
 
     <span class="n">String</span> <span class="n">body</span> <span class="o">=</span> <span class="n">resposta</span><span class="o">.</span><span class="na">getEntity</span><span class="o">(</span><span class="n">String</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
 
-     <span class="cm">/* As três linhas abaixo imprimem as informações retornadas pela API. 
+     <span class="cm">/* As três linhas abaixo imprimem as informações retornadas pela API.
       * Aqui o seu sistema deverá interpretar e lidar com o retorno. */</span>
     <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="s">"HTTP Code: "</span><span class="o">);</span>
     <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="n">HttpCode</span><span class="o">);</span>
-    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="n">body</span><span class="o">);</span> 
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="n">body</span><span class="o">);</span>
   <span class="o">}</span>
 <span class="o">}</span>
 
@@ -6094,7 +6094,7 @@ Para ambiente de producao use a URL abaixo:
 */</span>
 <span class="kd">var</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">"http://homologacao.acrasnfe.acras.com.br/v2/cte/inutilizacao"</span><span class="p">;</span>
 
-<span class="cm">/* 
+<span class="cm">/*
 Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
 Passamos o token como quarto parametro deste metodo, como autenticador do HTTP Basic Authentication.
 */</span>
@@ -6158,10 +6158,10 @@ Passamos o token como quarto parametro deste metodo, como autenticador do HTTP B
 <span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">requests</span>
 
-<span class="s">''' 
+<span class="s">'''
 Para ambiente de produção use a variável abaixo:
 url = "https://api.focusnfe.com.br"
-'''</span> 
+'''</span>
 <span class="n">url</span> <span class="o">=</span> <span class="s">"http://homologacao.acrasnfe.acras.com.br/v2/cte/inutilizacao"</span>
 
 <span class="n">token</span><span class="o">=</span><span class="s">"Token_enviado_pelo_suporte"</span>
