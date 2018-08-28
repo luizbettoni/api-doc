@@ -111,11 +111,11 @@ Abaixo, iremos mostrar os campos de uso obrigatório para emissão de uma Nota F
 
 * <strong>local_destino</strong>: Local onde a operação irá acontecer. Valores possíveis:
 
-0 – Operação interna;
+1 – Operação interna;
 
-1 – Operação interestadual;
+2 – Operação interestadual;
 
-2 – Operação com exterior.
+3 – Operação com exterior.
 
 * <strong>finalidade_emissao</strong>: Indicar qual a finalidade da emissão da nota. Valores possíveis:
 
