@@ -23,9 +23,9 @@ POST | /v2/nfce/inutilizacao | Inutiliza uma numeração da nota fiscal
 
 ## Campos obrigatórios de uma NFCe
 
-Atualmente, a NFe possui centenas de campos para os mais variados tipos e formas de operações, por isso, criamos uma página exclusiva que mostra todos os campos da nossa API para o envio de NFe. Nela, você pode buscar os campos pela TAG XML ou pela nossa tradução para API.
+Atualmente, a NFCe possui centenas de campos para os mais variados tipos e formas de operações, por isso, criamos uma página exclusiva que mostra todos os campos da nossa API para o envio de NFCe. Nela, você pode buscar os campos pela TAG XML ou pela nossa tradução para API.
 
-[Documentação completa dos campos (versão 4.00 da NFe)] (https://focusnfe.com.br/dsl/4.0/NotaFiscalXML.html)
+[Documentação completa dos campos (versão 4.00 da NFe/NFCe)] (https://focusnfe.com.br/dsl/4.0/NotaFiscalXML.html)
 
 Abaixo, iremos mostrar todos os campos de uso mais comum para emissão de uma NFCe.
 
