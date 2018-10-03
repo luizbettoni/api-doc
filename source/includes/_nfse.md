@@ -221,87 +221,87 @@ import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 
-public class NFSe_autorizar {
+public class NFSeAutorizar {
 
-  public static void main(String[] args) throws JSONException{
+	public static void main(String[] args) throws JSONException{
+		
+		String login = "Token_enviado_pelo_suporte";
 
-    String login = "Token_enviado_pelo_suporte";
+		/* Substituir pela sua identificação interna da nota. */
+		String ref = "12345";
+		
+		/* Para ambiente de produção use a variável abaixo:
+		String server = "https://api.focusnfe.com.br/"; */
+ 		String server = "http://homologacao.acrasnfe.acras.com.br/";
+ 		
+ 		String url = server.concat("v2/nfse?ref="+ref);
+ 		
+ 		/* Configuração para realizar o HTTP BasicAuth. */
+		Object config = new DefaultClientConfig();
+		Client client = Client.create((ClientConfig) config);
+		client.addFilter(new HTTPBasicAuthFilter(login, ""));
 
-    /* Substituir pela sua identificação interna da nota. */
-    String ref = "12345";
+		/* Aqui são criados as hash's que receberão os dados da nota. */
+		HashMap<String, String> nfse = new HashMap<String, String>();
+		HashMap<String, String> prestador = new HashMap<String, String>();
+		HashMap<String, String> tomador = new HashMap<String, String>();
+		HashMap<String, String> tomadorEndereco = new HashMap<String, String>();
+		HashMap<String, String> servico = new HashMap<String, String>();
 
-    /* Para ambiente de produção use a variável abaixo:
-    String server = "https://api.focusnfe.com.br/"; */
-    String server = "http://homologacao.acrasnfe.acras.com.br/";
+		nfse.put("data_emissao", "2018-01-15T17:40:00");
+		nfse.put("natureza_operacao", "1");
+		prestador.put("cnpj", "51916585000125");
+		prestador.put("inscricao_municipal", "123456");
+		prestador.put("codigo_municipio", "4128104");
+		tomador.put("cpf", "51966818092");
+		tomador.put("razao_social", "ACME LTDA");
+		tomador.put("email", "email-do-tomador@google.com.br");
+		tomadorEndereco.put("bairro", "Jardim America");
+		tomadorEndereco.put("cep", "82620150");
+		tomadorEndereco.put("codigo_municipio", "4106902");
+		tomadorEndereco.put("logradouro", "Rua Paulo Centrone");
+		tomadorEndereco.put("numero", "168");
+		tomadorEndereco.put("uf", "PR");
+		servico.put("discriminacao", "Teste de servico");
+		servico.put("aliquota", "3.00");
+		servico.put("base_calculo", "1.0");
+		servico.put("valor_iss", "0");
+		servico.put("iss_retido", "false");
+		servico.put("codigo_tributario_municipio", "080101");
+		servico.put("item_lista_servico", "0801");
+		servico.put("valor_servicos", "1.0");
+		servico.put("valor_liquido", "1.0");
+		
+		/* Depois de fazer o input dos dados, são criados os objetos JSON já com os valores das hash's. */
+		JSONObject json = new JSONObject (nfse);
+		JSONObject jsonPrestador = new JSONObject (prestador);
+		JSONObject jsonTomador = new JSONObject (tomador);
+		JSONObject jsonTomadorEndereco = new JSONObject (tomadorEndereco);
+		JSONObject jsonServico = new JSONObject (servico);
+		
+		/* Aqui adicionamos os objetos JSON nos campos da API como array no JSON principal. */
+		json.accumulate("prestador", jsonPrestador);
+		json.accumulate("tomador", jsonTomador);
+		jsonTomador.accumulate("endereco", jsonTomadorEndereco);
+		json.accumulate("servico", jsonServico);
 
-    String url = server.concat("v2/nfse?ref="+ref);
+		/* É recomendado verificar como os dados foram gerados em JSON e se ele está seguindo a estrutura especificada em nossa documentação.
+		System.out.print(json); */
+		
+		WebResource request = client.resource(url);
 
-    /* Configuração para realizar o HTTP BasicAuth. */
-    Object config = new DefaultClientConfig();
-    Client client = Client.create((ClientConfig) config);
-    client.addFilter(new HTTPBasicAuthFilter(login, ""));
+		ClientResponse resposta = request.post(ClientResponse.class, json);
 
-    /* Aqui são criados as hash's que receberão os dados da nota. */
-    HashMap<String, String> nfse = new HashMap<String, String>();
-    HashMap<String, String> prestador = new HashMap<String, String>();
-    HashMap<String, String> tomador = new HashMap<String, String>();
-    HashMap<String, String> TomadorEndereco = new HashMap<String, String>();
-    HashMap<String, String> servico = new HashMap<String, String>();
+		int httpCode = resposta.getStatus(); 
 
-    nfse.put("data_emissao", "2018-01-15T17:40:00");
-    nfse.put("natureza_operacao", "1");
-    prestador.put("cnpj", "51916585000125");
-    prestador.put("inscricao_municipal", "123456");
-    prestador.put("codigo_municipio", "4128104");
-    tomador.put("cpf", "51966818092");
-    tomador.put("razao_social", "ACME LTDA");
-    tomador.put("email", "email-do-tomador@google.com.br");
-    TomadorEndereco.put("bairro", "Jardim America");
-    TomadorEndereco.put("cep", "82620150");
-    TomadorEndereco.put("codigo_municipio", "4106902");
-    TomadorEndereco.put("logradouro", "Rua Paulo Centrone");
-    TomadorEndereco.put("numero", "168");
-    TomadorEndereco.put("uf", "PR");
-    servico.put("discriminacao", "Teste de servico");
-    servico.put("aliquota", "3.00");
-    servico.put("base_calculo", "1.0");
-    servico.put("valor_iss", "0");
-    servico.put("iss_retido", "false");
-    servico.put("codigo_tributario_municipio", "080101");
-    servico.put("item_lista_servico", "0801");
-    servico.put("valor_servicos", "1.0");
-    servico.put("valor_liquido", "1.0");
-
-    /* Depois de fazer o input dos dados, são criados os objetos JSON já com os valores das hash's. */
-    JSONObject json = new JSONObject (nfse);
-    JSONObject JsonPrestador = new JSONObject (prestador);
-    JSONObject JsonTomador = new JSONObject (tomador);
-    JSONObject JsonTomadorEndereco = new JSONObject (TomadorEndereco);
-    JSONObject JsonServico = new JSONObject (servico);
-
-    /* Aqui adicionamos os objetos JSON nos campos da API como array no JSON principal. */
-    json.accumulate("prestador", JsonPrestador);
-    json.accumulate("tomador", JsonTomador);
-    JsonTomador.accumulate("endereco", JsonTomadorEndereco);
-    json.accumulate("servico", JsonServico);
-
-    /* É recomendado verificar como os dados foram gerados em JSON e se ele está seguindo a estrutura especificada em nossa documentação.
-    System.out.print(json); */
-
-    WebResource request = client.resource(url);
-
-    ClientResponse resposta = request.post(ClientResponse.class, json);
-
-    int HttpCode = resposta.getStatus();
-
-    String body = resposta.getEntity(String.class);
-
-    /* As três linhas a seguir exibem as informações retornadas pela nossa API.
-     * Aqui o seu sistema deverá interpretar e lidar com o retorno. */
-    System.out.print("HTTP Code: ");
-    System.out.print(HttpCode);
-    System.out.printf(body);
-  }
+		String body = resposta.getEntity(String.class);
+		
+		/* As três linhas a seguir exibem as informações retornadas pela nossa API. 
+		 * Aqui o seu sistema deverá interpretar e lidar com o retorno. */
+		System.out.print("HTTP Code: ");
+		System.out.print(httpCode);
+		System.out.printf(body);
+	}
 }
 ```
 
@@ -499,40 +499,40 @@ import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 
-public class NFSe_consulta {
+public class NFSeConsulta {
 
-  public static void main(String[] args){
+	public static void main(String[] args){
 
-    String login = "Token_enviado_pelo_suporte";
+		String login = "Token_enviado_pelo_suporte";
 
-    /* Substituir pela sua identificação interna da nota. */
-    String ref = "12345";
+		/* Substituir pela sua identificação interna da nota. */
+		String ref = "12345";
+		
+		/* Para ambiente de produção use a variável abaixo:
+		String server = "https://api.focusnfe.com.br/"; */
+ 		String server = "http://homologacao.acrasnfe.acras.com.br/";
+		
+ 		String url = server.concat("v2/nfse/"+ref);
 
-    /* Para ambiente de produção use a variável abaixo:
-    String server = "https://api.focusnfe.com.br/"; */
-    String server = "http://homologacao.acrasnfe.acras.com.br/";
+ 		/* Configuração para realizar o HTTP BasicAuth. */
+		Object config = new DefaultClientConfig();
+		Client client = Client.create((ClientConfig) config);
+		client.addFilter(new HTTPBasicAuthFilter(login, ""));
 
-    String url = server.concat("v2/nfse/"+ref);
+		WebResource request = client.resource(url);
 
-    /* Configuração para realizar o HTTP BasicAuth. */
-    Object config = new DefaultClientConfig();
-    Client client = Client.create((ClientConfig) config);
-    client.addFilter(new HTTPBasicAuthFilter(login, ""));
+		ClientResponse resposta = (ClientResponse) request.get(ClientResponse.class);
 
-    WebResource request = client.resource(url);
+		int httpCode = resposta.getStatus(); 
 
-    ClientResponse resposta = (ClientResponse) request.get(ClientResponse.class);
+		String body = resposta.getEntity(String.class);
 
-    int HttpCode = resposta.getStatus();
-
-    String body = resposta.getEntity(String.class);
-
-    /* As três linhas abaixo imprimem as informações retornadas pela API.
-     * Aqui o seu sistema deverá interpretar e lidar com o retorno. */
-    System.out.print("HTTP Code: ");
-    System.out.print(HttpCode);
-    System.out.printf(body);
-  }
+		/* As três linhas abaixo imprimem as informações retornadas pela API. 
+		 * Aqui o seu sistema deverá interpretar e lidar com o retorno. */
+		System.out.print("HTTP Code: ");
+		System.out.print(httpCode);
+		System.out.printf(body);
+	}
 }
 ```
 
@@ -675,47 +675,47 @@ import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 
-public class NFSe_cancelamento {
+public class NFSeCancelamento {
 
-  public static void main(String[] args){
+	public static void main(String[] args){
+		
+		String login = "Token_enviado_pelo_suporte";
 
-    String login = "Token_enviado_pelo_suporte";
+		/* Substituir pela sua identificação interna da nota. */
+		String ref = "12345";
+		
+		/* Para ambiente de produção use a variável abaixo:
+		String server = "https://api.focusnfe.com.br/"; */
+ 		String server = "http://homologacao.acrasnfe.acras.com.br/";
+ 		
+		String url = server.concat("v2/nfse/"+ref);
+ 		
+ 		/* Aqui criamos um hashmap para receber a chave "justificativa" e o valor desejado. */
+		HashMap<String, String> justificativa = new HashMap<String, String>();
+		justificativa.put("justificativa", "Informe aqui a sua justificativa para realizar o cancelamento da NFSe.");
+		
+		/* Criamos um objeto JSON para receber a hash com os dados esperado pela API. */
+		JSONObject json = new JSONObject(justificativa);
 
-    /* Substituir pela sua identificação interna da nota. */
-    String ref = "12345";
+		/* Configuração para realizar o HTTP BasicAuth. */
+		Object config = new DefaultClientConfig();
+		Client client = Client.create((ClientConfig) config);
+		client.addFilter(new HTTPBasicAuthFilter(login, ""));
 
-    /* Para ambiente de produção use a variável abaixo:
-    String server = "https://api.focusnfe.com.br/"; */
-    String server = "http://homologacao.acrasnfe.acras.com.br/";
+		WebResource request = client.resource(url);
 
-    String url = server.concat("v2/nfse/"+ref);
+		ClientResponse resposta = request.delete(ClientResponse.class, json);
 
-    /* Aqui criamos um hashmap para receber a chave "justificativa" e o valor desejado. */
-    HashMap<String, String> justificativa = new HashMap<String, String>();
-    justificativa.put("justificativa", "Informe aqui a sua justificativa para realizar o cancelamento da NFSe.");
+		int httpCode = resposta.getStatus(); 
 
-    /* Criamos um objeto JSON para receber a hash com os dados esperado pela API. */
-    JSONObject json = new JSONObject(justificativa);
-
-    /* Configuração para realizar o HTTP BasicAuth. */
-    Object config = new DefaultClientConfig();
-    Client client = Client.create((ClientConfig) config);
-    client.addFilter(new HTTPBasicAuthFilter(login, ""));
-
-    WebResource request = client.resource(url);
-
-    ClientResponse resposta = request.delete(ClientResponse.class, json);
-
-    int HttpCode = resposta.getStatus();
-
-    String body = resposta.getEntity(String.class);
-
-    /* As três linhas abaixo imprimem as informações retornadas pela API.
-     * Aqui o seu sistema deverá interpretar e lidar com o retorno. */
-    System.out.print("HTTP Code: ");
-    System.out.print(HttpCode);
-    System.out.printf(body);
-  }
+		String body = resposta.getEntity(String.class);
+		
+		/* As três linhas abaixo imprimem as informações retornadas pela API. 
+		 * Aqui o seu sistema deverá interpretar e lidar com o retorno. */
+		System.out.print("HTTP Code: ");
+		System.out.print(httpCode);
+		System.out.printf(body);
+	}
 }
 ```
 
@@ -870,51 +870,51 @@ import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 
-public class NFSe_envia_email {
+public class NFSeEnviaEmail {
 
-  public static void main(String[] args) throws JSONException{
+	public static void main(String[] args) throws JSONException{
+		
+		String login = "Token_enviado_pelo_suporte";
 
-    String login = "Token_enviado_pelo_suporte";
+		/* Substituir pela sua identificação interna da nota. */
+		String ref = "12345";
+		
+		/* Para ambiente de produção use a variável abaixo:
+		String server = "https://api.focusnfe.com.br/"; */
+ 		String server = "http://homologacao.acrasnfe.acras.com.br/";
 
-    /* Substituir pela sua identificação interna da nota. */
-    String ref = "12345";
+		String url = server.concat("v2/nfse/"+ref+"/email");
+		
+		/* Criamos o um objeto JSON que receberá um JSON Array com a lista de e-mails. */
+		JSONObject json = new JSONObject ();	
+		JSONArray listaEmails = new JSONArray();
+		listaEmails.put("email_01@acras.com.br");
+		listaEmails.put("email_02@acras.com.br");
+		listaEmails.put("email_03@acras.com.br");
+		json.put("emails", listaEmails);	
+		
+		/* Testar se o JSON gerado está dentro do formato esperado.
+		System.out.print(json); */
+		
+		/* Configuração para realizar o HTTP BasicAuth. */
+		Object config = new DefaultClientConfig();
+		Client client = Client.create((ClientConfig) config);
+		client.addFilter(new HTTPBasicAuthFilter(login, ""));
 
-    /* Para ambiente de produção use a variável abaixo:
-    String server = "https://api.focusnfe.com.br/"; */
-    String server = "http://homologacao.acrasnfe.acras.com.br/";
+		WebResource request = client.resource(url);
 
-    String url = server.concat("v2/nfse/"+ref+"/email");
+		ClientResponse resposta = request.post(ClientResponse.class, json);
 
-    /* Criamos o um objeto JSON que receberá um JSON Array com a lista de e-mails. */
-    JSONObject json = new JSONObject ();  
-    JSONArray ListaEmails = new JSONArray();
-    ListaEmails.put("email_01@acras.com.br");
-    ListaEmails.put("email_02@acras.com.br");
-    ListaEmails.put("email_03@acras.com.br");
-    json.put("emails", ListaEmails);  
+		int httpCode = resposta.getStatus(); 
 
-    /* Testar se o JSON gerado está dentro do formato esperado.
-    System.out.print(json); */
-
-    /* Configuração para realizar o HTTP BasicAuth. */
-    Object config = new DefaultClientConfig();
-    Client client = Client.create((ClientConfig) config);
-    client.addFilter(new HTTPBasicAuthFilter(login, ""));
-
-    WebResource request = client.resource(url);
-
-    ClientResponse resposta = request.post(ClientResponse.class, json);
-
-    int HttpCode = resposta.getStatus();
-
-    String body = resposta.getEntity(String.class);
-
-    /* As três linhas abaixo imprimem as informações retornadas pela API.
-     * Aqui o seu sistema deverá interpretar e lidar com o retorno. */
-    System.out.print("HTTP Code: ");
-    System.out.print(HttpCode);
-    System.out.printf(body);
-  }
+		String body = resposta.getEntity(String.class);
+		
+		/* As três linhas abaixo imprimem as informações retornadas pela API. 
+		 * Aqui o seu sistema deverá interpretar e lidar com o retorno. */
+		System.out.print("HTTP Code: ");
+		System.out.print(httpCode);
+		System.out.printf(body); 
+	}
 }
 ```
 

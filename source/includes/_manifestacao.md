@@ -72,25 +72,25 @@ import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 public class Manifestar {
 
 	public static void main(String[] args) {
-
+		
 		String login = "Token_enviado_pelo_Suporte";
 		String chave = "Chave_de_identificação_da_NFe";
-
+		
 		/* Para ambiente de produção use a variável abaixo:
 		String server = "https://api.focusnfe.com.br/"; */
 		String server = "http://homologacao.acrasnfe.acras.com.br/";
 		String url = server.concat("v2/nfes_recebidas/"+chave+"/manifesto");
-
+			
 		/* Aqui criamos um hashmap para receber a chave "tipo" e o valor que pode ser: ciencia, confirmacao, desconhecimento ou nao_realizada. */		
-		HashMap<String, String> TipoManifestacao = new HashMap<String, String>();
+		HashMap<String, String> tipoManifestacao = new HashMap<String, String>();
 		TipoManifestacao.put("tipo", "nao_realizada");
-
+		
 		/* Caso escolha o tipo "nao_realizada", é preciso informar o campo/chave "justificativa".
 		 * TipoManifestacao.put("justificativa", "Informe aqui a sua justificativa do motivo da não realização da operação."); */
-
+			
 		/* Criamos um objeto JSON para receber a hash com os dados esperado pela API. */
 		JSONObject json = new JSONObject(TipoManifestacao);
-
+		
 		/* Configuração para realizar o HTTP BasicAuth. */
 		Object config = new DefaultClientConfig();
 		Client client = Client.create((ClientConfig) config);
@@ -98,13 +98,13 @@ public class Manifestar {
 
 		WebResource request =  client.resource(url);
 		ClientResponse resposta = request.post(ClientResponse.class, json);
-		int HttpCode = resposta.getStatus();
+		int httpCode = resposta.getStatus(); 
 		String body = resposta.getEntity(String.class);
-
-		/* As três linhas abaixo imprimem as informações retornadas pela API.
+		
+		/* As três linhas abaixo imprimem as informações retornadas pela API. 
 		 * Aqui o seu sistema deverá interpretar e lidar com o retorno. */
 		System.out.print("HTTP Code: ");
-		System.out.print(HttpCode);
+		System.out.print(httpCode);
 		System.out.printf(body);
 	}
 }
@@ -273,18 +273,18 @@ import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 
-public class consultar_ultima_manifestacao {
+public class ConsultarUltimaManifestacao {
 
 	public static void main(String[] args) {
-
+		
 		String login = "Token_enviado_pelo_Suporte";
 		String chave = "Chave_de_identificação_da_NFe";
-
+		
 		/* Para ambiente de produção use a variável abaixo:
 		String server = "https://api.focusnfe.com.br/"; */
 		String server = "http://homologacao.acrasnfe.acras.com.br/";
 		String url = server.concat("v2/nfes_recebidas/"+chave+"/manifesto");
-
+		
 		/* Configuração para realizar o HTTP BasicAuth. */
 		Object config = new DefaultClientConfig();
 		Client client = Client.create((ClientConfig) config);
@@ -292,13 +292,13 @@ public class consultar_ultima_manifestacao {
 
 		WebResource request =  client.resource(url);
 		ClientResponse resposta = request.get(ClientResponse.class);
-		int HttpCode = resposta.getStatus();
+		int httpCode = resposta.getStatus(); 
 		String body = resposta.getEntity(String.class);
-
-		/* As três linhas abaixo imprimem as informações retornadas pela API.
+		
+		/* As três linhas abaixo imprimem as informações retornadas pela API. 
 		 * Aqui o seu sistema deverá interpretar e lidar com o retorno. */
 		System.out.print("HTTP Code: ");
-		System.out.print(HttpCode);
+		System.out.print(httpCode);
 		System.out.printf(body);
 	}
 }
@@ -379,18 +379,18 @@ import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 
-public class consultar_todos_manifestos {
+public class ConsultarTodosManifestos {
 
 	public static void main(String[] args) {
 
 		String login = "Token_enviado_pelo_Suporte";
 		String cnpj = "CNPJ_da_sua_empresa";
-
+		
 		/* Para ambiente de produção use a variável abaixo:
 		String server = "https://api.focusnfe.com.br/"; */
 		String server = "http://homologacao.acrasnfe.acras.com.br/";
 		String url = server.concat("v2/nfes_recebidas?cnpj="+cnpj);
-
+		
 		/* Configuração para realizar o HTTP BasicAuth. */
 		Object config = new DefaultClientConfig();
 		Client client = Client.create((ClientConfig) config);
@@ -398,10 +398,10 @@ public class consultar_todos_manifestos {
 
 		WebResource request =  client.resource(url);
 		ClientResponse resposta = request.get(ClientResponse.class);
-		int httpCode = resposta.getStatus();
+		int httpCode = resposta.getStatus(); 
 		String body = resposta.getEntity(String.class);
-
-		/* As três linhas abaixo imprimem as informações retornadas pela API.
+		
+		/* As três linhas abaixo imprimem as informações retornadas pela API. 
 		 * Aqui o seu sistema deverá interpretar e lidar com o retorno. */
 		System.out.print("HTTP Code: ");
 		System.out.print(httpCode);
@@ -645,18 +645,18 @@ import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 
-public class download_nota_especifica_xml {
+public class DownloadNotaEspecificaXml {
 
 	public static void main(String[] args) {
-
+		
 		String login = "Token_enviado_pelo_Suporte";
 		String chave = "Chave_de_identificação_da_NFe";
-
+		
 		/* Para ambiente de produção use a variável abaixo:
 		String server = "https://api.focusnfe.com.br/"; */
 		String server = "http://homologacao.acrasnfe.acras.com.br/";
 		String url = server.concat("v2/nfes_recebidas/"+chave+".xml");
-
+		
 		/* Configuração para realizar o HTTP BasicAuth. */
 		Object config = new DefaultClientConfig();
 		Client client = Client.create((ClientConfig) config);
@@ -664,13 +664,13 @@ public class download_nota_especifica_xml {
 
 		WebResource request =  client.resource(url);
 		ClientResponse resposta = request.get(ClientResponse.class);
-		int HttpCode = resposta.getStatus();
+		int httpCode = resposta.getStatus(); 
 		String body = resposta.getEntity(String.class);
-
-		/* As três linhas abaixo imprimem as informações retornadas pela API.
+		
+		/* As três linhas abaixo imprimem as informações retornadas pela API. 
 		 * Aqui o seu sistema deverá interpretar e lidar com o retorno. */
 		System.out.print("HTTP Code: ");
-		System.out.print(HttpCode);
+		System.out.print(httpCode);
 		System.out.printf(body);
 	}
 }
@@ -776,18 +776,18 @@ import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 
-public class download_nota_especifica {
+public class DownloadNotaEspecifica {
 
 	public static void main(String[] args) {
-
+		
 		String login = "Token_enviado_pelo_Suporte";
 		String chave = "Chave_de_identificação_da_NFe";
-
+		
 		/* Para ambiente de produção use a variável abaixo:
 		String server = "https://api.focusnfe.com.br/"; */
 		String server = "http://homologacao.acrasnfe.acras.com.br/";
 		String url = server.concat("v2/nfes_recebidas/"+chave+".json?completa=1");
-
+		
 		/* Configuração para realizar o HTTP BasicAuth. */
 		Object config = new DefaultClientConfig();
 		Client client = Client.create((ClientConfig) config);
@@ -795,13 +795,13 @@ public class download_nota_especifica {
 
 		WebResource request =  client.resource(url);
 		ClientResponse resposta = request.get(ClientResponse.class);
-		int HttpCode = resposta.getStatus();
+		int httpCode = resposta.getStatus(); 
 		String body = resposta.getEntity(String.class);
-
-		/* As três linhas abaixo imprimem as informações retornadas pela API.
+		
+		/* As três linhas abaixo imprimem as informações retornadas pela API. 
 		 * Aqui o seu sistema deverá interpretar e lidar com o retorno. */
 		System.out.print("HTTP Code: ");
-		System.out.print(HttpCode);
+		System.out.print(httpCode);
 		System.out.printf(body);
 	}
 }
@@ -905,18 +905,18 @@ import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 
-public class download_cancelamento_xml {
+public class DownloadCancelamentoXml {
 
 	public static void main(String[] args) {
-
+		
 		String login = "Token_enviado_pelo_Suporte";
 		String chave = "Chave_de_identificação_da_NFe";
-
+		
 		/* Para ambiente de produção use a variável abaixo:
 		String server = "https://api.focusnfe.com.br/"; */
 		String server = "http://homologacao.acrasnfe.acras.com.br/";
 		String url = server.concat("v2/nfes_recebidas/"+chave+"/cancelamento.xml");
-
+		
 		/* Configuração para realizar o HTTP BasicAuth. */
 		Object config = new DefaultClientConfig();
 		Client client = Client.create((ClientConfig) config);
@@ -924,13 +924,13 @@ public class download_cancelamento_xml {
 
 		WebResource request =  client.resource(url);
 		ClientResponse resposta = request.get(ClientResponse.class);
-		int HttpCode = resposta.getStatus();
+		int httpCode = resposta.getStatus(); 
 		String body = resposta.getEntity(String.class);
-
-		/* As três linhas abaixo imprimem as informações retornadas pela API.
+		
+		/* As três linhas abaixo imprimem as informações retornadas pela API. 
 		 * Aqui o seu sistema deverá interpretar e lidar com o retorno. */
 		System.out.print("HTTP Code: ");
-		System.out.print(HttpCode);
+		System.out.print(httpCode);
 		System.out.printf(body);
 	}
 }
@@ -1033,18 +1033,18 @@ import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 
-public class download_xml_cce {
+public class DownloadXmlCce {
 
 	public static void main(String[] args) {
-
+		
 		String login = "Token_enviado_pelo_Suporte";
 		String chave = "Chave_de_identificação_da_NFe";
-
+		
 		/* Para ambiente de produção use a variável abaixo:
 		String server = "https://api.focusnfe.com.br/"; */
 		String server = "http://homologacao.acrasnfe.acras.com.br/";
 		String url = server.concat("v2/nfes_recebidas/"+chave+"/carta_correcao.xml");
-
+		
 		/* Configuração para realizar o HTTP BasicAuth. */
 		Object config = new DefaultClientConfig();
 		Client client = Client.create((ClientConfig) config);
@@ -1052,13 +1052,13 @@ public class download_xml_cce {
 
 		WebResource request =  client.resource(url);
 		ClientResponse resposta = request.get(ClientResponse.class);
-		int HttpCode = resposta.getStatus();
+		int httpCode = resposta.getStatus(); 
 		String body = resposta.getEntity(String.class);
-
-		/* As três linhas abaixo imprimem as informações retornadas pela API.
+		
+		/* As três linhas abaixo imprimem as informações retornadas pela API. 
 		 * Aqui o seu sistema deverá interpretar e lidar com o retorno. */
 		System.out.print("HTTP Code: ");
-		System.out.print(HttpCode);
+		System.out.print(httpCode);
 		System.out.printf(body);
 	}
 }

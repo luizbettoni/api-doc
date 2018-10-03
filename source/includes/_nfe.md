@@ -571,30 +571,30 @@ import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 
-public class NFe_autorizar {
+public class NFeAutorizar {
 
 	public static void main(String[] args) throws JSONException{
-
+		
 		String login = "Token_enviado_pelo_suporte";
 
 		/* Substituir pela sua identificação interna da nota. */
 		String ref = "12345";
-
+		
 		/* Para ambiente de produção use a variável abaixo:
 		String server = "https://api.focusnfe.com.br/"; */
  		String server = "http://homologacao.acrasnfe.acras.com.br/";
-
+ 		
  		String url = server.concat("v2/nfe?ref="+ref);
-
+	
 		/* Configuração para realizar o HTTP BasicAuth. */
 		Object config = new DefaultClientConfig();
 		Client client = Client.create((ClientConfig) config);
 		client.addFilter(new HTTPBasicAuthFilter(login, ""));
-
+		
 		/* Aqui são criados as hash's que receberão os dados da nota. */
 		HashMap<String, String> nfe = new HashMap<String, String>();
 		HashMap<String, String> itens = new HashMap<String, String>();
-
+   
 		nfe.put("data_emissao", "2018-01-16T09:38:00");
 		nfe.put("natureza_operacao", "Remessa de Produtos");
 		nfe.put("forma_pagamento", "0");
@@ -655,29 +655,29 @@ public class NFe_autorizar {
 		itens.put("cofins_situacao_tributaria","07");
 		itens.put("ipi_situacao_tributaria","53");
 		itens.put("ipi_codigo_enquadramento_legal","999");
-
+		
 		/* Depois de fazer o input dos dados, são criados os objetos JSON já com os valores das hash's. */
 		JSONObject json = new JSONObject (nfe);
-		JSONObject JsonItens = new JSONObject (itens);
-
+		JSONObject jsonItens = new JSONObject (itens);
+		
 		/* Aqui adicionamos os objetos JSON nos campos da API como array no JSON principal. */
-		json.append("items", JsonItens);
+		json.append("items", jsonItens);
 
 		/* É recomendado verificar como os dados foram gerados em JSON e se ele está seguindo a estrutura especificada em nossa documentação.
 		System.out.print(json); */
-
+		
 		WebResource request = client.resource(url);
 
 		ClientResponse resposta = request.post(ClientResponse.class, json);
 
-		int HttpCode = resposta.getStatus();
+		int httpCode = resposta.getStatus(); 
 
 		String body = resposta.getEntity(String.class);
-
-		/* As três linhas a seguir exibem as informações retornadas pela nossa API.
+		
+		/* As três linhas a seguir exibem as informações retornadas pela nossa API. 
 		 * Aqui o seu sistema deverá interpretar e lidar com o retorno. */
 		System.out.print("HTTP Code: ");
-		System.out.print(HttpCode);
+		System.out.print(httpCode);
 		System.out.printf(body);
 	}
 }
@@ -964,7 +964,7 @@ import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 
-public class NFe_consulta {
+public class NFeConsulta {
 
 	public static void main(String[] args){
 
@@ -972,13 +972,13 @@ public class NFe_consulta {
 
 		/* Substituir pela sua identificação interna da nota. */
 		String ref = "12345";
-
+		
 		/* Para ambiente de produção use a variável abaixo:
 		String server = "https://api.focusnfe.com.br/"; */
  		String server = "http://homologacao.acrasnfe.acras.com.br/";
-
+ 		
 		String url = server.concat("v2/nfe/"+ref+"?completa=1");
-
+		
 		/* Configuração para realizar o HTTP BasicAuth. */
 		Object config = new DefaultClientConfig();
 		Client client = Client.create((ClientConfig) config);
@@ -988,14 +988,14 @@ public class NFe_consulta {
 
 		ClientResponse resposta = request.get(ClientResponse.class);
 
-		int HttpCode = resposta.getStatus();
+		int httpCode = resposta.getStatus(); 
 
 		String body = resposta.getEntity(String.class);
 
-		/* As três linhas abaixo imprimem as informações retornadas pela API.
+		/* As três linhas abaixo imprimem as informações retornadas pela API. 
 		 * Aqui o seu sistema deverá interpretar e lidar com o retorno. */
 		System.out.print("HTTP Code: ");
-		System.out.print(HttpCode);
+		System.out.print(httpCode);
 		System.out.printf(body);
 	}
 }
@@ -1224,44 +1224,44 @@ import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 
-public class NFe_cancelamento {
+public class NFeCancelamento {
 
 	public static void main(String[] args){
-
+		
 		String login = "Token_enviado_pelo_suporte";
 
 		/* Substituir pela sua identificação interna da nota. */
 		String ref = "12345";
-
+		
 		/* Para ambiente de produção use a variável abaixo:
 		String server = "https://api.focusnfe.com.br/"; */
  		String server = "http://homologacao.acrasnfe.acras.com.br/";
-
+ 		
  		String url = server.concat("v2/nfe/"+ref);
  		/* Aqui criamos um hashmap para receber a chave "justificativa" e o valor desejado. */
 		HashMap<String, String> justificativa = new HashMap<String, String>();
 		justificativa.put("justificativa", "Informe aqui a sua justificativa para realizar o cancelamento da NFe.");
-
+		
 		/* Criamos um objeto JSON para receber a hash com os dados esperado pela API. */
 		JSONObject json = new JSONObject(justificativa);
-
+		
 		/* Configuração para realizar o HTTP BasicAuth. */
 		Object config = new DefaultClientConfig();
 		Client client = Client.create((ClientConfig) config);
 		client.addFilter(new HTTPBasicAuthFilter(login, ""));
-
+	
 		WebResource request = client.resource(url);
 
 		ClientResponse resposta = request.delete(ClientResponse.class, json);
 
-		int HttpCode = resposta.getStatus();
+		int httpCode = resposta.getStatus(); 
 
 		String body = resposta.getEntity(String.class);
-
-	   /* As três linhas abaixo imprimem as informações retornadas pela API.
+		
+	   /* As três linhas abaixo imprimem as informações retornadas pela API. 
         * Aqui o seu sistema deverá interpretar e lidar com o retorno. */
 		System.out.print("HTTP Code: ");
-		System.out.print(HttpCode);
+		System.out.print(httpCode);
 		System.out.printf(body);
 	}
 }
@@ -1420,28 +1420,28 @@ import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 
-public class NFe_CCe {
+public class NFeCCe {
 
 	public static void main(String[] args){
 
 		String login = "Token_enviado_pelo_suporte";
-
+		
 		/* Substituir pela sua identificação interna da nota. */
 		String ref = "12345";
-
+		
 		/* Para ambiente de produção use a variável abaixo:
 		String server = "https://api.focusnfe.com.br/"; */
 		String server = "http://homologacao.acrasnfe.acras.com.br/";
-
+		
 		String url = server.concat("v2/nfe/"+ref+"/carta_correcao");
 
 		/* Aqui criamos um hashmap para receber a chave "correcao" e o valor desejado. */
 		HashMap<String, String> correcao = new HashMap<String, String>();
 		correcao.put("correcao", "Informe aqui os campos que foram corrigidos na NFe.");
-
+		
 		/* Criamos um objeto JSON para receber a hash com os dados esperado pela API. */
 		JSONObject json = new JSONObject(correcao);
-
+		
 		/* Configuração para realizar o HTTP BasicAuth. */
 		Object config = new DefaultClientConfig();
 		Client client = Client.create((ClientConfig) config);
@@ -1451,14 +1451,14 @@ public class NFe_CCe {
 
 		ClientResponse resposta = request.post(ClientResponse.class, json);
 
-		int HttpCode = resposta.getStatus();
+		int httpCode = resposta.getStatus(); 
 
 		String body = resposta.getEntity(String.class);
 
-	   /* As três linhas abaixo imprimem as informações retornadas pela API.
+	   /* As três linhas abaixo imprimem as informações retornadas pela API. 
 		* Aqui o seu sistema deverá interpretar e lidar com o retorno. */
 		System.out.print("HTTP Code: ");
-		System.out.print(HttpCode);
+		System.out.print(httpCode);
 		System.out.printf(body);
 	}
 }
@@ -1630,32 +1630,32 @@ import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 
-public class NFe_envia_email {
+public class NFeEnviaEmail {
 
 	public static void main(String[] args) throws JSONException{
-
+		
 		String login = "Token_enviado_pelo_suporte";
 
 		/* Substituir pela sua identificação interna da nota. */
 		String ref = "12345";
-
+		
 		/* Para ambiente de produção use a variável abaixo:
 		String server = "https://api.focusnfe.com.br/"; */
  		String server = "http://homologacao.acrasnfe.acras.com.br/";
-
+ 		
 		String url = server.concat("v2/nfe/"+ref+"/email");
-
+		
 		/* Criamos o um objeto JSON que receberá um JSON Array com a lista de e-mails. */
-		JSONObject json = new JSONObject ();
-		JSONArray ListaEmails = new JSONArray();
-		ListaEmails.put("email_01@acras.com.br");
-		ListaEmails.put("email_02@acras.com.br");
-		ListaEmails.put("email_03@acras.com.br");
-		json.put("emails", ListaEmails);
-
+		JSONObject json = new JSONObject ();	
+		JSONArray listaEmails = new JSONArray();
+		listaEmails.put("email_01@acras.com.br");
+		listaEmails.put("email_02@acras.com.br");
+		listaEmails.put("email_03@acras.com.br");
+		json.put("emails", listaEmails);	
+		
 		/* Testar se o JSON gerado está dentro do formato esperado.
 		System.out.print(json); */
-
+		
 		/* Configuração para realizar o HTTP BasicAuth. */
 		Object config = new DefaultClientConfig();
 		Client client = Client.create((ClientConfig) config);
@@ -1665,15 +1665,15 @@ public class NFe_envia_email {
 
 		ClientResponse resposta = request.post(ClientResponse.class, json);
 
-		int HttpCode = resposta.getStatus();
+		int httpCode = resposta.getStatus(); 
 
 		String body = resposta.getEntity(String.class);
-
-		/* As três linhas abaixo imprimem as informações retornadas pela API.
+		
+		/* As três linhas abaixo imprimem as informações retornadas pela API. 
 		 * Aqui o seu sistema deverá interpretar e lidar com o retorno. */
 		System.out.print("HTTP Code: ");
-		System.out.print(HttpCode);
-		System.out.printf(body);
+		System.out.print(httpCode);
+		System.out.printf(body); 
 	}
 }
 ```
@@ -1814,32 +1814,32 @@ import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 
-public class NFe_inutilizacao {
+public class NFeInutilizacao {
 
 	public static void main(String[] args) throws JSONException{
-
+		
 		String login = "Token_enviado_pelo_suporte";
-
+		
 		/* Para ambiente de produção use a variável abaixo:
 		String server = "https://api.focusnfe.com.br/"; */
  		String server = "http://homologacao.acrasnfe.acras.com.br/";
-
+ 		
  		String url = server.concat("v2/nfe/inutilizacao");
-
+ 		
  		/* Aqui criamos um hash que irá receber as chaves e valores esperados para gerar a inutilização. */
-		HashMap<String, String> DadosInutilizacao = new HashMap<String, String>();
-		DadosInutilizacao.put("cnpj", "51916585009999");
-		DadosInutilizacao.put("serie", "9");
-		DadosInutilizacao.put("numero_inicial", "7730");
-		DadosInutilizacao.put("numero_final", "7732");
-		DadosInutilizacao.put("justificativa", "Informe aqui a justificativa para realizar a inutilizacao da numeracao.");
-
+		HashMap<String, String> dadosInutilizacao = new HashMap<String, String>();
+		dadosInutilizacao.put("cnpj", "51916585009999");
+		dadosInutilizacao.put("serie", "9");
+		dadosInutilizacao.put("numero_inicial", "7730");
+		dadosInutilizacao.put("numero_final", "7732");
+		dadosInutilizacao.put("justificativa", "Informe aqui a justificativa para realizar a inutilizacao da numeracao.");
+		
 		/* Criamos um objeto JSON que irá receber o input dos dados, para então enviar a requisição. */
-		JSONObject json = new JSONObject (DadosInutilizacao);
-
+		JSONObject json = new JSONObject (dadosInutilizacao);
+		
 		/* Testar se o JSON gerado está dentro do formato esperado.
 		System.out.print(json); */
-
+		
 		/* Configuração para realizar o HTTP BasicAuth. */
 		Object config = new DefaultClientConfig();
 		Client client = Client.create((ClientConfig) config);
@@ -1849,15 +1849,15 @@ public class NFe_inutilizacao {
 
 		ClientResponse resposta = request.post(ClientResponse.class, json);
 
-		int HttpCode = resposta.getStatus();
+		int hHttpCode = resposta.getStatus(); 
 
 		String body = resposta.getEntity(String.class);
-
-		 /* As três linhas abaixo imprimem as informações retornadas pela API.
+		
+		 /* As três linhas abaixo imprimem as informações retornadas pela API. 
 		  * Aqui o seu sistema deverá interpretar e lidar com o retorno. */
 		System.out.print("HTTP Code: ");
-		System.out.print(HttpCode);
-		System.out.printf(body);
+		System.out.print(hHttpCode);
+		System.out.printf(body); 
 	}
 }
 ```

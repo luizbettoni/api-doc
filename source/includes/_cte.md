@@ -176,122 +176,122 @@ import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 
-public class autorizar {
+public class Autorizar {
 
-  public static void main(String[] args) throws JSONException{
+	public static void main(String[] args) throws JSONException{
+		
+		String login = "Token_enviado_pelo_suporte";
 
-    String login = "Token_enviado_pelo_suporte";
+		/* Substituir pela sua identificação interno do CTe. */
+		String ref = "12345";
+		
+		/* Para ambiente de produção use a variável abaixo:
+		String server = "https://api.focusnfe.com.br/"; */
+ 		String server = "http://homologacao.acrasnfe.acras.com.br/";
+ 		
+ 		String url = server.concat("v2/cte_os?ref="+ref);
+	
+		/* Configuração para realizar o HTTP BasicAuth. */
+ 		Object config = new DefaultClientConfig();
+		Client client = Client.create((ClientConfig) config);
+		client.addFilter(new HTTPBasicAuthFilter(login, ""));
+		
+		/* Aqui são criados as hash's que receberão os dados do CTe. */
+		HashMap<String, String> cte = new HashMap<String, String>();
+		HashMap<String, String> seguroCarga = new HashMap<String, String>();
+		HashMap<String, String> documentosReferenciados = new HashMap<String, String>();
+   
+		cte.put("bairro_emitente","Sao Cristova");
+		cte.put("bairro_tomador","Bacacheri");
+		cte.put("cep_emitente","99880077");
+		cte.put("cep_tomador","88991188");
+		cte.put("cfop","5353");
+		cte.put("cnpj_emitente","51916585000125");
+		cte.put("cnpj_tomador","51966818092777");
+		cte.put("codigo_municipio_emitente","2927408");
+		cte.put("codigo_municipio_envio","5200050");
+		cte.put("codigo_municipio_fim","3100104");
+		cte.put("codigo_municipio_inicio","5200050");
+		cte.put("codigo_municipio_tomador","4106902");
+		cte.put("codigo_pais_tomador","1058");
+		cte.put("complemento_emitente","Andar 19 - sala 23");
+		cte.put("data_emissao","2018-06-18T09:17:00");
+		cte.put("descricao_servico","Descricao do seu servico aqui");
+		cte.put("funcionario_emissor","Nome do funcionario que fez a emissao");
+		cte.put("icms_aliquota","17.00");
+		cte.put("icms_base_calculo","1.00");
+		cte.put("icms_situacao_tributaria","00");
+		cte.put("icms_valor","0.17");
+		cte.put("indicador_inscricao_estadual_tomador","9");
+		cte.put("inscricao_estadual_emitente","12345678");
+		cte.put("logradouro_emitente","Aeroporto Internacional de Salvador");
+		cte.put("logradouro_tomador","Rua Joao Dalegrave");
+		cte.put("modal","02");
+		cte.put("municipio_emitente","Salvador");
+		cte.put("municipio_envio","Abadia de Goias");
+		cte.put("municipio_fim","Abadia dos Dourados");
+		cte.put("municipio_inicio","Abadia de Goias");
+		cte.put("municipio_tomador","Curitiba");
+		cte.put("natureza_operacao","PREST. DE SERV. TRANSPORTE A ESTAB. COMERCIAL");
+		cte.put("nome_emitente","ACME LTDA");
+		cte.put("nome_fantasia_emitente","ACME");
+		cte.put("nome_fantasia_tomador","Nome do tomador do servico aqui");
+		cte.put("nome_tomador","NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL");
+		cte.put("numero_emitente","S/N");
+		cte.put("numero_fatura","1");
+		cte.put("numero_tomador","1");
+		cte.put("pais_tomador","BRASIL");
+		cte.put("quantidade","1.0000");
+		cte.put("telefone_emitente","4133336666");
+		cte.put("tipo_documento","0");
+		cte.put("tipo_servico","6");
+		cte.put("uf_emitente","BA");
+		cte.put("uf_envio","GO");
+		cte.put("uf_fim","MG");
+		cte.put("uf_inicio","GO");
+		cte.put("uf_tomador","PR");
+		cte.put("valor_desconto_fatura","0.00");
+		cte.put("valor_inss","0.10");
+		cte.put("valor_liquido_fatura","1.00");
+		cte.put("valor_original_fatura","1.00");
+		cte.put("valor_receber","1.00");
+		cte.put("valor_total","1.00");
+		cte.put("valor_total_tributos","0.00");
+		segurosCarga.put("nome_seguradora","Nome da seguradora aqui");
+		segurosCarga.put("numero_apolice","12345");
+		segurosCarga.put("responsavel_seguro","4");
+		documentosReferenciados.put("data_emissao","2018-06-18");
+		documentosReferenciados.put("numero","1");
+		documentosReferenciados.put("serie","1");
+		documentosReferenciados.put("subserie","1");
+		documentosReferenciados.put("valor","1.00");
+		
+		/* Depois de fazer o input dos dados, são criados os objetos JSON já com os valores das hash's. */
+		JSONObject json = new JSONObject (cte);
+		JSONObject jsonSegurosCarga = new JSONObject (segurosCarga);
+		JSONObject jsonDocumentosReferenciados = new JSONObject (documentosReferenciados);
+		
+		/* Aqui adicionamos os objetos JSON nos campos da API como array no JSON principal. */
+		json.append("segurosCarga", jsonSegurosCarga);
+		json.append("documentosReferenciados", jsonDocumentosReferenciados);
 
-    /* Substituir pela sua identificação interno do CTe. */
-    String ref = "12345";
+		/* É recomendado verificar como os dados foram gerados em JSON e se ele está seguindo a estrutura especificada em nossa documentação.*/
+		//System.out.print(json); 
+		
+		WebResource request = client.resource(url);
 
-    /* Para ambiente de produção use a variável abaixo:
-    String server = "https://api.focusnfe.com.br/"; */
-    String server = "http://homologacao.acrasnfe.acras.com.br/";
+		ClientResponse resposta = request.post(ClientResponse.class, json);
 
-    String url = server.concat("v2/cte_os?ref="+ref);
+		int httpCode = resposta.getStatus(); 
 
-    /* Configuração para realizar o HTTP BasicAuth. */
-    Object config = new DefaultClientConfig();
-    Client client = Client.create((ClientConfig) config);
-    client.addFilter(new HTTPBasicAuthFilter(login, ""));
-
-    /* Aqui são criados as hash's que receberão os dados do CTe. */
-    HashMap<String, String> cte = new HashMap<String, String>();
-    HashMap<String, String> seguros_carga = new HashMap<String, String>();
-    HashMap<String, String> documentos_referenciados = new HashMap<String, String>();
-
-    cte.put("bairro_emitente","Sao Cristova");
-    cte.put("bairro_tomador","Bacacheri");
-    cte.put("cep_emitente","99880077");
-    cte.put("cep_tomador","88991188");
-    cte.put("cfop","5353");
-    cte.put("cnpj_emitente","51916585000125");
-    cte.put("cnpj_tomador","51966818092777");
-    cte.put("codigo_municipio_emitente","2927408");
-    cte.put("codigo_municipio_envio","5200050");
-    cte.put("codigo_municipio_fim","3100104");
-    cte.put("codigo_municipio_inicio","5200050");
-    cte.put("codigo_municipio_tomador","4106902");
-    cte.put("codigo_pais_tomador","1058");
-    cte.put("complemento_emitente","Andar 19 - sala 23");
-    cte.put("data_emissao","2018-06-18T09:17:00");
-    cte.put("descricao_servico","Descricao do seu servico aqui");
-    cte.put("funcionario_emissor","Nome do funcionario que fez a emissao");
-    cte.put("icms_aliquota","17.00");
-    cte.put("icms_base_calculo","1.00");
-    cte.put("icms_situacao_tributaria","00");
-    cte.put("icms_valor","0.17");
-    cte.put("indicador_inscricao_estadual_tomador","9");
-    cte.put("inscricao_estadual_emitente","12345678");
-    cte.put("logradouro_emitente","Aeroporto Internacional de Salvador");
-    cte.put("logradouro_tomador","Rua Joao Dalegrave");
-    cte.put("modal","02");
-    cte.put("municipio_emitente","Salvador");
-    cte.put("municipio_envio","Abadia de Goias");
-    cte.put("municipio_fim","Abadia dos Dourados");
-    cte.put("municipio_inicio","Abadia de Goias");
-    cte.put("municipio_tomador","Curitiba");
-    cte.put("natureza_operacao","PREST. DE SERV. TRANSPORTE A ESTAB. COMERCIAL");
-    cte.put("nome_emitente","ACME LTDA");
-    cte.put("nome_fantasia_emitente","ACME");
-    cte.put("nome_fantasia_tomador","Nome do tomador do servico aqui");
-    cte.put("nome_tomador","NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL");
-    cte.put("numero_emitente","S/N");
-    cte.put("numero_fatura","1");
-    cte.put("numero_tomador","1");
-    cte.put("pais_tomador","BRASIL");
-    cte.put("quantidade","1.0000");
-    cte.put("telefone_emitente","4133336666");
-    cte.put("tipo_documento","0");
-    cte.put("tipo_servico","6");
-    cte.put("uf_emitente","BA");
-    cte.put("uf_envio","GO");
-    cte.put("uf_fim","MG");
-    cte.put("uf_inicio","GO");
-    cte.put("uf_tomador","PR");
-    cte.put("valor_desconto_fatura","0.00");
-    cte.put("valor_inss","0.10");
-    cte.put("valor_liquido_fatura","1.00");
-    cte.put("valor_original_fatura","1.00");
-    cte.put("valor_receber","1.00");
-    cte.put("valor_total","1.00");
-    cte.put("valor_total_tributos","0.00");
-    seguros_carga.put("nome_seguradora","Nome da seguradora aqui");
-    seguros_carga.put("numero_apolice","12345");
-    seguros_carga.put("responsavel_seguro","4");
-    documentos_referenciados.put("data_emissao","2018-06-18");
-    documentos_referenciados.put("numero","1");
-    documentos_referenciados.put("serie","1");
-    documentos_referenciados.put("subserie","1");
-    documentos_referenciados.put("valor","1.00");
-
-    /* Depois de fazer o input dos dados, são criados os objetos JSON já com os valores das hash's. */
-    JSONObject json = new JSONObject (cte);
-    JSONObject JsonSeguros_carga = new JSONObject (seguros_carga);
-    JSONObject JsonDocumentos_referenciados = new JSONObject (documentos_referenciados);
-
-    /* Aqui adicionamos os objetos JSON nos campos da API como array no JSON principal. */
-    json.append("seguros_carga", JsonSeguros_carga);
-    json.append("documentos_referenciados", JsonDocumentos_referenciados);
-
-    /* É recomendado verificar como os dados foram gerados em JSON e se ele está seguindo a estrutura especificada em nossa documentação.*/
-    //System.out.print(json);
-
-    WebResource request = client.resource(url);
-
-    ClientResponse resposta = request.post(ClientResponse.class, json);
-
-    int HttpCode = resposta.getStatus();
-
-    String body = resposta.getEntity(String.class);
-
-    /* As três linhas a seguir exibem as informações retornadas pela nossa API.
-     * Aqui o seu sistema deverá interpretar e lidar com o retorno. */
-    System.out.print("HTTP Code: ");
-    System.out.print(HttpCode);
-    System.out.printf(body);
-  }
+		String body = resposta.getEntity(String.class);
+		
+		/* As três linhas a seguir exibem as informações retornadas pela nossa API. 
+		 * Aqui o seu sistema deverá interpretar e lidar com o retorno. */
+		System.out.print("HTTP Code: ");
+		System.out.print(httpCode);
+		System.out.printf(body);
+	}
 }
 
 ```
@@ -656,40 +656,40 @@ import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 
-public class consulta {
+public class Consulta {
 
-  public static void main(String[] args){
+	public static void main(String[] args){
 
-    String login = "Token_enviado_pelo_suporte";
+		String login = "Token_enviado_pelo_suporte";
 
-    /* Substituir pela sua identificação interno do CTe. */
-    String ref = "12345";
+		/* Substituir pela sua identificação interno do CTe. */
+		String ref = "12345";
+		
+		/* Para ambiente de produção use a variável abaixo:
+		String server = "https://api.focusnfe.com.br/"; */
+ 		String server = "http://homologacao.acrasnfe.acras.com.br/";
+ 		
+		String url = server.concat("v2/cte/"+ref+"?completa=1");
+		
+		/* Configuração para realizar o HTTP BasicAuth. */
+		Object config = new DefaultClientConfig();
+		Client client = Client.create((ClientConfig) config);
+		client.addFilter(new HTTPBasicAuthFilter(login, ""));
 
-    /* Para ambiente de produção use a variável abaixo:
-    String server = "https://api.focusnfe.com.br/"; */
-    String server = "http://homologacao.acrasnfe.acras.com.br/";
+		WebResource request = client.resource(url);
 
-    String url = server.concat("v2/cte/"+ref+"?completa=1");
+		ClientResponse resposta = request.get(ClientResponse.class);
 
-    /* Configuração para realizar o HTTP BasicAuth. */
-    Object config = new DefaultClientConfig();
-    Client client = Client.create((ClientConfig) config);
-    client.addFilter(new HTTPBasicAuthFilter(login, ""));
+		int httpCode = resposta.getStatus(); 
 
-    WebResource request = client.resource(url);
+		String body = resposta.getEntity(String.class);
 
-    ClientResponse resposta = request.get(ClientResponse.class);
-
-    int HttpCode = resposta.getStatus();
-
-    String body = resposta.getEntity(String.class);
-
-    /* As três linhas abaixo imprimem as informações retornadas pela API.
-     * Aqui o seu sistema deverá interpretar e lidar com o retorno. */
-    System.out.print("HTTP Code: ");
-    System.out.print(HttpCode);
-    System.out.printf(body);
-  }
+		/* As três linhas abaixo imprimem as informações retornadas pela API. 
+		 * Aqui o seu sistema deverá interpretar e lidar com o retorno. */
+		System.out.print("HTTP Code: ");
+		System.out.print(httpCode);
+		System.out.printf(body);
+	}
 }
 
 
@@ -923,46 +923,46 @@ import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 
-public class cancelar {
+public class Cancelar {
 
-  public static void main(String[] args){
+	public static void main(String[] args){
+		
+		String login = "Token_enviado_pelo_suporte";
 
-    String login = "Token_enviado_pelo_suporte";
+		/* Substituir pela sua identificação interno do CTe. */
+		String ref = "12345";
+		
+		/* Para ambiente de produção use a variável abaixo:
+		String server = "https://api.focusnfe.com.br/"; */
+ 		String server = "http://homologacao.acrasnfe.acras.com.br/";
+ 		
+ 		String url = server.concat("v2/cte/"+ref);
+ 		/* Aqui criamos um hashmap para receber a chave "justificativa" e o valor desejado. */
+		HashMap<String, String> justificativa = new HashMap<String, String>();
+		justificativa.put("justificativa", "Informe aqui a sua justificativa para realizar o cancelamento da NFe.");
+		
+		/* Criamos um objeto JSON para receber a hash com os dados esperado pela API. */
+		JSONObject json = new JSONObject(justificativa);
+		
+		/* Configuração para realizar o HTTP BasicAuth. */
+		Object config = new DefaultClientConfig();
+		Client client = Client.create((ClientConfig) config);
+		client.addFilter(new HTTPBasicAuthFilter(login, ""));
+	
+		WebResource request = client.resource(url);
 
-    /* Substituir pela sua identificação interno do CTe. */
-    String ref = "12345";
+		ClientResponse resposta = request.delete(ClientResponse.class, json);
 
-    /* Para ambiente de produção use a variável abaixo:
-    String server = "https://api.focusnfe.com.br/"; */
-    String server = "http://homologacao.acrasnfe.acras.com.br/";
+		int httpCode = resposta.getStatus(); 
 
-    String url = server.concat("v2/cte/"+ref);
-    /* Aqui criamos um hashmap para receber a chave "justificativa" e o valor desejado. */
-    HashMap<String, String> justificativa = new HashMap<String, String>();
-    justificativa.put("justificativa", "Informe aqui a sua justificativa para realizar o cancelamento da NFe.");
-
-    /* Criamos um objeto JSON para receber a hash com os dados esperado pela API. */
-    JSONObject json = new JSONObject(justificativa);
-
-    /* Configuração para realizar o HTTP BasicAuth. */
-    Object config = new DefaultClientConfig();
-    Client client = Client.create((ClientConfig) config);
-    client.addFilter(new HTTPBasicAuthFilter(login, ""));
-
-    WebResource request = client.resource(url);
-
-    ClientResponse resposta = request.delete(ClientResponse.class, json);
-
-    int HttpCode = resposta.getStatus();
-
-    String body = resposta.getEntity(String.class);
-
-     /* As três linhas abaixo imprimem as informações retornadas pela API.
+		String body = resposta.getEntity(String.class);
+		
+	   /* As três linhas abaixo imprimem as informações retornadas pela API. 
         * Aqui o seu sistema deverá interpretar e lidar com o retorno. */
-    System.out.print("HTTP Code: ");
-    System.out.print(HttpCode);
-    System.out.printf(body);
-  }
+		System.out.print("HTTP Code: ");
+		System.out.print(httpCode);
+		System.out.printf(body);
+	}
 }
 
 ```
@@ -1136,48 +1136,48 @@ import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 
-public class emitir_cce {
+public class EmitirCce {
 
-  public static void main(String[] args){
+	public static void main(String[] args){
 
-    String login = "Token_enviado_pelo_suporte";
+		String login = "Token_enviado_pelo_suporte";
+		
+		/* Substituir pela sua identificação interno do CTe. */
+		String ref = "12345";
+		
+		/* Para ambiente de produção use a variável abaixo:
+		String server = "https://api.focusnfe.com.br/"; */
+		String server = "http://homologacao.acrasnfe.acras.com.br/";
+		
+		String url = server.concat("v2/cte/"+ref+"/carta_correcao");
 
-    /* Substituir pela sua identificação interno do CTe. */
-    String ref = "12345";
+		/* Aqui criamos um hashmap para receber a chave "correcao" e o valor desejado. */
+		HashMap<String, String> correcao = new HashMap<String, String>();
+		correcao.put("campo_corrigido", "uf_inicio");
+		correcao.put("valor_corrigido", "PR");
+		
+		/* Criamos um objeto JSON para receber a hash com os dados esperado pela API. */
+		JSONObject json = new JSONObject(correcao);
+		
+		/* Configuração para realizar o HTTP BasicAuth. */
+		Object config = new DefaultClientConfig();
+		Client client = Client.create((ClientConfig) config);
+		client.addFilter(new HTTPBasicAuthFilter(login, ""));
 
-    /* Para ambiente de produção use a variável abaixo:
-    String server = "https://api.focusnfe.com.br/"; */
-    String server = "http://homologacao.acrasnfe.acras.com.br/";
+		WebResource request = client.resource(url);
 
-    String url = server.concat("v2/cte/"+ref+"/carta_correcao");
+		ClientResponse resposta = request.post(ClientResponse.class, json);
 
-    /* Aqui criamos um hashmap para receber a chave "correcao" e o valor desejado. */
-    HashMap<String, String> correcao = new HashMap<String, String>();
-    correcao.put("campo_corrigido", "uf_inicio");
-    correcao.put("valor_corrigido", "PR");
+		int httpCode = resposta.getStatus(); 
 
-    /* Criamos um objeto JSON para receber a hash com os dados esperado pela API. */
-    JSONObject json = new JSONObject(correcao);
+		String body = resposta.getEntity(String.class);
 
-    /* Configuração para realizar o HTTP BasicAuth. */
-    Object config = new DefaultClientConfig();
-    Client client = Client.create((ClientConfig) config);
-    client.addFilter(new HTTPBasicAuthFilter(login, ""));
-
-    WebResource request = client.resource(url);
-
-    ClientResponse resposta = request.post(ClientResponse.class, json);
-
-    int HttpCode = resposta.getStatus();
-
-    String body = resposta.getEntity(String.class);
-
-     /* As três linhas abaixo imprimem as informações retornadas pela API.
-    * Aqui o seu sistema deverá interpretar e lidar com o retorno. */
-    System.out.print("HTTP Code: ");
-    System.out.print(HttpCode);
-    System.out.printf(body);
-  }
+	   /* As três linhas abaixo imprimem as informações retornadas pela API. 
+		* Aqui o seu sistema deverá interpretar e lidar com o retorno. */
+		System.out.print("HTTP Code: ");
+		System.out.print(httpCode);
+		System.out.printf(body);
+	}
 }
 
 ```
@@ -1345,52 +1345,52 @@ import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 
-public class inutilizar {
+public class Inutilizar {
 
-  public static void main(String[] args) throws JSONException{
+	public static void main(String[] args) throws JSONException{
+		
+		String login = "Token_enviado_pelo_suporte";
+		
+		/* Para ambiente de produção use a variável abaixo:
+		String server = "https://api.focusnfe.com.br/"; */
+ 		String server = "http://homologacao.acrasnfe.acras.com.br/";
+ 		
+ 		String url = server.concat("v2/cte/inutilizacao");
+ 		
+ 		/* Aqui criamos um hash que irá receber as chaves e valores esperados para gerar a inutilização. */
+		HashMap<String, String> dadosInutilizacao = new HashMap<String, String>();
+		dadosInutilizacao.put("cnpj", "51916585000125");
+		dadosInutilizacao.put("serie", "1");
+		dadosInutilizacao.put("numero_inicial", "1");
+		dadosInutilizacao.put("numero_final", "3");
+		dadosInutilizacao.put("justificativa", "Informe aqui a justificativa para realizar a inutilizacao da numeracao.");
+		dadosInutilizacao.put("modelo", "67");
+		
+		/* Criamos um objeto JSON que irá receber o input dos dados, para então enviar a requisição. */
+		JSONObject json = new JSONObject (dadosInutilizacao);
+		
+		/* Testar se o JSON gerado está dentro do formato esperado.
+		System.out.print(json); */
+		
+		/* Configuração para realizar o HTTP BasicAuth. */
+		Object config = new DefaultClientConfig();
+		Client client = Client.create((ClientConfig) config);
+		client.addFilter(new HTTPBasicAuthFilter(login, ""));
 
-    String login = "Token_enviado_pelo_suporte";
+		WebResource request = client.resource(url);
 
-    /* Para ambiente de produção use a variável abaixo:
-    String server = "https://api.focusnfe.com.br/"; */
-    String server = "http://homologacao.acrasnfe.acras.com.br/";
+		ClientResponse resposta = request.post(ClientResponse.class, json);
 
-    String url = server.concat("v2/cte/inutilizacao");
+		int httpCode = resposta.getStatus(); 
 
-    /* Aqui criamos um hash que irá receber as chaves e valores esperados para gerar a inutilização. */
-    HashMap<String, String> DadosInutilizacao = new HashMap<String, String>();
-    DadosInutilizacao.put("cnpj", "51916585000125");
-    DadosInutilizacao.put("serie", "1");
-    DadosInutilizacao.put("numero_inicial", "1");
-    DadosInutilizacao.put("numero_final", "3");
-    DadosInutilizacao.put("justificativa", "Informe aqui a justificativa para realizar a inutilizacao da numeracao.");
-    DadosInutilizacao.put("modelo", "67");
-
-    /* Criamos um objeto JSON que irá receber o input dos dados, para então enviar a requisição. */
-    JSONObject json = new JSONObject (DadosInutilizacao);
-
-    /* Testar se o JSON gerado está dentro do formato esperado.
-    System.out.print(json); */
-
-    /* Configuração para realizar o HTTP BasicAuth. */
-    Object config = new DefaultClientConfig();
-    Client client = Client.create((ClientConfig) config);
-    client.addFilter(new HTTPBasicAuthFilter(login, ""));
-
-    WebResource request = client.resource(url);
-
-    ClientResponse resposta = request.post(ClientResponse.class, json);
-
-    int HttpCode = resposta.getStatus();
-
-    String body = resposta.getEntity(String.class);
-
-     /* As três linhas abaixo imprimem as informações retornadas pela API.
-      * Aqui o seu sistema deverá interpretar e lidar com o retorno. */
-    System.out.print("HTTP Code: ");
-    System.out.print(HttpCode);
-    System.out.printf(body);
-  }
+		String body = resposta.getEntity(String.class);
+		
+		 /* As três linhas abaixo imprimem as informações retornadas pela API. 
+		  * Aqui o seu sistema deverá interpretar e lidar com o retorno. */
+		System.out.print("HTTP Code: ");
+		System.out.print(httpCode);
+		System.out.printf(body); 
+	}
 }
 
 ```
