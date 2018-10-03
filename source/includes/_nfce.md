@@ -27,8 +27,6 @@ Atualmente, a NFe possui centenas de campos para os mais variados tipos e formas
 
 [Documentação completa dos campos (versão 4.00 da NFe)] (https://focusnfe.com.br/dsl/4.0/NotaFiscalXML.html)
 
-[Documentação completa dos campos – versão 3.10 da NFe – Disponível até 2/julho/2018] (https://focusnfe.com.br/dsl/lang/NotaFiscalXML.html)
-
 Abaixo, iremos mostrar todos os campos de uso mais comum para emissão de uma NFCe.
 
 > Abaixo um exemplo de dados de uma nota (usando a versão 4.00 da NFCe):
