@@ -413,6 +413,92 @@ public class NFCeAutorizar {
 }
 ```
 
+```ruby
+
+# encoding: UTF-8
+
+require "net/http"
+require "net/https"
+require "json"
+
+# token enviado pelo suporte
+token = "codigo_alfanumerico_token"
+
+# referência da nota - deve ser única para cada nota enviada
+ref = "id_referencia_nota"
+
+# endereço da api que deve ser usado conforme o ambiente: produção ou homologação
+servidor_producao = "https://api.focusnfe.com.br/"
+servidor_homologacao = "http://homologacao.acrasnfe.acras.com.br/"
+
+# no caso do ambiente de envio ser em produção, utilizar servidor_producao
+url_envio = servidor_homologacao + "v2/nfce?ref=" + ref
+
+# altere os campos conforme a nota que será enviada
+dados_da_nota = {
+  cnpj_emitente: "05953016000132",
+  data_emissao: "2017-12-06 14:45:10",
+  indicador_inscricao_estadual_destinatario: "9",
+  modalidade_frete: "9",
+  local_destino: "1",
+  presenca_comprador: "1",
+  natureza_operacao: "VENDA AO CONSUMIDOR",
+  items: [
+    numero_item: "1",
+    codigo_ncm: "62044200",
+    quantidade_comercial: "1.00",
+    quantidade_tributavel: "1.00",
+    cfop: "5102",
+    valor_unitario_tributavel: "79.00",
+    valor_unitario_comercial: "79.00",
+    valor_desconto: "0.00",
+    descricao: "NOTA FISCAL EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL",
+    codigo_produto: "251887",
+    icms_origem: "0",
+    icms_situacao_tributaria: "102",
+    unidade_comercial: "un",
+    unidade_tributavel: "un",
+    valor_total_tributos: "24.29"
+  ],
+  formas_pagamento: [
+    forma_pagamento: "03",
+    valor_pagamento: "79.00",
+    nome_credenciadora: "Cielo",
+    bandeira_operadora: "02",
+    numero_autorizacao: "R07242"
+  ]
+}
+
+# criamos uma objeto uri para envio da nota
+uri = URI(url_envio)
+
+# também criamos um objeto da classe HTTP a partir do host da uri
+http = Net::HTTP.new(uri.hostname, uri.port)
+
+# aqui criamos um objeto da classe Post a partir da uri de requisição
+requisicao = Net::HTTP::Post.new(uri.request_uri)
+
+# adicionando o token à requisição
+requisicao.basic_auth(token, '')
+
+# convertemos os dados da nota para o formato JSON e adicionamos ao corpo da requisição
+requisicao.body = dados_da_nota.to_json
+
+# no envio de notas em produção, é necessário utilizar o protocolo ssl
+# para isso, basta retirar o comentário da linha abaixo
+# http.use_ssl = true
+
+# aqui enviamos a requisição ao servidor e obtemos a resposta
+resposta = http.request(requisicao)
+
+# imprimindo o código HTTP da resposta
+puts "Código retornado pela requisição: " + resposta.code
+
+# imprimindo o corpo da resposta
+puts "Corpo da resposta: " + resposta.body
+
+```
+
 ```php
 <?php
 /* Você deve definir isso globalmente para sua aplicação.
@@ -648,6 +734,53 @@ public class NFCeConsulta {
 		System.out.printf(body);
 	}
 }
+```
+
+```ruby
+
+# encoding: UTF-8
+
+require "net/http"
+require "net/https"
+
+# token enviado pelo suporte
+token = "codigo_alfanumerico_token"
+
+# referência da nota - deve ser única para cada nota enviada
+ref = "id_referencia_nota"
+
+# endereço da api que deve ser usado conforme o ambiente: produção ou homologação
+servidor_producao = "https://api.focusnfe.com.br/"
+servidor_homologacao = "http://homologacao.acrasnfe.acras.com.br/"
+
+# no caso do ambiente de envio ser em produção, utilizar servidor_producao
+url_envio = servidor_homologacao + "v2/nfce/" + ref
+
+# criamos uma objeto uri para envio da nota
+uri = URI(url_envio)
+
+# também criamos um objeto da classe HTTP a partir do host da uri
+http = Net::HTTP.new(uri.hostname, uri.port)
+
+# aqui criamos um objeto da classe Get a partir da uri de requisição
+requisicao = Net::HTTP::Get.new(uri.request_uri)
+
+# adicionando o token à requisição
+requisicao.basic_auth(token, '')
+
+# no envio de notas em produção, é necessário utilizar o protocolo ssl
+# para isso, basta retirar o comentário da linha abaixo
+# http.use_ssl = true
+
+# aqui enviamos a requisição ao servidor e obtemos a resposta
+resposta = http.request(requisicao)
+
+# imprimindo o código HTTP da resposta
+puts "Código retornado pela requisição: " + resposta.code
+
+# imprimindo o corpo da resposta
+puts "Corpo da resposta: " + resposta.body
+
 ```
 
 ```php
@@ -923,7 +1056,211 @@ public class NFCeCancelamento {
 		System.out.print(httpCode);
 		System.out.printf(body);
 	}
-}public class NFCeInutilizacao {
+}
+```
+
+```ruby
+
+# encoding: UTF-8
+
+require "net/http"
+require "net/https"
+require "json"
+
+# token enviado pelo suporte
+token = "codigo_alfanumerico_token"
+
+# referência da nota - deve ser única para cada nota enviada
+ref = "id_referencia_nota"
+
+# endereço da api que deve ser usado conforme o ambiente: produção ou homologação
+servidor_producao = "https://api.focusnfe.com.br/"
+servidor_homologacao = "http://homologacao.acrasnfe.acras.com.br/"
+
+# no caso do ambiente de envio ser em produção, utilizar servidor_producao
+url_envio = servidor_homologacao + "v2/nfce/" + ref
+
+# altere os campos conforme a nota que será enviada
+justificativa_cancelamento = {  
+  justificativa: "Informe aqui a sua justificativa para realizar o cancelamento da NFCe."
+}
+
+# criamos uma objeto uri para envio da nota
+uri = URI(url_envio)
+
+# também criamos um objeto da classe HTTP a partir do host da uri
+http = Net::HTTP.new(uri.hostname, uri.port)
+
+# aqui criamos um objeto da classe Delete a partir da uri de requisição
+requisicao = Net::HTTP::Delete.new(uri.request_uri)
+
+# adicionando o token à requisição
+requisicao.basic_auth(token, '')
+
+# convertemos a hash de justificativa do cancelamento para o formato JSON e adicionamos ao corpo da requisição
+requisicao.body = justificativa_cancelamento.to_json
+
+# no envio de notas em produção, é necessário utilizar o protocolo ssl
+# para isso, basta retirar o comentário da linha abaixo
+# http.use_ssl = true
+
+# aqui enviamos a requisição ao servidor e obtemos a resposta
+resposta = http.request(requisicao)
+
+# imprimindo o código HTTP da resposta
+puts "Código retornado pela requisição: " + resposta.code
+
+# imprimindo o corpo da resposta
+puts "Corpo da resposta: " + resposta.body
+
+```
+
+```php
+<?php
+/* Você deve definir isso globalmente para sua aplicação.
+Para ambiente de produção utilize e a variável abaixo:
+$server = "https://api.focusnfe.com.br"; */
+$server = "http://homologacao.acrasnfe.acras.com.br";
+// Substituir a variável, ref, pela sua identificação interna de nota.
+$ref = "12345";
+$login = "token_enviado_pelo_suporte";
+$password = "";
+$justificativa = array ("justificativa" => "Teste de cancelamento de nota");
+// Inicia o processo de envio das informações usando o cURL.
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, $server . "/v2/nfce/" . $ref);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
+curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($justificativa));
+curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+curl_setopt($ch, CURLOPT_USERPWD, "$login:$password");
+$body = curl_exec($ch);
+$result = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+// As próximas três linhas são um exemplo de como imprimir as informações de retorno da API.
+print($http_code."\n");
+print($body."\n\n");
+print("");
+curl_close($ch);
+?>
+```
+
+```javascript
+
+/*
+As orientacoes a seguir foram extraidas do site do NPMJS: https://www.npmjs.com/package/xmlhttprequest
+Here's how to include the module in your project and use as the browser-based XHR object.
+Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensitive systems (eg Linux) using uppercase letters won't work.
+*/
+var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+
+var request = new XMLHttpRequest();
+
+var token = "Token_enviado_pelo_suporte";
+
+// Substituir pela sua identificação interna da nota.
+var ref = "12345";
+
+/*
+Para ambiente de producao use a URL abaixo:
+"https://api.focusnfe.com.br"
+*/
+var url = "http://homologacao.acrasnfe.acras.com.br/v2/nfe/"+ ref;
+
+/*
+Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
+Passamos o token como quarto parametro deste metodo, como autenticador do HTTP Basic Authentication.
+*/
+request.open('DELETE', url, false, token);
+
+var cancelar = {
+
+	"justificativa": "Sua justificativa aqui!"
+};
+
+// Aqui fazermos a serializacao do JSON com os dados da nota e enviamos atraves do metodo usado.
+request.send(JSON.stringify(cancelar));
+
+// Sua aplicacao tera que ser capaz de tratar as respostas da API.
+console.log("HTTP code: " + request.status);
+console.log("Corpo: " + request.responseText);
+
+```
+
+
+Para cancelar uma NFCe, basta fazer uma requisição à URL abaixo, alterando o ambiente de produção para homologação, caso esteja emitindo notas de teste.
+
+Cancelar uma NFCe já autorizada:
+
+`https://api.focusnfe.com.br/v2/nfce/REFERENCIA`
+
+Utilize o comando HTTP **DELETE** para cancelar a sua nota para nossa API. Este método é síncrono, ou seja, a comunicação com a SEFAZ será feita imediatamente e devolvida a resposta na mesma requisição.
+
+O parâmetros de cancelamento deverão ser enviados da seguinte forma:
+
+* **justificativa:** Justificativa do cancelamento. Deverá conter de 15 a 255 caracteres.
+
+A API irá em seguida devolver os seguintes campos:
+
+* **status:** cancelado, se a nota pode ser cancelada, ou erro_cancelamento, se houve algum erro ao cancelar a nota.
+* **status_sefaz:** O status do cancelamento na SEFAZ.
+* **mensagem_sefaz:** Mensagem descritiva da SEFAZ detalhando o status.
+* **caminho_xml_cancelamento:** Caso a nota tenha sido cancelada, será informado aqui o caminho para download do XML de cancelamento.
+
+**Prazo de cancelamento**
+
+A NFCe poderá ser cancelada em até 24 horas após a emissão.
+
+## Inutilização
+```python
+# Faça o download e instalação da biblioteca requests, através do python-pip.
+import json
+import requests
+
+'''
+Para ambiente de produção use a variável abaixo:
+url = "https://api.focusnfe.com.br"
+'''
+url = "http://homologacao.acrasnfe.acras.com.br/v2/nfce/inutilizacao"
+
+token="token_enviado_pelo_suporte"
+
+'''
+Usamos dicionarios e listas para armazenar os campos e valores que em seguida,
+serao convertidos em JSON e enviados para nossa API
+'''
+inutilizacao={}
+inutilizacao["cnpj"] = "CNPJ da empresa emitente"
+inutilizacao["serie"] = "Serie da numeracao da NFCe que tera uma faixa de numeracao inutilizada"
+inutilizacao["numero_inicial"] = "Numero inicial a ser inutilizado"
+inutilizacao["numero_final"] = "Numero final a ser inutilizado"
+inutilizacao["justificativa"] = "Justificativa da inutilizacao (minimo 15 caracteres)"
+
+r = requests.post(url, data=json.dumps(inutilizacao), auth=(token,""))
+
+# Mostra na tela o codigo HTTP da requisicao e a mensagem de retorno da API
+print(r.status_code, r.text)
+
+```
+
+```shell
+curl -u token_enviado_pelo_suporte: \
+  -X POST -d '{"cnpj":"51916585009999","serie":"9","numero_inicial":"7730","numero_final":"7732","justificativa":"Teste de inutilizacao de nota"}' \
+  http://homologacao.acrasnfe.acras.com.br/v2/nfce/inutilizacao
+```
+
+```java
+
+import java.util.HashMap;
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.client.WebResource;
+import com.sun.jersey.api.client.config.ClientConfig;
+import com.sun.jersey.api.client.config.DefaultClientConfig;
+import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
+
+public class NFCeInutilizacao {
 
 	public static void main(String[] args) throws JSONException{
 		
@@ -969,6 +1306,63 @@ public class NFCeCancelamento {
 		System.out.printf(body); 
 	}
 }
+```
+
+```ruby
+
+# encoding: UTF-8
+
+require "net/http"
+require "net/https"
+require "json"
+
+# token enviado pelo suporte
+token = "codigo_alfanumerico_token"
+
+# endereço da api que deve ser usado conforme o ambiente: produção ou homologação
+servidor_producao = "https://api.focusnfe.com.br/"
+servidor_homologacao = "http://homologacao.acrasnfe.acras.com.br/"
+
+# no caso do ambiente de envio ser em produção, utilizar servidor_producao
+url_envio = servidor_homologacao + "v2/nfce/inutilizacao"
+
+# altere os campos conforme a nota que será enviada
+dados_inutilizacao = {  
+  cnpj: "51916585009999",
+  serie: "9",
+  numero_inicial: "7730",
+  numero_final: "7732",
+  justificativa: "Informe aqui a justificativa para realizar a inutilizacao da numeracao."
+}
+
+# criamos uma objeto uri para envio da nota
+uri = URI(url_envio)
+
+# também criamos um objeto da classe HTTP a partir do host da uri
+http = Net::HTTP.new(uri.hostname, uri.port)
+
+# aqui criamos um objeto da classe Post a partir da uri de requisição
+requisicao = Net::HTTP::Post.new(uri.request_uri)
+
+# adicionando o token à requisição
+requisicao.basic_auth(token, '')
+
+# convertemos a hash de justificativa do cancelamento para o formato JSON e adicionamos ao corpo da requisição
+requisicao.body = dados_inutilizacao.to_json
+
+# no envio de notas em produção, é necessário utilizar o protocolo ssl
+# para isso, basta retirar o comentário da linha abaixo
+# http.use_ssl = true
+
+# aqui enviamos a requisição ao servidor e obtemos a resposta
+resposta = http.request(requisicao)
+
+# imprimindo o código HTTP da resposta
+puts "Código retornado pela requisição: " + resposta.code
+
+# imprimindo o corpo da resposta
+puts "Corpo da resposta: " + resposta.body
+
 ```
 
 ```php
@@ -1169,6 +1563,61 @@ public class NFCeEnviaEmail {
 		System.out.printf(body); 
 	}
 }
+```
+
+```ruby
+
+# encoding: UTF-8
+
+require "net/http"
+require "net/https"
+require "json"
+
+# token enviado pelo suporte
+token = "codigo_alfanumerico_token"
+
+# referência da nota - deve ser única para cada nota enviada
+ref = "id_referencia_nota"
+
+# endereço da api que deve ser usado conforme o ambiente: produção ou homologação
+servidor_producao = "https://api.focusnfe.com.br/"
+servidor_homologacao = "http://homologacao.acrasnfe.acras.com.br/"
+
+# no caso do ambiente de envio ser em produção, utilizar servidor_producao
+url_envio = servidor_homologacao + "v2/nfce/" + ref + "/email"
+
+# altere os campos conforme a nota que será enviada
+emails_destinatarios = {
+  emails: ["email_01@acras.com.br", "email_02@acras.com.br", "email_03@acras.com.br"]
+}
+# criamos uma objeto uri para envio da nota
+uri = URI(url_envio)
+
+# também criamos um objeto da classe HTTP a partir do host da uri
+http = Net::HTTP.new(uri.hostname, uri.port)
+
+# aqui criamos um objeto da classe Post a partir da uri de requisição
+requisicao = Net::HTTP::Post.new(uri.request_uri)
+
+# adicionando o token à requisição
+requisicao.basic_auth(token, '')
+
+# convertemos os dados da nota para o formato JSON e adicionamos ao corpo da requisição
+requisicao.body = emails_destinatarios.to_json
+
+# no envio de notas em produção, é necessário utilizar o protocolo ssl
+# para isso, basta retirar o comentário da linha abaixo
+# http.use_ssl = true
+
+# aqui enviamos a requisição ao servidor e obtemos a resposta
+resposta = http.request(requisicao)
+
+# imprimindo o código HTTP da resposta
+puts "Código retornado pela requisição: " + resposta.code
+
+# imprimindo o corpo da resposta
+puts "Corpo da resposta: " + resposta.body
+
 ```
 
 ```php
