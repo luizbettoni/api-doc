@@ -29,8 +29,6 @@ Atualmente, a NFe possui centenas de campos para os mais variados tipos e formas
 
 [Documentação completa dos campos (versão 4.00 da NFe)](https://focusnfe.com.br/dsl/4.0/NotaFiscalXML.html)
 
-[Documentação completa dos campos – versão 3.10 da NFe – Disponível até 2/abril/2018](https://focusnfe.com.br/dsl/lang/NotaFiscalXML.html)
-
 Abaixo, iremos mostrar os campos de uso obrigatório para emissão de uma Nota Fiscal Eletrônica.
 
 >> Abaixo um exemplo de dados de uma nota (usando a versão 4.00 da NFe):
@@ -574,27 +572,27 @@ import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 public class NFeAutorizar {
 
 	public static void main(String[] args) throws JSONException{
-		
+
 		String login = "Token_enviado_pelo_suporte";
 
 		/* Substituir pela sua identificação interna da nota. */
 		String ref = "12345";
-		
+
 		/* Para ambiente de produção use a variável abaixo:
 		String server = "https://api.focusnfe.com.br/"; */
  		String server = "http://homologacao.acrasnfe.acras.com.br/";
- 		
+
  		String url = server.concat("v2/nfe?ref="+ref);
-	
+
 		/* Configuração para realizar o HTTP BasicAuth. */
 		Object config = new DefaultClientConfig();
 		Client client = Client.create((ClientConfig) config);
 		client.addFilter(new HTTPBasicAuthFilter(login, ""));
-		
+
 		/* Aqui são criados as hash's que receberão os dados da nota. */
 		HashMap<String, String> nfe = new HashMap<String, String>();
 		HashMap<String, String> itens = new HashMap<String, String>();
-   
+
 		nfe.put("data_emissao", "2018-01-16T09:38:00");
 		nfe.put("natureza_operacao", "Remessa de Produtos");
 		nfe.put("forma_pagamento", "0");
@@ -655,26 +653,26 @@ public class NFeAutorizar {
 		itens.put("cofins_situacao_tributaria","07");
 		itens.put("ipi_situacao_tributaria","53");
 		itens.put("ipi_codigo_enquadramento_legal","999");
-		
+
 		/* Depois de fazer o input dos dados, são criados os objetos JSON já com os valores das hash's. */
 		JSONObject json = new JSONObject (nfe);
 		JSONObject jsonItens = new JSONObject (itens);
-		
+
 		/* Aqui adicionamos os objetos JSON nos campos da API como array no JSON principal. */
 		json.append("items", jsonItens);
 
 		/* É recomendado verificar como os dados foram gerados em JSON e se ele está seguindo a estrutura especificada em nossa documentação.
 		System.out.print(json); */
-		
+
 		WebResource request = client.resource(url);
 
 		ClientResponse resposta = request.post(ClientResponse.class, json);
 
-		int httpCode = resposta.getStatus(); 
+		int httpCode = resposta.getStatus();
 
 		String body = resposta.getEntity(String.class);
-		
-		/* As três linhas a seguir exibem as informações retornadas pela nossa API. 
+
+		/* As três linhas a seguir exibem as informações retornadas pela nossa API.
 		 * Aqui o seu sistema deverá interpretar e lidar com o retorno. */
 		System.out.print("HTTP Code: ");
 		System.out.print(httpCode);
@@ -808,7 +806,7 @@ Para ambiente de producao use a URL abaixo:
 */
 var url = "http://homologacao.acrasnfe.acras.com.br/v2/nfe?ref=" + ref;
 
-/* 
+/*
 Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
 Passamos o token como quarto parametro deste metodo, como autenticador do HTTP Basic Authentication.
 */
@@ -882,7 +880,7 @@ console.log("Corpo: " + request.responseText);
 import json
 import requests
 
-''' 
+'''
 Para ambiente de produção use a variável abaixo:
 url = "https://api.focusnfe.com.br"
 '''
@@ -892,7 +890,7 @@ url = "http://homologacao.acrasnfe.acras.com.br/v2/nfe"
 ref = {"ref":"12345"}
 
 token="token_enviado_pelo_suporte"
- 
+
 '''
 Usamos dicionarios para armazenar os campos e valores que em seguida,
 serao convertidos em JSON e enviados para nossa API
@@ -1006,7 +1004,7 @@ O sistema cliente da API pode acompanhar este processo de forma transparente, co
 # Faça o download e instalação da biblioteca requests, através do python-pip.
 import requests
 
-''' 
+'''
 Para ambiente de produção use a variável abaixo:
 url = "https://api.focusnfe.com.br"
 '''
@@ -1074,13 +1072,13 @@ public class NFeConsulta {
 
 		/* Substituir pela sua identificação interna da nota. */
 		String ref = "12345";
-		
+
 		/* Para ambiente de produção use a variável abaixo:
 		String server = "https://api.focusnfe.com.br/"; */
  		String server = "http://homologacao.acrasnfe.acras.com.br/";
- 		
+
 		String url = server.concat("v2/nfe/"+ref+"?completa=1");
-		
+
 		/* Configuração para realizar o HTTP BasicAuth. */
 		Object config = new DefaultClientConfig();
 		Client client = Client.create((ClientConfig) config);
@@ -1090,11 +1088,11 @@ public class NFeConsulta {
 
 		ClientResponse resposta = request.get(ClientResponse.class);
 
-		int httpCode = resposta.getStatus(); 
+		int httpCode = resposta.getStatus();
 
 		String body = resposta.getEntity(String.class);
 
-		/* As três linhas abaixo imprimem as informações retornadas pela API. 
+		/* As três linhas abaixo imprimem as informações retornadas pela API.
 		 * Aqui o seu sistema deverá interpretar e lidar com o retorno. */
 		System.out.print("HTTP Code: ");
 		System.out.print(httpCode);
@@ -1171,7 +1169,7 @@ Para ambiente de producao use a URL abaixo:
 */
 var url = "http://homologacao.acrasnfe.acras.com.br/v2/nfe/" + ref + "?completa=1";
 
-/* 
+/*
 Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
 Passamos o token como quarto parametro deste metodo, como autenticador do HTTP Basic Authentication.
 */
@@ -1375,38 +1373,38 @@ import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 public class NFeCancelamento {
 
 	public static void main(String[] args){
-		
+
 		String login = "Token_enviado_pelo_suporte";
 
 		/* Substituir pela sua identificação interna da nota. */
 		String ref = "12345";
-		
+
 		/* Para ambiente de produção use a variável abaixo:
 		String server = "https://api.focusnfe.com.br/"; */
  		String server = "http://homologacao.acrasnfe.acras.com.br/";
- 		
+
  		String url = server.concat("v2/nfe/"+ref);
  		/* Aqui criamos um hashmap para receber a chave "justificativa" e o valor desejado. */
 		HashMap<String, String> justificativa = new HashMap<String, String>();
 		justificativa.put("justificativa", "Informe aqui a sua justificativa para realizar o cancelamento da NFe.");
-		
+
 		/* Criamos um objeto JSON para receber a hash com os dados esperado pela API. */
 		JSONObject json = new JSONObject(justificativa);
-		
+
 		/* Configuração para realizar o HTTP BasicAuth. */
 		Object config = new DefaultClientConfig();
 		Client client = Client.create((ClientConfig) config);
 		client.addFilter(new HTTPBasicAuthFilter(login, ""));
-	
+
 		WebResource request = client.resource(url);
 
 		ClientResponse resposta = request.delete(ClientResponse.class, json);
 
-		int httpCode = resposta.getStatus(); 
+		int httpCode = resposta.getStatus();
 
 		String body = resposta.getEntity(String.class);
-		
-	   /* As três linhas abaixo imprimem as informações retornadas pela API. 
+
+	   /* As três linhas abaixo imprimem as informações retornadas pela API.
         * Aqui o seu sistema deverá interpretar e lidar com o retorno. */
 		System.out.print("HTTP Code: ");
 		System.out.print(httpCode);
@@ -1493,7 +1491,7 @@ Para ambiente de producao use a URL abaixo:
 */
 var url = "http://homologacao.acrasnfe.acras.com.br/v2/nfe/"+ ref;
 
-/* 
+/*
 Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
 Passamos o token como quarto parametro deste metodo, como autenticador do HTTP Basic Authentication.
 */
@@ -1518,7 +1516,7 @@ console.log("Corpo: " + request.responseText);
 import json
 import requests
 
-''' 
+'''
 Para ambiente de produção use a variável abaixo:
 url = "https://api.focusnfe.com.br"
 '''
@@ -1629,23 +1627,23 @@ public class NFeCCe {
 	public static void main(String[] args){
 
 		String login = "Token_enviado_pelo_suporte";
-		
+
 		/* Substituir pela sua identificação interna da nota. */
 		String ref = "12345";
-		
+
 		/* Para ambiente de produção use a variável abaixo:
 		String server = "https://api.focusnfe.com.br/"; */
 		String server = "http://homologacao.acrasnfe.acras.com.br/";
-		
+
 		String url = server.concat("v2/nfe/"+ref+"/carta_correcao");
 
 		/* Aqui criamos um hashmap para receber a chave "correcao" e o valor desejado. */
 		HashMap<String, String> correcao = new HashMap<String, String>();
 		correcao.put("correcao", "Informe aqui os campos que foram corrigidos na NFe.");
-		
+
 		/* Criamos um objeto JSON para receber a hash com os dados esperado pela API. */
 		JSONObject json = new JSONObject(correcao);
-		
+
 		/* Configuração para realizar o HTTP BasicAuth. */
 		Object config = new DefaultClientConfig();
 		Client client = Client.create((ClientConfig) config);
@@ -1655,11 +1653,11 @@ public class NFeCCe {
 
 		ClientResponse resposta = request.post(ClientResponse.class, json);
 
-		int httpCode = resposta.getStatus(); 
+		int httpCode = resposta.getStatus();
 
 		String body = resposta.getEntity(String.class);
 
-	   /* As três linhas abaixo imprimem as informações retornadas pela API. 
+	   /* As três linhas abaixo imprimem as informações retornadas pela API.
 		* Aqui o seu sistema deverá interpretar e lidar com o retorno. */
 		System.out.print("HTTP Code: ");
 		System.out.print(httpCode);
@@ -1746,7 +1744,7 @@ Para ambiente de producao use a URL abaixo:
 */
 var url = "http://homologacao.acrasnfe.acras.com.br/v2/nfe/"+ ref + "/carta_correcao";
 
-/* 
+/*
 Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
 Passamos o token como quarto parametro deste metodo, como autenticador do HTTP Basic Authentication.
 */
@@ -1771,7 +1769,7 @@ console.log("Corpo: " + request.responseText);
 import json
 import requests
 
-''' 
+'''
 Para ambiente de produção use a variável abaixo:
 url = "https://api.focusnfe.com.br"
 '''
@@ -1893,29 +1891,29 @@ import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 public class NFeEnviaEmail {
 
 	public static void main(String[] args) throws JSONException{
-		
+
 		String login = "Token_enviado_pelo_suporte";
 
 		/* Substituir pela sua identificação interna da nota. */
 		String ref = "12345";
-		
+
 		/* Para ambiente de produção use a variável abaixo:
 		String server = "https://api.focusnfe.com.br/"; */
  		String server = "http://homologacao.acrasnfe.acras.com.br/";
- 		
+
 		String url = server.concat("v2/nfe/"+ref+"/email");
-		
+
 		/* Criamos o um objeto JSON que receberá um JSON Array com a lista de e-mails. */
-		JSONObject json = new JSONObject ();	
+		JSONObject json = new JSONObject ();
 		JSONArray listaEmails = new JSONArray();
 		listaEmails.put("email_01@acras.com.br");
 		listaEmails.put("email_02@acras.com.br");
 		listaEmails.put("email_03@acras.com.br");
-		json.put("emails", listaEmails);	
-		
+		json.put("emails", listaEmails);
+
 		/* Testar se o JSON gerado está dentro do formato esperado.
 		System.out.print(json); */
-		
+
 		/* Configuração para realizar o HTTP BasicAuth. */
 		Object config = new DefaultClientConfig();
 		Client client = Client.create((ClientConfig) config);
@@ -1925,15 +1923,15 @@ public class NFeEnviaEmail {
 
 		ClientResponse resposta = request.post(ClientResponse.class, json);
 
-		int httpCode = resposta.getStatus(); 
+		int httpCode = resposta.getStatus();
 
 		String body = resposta.getEntity(String.class);
-		
-		/* As três linhas abaixo imprimem as informações retornadas pela API. 
+
+		/* As três linhas abaixo imprimem as informações retornadas pela API.
 		 * Aqui o seu sistema deverá interpretar e lidar com o retorno. */
 		System.out.print("HTTP Code: ");
 		System.out.print(httpCode);
-		System.out.printf(body); 
+		System.out.printf(body);
 	}
 }
 ```
@@ -2016,7 +2014,7 @@ Para ambiente de producao use a URL abaixo:
 */
 var url = "http://homologacao.acrasnfe.acras.com.br/v2/nfe/" + ref + "/email";
 
-/* 
+/*
 Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
 Passamos o token como quarto parametro deste metodo, como autenticador do HTTP Basic Authentication.
 */
@@ -2040,7 +2038,7 @@ console.log("Corpo: " + request.responseText);
 import json
 import requests
 
-''' 
+'''
 Para ambiente de produção use a variável abaixo:
 url = "https://api.focusnfe.com.br"
 '''
@@ -2133,15 +2131,15 @@ import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 public class NFeInutilizacao {
 
 	public static void main(String[] args) throws JSONException{
-		
+
 		String login = "Token_enviado_pelo_suporte";
-		
+
 		/* Para ambiente de produção use a variável abaixo:
 		String server = "https://api.focusnfe.com.br/"; */
  		String server = "http://homologacao.acrasnfe.acras.com.br/";
- 		
+
  		String url = server.concat("v2/nfe/inutilizacao");
- 		
+
  		/* Aqui criamos um hash que irá receber as chaves e valores esperados para gerar a inutilização. */
 		HashMap<String, String> dadosInutilizacao = new HashMap<String, String>();
 		dadosInutilizacao.put("cnpj", "51916585009999");
@@ -2149,13 +2147,13 @@ public class NFeInutilizacao {
 		dadosInutilizacao.put("numero_inicial", "7730");
 		dadosInutilizacao.put("numero_final", "7732");
 		dadosInutilizacao.put("justificativa", "Informe aqui a justificativa para realizar a inutilizacao da numeracao.");
-		
+
 		/* Criamos um objeto JSON que irá receber o input dos dados, para então enviar a requisição. */
 		JSONObject json = new JSONObject (dadosInutilizacao);
-		
+
 		/* Testar se o JSON gerado está dentro do formato esperado.
 		System.out.print(json); */
-		
+
 		/* Configuração para realizar o HTTP BasicAuth. */
 		Object config = new DefaultClientConfig();
 		Client client = Client.create((ClientConfig) config);
@@ -2165,15 +2163,15 @@ public class NFeInutilizacao {
 
 		ClientResponse resposta = request.post(ClientResponse.class, json);
 
-		int hHttpCode = resposta.getStatus(); 
+		int hHttpCode = resposta.getStatus();
 
 		String body = resposta.getEntity(String.class);
-		
-		 /* As três linhas abaixo imprimem as informações retornadas pela API. 
+
+		 /* As três linhas abaixo imprimem as informações retornadas pela API.
 		  * Aqui o seu sistema deverá interpretar e lidar com o retorno. */
 		System.out.print("HTTP Code: ");
 		System.out.print(hHttpCode);
-		System.out.printf(body); 
+		System.out.printf(body);
 	}
 }
 ```
@@ -2254,7 +2252,7 @@ Para ambiente de producao use a URL abaixo:
 */
 var url = "http://homologacao.acrasnfe.acras.com.br/v2/nfe/inutilizacao";
 
-/* 
+/*
 Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
 Passamos o token como quarto parametro deste metodo, como autenticador do HTTP Basic Authentication.
 */
@@ -2282,10 +2280,10 @@ console.log("Corpo: " + request.responseText);
 import json
 import requests
 
-''' 
+'''
 Para ambiente de produção use a variável abaixo:
 url = "https://api.focusnfe.com.br"
-''' 
+'''
 url = "http://homologacao.acrasnfe.acras.com.br/v2/nfe/inutilizacao"
 
 token="token_enviado_pelo_suporte"
