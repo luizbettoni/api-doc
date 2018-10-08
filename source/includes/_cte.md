@@ -176,123 +176,250 @@ import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 
-public class autorizar {
+public class Autorizar {
 
-  public static void main(String[] args) throws JSONException{
+	public static void main(String[] args) throws JSONException{
+		
+		String login = "Token_enviado_pelo_suporte";
 
-    String login = "Token_enviado_pelo_suporte";
+		/* Substituir pela sua identificação interno do CTe. */
+		String ref = "12345";
+		
+		/* Para ambiente de produção use a variável abaixo:
+		String server = "https://api.focusnfe.com.br/"; */
+ 		String server = "http://homologacao.acrasnfe.acras.com.br/";
+ 		
+ 		String url = server.concat("v2/cte_os?ref="+ref);
+	
+		/* Configuração para realizar o HTTP BasicAuth. */
+ 		Object config = new DefaultClientConfig();
+		Client client = Client.create((ClientConfig) config);
+		client.addFilter(new HTTPBasicAuthFilter(login, ""));
+		
+		/* Aqui são criados as hash's que receberão os dados do CTe. */
+		HashMap<String, String> cte = new HashMap<String, String>();
+		HashMap<String, String> seguroCarga = new HashMap<String, String>();
+		HashMap<String, String> documentosReferenciados = new HashMap<String, String>();
+   
+		cte.put("bairro_emitente","Sao Cristova");
+		cte.put("bairro_tomador","Bacacheri");
+		cte.put("cep_emitente","99880077");
+		cte.put("cep_tomador","88991188");
+		cte.put("cfop","5353");
+		cte.put("cnpj_emitente","51916585000125");
+		cte.put("cnpj_tomador","51966818092777");
+		cte.put("codigo_municipio_emitente","2927408");
+		cte.put("codigo_municipio_envio","5200050");
+		cte.put("codigo_municipio_fim","3100104");
+		cte.put("codigo_municipio_inicio","5200050");
+		cte.put("codigo_municipio_tomador","4106902");
+		cte.put("codigo_pais_tomador","1058");
+		cte.put("complemento_emitente","Andar 19 - sala 23");
+		cte.put("data_emissao","2018-06-18T09:17:00");
+		cte.put("descricao_servico","Descricao do seu servico aqui");
+		cte.put("funcionario_emissor","Nome do funcionario que fez a emissao");
+		cte.put("icms_aliquota","17.00");
+		cte.put("icms_base_calculo","1.00");
+		cte.put("icms_situacao_tributaria","00");
+		cte.put("icms_valor","0.17");
+		cte.put("indicador_inscricao_estadual_tomador","9");
+		cte.put("inscricao_estadual_emitente","12345678");
+		cte.put("logradouro_emitente","Aeroporto Internacional de Salvador");
+		cte.put("logradouro_tomador","Rua Joao Dalegrave");
+		cte.put("modal","02");
+		cte.put("municipio_emitente","Salvador");
+		cte.put("municipio_envio","Abadia de Goias");
+		cte.put("municipio_fim","Abadia dos Dourados");
+		cte.put("municipio_inicio","Abadia de Goias");
+		cte.put("municipio_tomador","Curitiba");
+		cte.put("natureza_operacao","PREST. DE SERV. TRANSPORTE A ESTAB. COMERCIAL");
+		cte.put("nome_emitente","ACME LTDA");
+		cte.put("nome_fantasia_emitente","ACME");
+		cte.put("nome_fantasia_tomador","Nome do tomador do servico aqui");
+		cte.put("nome_tomador","NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL");
+		cte.put("numero_emitente","S/N");
+		cte.put("numero_fatura","1");
+		cte.put("numero_tomador","1");
+		cte.put("pais_tomador","BRASIL");
+		cte.put("quantidade","1.0000");
+		cte.put("telefone_emitente","4133336666");
+		cte.put("tipo_documento","0");
+		cte.put("tipo_servico","6");
+		cte.put("uf_emitente","BA");
+		cte.put("uf_envio","GO");
+		cte.put("uf_fim","MG");
+		cte.put("uf_inicio","GO");
+		cte.put("uf_tomador","PR");
+		cte.put("valor_desconto_fatura","0.00");
+		cte.put("valor_inss","0.10");
+		cte.put("valor_liquido_fatura","1.00");
+		cte.put("valor_original_fatura","1.00");
+		cte.put("valor_receber","1.00");
+		cte.put("valor_total","1.00");
+		cte.put("valor_total_tributos","0.00");
+		segurosCarga.put("nome_seguradora","Nome da seguradora aqui");
+		segurosCarga.put("numero_apolice","12345");
+		segurosCarga.put("responsavel_seguro","4");
+		documentosReferenciados.put("data_emissao","2018-06-18");
+		documentosReferenciados.put("numero","1");
+		documentosReferenciados.put("serie","1");
+		documentosReferenciados.put("subserie","1");
+		documentosReferenciados.put("valor","1.00");
+		
+		/* Depois de fazer o input dos dados, são criados os objetos JSON já com os valores das hash's. */
+		JSONObject json = new JSONObject (cte);
+		JSONObject jsonSegurosCarga = new JSONObject (segurosCarga);
+		JSONObject jsonDocumentosReferenciados = new JSONObject (documentosReferenciados);
+		
+		/* Aqui adicionamos os objetos JSON nos campos da API como array no JSON principal. */
+		json.append("segurosCarga", jsonSegurosCarga);
+		json.append("documentosReferenciados", jsonDocumentosReferenciados);
 
-    /* Substituir pela sua identificação interno do CTe. */
-    String ref = "12345";
+		/* É recomendado verificar como os dados foram gerados em JSON e se ele está seguindo a estrutura especificada em nossa documentação.*/
+		//System.out.print(json); 
+		
+		WebResource request = client.resource(url);
 
-    /* Para ambiente de produção use a variável abaixo:
-    String server = "https://api.focusnfe.com.br/"; */
-    String server = "http://homologacao.acrasnfe.acras.com.br/";
+		ClientResponse resposta = request.post(ClientResponse.class, json);
 
-    String url = server.concat("v2/cte_os?ref="+ref);
+		int httpCode = resposta.getStatus(); 
 
-    /* Configuração para realizar o HTTP BasicAuth. */
-    Object config = new DefaultClientConfig();
-    Client client = Client.create((ClientConfig) config);
-    client.addFilter(new HTTPBasicAuthFilter(login, ""));
-
-    /* Aqui são criados as hash's que receberão os dados do CTe. */
-    HashMap<String, String> cte = new HashMap<String, String>();
-    HashMap<String, String> seguros_carga = new HashMap<String, String>();
-    HashMap<String, String> documentos_referenciados = new HashMap<String, String>();
-
-    cte.put("bairro_emitente","Sao Cristova");
-    cte.put("bairro_tomador","Bacacheri");
-    cte.put("cep_emitente","99880077");
-    cte.put("cep_tomador","88991188");
-    cte.put("cfop","5353");
-    cte.put("cnpj_emitente","51916585000125");
-    cte.put("cnpj_tomador","51966818092777");
-    cte.put("codigo_municipio_emitente","2927408");
-    cte.put("codigo_municipio_envio","5200050");
-    cte.put("codigo_municipio_fim","3100104");
-    cte.put("codigo_municipio_inicio","5200050");
-    cte.put("codigo_municipio_tomador","4106902");
-    cte.put("codigo_pais_tomador","1058");
-    cte.put("complemento_emitente","Andar 19 - sala 23");
-    cte.put("data_emissao","2018-06-18T09:17:00");
-    cte.put("descricao_servico","Descricao do seu servico aqui");
-    cte.put("funcionario_emissor","Nome do funcionario que fez a emissao");
-    cte.put("icms_aliquota","17.00");
-    cte.put("icms_base_calculo","1.00");
-    cte.put("icms_situacao_tributaria","00");
-    cte.put("icms_valor","0.17");
-    cte.put("indicador_inscricao_estadual_tomador","9");
-    cte.put("inscricao_estadual_emitente","12345678");
-    cte.put("logradouro_emitente","Aeroporto Internacional de Salvador");
-    cte.put("logradouro_tomador","Rua Joao Dalegrave");
-    cte.put("modal","02");
-    cte.put("municipio_emitente","Salvador");
-    cte.put("municipio_envio","Abadia de Goias");
-    cte.put("municipio_fim","Abadia dos Dourados");
-    cte.put("municipio_inicio","Abadia de Goias");
-    cte.put("municipio_tomador","Curitiba");
-    cte.put("natureza_operacao","PREST. DE SERV. TRANSPORTE A ESTAB. COMERCIAL");
-    cte.put("nome_emitente","ACME LTDA");
-    cte.put("nome_fantasia_emitente","ACME");
-    cte.put("nome_fantasia_tomador","Nome do tomador do servico aqui");
-    cte.put("nome_tomador","NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL");
-    cte.put("numero_emitente","S/N");
-    cte.put("numero_fatura","1");
-    cte.put("numero_tomador","1");
-    cte.put("pais_tomador","BRASIL");
-    cte.put("quantidade","1.0000");
-    cte.put("telefone_emitente","4133336666");
-    cte.put("tipo_documento","0");
-    cte.put("tipo_servico","6");
-    cte.put("uf_emitente","BA");
-    cte.put("uf_envio","GO");
-    cte.put("uf_fim","MG");
-    cte.put("uf_inicio","GO");
-    cte.put("uf_tomador","PR");
-    cte.put("valor_desconto_fatura","0.00");
-    cte.put("valor_inss","0.10");
-    cte.put("valor_liquido_fatura","1.00");
-    cte.put("valor_original_fatura","1.00");
-    cte.put("valor_receber","1.00");
-    cte.put("valor_total","1.00");
-    cte.put("valor_total_tributos","0.00");
-    seguros_carga.put("nome_seguradora","Nome da seguradora aqui");
-    seguros_carga.put("numero_apolice","12345");
-    seguros_carga.put("responsavel_seguro","4");
-    documentos_referenciados.put("data_emissao","2018-06-18");
-    documentos_referenciados.put("numero","1");
-    documentos_referenciados.put("serie","1");
-    documentos_referenciados.put("subserie","1");
-    documentos_referenciados.put("valor","1.00");
-
-    /* Depois de fazer o input dos dados, são criados os objetos JSON já com os valores das hash's. */
-    JSONObject json = new JSONObject (cte);
-    JSONObject JsonSeguros_carga = new JSONObject (seguros_carga);
-    JSONObject JsonDocumentos_referenciados = new JSONObject (documentos_referenciados);
-
-    /* Aqui adicionamos os objetos JSON nos campos da API como array no JSON principal. */
-    json.append("seguros_carga", JsonSeguros_carga);
-    json.append("documentos_referenciados", JsonDocumentos_referenciados);
-
-    /* É recomendado verificar como os dados foram gerados em JSON e se ele está seguindo a estrutura especificada em nossa documentação.*/
-    //System.out.print(json);
-
-    WebResource request = client.resource(url);
-
-    ClientResponse resposta = request.post(ClientResponse.class, json);
-
-    int HttpCode = resposta.getStatus();
-
-    String body = resposta.getEntity(String.class);
-
-    /* As três linhas a seguir exibem as informações retornadas pela nossa API.
-     * Aqui o seu sistema deverá interpretar e lidar com o retorno. */
-    System.out.print("HTTP Code: ");
-    System.out.print(HttpCode);
-    System.out.printf(body);
-  }
+		String body = resposta.getEntity(String.class);
+		
+		/* As três linhas a seguir exibem as informações retornadas pela nossa API. 
+		 * Aqui o seu sistema deverá interpretar e lidar com o retorno. */
+		System.out.print("HTTP Code: ");
+		System.out.print(httpCode);
+		System.out.printf(body);
+	}
 }
+
+```
+
+```ruby
+
+# encoding: UTF-8
+
+require "net/http"
+require "net/https"
+require "json"
+
+# token enviado pelo suporte
+token = "codigo_alfanumerico_token"
+
+# referência da nota - deve ser única para cada nota enviada
+ref = "id_referencia_nota"
+
+# endereço da api que deve ser usado conforme o ambiente: produção ou homologação
+servidor_producao = "https://api.focusnfe.com.br/"
+servidor_homologacao = "http://homologacao.acrasnfe.acras.com.br/"
+
+# no caso do ambiente de envio ser em produção, utilizar servidor_producao
+url_envio = servidor_homologacao + "v2/cte?ref=" + ref
+
+# altere os campos conforme a nota que será enviada
+cte = {
+  bairro_emitente: "Sao Cristovao",
+  bairro_tomador: "Bacacheri",
+  cep_emitente: "99880077",
+  cep_tomador: "88991188",
+  cfop: "5353",
+  cnpj_emitente: "51916585000125",
+  cnpj_tomador: "51966818092777",
+  codigo_municipio_emitente: "2927408",
+  codigo_municipio_envio: "5200050",
+  codigo_municipio_fim: "3100104",
+  codigo_municipio_inicio: "5200050",
+  codigo_municipio_tomador: "4106902",
+  codigo_pais_tomador: "1058",
+  complemento_emitente: "Andar 19 - sala 23",
+  data_emissao: "2018-06-18T09:17:00",
+  descricao_servico: "Descricao do seu servico aqui",
+  documentos_referenciados: [
+    {  
+      data_emissao: "2018-06-10",
+      numero: "1",
+      serie: "1",
+      subserie: "1",
+      valor: "1.00"
+    }
+  ]
+  funcionario_emissor: "Nome do funcionario que fez a emissao",
+  icms_aliquota: "17.00",
+  icms_base_calculo: "1.00",
+  icms_situacao_tributaria: "00",
+  icms_valor: "0.17",
+  indicador_inscricao_estadual_tomador: "9",
+  inscricao_estadual_emitente: "12345678",
+  logradouro_emitente: "Aeroporto Internacional de Salvador",
+  logradouro_tomador: "Rua Joao Dalegrave",
+  modal: "02",
+  municipio_emitente: "Salvador",
+  municipio_envio: "Abadia de Goias",
+  municipio_fim: "Abadia dos Dourados",
+  municipio_inicio: "Abadia de Goias",
+  municipio_tomador: "Curitiba",
+  natureza_operacao: "PREST. DE SERV. TRANSPORTE A ESTAB. COMERCIAL",
+  nome_emitente: "ACME LTDA",
+  nome_fantasia_emitente: "ACME",
+  nome_fantasia_tomador: "Nome do tomador do servico aqui",
+  nome_tomador: "NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL",
+  numero_emitente: "S/N",
+  numero_fatura: "1",
+  numero_tomador: "1",
+  pais_tomador: "BRASIL",
+  quantidade: "1.00",
+  seguros_carga: [
+    {
+      nome_seguradora: "Nome da seguradora aqui",
+      numero_apolice: "12345",
+      responsavel_seguro: 4
+    }
+  ],
+  telefone_emitente: "4133336666",
+  tipo_documento: 0,
+  tipo_servico: 6,
+  uf_emitente: "BA",
+  uf_envio: "GO",
+  uf_fim: "MG",
+  uf_inicio: "GO",
+  uf_tomador: "PR",
+  valor_desconto_fatura: "0.00",
+  valor_inss: "0.10",
+  valor_liquido_fatura: "1.00",
+  valor_original_fatura: "1.00",
+  valor_receber: "1.00",
+  valor_total: "1.00",
+  valor_total_tributos: "0.00"
+}
+
+# criamos uma objeto uri para envio da nota
+uri = URI(url_envio)
+
+# também criamos um objeto da classe HTTP a partir do host da uri
+http = Net::HTTP.new(uri.hostname, uri.port)
+
+# aqui criamos um objeto da classe Post a partir da uri de requisição
+requisicao = Net::HTTP::Post.new(uri.request_uri)
+
+# adicionando o token à requisição
+requisicao.basic_auth(token, "")
+
+# convertemos os dados da nota para o formato JSON e adicionamos ao corpo da requisição
+requisicao.body = cte.to_json
+
+# no envio de notas em produção, é necessário utilizar o protocolo ssl
+# para isso, basta retirar o comentário da linha abaixo
+# http.use_ssl = true
+
+# aqui enviamos a requisição ao servidor e obtemos a resposta
+resposta = http.request(requisicao)
+
+# imprimindo o código HTTP da resposta
+puts "Código retornado pela requisição: " + resposta.code
+
+# imprimindo o corpo da resposta
+puts "Corpo da resposta: " + resposta.body
 
 ```
 
@@ -656,42 +783,88 @@ import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 
-public class consulta {
+public class Consulta {
 
-  public static void main(String[] args){
+	public static void main(String[] args){
 
-    String login = "Token_enviado_pelo_suporte";
+		String login = "Token_enviado_pelo_suporte";
 
-    /* Substituir pela sua identificação interno do CTe. */
-    String ref = "12345";
+		/* Substituir pela sua identificação interno do CTe. */
+		String ref = "12345";
+		
+		/* Para ambiente de produção use a variável abaixo:
+		String server = "https://api.focusnfe.com.br/"; */
+ 		String server = "http://homologacao.acrasnfe.acras.com.br/";
+ 		
+		String url = server.concat("v2/cte/"+ref+"?completa=1");
+		
+		/* Configuração para realizar o HTTP BasicAuth. */
+		Object config = new DefaultClientConfig();
+		Client client = Client.create((ClientConfig) config);
+		client.addFilter(new HTTPBasicAuthFilter(login, ""));
 
-    /* Para ambiente de produção use a variável abaixo:
-    String server = "https://api.focusnfe.com.br/"; */
-    String server = "http://homologacao.acrasnfe.acras.com.br/";
+		WebResource request = client.resource(url);
 
-    String url = server.concat("v2/cte/"+ref+"?completa=1");
+		ClientResponse resposta = request.get(ClientResponse.class);
 
-    /* Configuração para realizar o HTTP BasicAuth. */
-    Object config = new DefaultClientConfig();
-    Client client = Client.create((ClientConfig) config);
-    client.addFilter(new HTTPBasicAuthFilter(login, ""));
+		int httpCode = resposta.getStatus(); 
 
-    WebResource request = client.resource(url);
+		String body = resposta.getEntity(String.class);
 
-    ClientResponse resposta = request.get(ClientResponse.class);
-
-    int HttpCode = resposta.getStatus();
-
-    String body = resposta.getEntity(String.class);
-
-    /* As três linhas abaixo imprimem as informações retornadas pela API.
-     * Aqui o seu sistema deverá interpretar e lidar com o retorno. */
-    System.out.print("HTTP Code: ");
-    System.out.print(HttpCode);
-    System.out.printf(body);
-  }
+		/* As três linhas abaixo imprimem as informações retornadas pela API. 
+		 * Aqui o seu sistema deverá interpretar e lidar com o retorno. */
+		System.out.print("HTTP Code: ");
+		System.out.print(httpCode);
+		System.out.printf(body);
+	}
 }
 
+```
+
+```ruby
+
+# encoding: UTF-8
+
+require "net/http"
+require "net/https"
+
+# token enviado pelo suporte
+token = "codigo_alfanumerico_token"
+
+# referência da nota - deve ser única para cada nota enviada
+ref = "id_referencia_nota"
+
+# endereço da api que deve ser usado conforme o ambiente: produção ou homologação
+servidor_producao = "https://api.focusnfe.com.br/"
+servidor_homologacao = "http://homologacao.acrasnfe.acras.com.br/"
+
+# no caso do ambiente de envio ser em produção, utilizar servidor_producao
+url_envio = servidor_homologacao + "v2/cte/" + ref + "?completa=1"
+
+# criamos uma objeto uri para envio da nota
+uri = URI(url_envio)
+
+# também criamos um objeto da classe HTTP a partir do host da uri
+http = Net::HTTP.new(uri.hostname, uri.port)
+
+# aqui criamos um objeto da classe Get a partir da uri de requisição
+requisicao = Net::HTTP::Get.new(uri.request_uri)
+
+# adicionando o token à requisição
+requisicao.basic_auth(token, '')
+
+# no envio de notas em produção, é necessário utilizar o protocolo ssl
+# para isso, basta retirar o comentário da linha abaixo
+# http.use_ssl = true
+
+# aqui enviamos a requisição ao servidor e obtemos a resposta
+resposta = http.request(requisicao)
+
+# imprimindo o código HTTP da resposta
+puts "Código retornado pela requisição: " + resposta.code
+
+# imprimindo o corpo da resposta
+puts "Corpo da resposta: " + resposta.body
 
 ```
 
@@ -923,47 +1096,103 @@ import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 
-public class cancelar {
+public class Cancelar {
 
-  public static void main(String[] args){
+	public static void main(String[] args){
+		
+		String login = "Token_enviado_pelo_suporte";
 
-    String login = "Token_enviado_pelo_suporte";
+		/* Substituir pela sua identificação interno do CTe. */
+		String ref = "12345";
+		
+		/* Para ambiente de produção use a variável abaixo:
+		String server = "https://api.focusnfe.com.br/"; */
+ 		String server = "http://homologacao.acrasnfe.acras.com.br/";
+ 		
+ 		String url = server.concat("v2/cte/"+ref);
+ 		/* Aqui criamos um hashmap para receber a chave "justificativa" e o valor desejado. */
+		HashMap<String, String> justificativa = new HashMap<String, String>();
+		justificativa.put("justificativa", "Informe aqui a sua justificativa para realizar o cancelamento da NFe.");
+		
+		/* Criamos um objeto JSON para receber a hash com os dados esperado pela API. */
+		JSONObject json = new JSONObject(justificativa);
+		
+		/* Configuração para realizar o HTTP BasicAuth. */
+		Object config = new DefaultClientConfig();
+		Client client = Client.create((ClientConfig) config);
+		client.addFilter(new HTTPBasicAuthFilter(login, ""));
+	
+		WebResource request = client.resource(url);
 
-    /* Substituir pela sua identificação interno do CTe. */
-    String ref = "12345";
+		ClientResponse resposta = request.delete(ClientResponse.class, json);
 
-    /* Para ambiente de produção use a variável abaixo:
-    String server = "https://api.focusnfe.com.br/"; */
-    String server = "http://homologacao.acrasnfe.acras.com.br/";
+		int httpCode = resposta.getStatus(); 
 
-    String url = server.concat("v2/cte/"+ref);
-    /* Aqui criamos um hashmap para receber a chave "justificativa" e o valor desejado. */
-    HashMap<String, String> justificativa = new HashMap<String, String>();
-    justificativa.put("justificativa", "Informe aqui a sua justificativa para realizar o cancelamento da NFe.");
-
-    /* Criamos um objeto JSON para receber a hash com os dados esperado pela API. */
-    JSONObject json = new JSONObject(justificativa);
-
-    /* Configuração para realizar o HTTP BasicAuth. */
-    Object config = new DefaultClientConfig();
-    Client client = Client.create((ClientConfig) config);
-    client.addFilter(new HTTPBasicAuthFilter(login, ""));
-
-    WebResource request = client.resource(url);
-
-    ClientResponse resposta = request.delete(ClientResponse.class, json);
-
-    int HttpCode = resposta.getStatus();
-
-    String body = resposta.getEntity(String.class);
-
-     /* As três linhas abaixo imprimem as informações retornadas pela API.
+		String body = resposta.getEntity(String.class);
+		
+	   /* As três linhas abaixo imprimem as informações retornadas pela API. 
         * Aqui o seu sistema deverá interpretar e lidar com o retorno. */
-    System.out.print("HTTP Code: ");
-    System.out.print(HttpCode);
-    System.out.printf(body);
-  }
+		System.out.print("HTTP Code: ");
+		System.out.print(httpCode);
+		System.out.printf(body);
+	}
 }
+
+```
+
+```ruby
+
+# encoding: UTF-8
+
+require "net/http"
+require "net/https"
+require "json"
+
+# token enviado pelo suporte
+token = "codigo_alfanumerico_token"
+
+# referência da nota - deve ser única para cada nota enviada
+ref = "id_referencia_nota"
+
+# endereço da api que deve ser usado conforme o ambiente: produção ou homologação
+servidor_producao = "https://api.focusnfe.com.br/"
+servidor_homologacao = "http://homologacao.acrasnfe.acras.com.br/"
+
+# no caso do ambiente de envio ser em produção, utilizar servidor_producao
+url_envio = servidor_homologacao + "v2/cte/" + ref
+
+# altere os campos conforme a nota que será enviada
+justificativa_cancelamento = {  
+  justificativa: "Informe aqui a sua justificativa para realizar o cancelamento da NFe."
+}
+
+# criamos uma objeto uri para envio da nota
+uri = URI(url_envio)
+
+# também criamos um objeto da classe HTTP a partir do host da uri
+http = Net::HTTP.new(uri.hostname, uri.port)
+
+# aqui criamos um objeto da classe Delete a partir da uri de requisição
+requisicao = Net::HTTP::Delete.new(uri.request_uri)
+
+# adicionando o token à requisição
+requisicao.basic_auth(token, '')
+
+# convertemos a hash de justificativa do cancelamento para o formato JSON e adicionamos ao corpo da requisição
+requisicao.body = justificativa_cancelamento.to_json
+
+# no envio de notas em produção, é necessário utilizar o protocolo ssl
+# para isso, basta retirar o comentário da linha abaixo
+# http.use_ssl = true
+
+# aqui enviamos a requisição ao servidor e obtemos a resposta
+resposta = http.request(requisicao)
+
+# imprimindo o código HTTP da resposta
+puts "Código retornado pela requisição: " + resposta.code
+
+# imprimindo o corpo da resposta
+puts "Corpo da resposta: " + resposta.body
 
 ```
 
@@ -1136,51 +1365,109 @@ import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 
-public class emitir_cce {
+public class EmitirCce {
 
-  public static void main(String[] args){
+	public static void main(String[] args){
 
-    String login = "Token_enviado_pelo_suporte";
+		String login = "Token_enviado_pelo_suporte";
+		
+		/* Substituir pela sua identificação interno do CTe. */
+		String ref = "12345";
+		
+		/* Para ambiente de produção use a variável abaixo:
+		String server = "https://api.focusnfe.com.br/"; */
+		String server = "http://homologacao.acrasnfe.acras.com.br/";
+		
+		String url = server.concat("v2/cte/"+ref+"/carta_correcao");
 
-    /* Substituir pela sua identificação interno do CTe. */
-    String ref = "12345";
+		/* Aqui criamos um hashmap para receber a chave "correcao" e o valor desejado. */
+		HashMap<String, String> correcao = new HashMap<String, String>();
+		correcao.put("campo_corrigido", "uf_inicio");
+		correcao.put("valor_corrigido", "PR");
+		
+		/* Criamos um objeto JSON para receber a hash com os dados esperado pela API. */
+		JSONObject json = new JSONObject(correcao);
+		
+		/* Configuração para realizar o HTTP BasicAuth. */
+		Object config = new DefaultClientConfig();
+		Client client = Client.create((ClientConfig) config);
+		client.addFilter(new HTTPBasicAuthFilter(login, ""));
 
-    /* Para ambiente de produção use a variável abaixo:
-    String server = "https://api.focusnfe.com.br/"; */
-    String server = "http://homologacao.acrasnfe.acras.com.br/";
+		WebResource request = client.resource(url);
 
-    String url = server.concat("v2/cte/"+ref+"/carta_correcao");
+		ClientResponse resposta = request.post(ClientResponse.class, json);
 
-    /* Aqui criamos um hashmap para receber a chave "correcao" e o valor desejado. */
-    HashMap<String, String> correcao = new HashMap<String, String>();
-    correcao.put("campo_corrigido", "uf_inicio");
-    correcao.put("valor_corrigido", "PR");
+		int httpCode = resposta.getStatus(); 
 
-    /* Criamos um objeto JSON para receber a hash com os dados esperado pela API. */
-    JSONObject json = new JSONObject(correcao);
+		String body = resposta.getEntity(String.class);
 
-    /* Configuração para realizar o HTTP BasicAuth. */
-    Object config = new DefaultClientConfig();
-    Client client = Client.create((ClientConfig) config);
-    client.addFilter(new HTTPBasicAuthFilter(login, ""));
-
-    WebResource request = client.resource(url);
-
-    ClientResponse resposta = request.post(ClientResponse.class, json);
-
-    int HttpCode = resposta.getStatus();
-
-    String body = resposta.getEntity(String.class);
-
-     /* As três linhas abaixo imprimem as informações retornadas pela API.
-    * Aqui o seu sistema deverá interpretar e lidar com o retorno. */
-    System.out.print("HTTP Code: ");
-    System.out.print(HttpCode);
-    System.out.printf(body);
-  }
+	   /* As três linhas abaixo imprimem as informações retornadas pela API. 
+		* Aqui o seu sistema deverá interpretar e lidar com o retorno. */
+		System.out.print("HTTP Code: ");
+		System.out.print(httpCode);
+		System.out.printf(body);
+	}
 }
 
 ```
+
+```ruby
+
+# encoding: UTF-8
+
+require "net/http"
+require "net/https"
+require "json"
+
+# token enviado pelo suporte
+token = "codigo_alfanumerico_token"
+
+# referência da nota - deve ser única para cada nota enviada
+ref = "id_referencia_nota"
+
+# endereço da api que deve ser usado conforme o ambiente: produção ou homologação
+servidor_producao = "https://api.focusnfe.com.br/"
+servidor_homologacao = "http://homologacao.acrasnfe.acras.com.br/"
+
+# no caso do ambiente de envio ser em produção, utilizar servidor_producao
+url_envio = servidor_homologacao + "v2/cte/" + ref + "/carta_correcao"
+
+# altere os campos conforme a nota que será enviada
+correcao = {  
+  campo_correcao: "Informe aqui o titulo do campo que será corrigido na CTe.",
+  valor_correcao: "Informe aqui o valor para o campo que será corrigido."
+}
+
+# criamos uma objeto uri para envio da nota
+uri = URI(url_envio)
+
+# também criamos um objeto da classe HTTP a partir do host da uri
+http = Net::HTTP.new(uri.hostname, uri.port)
+
+# aqui criamos um objeto da classe Post a partir da uri de requisição
+requisicao = Net::HTTP::Post.new(uri.request_uri)
+
+# adicionando o token à requisição
+requisicao.basic_auth(token, '')
+
+# convertemos a hash de justificativa do cancelamento para o formato JSON e adicionamos ao corpo da requisição
+requisicao.body = correcao.to_json
+
+# no envio de notas em produção, é necessário utilizar o protocolo ssl
+# para isso, basta retirar o comentário da linha abaixo
+# http.use_ssl = true
+
+# aqui enviamos a requisição ao servidor e obtemos a resposta
+resposta = http.request(requisicao)
+
+# imprimindo o código HTTP da resposta
+puts "Código retornado pela requisição: " + resposta.code
+
+# imprimindo o corpo da resposta
+puts "Corpo da resposta: " + resposta.body
+
+```
+
 
 ```javascript
 /*
@@ -1345,53 +1632,111 @@ import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 
-public class inutilizar {
+public class Inutilizar {
 
-  public static void main(String[] args) throws JSONException{
+	public static void main(String[] args) throws JSONException{
+		
+		String login = "Token_enviado_pelo_suporte";
+		
+		/* Para ambiente de produção use a variável abaixo:
+		String server = "https://api.focusnfe.com.br/"; */
+ 		String server = "http://homologacao.acrasnfe.acras.com.br/";
+ 		
+ 		String url = server.concat("v2/cte/inutilizacao");
+ 		
+ 		/* Aqui criamos um hash que irá receber as chaves e valores esperados para gerar a inutilização. */
+		HashMap<String, String> dadosInutilizacao = new HashMap<String, String>();
+		dadosInutilizacao.put("cnpj", "51916585000125");
+		dadosInutilizacao.put("serie", "1");
+		dadosInutilizacao.put("numero_inicial", "1");
+		dadosInutilizacao.put("numero_final", "3");
+		dadosInutilizacao.put("justificativa", "Informe aqui a justificativa para realizar a inutilizacao da numeracao.");
+		dadosInutilizacao.put("modelo", "67");
+		
+		/* Criamos um objeto JSON que irá receber o input dos dados, para então enviar a requisição. */
+		JSONObject json = new JSONObject (dadosInutilizacao);
+		
+		/* Testar se o JSON gerado está dentro do formato esperado.
+		System.out.print(json); */
+		
+		/* Configuração para realizar o HTTP BasicAuth. */
+		Object config = new DefaultClientConfig();
+		Client client = Client.create((ClientConfig) config);
+		client.addFilter(new HTTPBasicAuthFilter(login, ""));
 
-    String login = "Token_enviado_pelo_suporte";
+		WebResource request = client.resource(url);
 
-    /* Para ambiente de produção use a variável abaixo:
-    String server = "https://api.focusnfe.com.br/"; */
-    String server = "http://homologacao.acrasnfe.acras.com.br/";
+		ClientResponse resposta = request.post(ClientResponse.class, json);
 
-    String url = server.concat("v2/cte/inutilizacao");
+		int httpCode = resposta.getStatus(); 
 
-    /* Aqui criamos um hash que irá receber as chaves e valores esperados para gerar a inutilização. */
-    HashMap<String, String> DadosInutilizacao = new HashMap<String, String>();
-    DadosInutilizacao.put("cnpj", "51916585000125");
-    DadosInutilizacao.put("serie", "1");
-    DadosInutilizacao.put("numero_inicial", "1");
-    DadosInutilizacao.put("numero_final", "3");
-    DadosInutilizacao.put("justificativa", "Informe aqui a justificativa para realizar a inutilizacao da numeracao.");
-    DadosInutilizacao.put("modelo", "67");
-
-    /* Criamos um objeto JSON que irá receber o input dos dados, para então enviar a requisição. */
-    JSONObject json = new JSONObject (DadosInutilizacao);
-
-    /* Testar se o JSON gerado está dentro do formato esperado.
-    System.out.print(json); */
-
-    /* Configuração para realizar o HTTP BasicAuth. */
-    Object config = new DefaultClientConfig();
-    Client client = Client.create((ClientConfig) config);
-    client.addFilter(new HTTPBasicAuthFilter(login, ""));
-
-    WebResource request = client.resource(url);
-
-    ClientResponse resposta = request.post(ClientResponse.class, json);
-
-    int HttpCode = resposta.getStatus();
-
-    String body = resposta.getEntity(String.class);
-
-     /* As três linhas abaixo imprimem as informações retornadas pela API.
-      * Aqui o seu sistema deverá interpretar e lidar com o retorno. */
-    System.out.print("HTTP Code: ");
-    System.out.print(HttpCode);
-    System.out.printf(body);
-  }
+		String body = resposta.getEntity(String.class);
+		
+		 /* As três linhas abaixo imprimem as informações retornadas pela API. 
+		  * Aqui o seu sistema deverá interpretar e lidar com o retorno. */
+		System.out.print("HTTP Code: ");
+		System.out.print(httpCode);
+		System.out.printf(body); 
+	}
 }
+
+```
+
+```ruby
+
+# encoding: UTF-8
+
+require "net/http"
+require "net/https"
+require "json"
+
+# token enviado pelo suporte
+token = "codigo_alfanumerico_token"
+
+# endereço da api que deve ser usado conforme o ambiente: produção ou homologação
+servidor_producao = "https://api.focusnfe.com.br/"
+servidor_homologacao = "http://homologacao.acrasnfe.acras.com.br/"
+
+# no caso do ambiente de envio ser em produção, utilizar servidor_producao
+url_envio = servidor_homologacao + "v2/cte/inutilizacao"
+
+# altere os campos conforme a nota que será enviada
+dados_inutilizacao = {  
+  cnpj: "51916585000125",
+  serie: "1",
+  numero_inicial: "1",
+  numero_final: "3",
+  justificativa: "Informe aqui a justificativa para realizar a inutilizacao da numeracao.",
+  modelo: "67"
+}
+
+# criamos uma objeto uri para envio da nota
+uri = URI(url_envio)
+
+# também criamos um objeto da classe HTTP a partir do host da uri
+http = Net::HTTP.new(uri.hostname, uri.port)
+
+# aqui criamos um objeto da classe Post a partir da uri de requisição
+requisicao = Net::HTTP::Post.new(uri.request_uri)
+
+# adicionando o token à requisição
+requisicao.basic_auth(token, '')
+
+# convertemos a hash de justificativa do cancelamento para o formato JSON e adicionamos ao corpo da requisição
+requisicao.body = dados_inutilizacao.to_json
+
+# no envio de notas em produção, é necessário utilizar o protocolo ssl
+# para isso, basta retirar o comentário da linha abaixo
+# http.use_ssl = true
+
+# aqui enviamos a requisição ao servidor e obtemos a resposta
+resposta = http.request(requisicao)
+
+# imprimindo o código HTTP da resposta
+puts "Código retornado pela requisição: " + resposta.code
+
+# imprimindo o corpo da resposta
+puts "Corpo da resposta: " + resposta.body
 
 ```
 
