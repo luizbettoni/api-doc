@@ -1,6 +1,6 @@
 # Consulta de NCM
 
-NCM significa "Nomenclatura Comum do Mercosul" e trata-se de um código de oito dígitos estabelecido através da convenção de categorização de mercadorias adotada desde 1995 pelo Uruguai, Paraguai, Brasil e Argentina e que toma por base o Sistema Harmonizado (SH).. Este código é utilizado na emissão de NFe e de NFCe.
+NCM significa "Nomenclatura Comum do Mercosul" e trata-se de um código de oito dígitos estabelecido através da convenção de categorização de mercadorias adotada desde 1995 pelo Uruguai, Paraguai, Brasil e Argentina e que toma por base o Sistema Harmonizado (SH). Este código é utilizado na emissão de NFe e de NFCe.
 
 Nós disponibilizamos uma API que você poderá utilizar para fornecer ao seu usuário final uma pesquisa de qual o código NCM correto do seu produto.
 
@@ -81,6 +81,103 @@ public class ExemploConsultaHook {
 }
 ```
 
+```ruby
+
+# encoding: UTF-8
+
+require "net/http"
+require "net/https"
+
+# token enviado pelo suporte
+token = "codigo_alfanumerico_token"
+
+# endereço da api que deve ser usado conforme o ambiente: produção ou homologação
+servidor_producao = "https://api.focusnfe.com.br/"
+servidor_homologacao = "http://homologacao.acrasnfe.acras.com.br/"
+
+# no caso do ambiente de envio ser em produção, utilizar servidor_producao
+url_envio = servidor_homologacao + "v2/ncms?capitulo=90"
+
+# criamos uma objeto uri para envio da nota
+uri = URI(url_envio)
+
+# também criamos um objeto da classe HTTP a partir do host da uri
+http = Net::HTTP.new(uri.hostname, uri.port)
+
+# aqui criamos um objeto da classe Post a partir da uri de requisição
+requisicao = Net::HTTP::Get.new(uri.request_uri)
+
+# adicionando o token à requisição
+requisicao.basic_auth(token, '')
+
+# no envio de notas em produção, é necessário utilizar o protocolo ssl
+# para isso, basta retirar o comentário da linha abaixo
+# http.use_ssl = true
+
+# aqui enviamos a requisição ao servidor e obtemos a resposta
+resposta = http.request(requisicao)
+
+# imprimindo o código HTTP da resposta
+puts "Código retornado pela requisição: " + resposta.code
+
+# imprimindo o corpo da resposta
+puts "Corpo da resposta: " + resposta.body
+
+```
+
+```python
+# Faça o download e instalação da biblioteca requests, através do python-pip.
+import requests
+
+'''
+Para ambiente de produção use a variável abaixo:
+url = "https://api.focusnfe.com.br"
+'''
+url = "http://homologacao.acrasnfe.acras.com.br/v2/ncms?capitulo=90"
+
+token="token_enviado_pelo_suporte"
+
+r = requests.get(url, auth=(token,""))
+
+# Mostra na tela o codigo HTTP da requisicao e a mensagem de retorno da API
+print(r.status_code, r.text)
+
+```
+
+```javascript
+
+/*
+As orientacoes a seguir foram extraidas do site do NPMJS: https://www.npmjs.com/package/xmlhttprequest
+Here's how to include the module in your project and use as the browser-based XHR object.
+Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensitive systems (eg Linux) using uppercase letters won't work.
+*/
+var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+
+var request = new XMLHttpRequest();
+
+var token = "Token_enviado_pelo_suporte";
+
+/*
+Para ambiente de producao use a URL abaixo:
+"https://api.focusnfe.com.br"
+*/
+var url = "http://homologacao.acrasnfe.acras.com.br/v2/ncms?capitulo=90";
+
+/*
+Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
+Passamos o token como quarto parametro deste metodo, como autenticador do HTTP Basic Authentication.
+*/
+request.open('GET', url, false, token);
+
+// Aqui enviamos a requisição.
+request.send();
+
+// Sua aplicacao tera que ser capaz de tratar as respostas da API.
+console.log("HTTP code: " + request.status);
+console.log("Corpo: " + request.responseText);
+
+```
+
 > Dados de resposta da consulta
 
 ```json
@@ -147,7 +244,7 @@ abaixo, substituindo CODIGO_NCM pelo código.
 
 ## Paginação
 
-Ao fazer uma pesquisa, a API irá devolver o cabeçalho HTTP *X-Max-Count* que representa
+Ao fazer uma pesquisa, a API irá devolver o cabeçalho HTTP *X-Total-Count* que representa
 o número total de ocorrências da pesquisa, porém a API devolve apenas 50 registros por vez.
 Para buscar os demais registros, utilize o parâmetro **offset**. Exemplo:
 
