@@ -25,13 +25,13 @@ POST |	/v2/nfe/inutilizacao	| Inutiliza uma numeração da nota fiscal
 
 ## Campos obrigatórios de uma NFe
 
-Atualmente, a NFe possui centenas de campos para os mais variados tipos e formas de operações, por isso, criamos uma página exclusiva que mostra todos os campos da nossa API para o envio de NFe. Nela, você pode buscar os campos pela TAG XML ou pela nossa tradução para API:
+Atualmente, a NFe possui centenas de campos para os mais variados tipos e formas de operações, por isso, criamos uma página exclusiva que mostra todos os campos da nossa API para o envio de NFe. Nela, você pode buscar os campos pela TAG XML ou pela nossa tradução para API.
 
 [Documentação completa dos campos (versão 4.00 da NFe)](https://focusnfe.com.br/dsl/4.0/NotaFiscalXML.html)
 
 Abaixo, iremos mostrar os campos de uso obrigatório para emissão de uma Nota Fiscal Eletrônica.
 
->> Abaixo um exemplo de dados de uma nota:
+>> Abaixo um exemplo de dados de uma nota (usando a versão 4.00 da NFe):
 
 ```json
 {
@@ -474,7 +474,7 @@ A lista de campos calculados automaticamente segue abaixo:
 ```shell
 # arquivo.json deve conter os dados da NFe
 curl -u token_enviado_pelo_suporte: \
-  -X POST -T arquivo.json http://homologacao.acrasnfe.acras.com.br/v2/nfe?ref=1234
+  -X POST -T arquivo.json http://homologacao.acrasnfe.acras.com.br/v2/nfe
 ```
 
 ```php
@@ -569,7 +569,7 @@ import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 
-public class NFe_autorizar {
+public class NFeAutorizar {
 
 	public static void main(String[] args) throws JSONException{
 
@@ -656,10 +656,10 @@ public class NFe_autorizar {
 
 		/* Depois de fazer o input dos dados, são criados os objetos JSON já com os valores das hash's. */
 		JSONObject json = new JSONObject (nfe);
-		JSONObject JsonItens = new JSONObject (itens);
+		JSONObject jsonItens = new JSONObject (itens);
 
 		/* Aqui adicionamos os objetos JSON nos campos da API como array no JSON principal. */
-		json.append("items", JsonItens);
+		json.append("items", jsonItens);
 
 		/* É recomendado verificar como os dados foram gerados em JSON e se ele está seguindo a estrutura especificada em nossa documentação.
 		System.out.print(json); */
@@ -668,17 +668,119 @@ public class NFe_autorizar {
 
 		ClientResponse resposta = request.post(ClientResponse.class, json);
 
-		int HttpCode = resposta.getStatus();
+		int httpCode = resposta.getStatus();
 
 		String body = resposta.getEntity(String.class);
 
 		/* As três linhas a seguir exibem as informações retornadas pela nossa API.
 		 * Aqui o seu sistema deverá interpretar e lidar com o retorno. */
 		System.out.print("HTTP Code: ");
-		System.out.print(HttpCode);
+		System.out.print(httpCode);
 		System.out.printf(body);
 	}
 }
+
+```
+
+```ruby
+# encoding: UTF-8
+
+require "net/http"
+require "net/https"
+require "json"
+
+# token enviado pelo suporte
+token = "codigo_alfanumerico_token"
+
+# referência da nota - deve ser única para cada nota enviada
+ref = "id_referencia_nota"
+
+# endereço da api que deve ser usado conforme o ambiente: produção ou homologação
+servidor_producao = "https://api.focusnfe.com.br/"
+servidor_homologacao = "http://homologacao.acrasnfe.acras.com.br/"
+
+# no caso do ambiente de envio ser em produção, utilizar servidor_producao
+url_envio = servidor_homologacao + "v2/nfe?ref=" + ref
+
+# altere os campos conforme a nota que será enviada
+dados_da_nota = {
+  natureza_operacao: "Remessa",
+  data_emissao: "2017-11-30T12:00:00",
+  data_entrada_saida: "2017-11-3012:00:00",
+  tipo_documento: "1",
+  finalidade_emissao: "1",
+  cnpj_emitente: "51916585000125",
+  nome_emitente: "ACME LTDA",
+  nome_fantasia_emitente: "ACME LTDA",
+  logradouro_emitente: "R. Padre Natal Pigato",
+  numero_emitente: "100",
+  bairro_emitente: "Santa Felicidade",
+  municipio_emitente: "Curitiba",
+  uf_emitente: "PR",
+  cep_emitente: "82320030",
+  inscricao_estadual_emitente: "101942171617",
+  nome_destinatario: "NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL",
+  cpf_destinatario: "51966818092",
+  telefone_destinatario: "1196185555",
+  logradouro_destinatario: "Rua Sao Januario",
+  numero_destinatario: "99",
+  bairro_destinatario: "Crespo",
+  municipio_destinatario: "Manaus",
+  uf_destinatario: "AM",
+  pais_destinatario: "Brasil",
+  cep_destinatario: "69073178",
+  valor_frete: "0.0",
+  valor_seguro: "0",
+  valor_total: "47.23",
+  valor_produtos: "47.23",
+  modalidade_frete: "0",
+  items: [
+    numero_item: "1",
+    codigo_produto: "1232",
+    descricao: "Cartu00f5es de Visita",
+    cfop: "6923",
+    unidade_comercial: "un",
+    quantidade_comercial: "100",
+    valor_unitario_comercial: "0.4723",
+    valor_unitario_tributavel: "0.4723",
+    unidade_tributavel: "un",
+    codigo_ncm: "49111090",
+    quantidade_tributavel: "100",
+    valor_bruto: "47.23",
+    icms_situacao_tributaria: "400",
+    icms_origem: "0",
+    pis_situacao_tributaria: "07",
+    cofins_situacao_tributaria: "07"
+  ]
+}
+
+# criamos uma objeto uri para envio da nota
+uri = URI(url_envio)
+
+# também criamos um objeto da classe HTTP a partir do host da uri
+http = Net::HTTP.new(uri.hostname, uri.port)
+
+# aqui criamos um objeto da classe Post a partir da uri de requisição
+requisicao = Net::HTTP::Post.new(uri.request_uri)
+
+# adicionando o token à requisição
+requisicao.basic_auth(token, "")
+
+# convertemos os dados da nota para o formato JSON e adicionamos ao corpo da requisição
+requisicao.body = dados_da_nota.to_json
+
+# no envio de notas em produção, é necessário utilizar o protocolo ssl
+# para isso, basta retirar o comentário da linha abaixo
+# http.use_ssl = true
+
+# aqui enviamos a requisição ao servidor e obtemos a resposta
+resposta = http.request(requisicao)
+
+# imprimindo o código HTTP da resposta
+puts "Código retornado pela requisição: " + resposta.code
+
+# imprimindo o corpo da resposta
+puts "Corpo da resposta: " + resposta.body
 
 ```
 
@@ -704,7 +806,7 @@ Para ambiente de producao use a URL abaixo:
 */
 var url = "http://homologacao.acrasnfe.acras.com.br/v2/nfe?ref=" + ref;
 
-/* 
+/*
 Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
 Passamos o token como quarto parametro deste metodo, como autenticador do HTTP Basic Authentication.
 */
@@ -778,7 +880,7 @@ console.log("Corpo: " + request.responseText);
 import json
 import requests
 
-''' 
+'''
 Para ambiente de produção use a variável abaixo:
 url = "https://api.focusnfe.com.br"
 '''
@@ -788,7 +890,7 @@ url = "http://homologacao.acrasnfe.acras.com.br/v2/nfe"
 ref = {"ref":"12345"}
 
 token="token_enviado_pelo_suporte"
- 
+
 '''
 Usamos dicionarios para armazenar os campos e valores que em seguida,
 serao convertidos em JSON e enviados para nossa API
@@ -902,7 +1004,7 @@ O sistema cliente da API pode acompanhar este processo de forma transparente, co
 # Faça o download e instalação da biblioteca requests, através do python-pip.
 import requests
 
-''' 
+'''
 Para ambiente de produção use a variável abaixo:
 url = "https://api.focusnfe.com.br"
 '''
@@ -962,7 +1064,7 @@ import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 
-public class NFe_consulta {
+public class NFeConsulta {
 
 	public static void main(String[] args){
 
@@ -986,17 +1088,63 @@ public class NFe_consulta {
 
 		ClientResponse resposta = request.get(ClientResponse.class);
 
-		int HttpCode = resposta.getStatus();
+		int httpCode = resposta.getStatus();
 
 		String body = resposta.getEntity(String.class);
 
 		/* As três linhas abaixo imprimem as informações retornadas pela API.
 		 * Aqui o seu sistema deverá interpretar e lidar com o retorno. */
 		System.out.print("HTTP Code: ");
-		System.out.print(HttpCode);
+		System.out.print(httpCode);
 		System.out.printf(body);
 	}
 }
+```
+
+```ruby
+
+# encoding: UTF-8
+
+require "net/http"
+require "net/https"
+
+# token enviado pelo suporte
+token = "codigo_alfanumerico_token"
+
+# referência da nota - deve ser única para cada nota enviada
+ref = "id_referencia_nota"
+
+# endereço da api que deve ser usado conforme o ambiente: produção ou homologação
+servidor_producao = "https://api.focusnfe.com.br/"
+servidor_homologacao = "http://homologacao.acrasnfe.acras.com.br/"
+
+# no caso do ambiente de envio ser em produção, utilizar servidor_producao
+url_envio = servidor_homologacao + "v2/nfe/" + ref
+
+# criamos uma objeto uri para envio da nota
+uri = URI(url_envio)
+# também criamos um objeto da classe HTTP a partir do host da uri
+http = Net::HTTP.new(uri.hostname, uri.port)
+
+# aqui criamos um objeto da classe Get a partir da uri de requisição
+requisicao = Net::HTTP::Get.new(uri.request_uri)
+
+# adicionando o token à requisição
+requisicao.basic_auth(token, '')
+
+# no envio de notas em produção, é necessário utilizar o protocolo ssl
+# para isso, basta retirar o comentário da linha abaixo
+# http.use_ssl = true
+
+# aqui enviamos a requisição ao servidor e obtemos a resposta
+resposta = http.request(requisicao)
+
+# imprimindo o código HTTP da resposta
+puts "Código retornado pela requisição: " + resposta.code
+
+# imprimindo o corpo da resposta
+puts "Corpo da resposta: " + resposta.body
+
 ```
 
 ```javascript
@@ -1021,7 +1169,7 @@ Para ambiente de producao use a URL abaixo:
 */
 var url = "http://homologacao.acrasnfe.acras.com.br/v2/nfe/" + ref + "?completa=1";
 
-/* 
+/*
 Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
 Passamos o token como quarto parametro deste metodo, como autenticador do HTTP Basic Authentication.
 */
@@ -1222,7 +1370,7 @@ import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 
-public class NFe_cancelamento {
+public class NFeCancelamento {
 
 	public static void main(String[] args){
 
@@ -1252,17 +1400,73 @@ public class NFe_cancelamento {
 
 		ClientResponse resposta = request.delete(ClientResponse.class, json);
 
-		int HttpCode = resposta.getStatus();
+		int httpCode = resposta.getStatus();
 
 		String body = resposta.getEntity(String.class);
 
 	   /* As três linhas abaixo imprimem as informações retornadas pela API.
         * Aqui o seu sistema deverá interpretar e lidar com o retorno. */
 		System.out.print("HTTP Code: ");
-		System.out.print(HttpCode);
+		System.out.print(httpCode);
 		System.out.printf(body);
 	}
 }
+```
+
+```ruby
+
+# encoding: UTF-8
+
+require "net/http"
+require "net/https"
+require "json"
+
+# token enviado pelo suporte
+token = "codigo_alfanumerico_token"
+
+# referência da nota - deve ser única para cada nota enviada
+ref = "id_referencia_nota"
+
+# endereço da api que deve ser usado conforme o ambiente: produção ou homologação
+servidor_producao = "https://api.focusnfe.com.br/"
+servidor_homologacao = "http://homologacao.acrasnfe.acras.com.br/"
+
+# no caso do ambiente de envio ser em produção, utilizar servidor_producao
+url_envio = servidor_homologacao + "v2/nfe/" + ref
+
+# altere os campos conforme a nota que será enviada
+justificativa_cancelamento = {  
+  justificativa: "Informe aqui a sua justificativa para realizar o cancelamento da NFe."
+}
+
+# criamos uma objeto uri para envio da nota
+uri = URI(url_envio)
+
+# também criamos um objeto da classe HTTP a partir do host da uri
+http = Net::HTTP.new(uri.hostname, uri.port)
+
+# aqui criamos um objeto da classe Delete a partir da uri de requisição
+requisicao = Net::HTTP::Delete.new(uri.request_uri)
+
+# adicionando o token à requisição
+requisicao.basic_auth(token, '')
+
+# convertemos a hash de justificativa do cancelamento para o formato JSON e adicionamos ao corpo da requisição
+requisicao.body = justificativa_cancelamento.to_json
+
+# no envio de notas em produção, é necessário utilizar o protocolo ssl
+# para isso, basta retirar o comentário da linha abaixo
+# http.use_ssl = true
+
+# aqui enviamos a requisição ao servidor e obtemos a resposta
+resposta = http.request(requisicao)
+
+# imprimindo o código HTTP da resposta
+puts "Código retornado pela requisição: " + resposta.code
+
+# imprimindo o corpo da resposta
+puts "Corpo da resposta: " + resposta.body
+
 ```
 
 ```javascript
@@ -1287,7 +1491,7 @@ Para ambiente de producao use a URL abaixo:
 */
 var url = "http://homologacao.acrasnfe.acras.com.br/v2/nfe/"+ ref;
 
-/* 
+/*
 Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
 Passamos o token como quarto parametro deste metodo, como autenticador do HTTP Basic Authentication.
 */
@@ -1312,7 +1516,7 @@ console.log("Corpo: " + request.responseText);
 import json
 import requests
 
-''' 
+'''
 Para ambiente de produção use a variável abaixo:
 url = "https://api.focusnfe.com.br"
 '''
@@ -1418,7 +1622,7 @@ import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 
-public class NFe_CCe {
+public class NFeCCe {
 
 	public static void main(String[] args){
 
@@ -1449,17 +1653,73 @@ public class NFe_CCe {
 
 		ClientResponse resposta = request.post(ClientResponse.class, json);
 
-		int HttpCode = resposta.getStatus();
+		int httpCode = resposta.getStatus();
 
 		String body = resposta.getEntity(String.class);
 
 	   /* As três linhas abaixo imprimem as informações retornadas pela API.
 		* Aqui o seu sistema deverá interpretar e lidar com o retorno. */
 		System.out.print("HTTP Code: ");
-		System.out.print(HttpCode);
+		System.out.print(httpCode);
 		System.out.printf(body);
 	}
 }
+```
+
+```ruby
+
+# encoding: UTF-8
+
+require "net/http"
+require "net/https"
+require "json"
+
+# token enviado pelo suporte
+token = "codigo_alfanumerico_token"
+
+# referência da nota - deve ser única para cada nota enviada
+ref = "id_referencia_nota"
+
+# endereço da api que deve ser usado conforme o ambiente: produção ou homologação
+servidor_producao = "https://api.focusnfe.com.br/"
+servidor_homologacao = "http://homologacao.acrasnfe.acras.com.br/"
+
+# no caso do ambiente de envio ser em produção, utilizar servidor_producao
+url_envio = servidor_homologacao + "v2/nfe/" + ref + "/carta_correcao"
+
+# altere os campos conforme a nota que será enviada
+correcao = {  
+  campo_correcao: "Informe aqui os campos que foram corrigidos na NFe."
+}
+
+# criamos uma objeto uri para envio da nota
+uri = URI(url_envio)
+
+# também criamos um objeto da classe HTTP a partir do host da uri
+http = Net::HTTP.new(uri.hostname, uri.port)
+
+# aqui criamos um objeto da classe Post a partir da uri de requisição
+requisicao = Net::HTTP::Post.new(uri.request_uri)
+
+# adicionando o token à requisição
+requisicao.basic_auth(token, '')
+
+# convertemos a hash de justificativa do cancelamento para o formato JSON e adicionamos ao corpo da requisição
+requisicao.body = correcao.to_json
+
+# no envio de notas em produção, é necessário utilizar o protocolo ssl
+# para isso, basta retirar o comentário da linha abaixo
+# http.use_ssl = true
+
+# aqui enviamos a requisição ao servidor e obtemos a resposta
+resposta = http.request(requisicao)
+
+# imprimindo o código HTTP da resposta
+puts "Código retornado pela requisição: " + resposta.code
+
+# imprimindo o corpo da resposta
+puts "Corpo da resposta: " + resposta.body
+
 ```
 
 ```javascript
@@ -1484,7 +1744,7 @@ Para ambiente de producao use a URL abaixo:
 */
 var url = "http://homologacao.acrasnfe.acras.com.br/v2/nfe/"+ ref + "/carta_correcao";
 
-/* 
+/*
 Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
 Passamos o token como quarto parametro deste metodo, como autenticador do HTTP Basic Authentication.
 */
@@ -1509,7 +1769,7 @@ console.log("Corpo: " + request.responseText);
 import json
 import requests
 
-''' 
+'''
 Para ambiente de produção use a variável abaixo:
 url = "https://api.focusnfe.com.br"
 '''
@@ -1628,7 +1888,7 @@ import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 
-public class NFe_envia_email {
+public class NFeEnviaEmail {
 
 	public static void main(String[] args) throws JSONException{
 
@@ -1645,11 +1905,11 @@ public class NFe_envia_email {
 
 		/* Criamos o um objeto JSON que receberá um JSON Array com a lista de e-mails. */
 		JSONObject json = new JSONObject ();
-		JSONArray ListaEmails = new JSONArray();
-		ListaEmails.put("email_01@acras.com.br");
-		ListaEmails.put("email_02@acras.com.br");
-		ListaEmails.put("email_03@acras.com.br");
-		json.put("emails", ListaEmails);
+		JSONArray listaEmails = new JSONArray();
+		listaEmails.put("email_01@acras.com.br");
+		listaEmails.put("email_02@acras.com.br");
+		listaEmails.put("email_03@acras.com.br");
+		json.put("emails", listaEmails);
 
 		/* Testar se o JSON gerado está dentro do formato esperado.
 		System.out.print(json); */
@@ -1663,17 +1923,73 @@ public class NFe_envia_email {
 
 		ClientResponse resposta = request.post(ClientResponse.class, json);
 
-		int HttpCode = resposta.getStatus();
+		int httpCode = resposta.getStatus();
 
 		String body = resposta.getEntity(String.class);
 
 		/* As três linhas abaixo imprimem as informações retornadas pela API.
 		 * Aqui o seu sistema deverá interpretar e lidar com o retorno. */
 		System.out.print("HTTP Code: ");
-		System.out.print(HttpCode);
+		System.out.print(httpCode);
 		System.out.printf(body);
 	}
 }
+```
+
+```ruby
+
+# encoding: UTF-8
+
+require "net/http"
+require "net/https"
+require "json"
+
+# token enviado pelo suporte
+token = "codigo_alfanumerico_token"
+
+# referência da nota - deve ser única para cada nota enviada
+ref = "id_referencia_nota"
+
+# endereço da api que deve ser usado conforme o ambiente: produção ou homologação
+servidor_producao = "https://api.focusnfe.com.br/"
+servidor_homologacao = "http://homologacao.acrasnfe.acras.com.br/"
+
+# no caso do ambiente de envio ser em produção, utilizar servidor_producao
+url_envio = servidor_homologacao + "v2/nfe/" + ref + "/email"
+
+# altere os campos conforme a nota que será enviada
+emails_destinatarios = {
+  emails: ["email_01@acras.com.br", "email_02@acras.com.br", "email_03@acras.com.br"]
+}
+
+# criamos uma objeto uri para envio da nota
+uri = URI(url_envio)
+
+# também criamos um objeto da classe HTTP a partir do host da uri
+http = Net::HTTP.new(uri.hostname, uri.port)
+
+# aqui criamos um objeto da classe Post a partir da uri de requisição
+requisicao = Net::HTTP::Post.new(uri.request_uri)
+
+# adicionando o token à requisição
+requisicao.basic_auth(token, '')
+
+# convertemos os dados da nota para o formato JSON e adicionamos ao corpo da requisição
+requisicao.body = emails_destinatarios.to_json
+
+# no envio de notas em produção, é necessário utilizar o protocolo ssl
+# para isso, basta retirar o comentário da linha abaixo
+# http.use_ssl = true
+
+# aqui enviamos a requisição ao servidor e obtemos a resposta
+resposta = http.request(requisicao)
+
+# imprimindo o código HTTP da resposta
+puts "Código retornado pela requisição: " + resposta.code
+
+# imprimindo o corpo da resposta
+  puts "Corpo da resposta: " + resposta.body
+
 ```
 
 ```javascript
@@ -1698,7 +2014,7 @@ Para ambiente de producao use a URL abaixo:
 */
 var url = "http://homologacao.acrasnfe.acras.com.br/v2/nfe/" + ref + "/email";
 
-/* 
+/*
 Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
 Passamos o token como quarto parametro deste metodo, como autenticador do HTTP Basic Authentication.
 */
@@ -1722,7 +2038,7 @@ console.log("Corpo: " + request.responseText);
 import json
 import requests
 
-''' 
+'''
 Para ambiente de produção use a variável abaixo:
 url = "https://api.focusnfe.com.br"
 '''
@@ -1812,7 +2128,7 @@ import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 
-public class NFe_inutilizacao {
+public class NFeInutilizacao {
 
 	public static void main(String[] args) throws JSONException{
 
@@ -1825,15 +2141,15 @@ public class NFe_inutilizacao {
  		String url = server.concat("v2/nfe/inutilizacao");
 
  		/* Aqui criamos um hash que irá receber as chaves e valores esperados para gerar a inutilização. */
-		HashMap<String, String> DadosInutilizacao = new HashMap<String, String>();
-		DadosInutilizacao.put("cnpj", "51916585009999");
-		DadosInutilizacao.put("serie", "9");
-		DadosInutilizacao.put("numero_inicial", "7730");
-		DadosInutilizacao.put("numero_final", "7732");
-		DadosInutilizacao.put("justificativa", "Informe aqui a justificativa para realizar a inutilizacao da numeracao.");
+		HashMap<String, String> dadosInutilizacao = new HashMap<String, String>();
+		dadosInutilizacao.put("cnpj", "51916585009999");
+		dadosInutilizacao.put("serie", "9");
+		dadosInutilizacao.put("numero_inicial", "7730");
+		dadosInutilizacao.put("numero_final", "7732");
+		dadosInutilizacao.put("justificativa", "Informe aqui a justificativa para realizar a inutilizacao da numeracao.");
 
 		/* Criamos um objeto JSON que irá receber o input dos dados, para então enviar a requisição. */
-		JSONObject json = new JSONObject (DadosInutilizacao);
+		JSONObject json = new JSONObject (dadosInutilizacao);
 
 		/* Testar se o JSON gerado está dentro do formato esperado.
 		System.out.print(json); */
@@ -1847,17 +2163,74 @@ public class NFe_inutilizacao {
 
 		ClientResponse resposta = request.post(ClientResponse.class, json);
 
-		int HttpCode = resposta.getStatus();
+		int hHttpCode = resposta.getStatus();
 
 		String body = resposta.getEntity(String.class);
 
 		 /* As três linhas abaixo imprimem as informações retornadas pela API.
 		  * Aqui o seu sistema deverá interpretar e lidar com o retorno. */
 		System.out.print("HTTP Code: ");
-		System.out.print(HttpCode);
+		System.out.print(hHttpCode);
 		System.out.printf(body);
 	}
 }
+```
+
+```ruby
+
+# encoding: UTF-8
+
+require "net/http"
+require "net/https"
+require "json"
+
+# token enviado pelo suporte
+token = "codigo_alfanumerico_token"
+
+# endereço da api que deve ser usado conforme o ambiente: produção ou homologação
+servidor_producao = "https://api.focusnfe.com.br/"
+servidor_homologacao = "http://homologacao.acrasnfe.acras.com.br/"
+
+# no caso do ambiente de envio ser em produção, utilizar servidor_producao
+url_envio = servidor_homologacao + "v2/nfe/inutilizacao"
+
+# altere os campos conforme a nota que será enviada
+dados_inutilizacao = {  
+  cnpj: "51916585009999",
+  serie: "9",
+  numero_inicial: "7730",
+  numero_final: "7732",
+  justificativa: "Informe aqui a justificativa para realizar a inutilizacao da numeracao."
+}
+
+# criamos uma objeto uri para envio da nota
+uri = URI(url_envio)
+
+# também criamos um objeto da classe HTTP a partir do host da uri
+http = Net::HTTP.new(uri.hostname, uri.port)
+
+# aqui criamos um objeto da classe Post a partir da uri de requisição
+requisicao = Net::HTTP::Post.new(uri.request_uri)
+
+# adicionando o token à requisição
+requisicao.basic_auth(token, '')
+
+# convertemos a hash de justificativa do cancelamento para o formato JSON e adicionamos ao corpo da requisição
+requisicao.body = dados_inutilizacao.to_json
+
+# no envio de notas em produção, é necessário utilizar o protocolo ssl
+# para isso, basta retirar o comentário da linha abaixo
+# http.use_ssl = true
+
+# aqui enviamos a requisição ao servidor e obtemos a resposta
+resposta = http.request(requisicao)
+
+# imprimindo o código HTTP da resposta
+puts "Código retornado pela requisição: " + resposta.code
+
+# imprimindo o corpo da resposta
+puts "Corpo da resposta: " + resposta.body
+
 ```
 
 ```javascript
@@ -1879,7 +2252,7 @@ Para ambiente de producao use a URL abaixo:
 */
 var url = "http://homologacao.acrasnfe.acras.com.br/v2/nfe/inutilizacao";
 
-/* 
+/*
 Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
 Passamos o token como quarto parametro deste metodo, como autenticador do HTTP Basic Authentication.
 */
@@ -1907,10 +2280,10 @@ console.log("Corpo: " + request.responseText);
 import json
 import requests
 
-''' 
+'''
 Para ambiente de produção use a variável abaixo:
 url = "https://api.focusnfe.com.br"
-''' 
+'''
 url = "http://homologacao.acrasnfe.acras.com.br/v2/nfe/inutilizacao"
 
 token="token_enviado_pelo_suporte"
