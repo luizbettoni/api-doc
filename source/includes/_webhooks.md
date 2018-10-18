@@ -1,22 +1,82 @@
-# Gatilhos
+# Gatilhos / Webhooks
 
-Gatilhos (ou WebHooks) são eventos que são disparados a partir de mudanças relevantes na nota fiscal. Na ocorrência deste evento é executado um POST em alguma URL definida pela sua aplicação. Este POST contém as mesmas informações que a consulta da nota fiscal. Cada acionamento do gatilho contém informações de 1 nota.
+## Informações gerais
 
-A vantagem de utilizar gatilhos é que não haverá a necessidade de fazer polling ou constantemente chamar a API para verificar por exemplo se uma nota já foi autorizada ou não.
+Gatilhos ou "WebHooks" são eventos automaticos que são disparados a partir de mudanças especificas na nota fiscal. Quando isso ocorre, é enviado os dados da nota fiscal no formato JSON para uma URL a sua escolha, através do método POST. Cada acionamento do gatilho contém os dados de apenas uma nota. A API enviará as seguintes informações para sua URL:
+
+> Dados enviados para sua URL:
+
+```json
+{
+  "cnpj_emitente": "07504505000132",
+  "ref": "teste_webhooks",
+  "status": "autorizado",
+  "status_sefaz": "100",
+  "mensagem_sefaz": "Autorizado o uso da NF-e",
+  "chave_nfe": "NFe77777075045050001329999930000002999999991249",
+  "numero": "1",
+  "serie": "1",
+  "caminho_xml_nota_fiscal": "/arquivos_development/99999999999972/201313/XMLs/77777075045050001329999930000002999999991249-nfe.xml",
+  "caminho_danfe": "/arquivos_development/99999999999972/201313/DANFEs/77777075045050001329999930000002999999991249.pdf"
+}
+```
+
+Para NFe e MDe (Manifestação de Destinatário Eletrônica):
+
+* **status**:
+  - **processando_autorizacao**: A nota ainda está em processamento pela API. Você deverá aguardar o processamento pela SEFAZ.
+  - **autorizado**: A nota foi autorizada, neste caso é fornecido os dados completos da nota como chave e arquivos para download
+  - **cancelado**: O documento foi cancelado, neste caso é fornecido o caminho para download do XML de cancelamento (caminho_xml_cancelamento).
+  - **erro_autorizacao**: Houve um erro de autorização por parte da SEFAZ. A mensagem de erro você encontrará nos campos status_sefaz e mensagem_sefaz. É possível fazer o reenvio da nota com a mesma referência se ela estiver neste estado.
+  - **denegado**: O documento foi denegado. Uma SEFAZ pode denegar uma nota se houver algum erro cadastral nos dados do destinatário ou do emitente. A mensagem de erro você encontrará nos campos status_sefaz e mensagem_sefaz. Não é possível reenviar a nota caso este estado seja alcançado pois é gerado um número, série, chave de NFe e XML para esta nota. O XML deverá ser armazenado pelo mesmo período de uma nota autorizada ou cancelada.
+* **status_sefaz**: O status da nota na SEFAZ.
+* **mensagem_sefaz**: Mensagem descritiva da SEFAZ detalhando o status.
+* **serie**: A série da nota fiscal, caso ela tenha sido autorizada.
+* **numero**: O número da nota fiscal, caso ela tenha sido autorizada.
+* **cnpj_emitente**: O CNPJ emitente da nota fiscal (o CNPJ de sua empresa).
+* **ref**:A referência da emissão.
+* **chave_nfe**: A chave da NFe, caso ela tenha sido autorizada.
+* **caminho_xml_nota_fiscal**: caso a nota tenha sido autorizada, retorna o caminho para download do XML.
+* **caminho_danfe**: caso a nota tenha sido autorizada retorna o caminho para download do DANFe.
+* **caminho_xml_carta_correcao**: caso tenha sido emitida alguma carta de correção, aqui aparecerá o caminho para fazer o download do XML.
+* **caminho_pdf_carta_correcao**: caso tenha sido emitida alguma carta de correção, aqui aparecerá o caminho para fazer o download do PDF da carta.
+* **numero_carta_correcao**: o número da carta de correção, caso tenha sido emitida.
+* **caminho_xml_cancelamento**: Caso a nota esteja cancelada, é fornecido o caminho para fazer o download do XML de cancelamento.
+
+Para NFSe:
+
+* **cnpj_prestador**: CNPJ do prestador do serviço.
+* **ref**: A referência da emissão.
+* **numero_rps**: Número do RPS da nota.
+* **serie_rps**: Série do RPS da nota.
+* **status**: 
+  - **processando_autorizacao**: A nota ainda está em processamento pela API. Você deverá aguardar o processamento da Prefeitura.
+  - **autorizado**: A nota foi autorizada, neste caso é fornecido os dados completos da nota como chave e arquivos para download
+  - **cancelado**: O documento foi cancelado, neste caso é fornecido o caminho para download do XML de cancelamento (caminho_xml_cancelamento).
+  - **erro_autorizacao**: Houve um erro de autorização por parte da Prefeitura. É possível fazer o reenvio da nota com a mesma referência se ela estiver neste estado.
+* **numero**: Número da nota fiscal.
+* **codigo_verificacao**: Código de verificação gerado pela Prefeitura.
+* **data_emissao**: Data da emissão da nota fiscal.
+* **url**: URL para visualização da nota fiscal a partir do portal da Prefeitura.
+* **caminho_xml_nota_fsical**: Caminho para download do XML da nota fiscal.
+
+A vantagem de utilizar gatilhos é que não haverá a necessidade de fazer "pulling" (realizar constantes requisições a fim de verificar o status da nota).
 
 Na ocorrência de falha na execução do POST para a URL definida (exemplo: servidor fora do ar ou alguma resposta HTTP diferente de 20X) a API tentará um reenvio nos seguintes intervalos: 1 minuto, 30 minutos, 1 hora, 3 horas, 24 horas até o momento em que a API irá desistir de acionar o gatilho.
 
+## Eventos
+
 Os seguintes eventos causam o acionamento do gatilho:
 
-* NFe:
+* **NFe**:
   * Erro na emissão de uma nota fiscal
   * Emissão de nota fiscal realizada com sucesso
   * Cancelamento de nota fiscal efetuado pela nossa interface web
   * Carta de correção emitida pela nossa interface web
-* NFSe:
+* **NFSe**:
   * Erro na emissão de uma nota fiscal
   * Emissão de nota fiscal realizada com sucesso
-* Manifestação:
+* **Manifestação**:
   * Recebimento de um novo documento fiscal
 
 Os gatilhos para autorização de CTe deverão ser disponibilizados em breve.
@@ -330,13 +390,13 @@ console.log("Corpo: " + request.responseText);
 }
 ```
 
-Para consultar os gatilhos disponíveis, utilize o endereço abaixo:
+Existem duas formas de consultar os gatilhos disponíveis, utilize o endereço abaixo:
 
 `https://api.focusnfe.com.br/v2/hooks`
 
-Utilize o método HTTP **GET** para consultar os gatilhos. Serão exibidos os gatilhos de todas as empresas que seu token possui acesso.
+Utilize o método HTTP **GET** para consultar **todos** os gatilhos criados. Serão exibidos os gatilhos de todas as empresas que seu token possui acesso.
 
-Para consultar um gatilho individualmente, utilize a URL
+Para consultar apenas um gatilho individualmente, utilize a URL:
 
 `https://api.focusnfe.com.br/v2/hooks/HOOK_ID`
 
@@ -489,11 +549,3 @@ Para excluir um gatilho, utilize a URL
 `https://api.focusnfe.com.br/v2/hooks/HOOK_ID`
 
 Utilize o método HTTP **DELETE** para excluir o gatilho. Em caso de sucesso será exibido os dados do gatilho excluído acrescentado do atributo "deleted" com o valor "true".
-
-## Dados enviados pelo gatilho para sua aplicação
-
-Os eventos serão gerados por evento, ou seja, se houver duas notas autorizadas, o gatilho será disparado duas vezes. O conteúdo do gatilho é exatamente igual a operação de consulta descrita nas seguintes seções:
-
-* NFe: [Operação de consulta de uma NFe](#nfe_consulta)
-* NFSe: [Operação de consulta de uma NFSe](#nfse_consulta)
-* Manifestação: [Consulta de NFe Recebida](#manifestacao_consulta-de-nfe-recebidas)

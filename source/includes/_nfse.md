@@ -207,7 +207,7 @@ print(r.status_code, r.text)
 ```shell
 # arquivo.json deve conter os dados da NFSe
 curl -u token_enviado_pelo_suporte: \
-  -X POST -T arquivo.json http://homologacao.acrasnfe.acras.com.br/v2/nfse
+  -X POST -T arquivo.json http://homologacao.acrasnfe.acras.com.br/v2/nfse?ref=1234
 ```
 
 ```java
@@ -221,171 +221,88 @@ import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 
-public class NFSeAutorizar {
+public class NFSe_autorizar {
 
-	public static void main(String[] args) throws JSONException{
-		
-		String login = "Token_enviado_pelo_suporte";
+  public static void main(String[] args) throws JSONException{
 
-		/* Substituir pela sua identificação interna da nota. */
-		String ref = "12345";
-		
-		/* Para ambiente de produção use a variável abaixo:
-		String server = "https://api.focusnfe.com.br/"; */
- 		String server = "http://homologacao.acrasnfe.acras.com.br/";
- 		
- 		String url = server.concat("v2/nfse?ref="+ref);
- 		
- 		/* Configuração para realizar o HTTP BasicAuth. */
-		Object config = new DefaultClientConfig();
-		Client client = Client.create((ClientConfig) config);
-		client.addFilter(new HTTPBasicAuthFilter(login, ""));
+    String login = "Token_enviado_pelo_suporte";
 
-		/* Aqui são criados as hash's que receberão os dados da nota. */
-		HashMap<String, String> nfse = new HashMap<String, String>();
-		HashMap<String, String> prestador = new HashMap<String, String>();
-		HashMap<String, String> tomador = new HashMap<String, String>();
-		HashMap<String, String> tomadorEndereco = new HashMap<String, String>();
-		HashMap<String, String> servico = new HashMap<String, String>();
+    /* Substituir pela sua identificação interna da nota. */
+    String ref = "12345";
 
-		nfse.put("data_emissao", "2018-01-15T17:40:00");
-		nfse.put("natureza_operacao", "1");
-		prestador.put("cnpj", "51916585000125");
-		prestador.put("inscricao_municipal", "123456");
-		prestador.put("codigo_municipio", "4128104");
-		tomador.put("cpf", "51966818092");
-		tomador.put("razao_social", "ACME LTDA");
-		tomador.put("email", "email-do-tomador@google.com.br");
-		tomadorEndereco.put("bairro", "Jardim America");
-		tomadorEndereco.put("cep", "82620150");
-		tomadorEndereco.put("codigo_municipio", "4106902");
-		tomadorEndereco.put("logradouro", "Rua Paulo Centrone");
-		tomadorEndereco.put("numero", "168");
-		tomadorEndereco.put("uf", "PR");
-		servico.put("discriminacao", "Teste de servico");
-		servico.put("aliquota", "3.00");
-		servico.put("base_calculo", "1.0");
-		servico.put("valor_iss", "0");
-		servico.put("iss_retido", "false");
-		servico.put("codigo_tributario_municipio", "080101");
-		servico.put("item_lista_servico", "0801");
-		servico.put("valor_servicos", "1.0");
-		servico.put("valor_liquido", "1.0");
-		
-		/* Depois de fazer o input dos dados, são criados os objetos JSON já com os valores das hash's. */
-		JSONObject json = new JSONObject (nfse);
-		JSONObject jsonPrestador = new JSONObject (prestador);
-		JSONObject jsonTomador = new JSONObject (tomador);
-		JSONObject jsonTomadorEndereco = new JSONObject (tomadorEndereco);
-		JSONObject jsonServico = new JSONObject (servico);
-		
-		/* Aqui adicionamos os objetos JSON nos campos da API como array no JSON principal. */
-		json.accumulate("prestador", jsonPrestador);
-		json.accumulate("tomador", jsonTomador);
-		jsonTomador.accumulate("endereco", jsonTomadorEndereco);
-		json.accumulate("servico", jsonServico);
+    /* Para ambiente de produção use a variável abaixo:
+    String server = "https://api.focusnfe.com.br/"; */
+    String server = "http://homologacao.acrasnfe.acras.com.br/";
 
-		/* É recomendado verificar como os dados foram gerados em JSON e se ele está seguindo a estrutura especificada em nossa documentação.
-		System.out.print(json); */
-		
-		WebResource request = client.resource(url);
+    String url = server.concat("v2/nfse?ref="+ref);
 
-		ClientResponse resposta = request.post(ClientResponse.class, json);
+    /* Configuração para realizar o HTTP BasicAuth. */
+    Object config = new DefaultClientConfig();
+    Client client = Client.create((ClientConfig) config);
+    client.addFilter(new HTTPBasicAuthFilter(login, ""));
 
-		int httpCode = resposta.getStatus(); 
+    /* Aqui são criados as hash's que receberão os dados da nota. */
+    HashMap<String, String> nfse = new HashMap<String, String>();
+    HashMap<String, String> prestador = new HashMap<String, String>();
+    HashMap<String, String> tomador = new HashMap<String, String>();
+    HashMap<String, String> TomadorEndereco = new HashMap<String, String>();
+    HashMap<String, String> servico = new HashMap<String, String>();
 
-		String body = resposta.getEntity(String.class);
-		
-		/* As três linhas a seguir exibem as informações retornadas pela nossa API. 
-		 * Aqui o seu sistema deverá interpretar e lidar com o retorno. */
-		System.out.print("HTTP Code: ");
-		System.out.print(httpCode);
-		System.out.printf(body);
-	}
-}
-```
+    nfse.put("data_emissao", "2018-01-15T17:40:00");
+    nfse.put("natureza_operacao", "1");
+    prestador.put("cnpj", "51916585000125");
+    prestador.put("inscricao_municipal", "123456");
+    prestador.put("codigo_municipio", "4128104");
+    tomador.put("cpf", "51966818092");
+    tomador.put("razao_social", "ACME LTDA");
+    tomador.put("email", "email-do-tomador@google.com.br");
+    TomadorEndereco.put("bairro", "Jardim America");
+    TomadorEndereco.put("cep", "82620150");
+    TomadorEndereco.put("codigo_municipio", "4106902");
+    TomadorEndereco.put("logradouro", "Rua Paulo Centrone");
+    TomadorEndereco.put("numero", "168");
+    TomadorEndereco.put("uf", "PR");
+    servico.put("discriminacao", "Teste de servico");
+    servico.put("aliquota", "3.00");
+    servico.put("base_calculo", "1.0");
+    servico.put("valor_iss", "0");
+    servico.put("iss_retido", "false");
+    servico.put("codigo_tributario_municipio", "080101");
+    servico.put("item_lista_servico", "0801");
+    servico.put("valor_servicos", "1.0");
+    servico.put("valor_liquido", "1.0");
 
-```ruby
+    /* Depois de fazer o input dos dados, são criados os objetos JSON já com os valores das hash's. */
+    JSONObject json = new JSONObject (nfse);
+    JSONObject JsonPrestador = new JSONObject (prestador);
+    JSONObject JsonTomador = new JSONObject (tomador);
+    JSONObject JsonTomadorEndereco = new JSONObject (TomadorEndereco);
+    JSONObject JsonServico = new JSONObject (servico);
 
-# encoding: UTF-8
+    /* Aqui adicionamos os objetos JSON nos campos da API como array no JSON principal. */
+    json.accumulate("prestador", JsonPrestador);
+    json.accumulate("tomador", JsonTomador);
+    JsonTomador.accumulate("endereco", JsonTomadorEndereco);
+    json.accumulate("servico", JsonServico);
 
-require "net/http"
-require "net/https"
-require "json"
+    /* É recomendado verificar como os dados foram gerados em JSON e se ele está seguindo a estrutura especificada em nossa documentação.
+    System.out.print(json); */
 
-# token enviado pelo suporte
-token = "codigo_alfanumerico_token"
+    WebResource request = client.resource(url);
 
-# referência da nota - deve ser única para cada nota enviada
-ref = "id_referencia_nota"
+    ClientResponse resposta = request.post(ClientResponse.class, json);
 
-# endereço da api que deve ser usado conforme o ambiente: produção ou homologação
-servidor_producao = "https://api.focusnfe.com.br/"
-servidor_homologacao = "http://homologacao.acrasnfe.acras.com.br/"
+    int HttpCode = resposta.getStatus();
 
-# no caso do ambiente de envio ser em produção, utilizar servidor_producao
-url_envio = servidor_homologacao + "v2/nfse?ref=" + ref
+    String body = resposta.getEntity(String.class);
 
-# altere os campos conforme a nota que será enviada
-dados_da_nota = {  
-  data_emissao: "2017-09-21T22:15:00",
-  prestador: {  
-      cnpj: "18765499000199",
-      inscricao_municipal: "12345",
-      codigo_municipio: "3516200"
-  },
-  tomador: {  
-      cnpj: "07504505000132",
-      razao_social: "Acras Tecnologia da Informação LTDA",
-      email: "contatoacras.com.br",
-      endereco: {  
-        logradouro: "Rua Dias da Rocha Filho",
-        numero: "999",
-        complemento: "Prédio 04 - Sala 34C",
-        bairro: "Alto da XV",
-        codigo_municipio: "4106902",
-        uf: "PR",
-        cep: "80045165"
-      }
-  },
-  servico: {  
-      aliquota: 3,
-      discriminacao: "Nota fiscal referente a serviços prestados",
-      iss_retido: "false",
-      item_lista_servico: "0107",
-      codigo_tributario_municipio: "620910000",
-      valor_servicos: 1.0
+    /* As três linhas a seguir exibem as informações retornadas pela nossa API.
+     * Aqui o seu sistema deverá interpretar e lidar com o retorno. */
+    System.out.print("HTTP Code: ");
+    System.out.print(HttpCode);
+    System.out.printf(body);
   }
 }
-
-# criamos uma objeto uri para envio da nota
-uri = URI(url_envio)
-
-# também criamos um objeto da classe HTTP a partir do host da uri
-http = Net::HTTP.new(uri.hostname, uri.port)
-
-# aqui criamos um objeto da classe Post a partir da uri de requisição
-requisicao = Net::HTTP::Post.new(uri.request_uri)
-
-# adicionando o token à requisição
-requisicao.basic_auth(token, '')
-
-# convertemos os dados da nota para o formato JSON e adicionamos ao corpo da requisição
-requisicao.body = dados_da_nota.to_json
-
-# no envio de notas em produção, é necessário utilizar o protocolo ssl
-# para isso, basta retirar o comentário da linha abaixo
-# http.use_ssl = true
-
-# aqui enviamos a requisição ao servidor e obtemos a resposta
-resposta = http.request(requisicao)
-
-# imprimindo o código HTTP da resposta
-puts "Código retornado pela requisição: " + resposta.code
-
-# imprimindo o corpo da resposta
-puts "Corpo da resposta: " + resposta.body
-
 ```
 
 ```php
@@ -582,88 +499,41 @@ import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 
-public class NFSeConsulta {
+public class NFSe_consulta {
 
-	public static void main(String[] args){
+  public static void main(String[] args){
 
-		String login = "Token_enviado_pelo_suporte";
+    String login = "Token_enviado_pelo_suporte";
 
-		/* Substituir pela sua identificação interna da nota. */
-		String ref = "12345";
-		
-		/* Para ambiente de produção use a variável abaixo:
-		String server = "https://api.focusnfe.com.br/"; */
- 		String server = "http://homologacao.acrasnfe.acras.com.br/";
-		
- 		String url = server.concat("v2/nfse/"+ref);
+    /* Substituir pela sua identificação interna da nota. */
+    String ref = "12345";
 
- 		/* Configuração para realizar o HTTP BasicAuth. */
-		Object config = new DefaultClientConfig();
-		Client client = Client.create((ClientConfig) config);
-		client.addFilter(new HTTPBasicAuthFilter(login, ""));
+    /* Para ambiente de produção use a variável abaixo:
+    String server = "https://api.focusnfe.com.br/"; */
+    String server = "http://homologacao.acrasnfe.acras.com.br/";
 
-		WebResource request = client.resource(url);
+    String url = server.concat("v2/nfse/"+ref);
 
-		ClientResponse resposta = (ClientResponse) request.get(ClientResponse.class);
+    /* Configuração para realizar o HTTP BasicAuth. */
+    Object config = new DefaultClientConfig();
+    Client client = Client.create((ClientConfig) config);
+    client.addFilter(new HTTPBasicAuthFilter(login, ""));
 
-		int httpCode = resposta.getStatus(); 
+    WebResource request = client.resource(url);
 
-		String body = resposta.getEntity(String.class);
+    ClientResponse resposta = (ClientResponse) request.get(ClientResponse.class);
 
-		/* As três linhas abaixo imprimem as informações retornadas pela API. 
-		 * Aqui o seu sistema deverá interpretar e lidar com o retorno. */
-		System.out.print("HTTP Code: ");
-		System.out.print(httpCode);
-		System.out.printf(body);
-	}
+    int HttpCode = resposta.getStatus();
+
+    String body = resposta.getEntity(String.class);
+
+    /* As três linhas abaixo imprimem as informações retornadas pela API.
+     * Aqui o seu sistema deverá interpretar e lidar com o retorno. */
+    System.out.print("HTTP Code: ");
+    System.out.print(HttpCode);
+    System.out.printf(body);
+  }
 }
-```
-
-```ruby
-
-# encoding: UTF-8
-
-require "net/http"
-require "net/https"
-
-# token enviado pelo suporte
-token = "codigo_alfanumerico_token"
-
-# referência da nota - deve ser única para cada nota enviada
-ref = "id_referencia_nota"
-
-# endereço da api que deve ser usado conforme o ambiente: produção ou homologação
-servidor_producao = "https://api.focusnfe.com.br/"
-servidor_homologacao = "http://homologacao.acrasnfe.acras.com.br/"
-
-# no caso do ambiente de envio ser em produção, utilizar servidor_producao
-url_envio = servidor_homologacao + "v2/nfse/" + ref
-
-# criamos uma objeto uri para envio da nota
-uri = URI(url_envio)
-
-# também criamos um objeto da classe HTTP a partir do host da uri
-http = Net::HTTP.new(uri.hostname, uri.port)
-
-# aqui criamos um objeto da classe Get a partir da uri de requisição
-requisicao = Net::HTTP::Get.new(uri.request_uri)
-
-# adicionando o token à requisição
-requisicao.basic_auth(token, '')
-
-# no envio de notas em produção, é necessário utilizar o protocolo ssl
-# para isso, basta retirar o comentário da linha abaixo
-# http.use_ssl = true
-
-# aqui enviamos a requisição ao servidor e obtemos a resposta
-resposta = http.request(requisicao)
-
-# imprimindo o código HTTP da resposta
-puts "Código retornado pela requisição: " + resposta.code
-
-# imprimindo o corpo da resposta
-puts "Corpo da resposta: " + resposta.body
-
 ```
 
 ```php
@@ -729,8 +599,6 @@ console.log("Corpo: " + request.responseText);
 
 ```
 
-
-
 > Exemplo de resposta da consulta de NFSe:
 
 ```json
@@ -775,9 +643,11 @@ ref = "12345"
 token="token_enviado_pelo_suporte"
 
 '''
-Usamos um dicionario para armazenar os campos e valores que em seguida,
-serao convertidos a JSON e enviados para nossa API
+Usamos um dicionario para armazenar os campos e valores que em seguida, serão convertidos a JSON e enviados para nossa API
 '''
+
+# A justificativa deve ser enviada no body da requisição
+
 justificativa={}
 justificativa["justificativa"] = "Sua justificativa aqui!"
 
@@ -805,104 +675,48 @@ import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 
-public class NFSeCancelamento {
+public class NFSe_cancelamento {
 
-	public static void main(String[] args){
-		
-		String login = "Token_enviado_pelo_suporte";
+  public static void main(String[] args){
 
-		/* Substituir pela sua identificação interna da nota. */
-		String ref = "12345";
-		
-		/* Para ambiente de produção use a variável abaixo:
-		String server = "https://api.focusnfe.com.br/"; */
- 		String server = "http://homologacao.acrasnfe.acras.com.br/";
- 		
-		String url = server.concat("v2/nfse/"+ref);
- 		
- 		/* Aqui criamos um hashmap para receber a chave "justificativa" e o valor desejado. */
-		HashMap<String, String> justificativa = new HashMap<String, String>();
-		justificativa.put("justificativa", "Informe aqui a sua justificativa para realizar o cancelamento da NFSe.");
-		
-		/* Criamos um objeto JSON para receber a hash com os dados esperado pela API. */
-		JSONObject json = new JSONObject(justificativa);
+    String login = "Token_enviado_pelo_suporte";
 
-		/* Configuração para realizar o HTTP BasicAuth. */
-		Object config = new DefaultClientConfig();
-		Client client = Client.create((ClientConfig) config);
-		client.addFilter(new HTTPBasicAuthFilter(login, ""));
+    /* Substituir pela sua identificação interna da nota. */
+    String ref = "12345";
 
-		WebResource request = client.resource(url);
+    /* Para ambiente de produção use a variável abaixo:
+    String server = "https://api.focusnfe.com.br/"; */
+    String server = "http://homologacao.acrasnfe.acras.com.br/";
 
-		ClientResponse resposta = request.delete(ClientResponse.class, json);
+    String url = server.concat("v2/nfse/"+ref);
 
-		int httpCode = resposta.getStatus(); 
+    /* Aqui criamos um hashmap para receber a chave "justificativa" e o valor desejado. */
+    HashMap<String, String> justificativa = new HashMap<String, String>();
+    justificativa.put("justificativa", "Informe aqui a sua justificativa para realizar o cancelamento da NFSe.");
 
-		String body = resposta.getEntity(String.class);
-		
-		/* As três linhas abaixo imprimem as informações retornadas pela API. 
-		 * Aqui o seu sistema deverá interpretar e lidar com o retorno. */
-		System.out.print("HTTP Code: ");
-		System.out.print(httpCode);
-		System.out.printf(body);
-	}
+    /* Criamos um objeto JSON para receber a hash com os dados esperado pela API. */
+    JSONObject json = new JSONObject(justificativa);
+
+    /* Configuração para realizar o HTTP BasicAuth. */
+    Object config = new DefaultClientConfig();
+    Client client = Client.create((ClientConfig) config);
+    client.addFilter(new HTTPBasicAuthFilter(login, ""));
+
+    WebResource request = client.resource(url);
+
+    ClientResponse resposta = request.delete(ClientResponse.class, json);
+
+    int HttpCode = resposta.getStatus();
+
+    String body = resposta.getEntity(String.class);
+
+    /* As três linhas abaixo imprimem as informações retornadas pela API.
+     * Aqui o seu sistema deverá interpretar e lidar com o retorno. */
+    System.out.print("HTTP Code: ");
+    System.out.print(HttpCode);
+    System.out.printf(body);
+  }
 }
-```
-
-```ruby
-
-# encoding: UTF-8
-
-require "net/http"
-require "net/https"
-require "json"
-
-# token enviado pelo suporte
-token = "codigo_alfanumerico_token"
-
-# referência da nota - deve ser única para cada nota enviada
-ref = "id_referencia_nota"
-
-# endereço da api que deve ser usado conforme o ambiente: produção ou homologação
-servidor_producao = "https://api.focusnfe.com.br/"
-servidor_homologacao = "http://homologacao.acrasnfe.acras.com.br/"
-
-# no caso do ambiente de envio ser em produção, utilizar servidor_producao
-url_envio = servidor_homologacao + "v2/nfse/" + ref
-
-# altere os campos conforme a nota que será enviada
-justificativa_cancelamento = {  
-  justificativa: "Informe aqui a sua justificativa para realizar o cancelamento da NFSe."
-}
-
-# criamos uma objeto uri para envio da nota
-uri = URI(url_envio)
-
-# também criamos um objeto da classe HTTP a partir do host da uri
-http = Net::HTTP.new(uri.hostname, uri.port)
-
-# aqui criamos um objeto da classe Delete a partir da uri de requisição
-requisicao = Net::HTTP::Delete.new(uri.request_uri)
-
-# adicionando o token à requisição
-requisicao.basic_auth(token, '')
-
-# convertemos a hash de justificativa do cancelamento para o formato JSON e adicionamos ao corpo da requisição
-requisicao.body = justificativa_cancelamento.to_json
-
-# no envio de notas em produção, é necessário utilizar o protocolo ssl
-# para isso, basta retirar o comentário da linha abaixo
-# http.use_ssl = true
-
-# aqui enviamos a requisição ao servidor e obtemos a resposta
-resposta = http.request(requisicao)
-
-# imprimindo o código HTTP da resposta
-puts "Código retornado pela requisição: " + resposta.code
-
-# imprimindo o corpo da resposta
-puts "Corpo da resposta: " + resposta.body
-
 ```
 
 ```php
@@ -976,8 +790,6 @@ console.log("Corpo: " + request.responseText);
 
 ```
 
-
-
 > Resposta da API para a requisição de cancelamento:
 
 ```json
@@ -985,7 +797,7 @@ console.log("Corpo: " + request.responseText);
   "status": "cancelado"
 }
 ```
-Para cancelar uma NFSe, basta fazer uma requisição à URL abaixo, alterando o ambiente de produção para homologação, caso esteja emitindo notas de teste.
+Para cancelar uma NFSe, faça uma requisição à URL abaixo, passando a justificativa no "body" da requisição e alterando o ambiente de produção para homologação, caso esteja emitindo notas de testes.
 
 **Cancelar uma NFSe já autorizada:**
 
@@ -1056,108 +868,52 @@ import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 
-public class NFSeEnviaEmail {
+public class NFSe_envia_email {
 
-	public static void main(String[] args) throws JSONException{
-		
-		String login = "Token_enviado_pelo_suporte";
+  public static void main(String[] args) throws JSONException{
 
-		/* Substituir pela sua identificação interna da nota. */
-		String ref = "12345";
-		
-		/* Para ambiente de produção use a variável abaixo:
-		String server = "https://api.focusnfe.com.br/"; */
- 		String server = "http://homologacao.acrasnfe.acras.com.br/";
+    String login = "Token_enviado_pelo_suporte";
 
-		String url = server.concat("v2/nfse/"+ref+"/email");
-		
-		/* Criamos o um objeto JSON que receberá um JSON Array com a lista de e-mails. */
-		JSONObject json = new JSONObject ();	
-		JSONArray listaEmails = new JSONArray();
-		listaEmails.put("email_01@acras.com.br");
-		listaEmails.put("email_02@acras.com.br");
-		listaEmails.put("email_03@acras.com.br");
-		json.put("emails", listaEmails);	
-		
-		/* Testar se o JSON gerado está dentro do formato esperado.
-		System.out.print(json); */
-		
-		/* Configuração para realizar o HTTP BasicAuth. */
-		Object config = new DefaultClientConfig();
-		Client client = Client.create((ClientConfig) config);
-		client.addFilter(new HTTPBasicAuthFilter(login, ""));
+    /* Substituir pela sua identificação interna da nota. */
+    String ref = "12345";
 
-		WebResource request = client.resource(url);
+    /* Para ambiente de produção use a variável abaixo:
+    String server = "https://api.focusnfe.com.br/"; */
+    String server = "http://homologacao.acrasnfe.acras.com.br/";
 
-		ClientResponse resposta = request.post(ClientResponse.class, json);
+    String url = server.concat("v2/nfse/"+ref+"/email");
 
-		int httpCode = resposta.getStatus(); 
+    /* Criamos o um objeto JSON que receberá um JSON Array com a lista de e-mails. */
+    JSONObject json = new JSONObject ();  
+    JSONArray ListaEmails = new JSONArray();
+    ListaEmails.put("email_01@acras.com.br");
+    ListaEmails.put("email_02@acras.com.br");
+    ListaEmails.put("email_03@acras.com.br");
+    json.put("emails", ListaEmails);  
 
-		String body = resposta.getEntity(String.class);
-		
-		/* As três linhas abaixo imprimem as informações retornadas pela API. 
-		 * Aqui o seu sistema deverá interpretar e lidar com o retorno. */
-		System.out.print("HTTP Code: ");
-		System.out.print(httpCode);
-		System.out.printf(body); 
-	}
+    /* Testar se o JSON gerado está dentro do formato esperado.
+    System.out.print(json); */
+
+    /* Configuração para realizar o HTTP BasicAuth. */
+    Object config = new DefaultClientConfig();
+    Client client = Client.create((ClientConfig) config);
+    client.addFilter(new HTTPBasicAuthFilter(login, ""));
+
+    WebResource request = client.resource(url);
+
+    ClientResponse resposta = request.post(ClientResponse.class, json);
+
+    int HttpCode = resposta.getStatus();
+
+    String body = resposta.getEntity(String.class);
+
+    /* As três linhas abaixo imprimem as informações retornadas pela API.
+     * Aqui o seu sistema deverá interpretar e lidar com o retorno. */
+    System.out.print("HTTP Code: ");
+    System.out.print(HttpCode);
+    System.out.printf(body);
+  }
 }
-```
-
-```ruby
-
-# encoding: UTF-8
-
-require "net/http"
-require "net/https"
-require "json"
-
-# token enviado pelo suporte
-token = "codigo_alfanumerico_token"
-
-# referência da nota - deve ser única para cada nota enviada
-ref = "id_referencia_nota"
-
-# endereço da api que deve ser usado conforme o ambiente: produção ou homologação
-servidor_producao = "https://api.focusnfe.com.br/"
-servidor_homologacao = "http://homologacao.acrasnfe.acras.com.br/"
-
-# no caso do ambiente de envio ser em produção, utilizar servidor_producao
-url_envio = servidor_homologacao + "v2/nfse/" + ref + "/email"
-
-# altere os campos conforme a nota que será enviada
-emails_destinatarios = {
-  emails: ["email_01@acras.com.br", "email_02@acras.com.br", "email_03@acras.com.br"]
-}
-
-# criamos uma objeto uri para envio da nota
-uri = URI(url_envio)
-
-# também criamos um objeto da classe HTTP a partir do host da uri
-http = Net::HTTP.new(uri.hostname, uri.port)
-
-# aqui criamos um objeto da classe Post a partir da uri de requisição
-requisicao = Net::HTTP::Post.new(uri.request_uri)
-
-# adicionando o token à requisição
-requisicao.basic_auth(token, '')
-
-# convertemos os dados da nota para o formato JSON e adicionamos ao corpo da requisição
-requisicao.body = emails_destinatarios.to_json
-
-# no envio de notas em produção, é necessário utilizar o protocolo ssl
-# para isso, basta retirar o comentário da linha abaixo
-# http.use_ssl = true
-
-# aqui enviamos a requisição ao servidor e obtemos a resposta
-resposta = http.request(requisicao)
-
-# imprimindo o código HTTP da resposta
-puts "Código retornado pela requisição: " + resposta.code
-
-# imprimindo o corpo da resposta
-puts "Corpo da resposta: " + resposta.body
-
 ```
 
 ```php
