@@ -2,9 +2,6 @@
 <!doctype html>
 <html>
   <head>
-    <!-- Google Tag Manager -->
-      <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-5ZH7WMQ');</script>
-    <!-- End Google Tag Manager -->
     <meta charset="utf-8">
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -389,19 +386,22 @@
               </ul>
           </li>
           <li>
-            <a href="#gatilhos_gatilhos" class="toc-h1 toc-link" data-title="gatilhos">Gatilhos</a>
+            <a href="#gatilhos-webhooks_gatilhos-webhooks" class="toc-h1 toc-link" data-title="gatilhos-webhooks">Gatilhos / Webhooks</a>
               <ul class="toc-list-h2">
                   <li>
-                    <a href="#gatilhos_criacao" class="toc-h2 toc-link" data-title="criacao">Criação</a>
+                    <a href="#gatilhos-webhooks_informacoes-gerais" class="toc-h2 toc-link" data-title="informacoes-gerais">Informações gerais</a>
                   </li>
                   <li>
-                    <a href="#gatilhos_consulta" class="toc-h2 toc-link" data-title="consulta">Consulta</a>
+                    <a href="#gatilhos-webhooks_eventos" class="toc-h2 toc-link" data-title="eventos">Eventos</a>
                   </li>
                   <li>
-                    <a href="#gatilhos_exclusao" class="toc-h2 toc-link" data-title="exclusao">Exclusão</a>
+                    <a href="#gatilhos-webhooks_criacao" class="toc-h2 toc-link" data-title="criacao">Criação</a>
                   </li>
                   <li>
-                    <a href="#gatilhos_dados-enviados-pelo-gatilho-para-sua-aplicacao" class="toc-h2 toc-link" data-title="dados-enviados-pelo-gatilho-para-sua-aplicacao">Dados enviados pelo gatilho para sua aplicação</a>
+                    <a href="#gatilhos-webhooks_consulta" class="toc-h2 toc-link" data-title="consulta">Consulta</a>
+                  </li>
+                  <li>
+                    <a href="#gatilhos-webhooks_exclusao" class="toc-h2 toc-link" data-title="exclusao">Exclusão</a>
                   </li>
               </ul>
           </li>
@@ -410,6 +410,14 @@
               <ul class="toc-list-h2">
                   <li>
                     <a href="#consulta-de-ncm_paginacao" class="toc-h2 toc-link" data-title="paginacao">Paginação</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#consulta-de-cfop_consulta-de-cfop" class="toc-h1 toc-link" data-title="consulta-de-cfop">Consulta de CFOP</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#consulta-de-cfop_paginacao" class="toc-h2 toc-link" data-title="paginacao">Paginação</a>
                   </li>
               </ul>
           </li>
@@ -5313,8 +5321,8 @@ Passamos o token como quarto parametro deste metodo, como autenticador do HTTP B
 </ul>
 
 <p>A API imediatamente devolve a requisição com a confirmação dos emails. Os emails serão enviados em segundo plano, por isso pode levar alguns minutos até que eles cheguem à caixa postal.</p>
-<h2 id='nfce_outras-documentacoes'>Outras documentações</h2><h3 id='nfce_enviador-de-arquivos'>Enviador de Arquivos</h3>
-<p>Para usuários de tecnologias que não permitem o acesso à API via Web Services ou que não desejam programar o acesso HTTP, disponibilizamos um comunicador que realiza toda comunicação com os Web Services de nossa API. Para utilizar o enviador de arquivos basta rodar um executável simples e salvar as notas em uma pasta específica que o enviador fará o resto.</p>
+<h2 id='nfce_outras-documentacoes'>Outras documentações</h2><h3 id='nfce_enviador-de-arquivos-sat-nfce'>Enviador de Arquivos SAT / NFCe</h3>
+<p>Para os usuários de tecnologias que não permitem o acesso à API via Web Services ou que não desejam programar o acesso HTTP, disponibilizamos um comunicador que realiza toda comunicação com os Web Services de nossa API. Para utilizar o enviador de arquivos basta rodar um executável simples e salvar as notas em uma pasta específica que o enviador fará o resto.</p>
 
 <p>Instalação e Configuração
 O Enviador de Arquivos não possui um instalador específico, ele é apenas um executável standalone. Este executável quando é rodado irá ler as configurações de um arquivo texto chamado nfce.ini que deve estar localizado na mesma pasta em que ele está e que possui o formato a seguir:</p>
@@ -5323,7 +5331,12 @@ O Enviador de Arquivos não possui um instalador específico, ele é apenas um e
 <code>dir=C:\Users\acras\Desktop\nfces</code>
 <code>cnpj_emitente=20220080000106</code>
 <code>token=ipPjf0dTqOw66Hih1eyZjWq7IQIIFgxO</code>
-<code>producao=0</code></p>
+<code>producao=0</code>
+<code>simples=1</code></p>
+
+<p>Quando usado para emitir Cupom Fiscal Eletrônico SAT os campos abaixo são habilitados:
+<code>codigo_ativacao_sat=bema1234</code>
+<code>assinatura_sat=SGR-SAT SISTEMA DE GESTAO E RETAGUARDA DO SAT</code></p>
 
 <p>Onde:</p>
 
@@ -5332,6 +5345,9 @@ O Enviador de Arquivos não possui um instalador específico, ele é apenas um e
 <li><strong>cnpj_emitente:</strong> CNPJ do emitente das notas.</li>
 <li><strong>token:</strong> Token de acesso fornecido pela nossa equipe de suporte (os tokens de homologação e produção são distintos).</li>
 <li><strong>producao:</strong> 0=Homologação, 1=Produção.</li>
+<li><strong>simples:</strong> 0=Regime Normal, 1=Simples Nacional.</li>
+<li><strong>codigo_ativacao_sat:</strong> Código de ativação do aparelho SAT.</li>
+<li><strong>assinatura_sat:</strong> Assinatura digital do CNPJ do emitente com o CNPJ da Software House.</li>
 </ul>
 
 <p><strong>Diretório e nome dos arquivos</strong></p>
@@ -5339,22 +5355,42 @@ O Enviador de Arquivos não possui um instalador específico, ele é apenas um e
 <p>Abaixo do diretório base os diretórios a seguir serão utilizados pelo Enviador de Arquivos:</p>
 
 <ul>
-<li><strong>envios:</strong> Este diretório será lido pelo Enviador, que ao encontrar arquivos com extensão .nfce irá realizar o envio</li>
+<li><strong>envios:</strong> Este diretório será lido pelo Enviador, que ao encontrar arquivos com extensão .nfce ou .cfe irá realizar o envio.</li>
 <li><strong>enviados:</strong> Este diretório irá guardar uma cópia fiel do arquivo que foi recebido com o mesmo nome ou com o nome adicionado de um _N onde N é um sequencial, no caso de reenvios.</li>
 <li><strong>processados:</strong> Neste diretório o Enviador de Arquivos irá armazenar as respostas recebidas do servidor, ele irá adicionar a extensão .resp.raw.json e irá conter o JSON bruto recebido do servidor</li>
-<li><strong>retornos:</strong> Nesta pasta o enviador irá gravar o retorno dos processamentos. Tanto envios (.nfce) quanto cancelamentos (.canc) serão posicionados neste diretório com o resultado da operação.</li>
+<li><strong>retornos:</strong> Nesta pasta o enviador irá gravar o retorno dos processamentos. Tanto envios (.nfce ou .cfe) quanto cancelamentos (.canc ou .cfecanc) serão posicionados neste diretório com o resultado da operação.</li>
+<li><strong>xml:</strong> Neste diretório é salvo o XML usado para o envio da nota ou cupom fiscal, tanto para autorizações como para cancelamentos (no cancelamento o nome do arquivo ganha o sufixo &quot;_canc&quot;).</li>
+<li><strong>pdf:</strong> Aqui é salvo a DANFCe e a impressão do CFe do SAT. Notas ou cupons cancelados não possuem impressão em PDF.</li>
+<li><strong>tmp:</strong> Este diretório salva o XML após a conversão dos campos, usado tanto para NFCe como para CFe SAT.</li>
 </ul>
 
-<p>Os arquivos a serem enviados devem possuir a extensão .nfce (envios) e .canc(cancelamentos) e serem nomeados com a ref a ser utilizada para aquela nota (Veja a seção referência acima). É importante observar que o Enviador de arquivos não possui qualquer inteligência com relação à referência utilizada, de forma que ele irá apenas repassar para a API. Se uma referência já previamente usada for usada novamente você irá receber o erro de nota já autorizada.</p>
+<p>Os arquivos a serem enviados devem possuir as extensões: 
+* Para NFCe, .nfce (envios) e .canc (cancelamentos);
+* Para CFe SAT, .cfe (envios) e .cfecanc (cancelamentos);</p>
+
+<p>E, deve ser nomeados com a referência a ser utilizada para aquela nota (veja a seção referência nesta documentação). É importante observar que o Enviador de Arquivos não possui qualquer inteligência com relação à referência utilizada, de forma que ele irá apenas repassar para a API. Se uma referência já previamente utilizada for usada novamente você irá receber o erro de nota já autorizada.</p>
 
 <p><strong>Cancelamentos</strong></p>
 
-<p>Para cancelar uma NFCe basta salvar um arquivo com nome igual à ref usada no envio e a extensão .canc. O conteúdo do arquivo deverá ser a justificativa do cancelamento (que deve conter entre 15 e 200 caracteres).</p>
+<p>Para realizar o cancelamento da NFCe ou do CFe SAT é necessário salvar um arquivo com o nome igual à referência usada no envio com a extenção de cancelamento na pasta &quot;envios&quot;. Neste arquivo a estrutura será igual a de um JSON (usando chave e valor), para CFe SAT, é necessário conter os campos &quot;chave&quot; e &quot;CNPJ&quot; ou &quot;CPF&quot; caso tenha sido informado um dos dois dados no cupom fiscal.
+Na emissão de cancelamento para NFCe o arquivo deverá a justificativa do cancelamento (que deve conter entre 15 e 200 caracteres).</p>
 
-<p>Após processado o cancelamento um arquivo com o mesmo nome será gravado no diretório retornos contendo um JSON simples com o resultado da operação indicando que a NFCe foi cancelada ou se deu erro.</p>
+<blockquote>
+<p>Arquivo de cancelamento do CFe SAT (.cfecanc):
+´´´json
+{
+    &quot;chave&quot;: &quot;77781082373077987991599000999380000289999993&quot;,
+    &quot;cpf&quot;: &quot;93515817050&quot;
+}
+´´´</p>
+</blockquote>
+
+<p>Após processado o cancelamento um arquivo com o mesmo nome será gravado no diretório &quot;retornos&quot; contendo um JSON simples com o resultado da operação indicando se houve sucesso ou erro.</p>
 
 <p><strong>Reimpressão</strong>
 Para realizar a reimpressão de determinada NFCe basta salvar um arquivo com nome igual à ref usada no envio e extensão .reimp.</p>
+
+<p>Quando a reimpressão for de um Cupom Fiscal Eletrônico do SAT, basta entrar na pasta &quot;pdf&quot; e reimprimir o arquivo.</p>
 <h1 id='cte-e-cte-os-beta_cte-e-cte-os-beta'>CTe e CTe OS (beta)</h1>
 <p>Através da API CTe é possível:</p>
 
@@ -7324,10 +7360,15 @@ um formato único de campos para todas as prefeituras. A listagem dos campos seg
 <li><strong>tributacao_rps</strong>: (String) Usado apenas pelo município de São Paulo. Informe o tipo de tributação:
 
 <ul>
-<li><strong>T</strong>: Operação normal (tributação conforme documento emitido);</li>
-<li><strong>I</strong>: Operação isenta ou não tributável, executadas no Município de São Paulo;</li>
-<li><strong>F</strong>: Operação isenta ou não tributável pelo Município de São Paulo, executada em outro Município;</li>
-<li><strong>J</strong>: ISS Suspenso por Decisão Judicial (neste caso, informar no campo Discriminação dos Serviços, o número do processo judicial na 1a. instância). (Valor padrão “T”).</li>
+<li><strong>T</strong>: Tributado em São Paulo;</li>
+<li><strong>F</strong>: Tributado Fora de São Paulo;</li>
+<li><strong>A</strong>: Tributado em São Paulo, porém Isento;</li>
+<li><strong>B</strong>: Tributado Fora de São Paulo, porém Isento;</li>
+<li><strong>M</strong>: Tributado em São Paulo, porém Imune;</li>
+<li><strong>N</strong>: Tributado Fora de São Paulo, porém Imune;</li>
+<li><strong>X</strong>: Tributado em São Paulo, porém Exigibilidade Suspensa;</li>
+<li><strong>V</strong>: Tributado Fora de São Paulo, porém Exigibilidade Suspensa;</li>
+<li><strong>P</strong>: Exportação de Serviços.</li>
 </ul></li>
 <li><strong>codigo_obra</strong>: (String) Código da obra quando construção civil. Tamanho: 15 caracteres.</li>
 <li><strong>art</strong>: (String) Código ART quando construção civil. Este campo é ignorado pelo município de São Paulo. Tamanho: 15 caracteres.</li>
@@ -9793,17 +9834,82 @@ url = "https://api.focusnfe.com.br"
 <p><code>https://api.focusnfe.com.br/v2/nfes_recebidas/CHAVE/carta_correcao.xml</code></p>
 
 <p>Utilize o método <strong>HTTP GET</strong> para obter os dados das notas no formato XML.</p>
-<h1 id='gatilhos_gatilhos'>Gatilhos</h1>
-<p>Gatilhos (ou WebHooks) são eventos que são disparados a partir de mudanças relevantes na nota fiscal. Na ocorrência deste evento é executado um POST em alguma URL definida pela sua aplicação. Este POST contém as mesmas informações que a consulta da nota fiscal. Cada acionamento do gatilho contém informações de 1 nota.</p>
+<h1 id='gatilhos-webhooks_gatilhos-webhooks'>Gatilhos / Webhooks</h1><h2 id='gatilhos-webhooks_informacoes-gerais'>Informações gerais</h2>
+<p>Gatilhos ou &quot;WebHooks&quot; são eventos automaticos que são disparados a partir de mudanças especificas na nota fiscal. Quando isso ocorre, é enviado os dados da nota fiscal no formato JSON para uma URL a sua escolha, através do método POST. Cada acionamento do gatilho contém os dados de apenas uma nota. A API enviará as seguintes informações para sua URL:</p>
 
-<p>A vantagem de utilizar gatilhos é que não haverá a necessidade de fazer polling ou constantemente chamar a API para verificar por exemplo se uma nota já foi autorizada ou não.</p>
+<blockquote>
+<p>Dados enviados para sua URL:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"cnpj_emitente"</span><span class="p">:</span><span class="w"> </span><span class="s2">"07504505000132"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"teste_webhooks"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"autorizado"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"status_sefaz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"100"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"mensagem_sefaz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Autorizado o uso da NF-e"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"chave_nfe"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NFe77777075045050001329999930000002999999991249"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"numero"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"serie"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"caminho_xml_nota_fiscal"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/arquivos_development/99999999999972/201313/XMLs/77777075045050001329999930000002999999991249-nfe.xml"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"caminho_danfe"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/arquivos_development/99999999999972/201313/DANFEs/77777075045050001329999930000002999999991249.pdf"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>Para NFe e MDe (Manifestação de Destinatário Eletrônica):</p>
+
+<ul>
+<li><strong>status</strong>:
+
+<ul>
+<li><strong>processando_autorizacao</strong>: A nota ainda está em processamento pela API. Você deverá aguardar o processamento pela SEFAZ.</li>
+<li><strong>autorizado</strong>: A nota foi autorizada, neste caso é fornecido os dados completos da nota como chave e arquivos para download</li>
+<li><strong>cancelado</strong>: O documento foi cancelado, neste caso é fornecido o caminho para download do XML de cancelamento (caminho_xml_cancelamento).</li>
+<li><strong>erro_autorizacao</strong>: Houve um erro de autorização por parte da SEFAZ. A mensagem de erro você encontrará nos campos status_sefaz e mensagem_sefaz. É possível fazer o reenvio da nota com a mesma referência se ela estiver neste estado.</li>
+<li><strong>denegado</strong>: O documento foi denegado. Uma SEFAZ pode denegar uma nota se houver algum erro cadastral nos dados do destinatário ou do emitente. A mensagem de erro você encontrará nos campos status_sefaz e mensagem_sefaz. Não é possível reenviar a nota caso este estado seja alcançado pois é gerado um número, série, chave de NFe e XML para esta nota. O XML deverá ser armazenado pelo mesmo período de uma nota autorizada ou cancelada.</li>
+</ul></li>
+<li><strong>status_sefaz</strong>: O status da nota na SEFAZ.</li>
+<li><strong>mensagem_sefaz</strong>: Mensagem descritiva da SEFAZ detalhando o status.</li>
+<li><strong>serie</strong>: A série da nota fiscal, caso ela tenha sido autorizada.</li>
+<li><strong>numero</strong>: O número da nota fiscal, caso ela tenha sido autorizada.</li>
+<li><strong>cnpj_emitente</strong>: O CNPJ emitente da nota fiscal (o CNPJ de sua empresa).</li>
+<li><strong>ref</strong>:A referência da emissão.</li>
+<li><strong>chave_nfe</strong>: A chave da NFe, caso ela tenha sido autorizada.</li>
+<li><strong>caminho_xml_nota_fiscal</strong>: caso a nota tenha sido autorizada, retorna o caminho para download do XML.</li>
+<li><strong>caminho_danfe</strong>: caso a nota tenha sido autorizada retorna o caminho para download do DANFe.</li>
+<li><strong>caminho_xml_carta_correcao</strong>: caso tenha sido emitida alguma carta de correção, aqui aparecerá o caminho para fazer o download do XML.</li>
+<li><strong>caminho_pdf_carta_correcao</strong>: caso tenha sido emitida alguma carta de correção, aqui aparecerá o caminho para fazer o download do PDF da carta.</li>
+<li><strong>numero_carta_correcao</strong>: o número da carta de correção, caso tenha sido emitida.</li>
+<li><strong>caminho_xml_cancelamento</strong>: Caso a nota esteja cancelada, é fornecido o caminho para fazer o download do XML de cancelamento.</li>
+</ul>
+
+<p>Para NFSe:</p>
+
+<ul>
+<li><strong>cnpj_prestador</strong>: CNPJ do prestador do serviço.</li>
+<li><strong>ref</strong>: A referência da emissão.</li>
+<li><strong>numero_rps</strong>: Número do RPS da nota.</li>
+<li><strong>serie_rps</strong>: Série do RPS da nota.</li>
+<li><strong>status</strong>: 
+
+<ul>
+<li><strong>processando_autorizacao</strong>: A nota ainda está em processamento pela API. Você deverá aguardar o processamento da Prefeitura.</li>
+<li><strong>autorizado</strong>: A nota foi autorizada, neste caso é fornecido os dados completos da nota como chave e arquivos para download</li>
+<li><strong>cancelado</strong>: O documento foi cancelado, neste caso é fornecido o caminho para download do XML de cancelamento (caminho_xml_cancelamento).</li>
+<li><strong>erro_autorizacao</strong>: Houve um erro de autorização por parte da Prefeitura. É possível fazer o reenvio da nota com a mesma referência se ela estiver neste estado.</li>
+</ul></li>
+<li><strong>numero</strong>: Número da nota fiscal.</li>
+<li><strong>codigo_verificacao</strong>: Código de verificação gerado pela Prefeitura.</li>
+<li><strong>data_emissao</strong>: Data da emissão da nota fiscal.</li>
+<li><strong>url</strong>: URL para visualização da nota fiscal a partir do portal da Prefeitura.</li>
+<li><strong>caminho_xml_nota_fsical</strong>: Caminho para download do XML da nota fiscal.</li>
+</ul>
+
+<p>A vantagem de utilizar gatilhos é que não haverá a necessidade de fazer &quot;pulling&quot; (realizar constantes requisições a fim de verificar o status da nota).</p>
 
 <p>Na ocorrência de falha na execução do POST para a URL definida (exemplo: servidor fora do ar ou alguma resposta HTTP diferente de 20X) a API tentará um reenvio nos seguintes intervalos: 1 minuto, 30 minutos, 1 hora, 3 horas, 24 horas até o momento em que a API irá desistir de acionar o gatilho.</p>
-
+<h2 id='gatilhos-webhooks_eventos'>Eventos</h2>
 <p>Os seguintes eventos causam o acionamento do gatilho:</p>
 
 <ul>
-<li>NFe:
+<li><strong>NFe</strong>:
 
 <ul>
 <li>Erro na emissão de uma nota fiscal</li>
@@ -9811,13 +9917,13 @@ url = "https://api.focusnfe.com.br"
 <li>Cancelamento de nota fiscal efetuado pela nossa interface web</li>
 <li>Carta de correção emitida pela nossa interface web</li>
 </ul></li>
-<li>NFSe:
+<li><strong>NFSe</strong>:
 
 <ul>
 <li>Erro na emissão de uma nota fiscal</li>
 <li>Emissão de nota fiscal realizada com sucesso</li>
 </ul></li>
-<li>Manifestação:
+<li><strong>Manifestação</strong>:
 
 <ul>
 <li>Recebimento de um novo documento fiscal</li>
@@ -9825,7 +9931,7 @@ url = "https://api.focusnfe.com.br"
 </ul>
 
 <p>Os gatilhos para autorização de CTe deverão ser disponibilizados em breve.</p>
-<h2 id='gatilhos_criacao'>Criação</h2><pre class="highlight python tab-python"><code><span class="c"># Faça o download e instalação da biblioteca requests, através do python-pip.</span>
+<h2 id='gatilhos-webhooks_criacao'>Criação</h2><pre class="highlight python tab-python"><code><span class="c"># Faça o download e instalação da biblioteca requests, através do python-pip.</span>
 <span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">requests</span>
 
@@ -9862,7 +9968,7 @@ serao convertidos a JSON e enviados para nossa API
 <span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_RETURNTRANSFER</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
 <span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_POST</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
 <span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_POSTFIELDS</span><span class="p">,</span> <span class="nb">json_encode</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s2">"cnpj"</span> <span class="o">=&gt;</span> <span class="s2">"51916585000125"</span><span class="p">,</span>
-    <span class="s2">"event"</span> <span class="o">=&gt;</span> <span class="s2">"nfe"</span><span class="p">,</span> <span class="s2">"url"</span> <span class="o">=&gt;</span> <span class="s2">"http://minha.url/nfe"</span><span class="p">)));</span>
+  <span class="s2">"event"</span> <span class="o">=&gt;</span> <span class="s2">"nfe"</span><span class="p">,</span> <span class="s2">"url"</span> <span class="o">=&gt;</span> <span class="s2">"http://minha.url/nfe"</span><span class="p">)));</span>
 <span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_HTTPAUTH</span><span class="p">,</span> <span class="nx">CURLAUTH_BASIC</span><span class="p">);</span>
 <span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_USERPWD</span><span class="p">,</span> <span class="s2">"token_enviado_pelo_suporte:"</span><span class="p">);</span>
 <span class="nv">$body</span> <span class="o">=</span> <span class="nb">curl_exec</span><span class="p">(</span><span class="nv">$ch</span><span class="p">);</span>
@@ -9944,9 +10050,9 @@ Passamos o token como quarto parametro deste metodo, como autenticador do HTTP B
 
 <span class="kd">var</span> <span class="nx">gatilho</span> <span class="o">=</span> <span class="p">{</span>
 
-    <span class="s2">"cnpj"</span><span class="p">:</span><span class="s2">"51916585000125"</span><span class="p">,</span>
-    <span class="s2">"event"</span><span class="p">:</span><span class="s2">"nfe"</span><span class="p">,</span>
-    <span class="s2">"url"</span><span class="p">:</span><span class="s2">"http://minha.url/nfe"</span>
+  <span class="s2">"cnpj"</span><span class="p">:</span><span class="s2">"51916585000125"</span><span class="p">,</span>
+  <span class="s2">"event"</span><span class="p">:</span><span class="s2">"nfe"</span><span class="p">,</span>
+  <span class="s2">"url"</span><span class="p">:</span><span class="s2">"http://minha.url/nfe"</span>
 <span class="p">};</span>
 
 <span class="c1">// Aqui fazermos a serializacao do JSON com os dados da nota e enviamos atraves do metodo usado.</span>
@@ -9981,7 +10087,7 @@ Passamos o token como quarto parametro deste metodo, como autenticador do HTTP B
 </ul>
 
 <p>A API irá devolver como resposta o gatilho criado. É possível ter apenas um gatilho por evento</p>
-<h2 id='gatilhos_consulta'>Consulta</h2><pre class="highlight python tab-python"><code><span class="c"># Faça o download e instalação da biblioteca requests, através do python-pip.</span>
+<h2 id='gatilhos-webhooks_consulta'>Consulta</h2><pre class="highlight python tab-python"><code><span class="c"># Faça o download e instalação da biblioteca requests, através do python-pip.</span>
 <span class="kn">import</span> <span class="nn">requests</span>
 
 <span class="s">'''
@@ -10101,18 +10207,18 @@ Passamos o token como quarto parametro deste metodo, como autenticador do HTTP B
   </span><span class="s2">"cnpj"</span><span class="p">:</span><span class="w"> </span><span class="s2">"51916585000125"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
-<p>Para consultar os gatilhos disponíveis, utilize o endereço abaixo:</p>
+<p>Existem duas formas de consultar os gatilhos disponíveis, utilize o endereço abaixo:</p>
 
 <p><code>https://api.focusnfe.com.br/v2/hooks</code></p>
 
-<p>Utilize o método HTTP <strong>GET</strong> para consultar os gatilhos. Serão exibidos os gatilhos de todas as empresas que seu token possui acesso.</p>
+<p>Utilize o método HTTP <strong>GET</strong> para consultar <strong>todos</strong> os gatilhos criados. Serão exibidos os gatilhos de todas as empresas que seu token possui acesso.</p>
 
-<p>Para consultar um gatilho individualmente, utilize a URL</p>
+<p>Para consultar apenas um gatilho individualmente, utilize a URL:</p>
 
 <p><code>https://api.focusnfe.com.br/v2/hooks/HOOK_ID</code></p>
 
 <p>Substituindo HOOK_ID pelo identificador do gatilho.</p>
-<h2 id='gatilhos_exclusao'>Exclusão</h2><pre class="highlight python tab-python"><code> <span class="n">Fa</span><span class="err">ç</span><span class="n">a</span> <span class="n">o</span> <span class="n">download</span> <span class="n">e</span> <span class="n">instala</span><span class="err">çã</span><span class="n">o</span> <span class="n">da</span> <span class="n">biblioteca</span> <span class="n">requests</span><span class="p">,</span> <span class="n">atrav</span><span class="err">é</span><span class="n">s</span> <span class="n">do</span> <span class="n">python</span><span class="o">-</span><span class="n">pip</span><span class="o">.</span>
+<h2 id='gatilhos-webhooks_exclusao'>Exclusão</h2><pre class="highlight python tab-python"><code> <span class="n">Fa</span><span class="err">ç</span><span class="n">a</span> <span class="n">o</span> <span class="n">download</span> <span class="n">e</span> <span class="n">instala</span><span class="err">çã</span><span class="n">o</span> <span class="n">da</span> <span class="n">biblioteca</span> <span class="n">requests</span><span class="p">,</span> <span class="n">atrav</span><span class="err">é</span><span class="n">s</span> <span class="n">do</span> <span class="n">python</span><span class="o">-</span><span class="n">pip</span><span class="o">.</span>
 <span class="kn">import</span> <span class="nn">requests</span>
 
 <span class="s">'''
@@ -10240,16 +10346,8 @@ Passamos o token como quarto parametro deste metodo, como autenticador do HTTP B
 <p><code>https://api.focusnfe.com.br/v2/hooks/HOOK_ID</code></p>
 
 <p>Utilize o método HTTP <strong>DELETE</strong> para excluir o gatilho. Em caso de sucesso será exibido os dados do gatilho excluído acrescentado do atributo &quot;deleted&quot; com o valor &quot;true&quot;.</p>
-<h2 id='gatilhos_dados-enviados-pelo-gatilho-para-sua-aplicacao'>Dados enviados pelo gatilho para sua aplicação</h2>
-<p>Os eventos serão gerados por evento, ou seja, se houver duas notas autorizadas, o gatilho será disparado duas vezes. O conteúdo do gatilho é exatamente igual a operação de consulta descrita nas seguintes seções:</p>
-
-<ul>
-<li>NFe: <a href="#nfe_consulta">Operação de consulta de uma NFe</a></li>
-<li>NFSe: <a href="#nfse_consulta">Operação de consulta de uma NFSe</a></li>
-<li>Manifestação: <a href="#manifestacao_consulta-de-nfe-recebidas">Consulta de NFe Recebida</a></li>
-</ul>
 <h1 id='consulta-de-ncm_consulta-de-ncm'>Consulta de NCM</h1>
-<p>NCM significa &quot;Nomenclatura Comum do Mercosul&quot; e trata-se de um código de oito dígitos estabelecido através da convenção de categorização de mercadorias adotada desde 1995 pelo Uruguai, Paraguai, Brasil e Argentina e que toma por base o Sistema Harmonizado (SH).. Este código é utilizado na emissão de NFe e de NFCe.</p>
+<p>NCM significa &quot;Nomenclatura Comum do Mercosul&quot; e trata-se de um código de oito dígitos estabelecido através da convenção de categorização de mercadorias adotada desde 1995 pelo Uruguai, Paraguai, Brasil e Argentina e que toma por base o Sistema Harmonizado (SH). Este código é utilizado na emissão de NFe e de NFCe.</p>
 
 <p>Nós disponibilizamos uma API que você poderá utilizar para fornecer ao seu usuário final uma pesquisa de qual o código NCM correto do seu produto.</p>
 
@@ -10322,6 +10420,94 @@ curl -u token_enviado_pelo_suporte: <span class="se">\</span>
         <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="n">body</span><span class="o">);</span>
     <span class="o">}</span>
 <span class="o">}</span>
+</code></pre><pre class="highlight ruby tab-ruby"><code>
+<span class="c1"># encoding: UTF-8</span>
+
+<span class="nb">require</span> <span class="s2">"net/http"</span>
+<span class="nb">require</span> <span class="s2">"net/https"</span>
+
+<span class="c1"># token enviado pelo suporte</span>
+<span class="n">token</span> <span class="o">=</span> <span class="s2">"codigo_alfanumerico_token"</span>
+
+<span class="c1"># endereço da api que deve ser usado conforme o ambiente: produção ou homologação</span>
+<span class="n">servidor_producao</span> <span class="o">=</span> <span class="s2">"https://api.focusnfe.com.br/"</span>
+<span class="n">servidor_homologacao</span> <span class="o">=</span> <span class="s2">"http://homologacao.acrasnfe.acras.com.br/"</span>
+
+<span class="c1"># no caso do ambiente de envio ser em produção, utilizar servidor_producao</span>
+<span class="n">url_envio</span> <span class="o">=</span> <span class="n">servidor_homologacao</span> <span class="o">+</span> <span class="s2">"v2/ncms?capitulo=90"</span>
+
+<span class="c1"># criamos uma objeto uri para envio da nota</span>
+<span class="n">uri</span> <span class="o">=</span> <span class="no">URI</span><span class="p">(</span><span class="n">url_envio</span><span class="p">)</span>
+
+<span class="c1"># também criamos um objeto da classe HTTP a partir do host da uri</span>
+<span class="n">http</span> <span class="o">=</span> <span class="no">Net</span><span class="o">::</span><span class="no">HTTP</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">uri</span><span class="p">.</span><span class="nf">hostname</span><span class="p">,</span> <span class="n">uri</span><span class="p">.</span><span class="nf">port</span><span class="p">)</span>
+
+<span class="c1"># aqui criamos um objeto da classe Post a partir da uri de requisição</span>
+<span class="n">requisicao</span> <span class="o">=</span> <span class="no">Net</span><span class="o">::</span><span class="no">HTTP</span><span class="o">::</span><span class="no">Get</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">uri</span><span class="p">.</span><span class="nf">request_uri</span><span class="p">)</span>
+
+<span class="c1"># adicionando o token à requisição</span>
+<span class="n">requisicao</span><span class="p">.</span><span class="nf">basic_auth</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="s1">''</span><span class="p">)</span>
+
+<span class="c1"># no envio de notas em produção, é necessário utilizar o protocolo ssl</span>
+<span class="c1"># para isso, basta retirar o comentário da linha abaixo</span>
+<span class="c1"># http.use_ssl = true</span>
+
+<span class="c1"># aqui enviamos a requisição ao servidor e obtemos a resposta</span>
+<span class="n">resposta</span> <span class="o">=</span> <span class="n">http</span><span class="p">.</span><span class="nf">request</span><span class="p">(</span><span class="n">requisicao</span><span class="p">)</span>
+
+<span class="c1"># imprimindo o código HTTP da resposta</span>
+<span class="nb">puts</span> <span class="s2">"Código retornado pela requisição: "</span> <span class="o">+</span> <span class="n">resposta</span><span class="p">.</span><span class="nf">code</span>
+
+<span class="c1"># imprimindo o corpo da resposta</span>
+<span class="nb">puts</span> <span class="s2">"Corpo da resposta: "</span> <span class="o">+</span> <span class="n">resposta</span><span class="p">.</span><span class="nf">body</span>
+
+</code></pre><pre class="highlight python tab-python"><code><span class="c"># Faça o download e instalação da biblioteca requests, através do python-pip.</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="s">'''
+Para ambiente de produção use a variável abaixo:
+url = "https://api.focusnfe.com.br"
+'''</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s">"http://homologacao.acrasnfe.acras.com.br/v2/ncms?capitulo=90"</span>
+
+<span class="n">token</span><span class="o">=</span><span class="s">"token_enviado_pelo_suporte"</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="p">(</span><span class="n">token</span><span class="p">,</span><span class="s">""</span><span class="p">))</span>
+
+<span class="c"># Mostra na tela o codigo HTTP da requisicao e a mensagem de retorno da API</span>
+<span class="k">print</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+
+</code></pre><pre class="highlight javascript tab-javascript"><code>
+<span class="cm">/*
+As orientacoes a seguir foram extraidas do site do NPMJS: https://www.npmjs.com/package/xmlhttprequest
+Here's how to include the module in your project and use as the browser-based XHR object.
+Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensitive systems (eg Linux) using uppercase letters won't work.
+*/</span>
+<span class="kd">var</span> <span class="nx">XMLHttpRequest</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">"xmlhttprequest"</span><span class="p">).</span><span class="nx">XMLHttpRequest</span><span class="p">;</span>
+
+<span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
+
+<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_enviado_pelo_suporte"</span><span class="p">;</span>
+
+<span class="cm">/*
+Para ambiente de producao use a URL abaixo:
+"https://api.focusnfe.com.br"
+*/</span>
+<span class="kd">var</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">"http://homologacao.acrasnfe.acras.com.br/v2/ncms?capitulo=90"</span><span class="p">;</span>
+
+<span class="cm">/*
+Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
+Passamos o token como quarto parametro deste metodo, como autenticador do HTTP Basic Authentication.
+*/</span>
+<span class="nx">request</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s1">'GET'</span><span class="p">,</span> <span class="nx">url</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="nx">token</span><span class="p">);</span>
+
+<span class="c1">// Aqui enviamos a requisição.</span>
+<span class="nx">request</span><span class="p">.</span><span class="nx">send</span><span class="p">();</span>
+
+<span class="c1">// Sua aplicacao tera que ser capaz de tratar as respostas da API.</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"HTTP code: "</span> <span class="o">+</span> <span class="nx">request</span><span class="p">.</span><span class="nx">status</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Corpo: "</span> <span class="o">+</span> <span class="nx">request</span><span class="p">.</span><span class="nx">responseText</span><span class="p">);</span>
+
 </code></pre>
 <blockquote>
 <p>Dados de resposta da consulta</p>
@@ -10386,7 +10572,7 @@ abaixo, substituindo CODIGO_NCM pelo código.</p>
 
 <p><code>http://homologacao.acrasnfe.acras.com.br/v2/ncms/CODIGO_NCM</code></p>
 <h2 id='consulta-de-ncm_paginacao'>Paginação</h2>
-<p>Ao fazer uma pesquisa, a API irá devolver o cabeçalho HTTP <em>X-Max-Count</em> que representa
+<p>Ao fazer uma pesquisa, a API irá devolver o cabeçalho HTTP <em>X-Total-Count</em> que representa
 o número total de ocorrências da pesquisa, porém a API devolve apenas 50 registros por vez.
 Para buscar os demais registros, utilize o parâmetro <strong>offset</strong>. Exemplo:</p>
 
@@ -10401,6 +10587,242 @@ Para buscar os demais registros, utilize o parâmetro <strong>offset</strong>. E
 
 <p>Registros 101 a 123:
 <code>http://homologacao.acrasnfe.acras.com.br/v2/ncms?codigo=7022&amp;offset=100</code></p>
+<h1 id='consulta-de-cfop_consulta-de-cfop'>Consulta de CFOP</h1>
+<p>CFOP significa &quot;Código Fiscal de Operações e Prestações&quot; e trata-se de um código de quatro dígitos que serve para identificar operações que envolvam a incidência de ICMS ou IPI. </p>
+
+<p>Nós disponibilizamos uma API que você poderá utilizar para fornecer ao seu usuário final uma pesquisa de qual o código CFOP correto para a operação realizada.</p>
+
+<p>O código CFOP é formato por 4 dígitos, sendo que o primeiro digito indica se a operação é de entrada ou saída e também a localização da contraparte: mesma UF, outra UF ou exterior. Exemplo:</p>
+
+<p>Entradas</p>
+
+<ul>
+<li>1.000 – Entrada e/ou Aquisições de Serviços do Estado</li>
+<li>2.000 – Entrada e/ou Aquisições de Serviços de outros Estados</li>
+<li>3.000 – Entrada e/ou Aquisições de Serviços do Exterior</li>
+</ul>
+
+<p>Saídas</p>
+
+<ul>
+<li>5.000 – Saídas ou Prestações de Serviços para o Estado</li>
+<li>6.000 – Saídas ou Prestações de Serviços para outros Estados</li>
+<li>7.000 – Saídas ou Prestações de Serviços para o Exterior</li>
+</ul>
+
+<p>Por exemplo, o código 5101 refere-se a venda de produção do estabelecimento para um cliente do mesmo estado.</p>
+<pre class="highlight shell tab-shell"><code><span class="c"># pesquisa por CFOPs que iniciam com o dígito 2</span>
+curl -u token_enviado_pelo_suporte: <span class="se">\</span>
+  http://homologacao.acrasnfe.acras.com.br/v2/cfops?codigo<span class="o">=</span>2
+</code></pre><pre class="highlight php tab-php"><code><span class="cp">&lt;?php</span>
+<span class="nv">$ch</span> <span class="o">=</span> <span class="nb">curl_init</span><span class="p">();</span>
+<span class="nv">$server</span> <span class="o">=</span> <span class="s2">"http://homologacao.acrasnfe.acras.com.br"</span><span class="p">;</span>
+<span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_URL</span><span class="p">,</span> <span class="nv">$server</span><span class="o">.</span><span class="s2">"/v2/cfops?codigo=2"</span><span class="p">);</span>
+<span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_RETURNTRANSFER</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+<span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_HTTPHEADER</span><span class="p">,</span> <span class="k">array</span><span class="p">());</span>
+<span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_HTTPAUTH</span><span class="p">,</span> <span class="nx">CURLAUTH_BASIC</span><span class="p">);</span>
+<span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_USERPWD</span><span class="p">,</span> <span class="s2">"token_enviado_pelo_suporte:"</span><span class="p">);</span>
+<span class="nv">$body</span> <span class="o">=</span> <span class="nb">curl_exec</span><span class="p">(</span><span class="nv">$ch</span><span class="p">);</span>
+<span class="nv">$http_code</span> <span class="o">=</span> <span class="nb">curl_getinfo</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLINFO_HTTP_CODE</span><span class="p">);</span>
+<span class="c1">// As próximas três linhas são um exemplo de como imprimir as informações de retorno da API.
+</span><span class="k">print</span><span class="p">(</span><span class="nv">$http_code</span><span class="o">.</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">);</span>
+<span class="k">print</span><span class="p">(</span><span class="nv">$body</span><span class="o">.</span><span class="s2">"</span><span class="se">\n\n</span><span class="s2">"</span><span class="p">);</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">""</span><span class="p">);</span>
+<span class="nb">curl_close</span><span class="p">(</span><span class="nv">$ch</span><span class="p">);</span>
+<span class="cp">?&gt;</span>
+</code></pre><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">com.sun.jersey.api.client.Client</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.sun.jersey.api.client.ClientResponse</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.sun.jersey.api.client.WebResource</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.sun.jersey.api.client.config.ClientConfig</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.sun.jersey.api.client.config.DefaultClientConfig</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.sun.jersey.api.client.filter.HTTPBasicAuthFilter</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ExemploConsultaHook</span> <span class="o">{</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">){</span>
+
+        <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_enviado_pelo_suporte"</span><span class="o">;</span>
+
+        <span class="cm">/* Para ambiente de produção use a variável abaixo:
+        String server = "https://api.focusnfe.com.br/"; */</span>
+        <span class="n">String</span> <span class="n">server</span> <span class="o">=</span> <span class="s">"http://homologacao.acrasnfe.acras.com.br/"</span><span class="o">;</span>
+
+        <span class="n">String</span> <span class="n">url</span> <span class="o">=</span> <span class="n">server</span><span class="o">.</span><span class="na">concat</span><span class="o">(</span><span class="s">"v2/cfops?codigo=2"</span><span class="o">);</span>
+
+        <span class="cm">/* Configuração para realizar o HTTP BasicAuth. */</span>
+        <span class="n">Object</span> <span class="n">config</span> <span class="o">=</span> <span class="k">new</span> <span class="n">DefaultClientConfig</span><span class="o">();</span>
+        <span class="n">Client</span> <span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="o">.</span><span class="na">create</span><span class="o">((</span><span class="n">ClientConfig</span><span class="o">)</span> <span class="n">config</span><span class="o">);</span>
+        <span class="n">client</span><span class="o">.</span><span class="na">addFilter</span><span class="o">(</span><span class="k">new</span> <span class="n">HTTPBasicAuthFilter</span><span class="o">(</span><span class="n">login</span><span class="o">,</span> <span class="s">""</span><span class="o">));</span>
+
+        <span class="n">WebResource</span> <span class="n">request</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="na">resource</span><span class="o">(</span><span class="n">url</span><span class="o">);</span>
+
+        <span class="n">ClientResponse</span> <span class="n">resposta</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">ClientResponse</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+
+        <span class="kt">int</span> <span class="n">HttpCode</span> <span class="o">=</span> <span class="n">resposta</span><span class="o">.</span><span class="na">getStatus</span><span class="o">();</span>
+
+        <span class="n">String</span> <span class="n">body</span> <span class="o">=</span> <span class="n">resposta</span><span class="o">.</span><span class="na">getEntity</span><span class="o">(</span><span class="n">String</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+
+        <span class="cm">/* As três linhas abaixo imprimem as informações retornadas pela API.
+         * Aqui o seu sistema deverá interpretar e lidar com o retorno. */</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="s">"HTTP Code: "</span><span class="o">);</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="n">HttpCode</span><span class="o">);</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="n">body</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre><pre class="highlight ruby tab-ruby"><code>
+<span class="c1"># encoding: UTF-8</span>
+
+<span class="nb">require</span> <span class="s2">"net/http"</span>
+<span class="nb">require</span> <span class="s2">"net/https"</span>
+
+<span class="c1"># token enviado pelo suporte</span>
+<span class="n">token</span> <span class="o">=</span> <span class="s2">"codigo_alfanumerico_token"</span>
+
+<span class="c1"># endereço da api que deve ser usado conforme o ambiente: produção ou homologação</span>
+<span class="n">servidor_producao</span> <span class="o">=</span> <span class="s2">"https://api.focusnfe.com.br/"</span>
+<span class="n">servidor_homologacao</span> <span class="o">=</span> <span class="s2">"http://homologacao.acrasnfe.acras.com.br/"</span>
+
+<span class="c1"># no caso do ambiente de envio ser em produção, utilizar servidor_producao</span>
+<span class="n">url_envio</span> <span class="o">=</span> <span class="n">servidor_homologacao</span> <span class="o">+</span> <span class="s2">"v2/cfops?codigo=2"</span>
+
+<span class="c1"># criamos uma objeto uri para envio da nota</span>
+<span class="n">uri</span> <span class="o">=</span> <span class="no">URI</span><span class="p">(</span><span class="n">url_envio</span><span class="p">)</span>
+
+<span class="c1"># também criamos um objeto da classe HTTP a partir do host da uri</span>
+<span class="n">http</span> <span class="o">=</span> <span class="no">Net</span><span class="o">::</span><span class="no">HTTP</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">uri</span><span class="p">.</span><span class="nf">hostname</span><span class="p">,</span> <span class="n">uri</span><span class="p">.</span><span class="nf">port</span><span class="p">)</span>
+
+<span class="c1"># aqui criamos um objeto da classe Post a partir da uri de requisição</span>
+<span class="n">requisicao</span> <span class="o">=</span> <span class="no">Net</span><span class="o">::</span><span class="no">HTTP</span><span class="o">::</span><span class="no">Get</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">uri</span><span class="p">.</span><span class="nf">request_uri</span><span class="p">)</span>
+
+<span class="c1"># adicionando o token à requisição</span>
+<span class="n">requisicao</span><span class="p">.</span><span class="nf">basic_auth</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="s1">''</span><span class="p">)</span>
+
+<span class="c1"># no envio de notas em produção, é necessário utilizar o protocolo ssl</span>
+<span class="c1"># para isso, basta retirar o comentário da linha abaixo</span>
+<span class="c1"># http.use_ssl = true</span>
+
+<span class="c1"># aqui enviamos a requisição ao servidor e obtemos a resposta</span>
+<span class="n">resposta</span> <span class="o">=</span> <span class="n">http</span><span class="p">.</span><span class="nf">request</span><span class="p">(</span><span class="n">requisicao</span><span class="p">)</span>
+
+<span class="c1"># imprimindo o código HTTP da resposta</span>
+<span class="nb">puts</span> <span class="s2">"Código retornado pela requisição: "</span> <span class="o">+</span> <span class="n">resposta</span><span class="p">.</span><span class="nf">code</span>
+
+<span class="c1"># imprimindo o corpo da resposta</span>
+<span class="nb">puts</span> <span class="s2">"Corpo da resposta: "</span> <span class="o">+</span> <span class="n">resposta</span><span class="p">.</span><span class="nf">body</span>
+
+</code></pre><pre class="highlight python tab-python"><code><span class="c"># Faça o download e instalação da biblioteca requests, através do python-pip.</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="s">'''
+Para ambiente de produção use a variável abaixo:
+url = "https://api.focusnfe.com.br"
+'''</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s">"http://homologacao.acrasnfe.acras.com.br/v2/cfops?codigo=2"</span>
+
+<span class="n">token</span><span class="o">=</span><span class="s">"token_enviado_pelo_suporte"</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="p">(</span><span class="n">token</span><span class="p">,</span><span class="s">""</span><span class="p">))</span>
+
+<span class="c"># Mostra na tela o codigo HTTP da requisicao e a mensagem de retorno da API</span>
+<span class="k">print</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+
+</code></pre><pre class="highlight javascript tab-javascript"><code>
+<span class="cm">/*
+As orientacoes a seguir foram extraidas do site do NPMJS: https://www.npmjs.com/package/xmlhttprequest
+Here's how to include the module in your project and use as the browser-based XHR object.
+Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensitive systems (eg Linux) using uppercase letters won't work.
+*/</span>
+<span class="kd">var</span> <span class="nx">XMLHttpRequest</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">"xmlhttprequest"</span><span class="p">).</span><span class="nx">XMLHttpRequest</span><span class="p">;</span>
+
+<span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
+
+<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_enviado_pelo_suporte"</span><span class="p">;</span>
+
+<span class="cm">/*
+Para ambiente de producao use a URL abaixo:
+"https://api.focusnfe.com.br"
+*/</span>
+<span class="kd">var</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">"http://homologacao.acrasnfe.acras.com.br/v2/cfops?codigo=2"</span><span class="p">;</span>
+
+<span class="cm">/*
+Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
+Passamos o token como quarto parametro deste metodo, como autenticador do HTTP Basic Authentication.
+*/</span>
+<span class="nx">request</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s1">'GET'</span><span class="p">,</span> <span class="nx">url</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="nx">token</span><span class="p">);</span>
+
+<span class="c1">// Aqui enviamos a requisição.</span>
+<span class="nx">request</span><span class="p">.</span><span class="nx">send</span><span class="p">();</span>
+
+<span class="c1">// Sua aplicacao tera que ser capaz de tratar as respostas da API.</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"HTTP code: "</span> <span class="o">+</span> <span class="nx">request</span><span class="p">.</span><span class="nx">status</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Corpo: "</span> <span class="o">+</span> <span class="nx">request</span><span class="p">.</span><span class="nx">responseText</span><span class="p">);</span>
+
+</code></pre>
+<blockquote>
+<p>Dados de resposta da consulta</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+ </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"codigo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2151"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"descricao"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2151 - Transferência p/ industrialização ou produção rural"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"codigo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2152"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"descricao"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2152 - Transferência p/ comercialização"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"codigo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2153"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"descricao"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2153 - Transferência de energia elétrica p/ distribuição"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"codigo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2154"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"descricao"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2154 - Transferência p/ utilização na prestação de serviço"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"codigo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2159"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"descricao"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2159 - Entrada decorrente do fornecimento de produto ou mercadoria de ato cooperativo"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"codigo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2201"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"descricao"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2201 - Devolução de venda de produção do estabelecimento"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"codigo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2202"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"descricao"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2202 - Devolução de venda de mercadoria adquirida ou recebida de terceiros"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre>
+<p>Para consultar os CFOPs disponíveis, utilize o endereço abaixo:</p>
+
+<p><code>http://homologacao.acrasnfe.acras.com.br/v2/cfops</code></p>
+
+<p>Utilize o método HTTP <strong>GET</strong>. São aceitos os seguintes parâmetros de pesquisa:</p>
+
+<ul>
+<li><strong>codigo</strong>: Pesquise <strong>pela parte inicial</strong> do código CFOP</li>
+<li><strong>descricao</strong>: Pesquisa por parte da descrição do código CFOP.</li>
+</ul>
+
+<p>Caso já saiba o código CFOP exato, e queira apenas recuperar sua descrição, utilize o link
+abaixo, substituindo CODIGO_CFOP pelo código.</p>
+
+<p><code>http://homologacao.acrasnfe.acras.com.br/v2/cfops?CODIGO_CFOP</code></p>
+<h2 id='consulta-de-cfop_paginacao'>Paginação</h2>
+<p>Ao fazer uma pesquisa, a API irá devolver o cabeçalho HTTP <em>X-Total-Count</em> que representa
+o número total de ocorrências da pesquisa, porém a API devolve apenas 50 registros por vez.
+Para buscar os demais registros, utilize o parâmetro <strong>offset</strong>. Exemplo:</p>
+
+<p>Vamos supor que a chamada abaixo devolva 123 ocorrências:</p>
+
+<p><code>http://homologacao.acrasnfe.acras.com.br/v2/cfops?codigo=2</code></p>
+
+<p>A segunda e terceira páginas da consulta poderão ser acessados desta forma:</p>
+
+<p>Registros 51 a 100:
+<code>http://homologacao.acrasnfe.acras.com.br/v2/cfops?codigo=2&amp;offset=50</code></p>
+
+<p>Registros 101 a 123:
+<code>http://homologacao.acrasnfe.acras.com.br/v2/cfops?codigo=2&amp;offset=100</code></p>
 <h1 id='revenda_revenda'>Revenda</h1>
 <p>A API de Revenda ainda não foi migrada para a versão 2.0, você pode consultar a <a href="https://focusnfe.com.br/api/doc/revenda/">versão anterior aqui</a></p>
 <h1 id='limite-de-requisicoes_limite-de-requisicoes'>Limite de requisições</h1>
