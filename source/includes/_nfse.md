@@ -77,10 +77,15 @@ um formato único de campos para todas as prefeituras. A listagem dos campos seg
 * **optante_simples_nacional**(*): (Boolean) Informar verdadeiro ou falso se a empresa for optante pelo Simples Nacional. Campo ignorado pelo município de São Paulo.
 * **incentivador_cultural**: (Boolean) Informe verdadeiro ou falso. Valor padrão: falso. Campo ignorado para o município de São Paulo.
 - **tributacao_rps**: (String) Usado apenas pelo município de São Paulo. Informe o tipo de tributação:
-  - **T**: Operação normal (tributação conforme documento emitido);
-  - **I**: Operação isenta ou não tributável, executadas no Município de São Paulo;
-  - **F**: Operação isenta ou não tributável pelo Município de São Paulo, executada em outro Município;
-  - **J**: ISS Suspenso por Decisão Judicial (neste caso, informar no campo Discriminação dos Serviços, o número do processo judicial na 1a. instância). (Valor padrão “T”).
+  - **T**: Tributado em São Paulo;
+  - **F**: Tributado Fora de São Paulo;
+  - **A**: Tributado em São Paulo, porém Isento;
+  - **B**: Tributado Fora de São Paulo, porém Isento;
+  - **M**: Tributado em São Paulo, porém Imune;
+  - **N**: Tributado Fora de São Paulo, porém Imune;
+  - **X**: Tributado em São Paulo, porém Exigibilidade Suspensa;
+  - **V**: Tributado Fora de São Paulo, porém Exigibilidade Suspensa;
+  - **P**: Exportação de Serviços.
 * **codigo_obra**: (String) Código da obra quando construção civil. Tamanho: 15 caracteres.
 * **art**: (String) Código ART quando construção civil. Este campo é ignorado pelo município de São Paulo. Tamanho: 15 caracteres.
 

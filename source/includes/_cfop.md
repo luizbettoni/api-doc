@@ -1,30 +1,36 @@
-# Consulta de NCM
+# Consulta de CFOP
 
-NCM significa "Nomenclatura Comum do Mercosul" e trata-se de um código de oito dígitos estabelecido através da convenção de categorização de mercadorias adotada desde 1995 pelo Uruguai, Paraguai, Brasil e Argentina e que toma por base o Sistema Harmonizado (SH). Este código é utilizado na emissão de NFe e de NFCe.
+CFOP significa "Código Fiscal de Operações e Prestações" e trata-se de um código de quatro dígitos que serve para identificar operações que envolvam a incidência de ICMS ou IPI. 
 
-Nós disponibilizamos uma API que você poderá utilizar para fornecer ao seu usuário final uma pesquisa de qual o código NCM correto do seu produto.
+Nós disponibilizamos uma API que você poderá utilizar para fornecer ao seu usuário final uma pesquisa de qual o código CFOP correto para a operação realizada.
 
-O código NCM é formato por 8 dígitos no seguinte formato:
+O código CFOP é formato por 4 dígitos, sendo que o primeiro digito indica se a operação é de entrada ou saída e também a localização da contraparte: mesma UF, outra UF ou exterior. Exemplo:
 
-CCPPSÇII, sendo:
+Entradas
 
-* CC = Capitulo
-* PP = Posição
-* S  = Subposição 1
-* Ç  = Subposição 2
-* II = Item 1 e 2
+* 1.000 – Entrada e/ou Aquisições de Serviços do Estado
+* 2.000 – Entrada e/ou Aquisições de Serviços de outros Estados
+* 3.000 – Entrada e/ou Aquisições de Serviços do Exterior
+
+Saídas
+
+* 5.000 – Saídas ou Prestações de Serviços para o Estado
+* 6.000 – Saídas ou Prestações de Serviços para outros Estados
+* 7.000 – Saídas ou Prestações de Serviços para o Exterior
+
+Por exemplo, o código 5101 refere-se a venda de produção do estabelecimento para um cliente do mesmo estado.
 
 ```shell
-# pesquisa por códigos NCM do capítulo 90
+# pesquisa por CFOPs que iniciam com o dígito 2
 curl -u token_enviado_pelo_suporte: \
-  http://homologacao.acrasnfe.acras.com.br/v2/ncms?capitulo=90
+  http://homologacao.acrasnfe.acras.com.br/v2/cfops?codigo=2
 ```
 
 ```php
 <?php
 $ch = curl_init();
 $server = "http://homologacao.acrasnfe.acras.com.br";
-curl_setopt($ch, CURLOPT_URL, $server."/v2/ncms?capitulo=90");
+curl_setopt($ch, CURLOPT_URL, $server."/v2/cfops?codigo=2");
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 curl_setopt($ch, CURLOPT_HTTPHEADER, array());
 curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
@@ -57,7 +63,7 @@ public class ExemploConsultaHook {
         String server = "https://api.focusnfe.com.br/"; */
         String server = "http://homologacao.acrasnfe.acras.com.br/";
 
-        String url = server.concat("v2/ncms?capitulo=90");
+        String url = server.concat("v2/cfops?codigo=2");
 
         /* Configuração para realizar o HTTP BasicAuth. */
         Object config = new DefaultClientConfig();
@@ -96,7 +102,7 @@ servidor_producao = "https://api.focusnfe.com.br/"
 servidor_homologacao = "http://homologacao.acrasnfe.acras.com.br/"
 
 # no caso do ambiente de envio ser em produção, utilizar servidor_producao
-url_envio = servidor_homologacao + "v2/ncms?capitulo=90"
+url_envio = servidor_homologacao + "v2/cfops?codigo=2"
 
 # criamos uma objeto uri para envio da nota
 uri = URI(url_envio)
@@ -133,7 +139,7 @@ import requests
 Para ambiente de produção use a variável abaixo:
 url = "https://api.focusnfe.com.br"
 '''
-url = "http://homologacao.acrasnfe.acras.com.br/v2/ncms?capitulo=90"
+url = "http://homologacao.acrasnfe.acras.com.br/v2/cfops?codigo=2"
 
 token="token_enviado_pelo_suporte"
 
@@ -161,7 +167,7 @@ var token = "Token_enviado_pelo_suporte";
 Para ambiente de producao use a URL abaixo:
 "https://api.focusnfe.com.br"
 */
-var url = "http://homologacao.acrasnfe.acras.com.br/v2/ncms?capitulo=90";
+var url = "http://homologacao.acrasnfe.acras.com.br/v2/cfops?codigo=2";
 
 /*
 Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
@@ -183,63 +189,50 @@ console.log("Corpo: " + request.responseText);
 ```json
 [
  {
-   "codigo": "90049090",
-   "descricao_completa": "Óculos para correção, proteção ou outros fins, e artigos semelhantes. Outros Outros",
-   "capitulo": "90",
-   "posicao": "04",
-   "subposicao1": "9",
-   "subposicao2": "0",
-   "item1": "9",
-   "item2": "0"
- },
- {
-   "codigo": "90051000",
-   "descricao_completa": "Binóculos, lunetas, incluindo as astronômicas, telescópios ópticos, e suas armações, outros instrumentos de astronomia e suas armações, exceto os aparelhos de radioastronomia. Binóculos",
-   "capitulo": "90",
-   "posicao": "05",
-   "subposicao1": "1",
-   "subposicao2": "0",
-   "item1": "0",
-   "item2": "0"
- },
- {
-   "codigo": "90058000",
-   "descricao_completa": "Binóculos, lunetas, incluindo as astronômicas, telescópios ópticos, e suas armações, outros instrumentos de astronomia e suas armações, exceto os aparelhos de radioastronomia. Outros instrumentos",
-   "capitulo": "90",
-   "posicao": "05",
-   "subposicao1": "8",
-   "subposicao2": "0",
-   "item1": "0",
-   "item2": "0"
- },
- {
-   "codigo": "90059010",
-   "descricao_completa": "Binóculos, lunetas, incluindo as astronômicas, telescópios ópticos, e suas armações, outros instrumentos de astronomia e suas armações, exceto os aparelhos de radioastronomia. Partes e acessórios (incluindo as armações) De binóculos",
-   "capitulo": "90",
-   "posicao": "05",
-   "subposicao1": "9",
-   "subposicao2": "0",
-   "item1": "1",
-   "item2": "0"
- }
+    "codigo": "2151",
+    "descricao": "2151 - Transferência p/ industrialização ou produção rural"
+  },
+  {
+    "codigo": "2152",
+    "descricao": "2152 - Transferência p/ comercialização"
+  },
+  {
+    "codigo": "2153",
+    "descricao": "2153 - Transferência de energia elétrica p/ distribuição"
+  },
+  {
+    "codigo": "2154",
+    "descricao": "2154 - Transferência p/ utilização na prestação de serviço"
+  },
+  {
+    "codigo": "2159",
+    "descricao": "2159 - Entrada decorrente do fornecimento de produto ou mercadoria de ato cooperativo"
+  },
+  {
+    "codigo": "2201",
+    "descricao": "2201 - Devolução de venda de produção do estabelecimento"
+  },
+  {
+    "codigo": "2202",
+    "descricao": "2202 - Devolução de venda de mercadoria adquirida ou recebida de terceiros"
+  }
 ]
 ```
 
-Para consultar os NCMs disponíveis, utilize o endereço abaixo:
+Para consultar os CFOPs disponíveis, utilize o endereço abaixo:
 
-`http://homologacao.acrasnfe.acras.com.br/v2/ncms`
+`http://homologacao.acrasnfe.acras.com.br/v2/cfops`
 
 
 Utilize o método HTTP **GET**. São aceitos os seguintes parâmetros de pesquisa:
 
-* **codigo**: Pesquise **pela parte inicial** do código NCM
-* **descricao**: Pesquisa por parte da descrição do código NCM.
-* **capitulo**,**posicao**,**subposicao1**,**subposicao2**,**item1** e **item2**: Pesquisa exata informando qualquer uma das partes do código NCM.
+* **codigo**: Pesquise **pela parte inicial** do código CFOP
+* **descricao**: Pesquisa por parte da descrição do código CFOP.
 
-Caso já saiba o código NCM exato, e queira apenas recuperar sua descrição, utilize o link
-abaixo, substituindo CODIGO_NCM pelo código.
+Caso já saiba o código CFOP exato, e queira apenas recuperar sua descrição, utilize o link
+abaixo, substituindo CODIGO_CFOP pelo código.
 
-`http://homologacao.acrasnfe.acras.com.br/v2/ncms/CODIGO_NCM`
+`http://homologacao.acrasnfe.acras.com.br/v2/cfops?CODIGO_CFOP`
 
 
 ## Paginação
@@ -250,12 +243,12 @@ Para buscar os demais registros, utilize o parâmetro **offset**. Exemplo:
 
 Vamos supor que a chamada abaixo devolva 123 ocorrências:
 
-`http://homologacao.acrasnfe.acras.com.br/v2/ncms?codigo=7022`
+`http://homologacao.acrasnfe.acras.com.br/v2/cfops?codigo=2`
 
 A segunda e terceira páginas da consulta poderão ser acessados desta forma:
 
 Registros 51 a 100:
-`http://homologacao.acrasnfe.acras.com.br/v2/ncms?codigo=7022&offset=50`
+`http://homologacao.acrasnfe.acras.com.br/v2/cfops?codigo=2&offset=50`
 
 Registros 101 a 123:
-`http://homologacao.acrasnfe.acras.com.br/v2/ncms?codigo=7022&offset=100`
+`http://homologacao.acrasnfe.acras.com.br/v2/cfops?codigo=2&offset=100`

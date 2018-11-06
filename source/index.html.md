@@ -20,6 +20,7 @@ includes:
   - manifestacao
   - webhooks
   - ncm
+  - cfop
   - revenda
   - limite-requisicoes
   - github
