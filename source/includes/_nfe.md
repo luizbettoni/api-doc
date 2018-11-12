@@ -92,14 +92,6 @@ Abaixo, iremos mostrar os campos de uso obrigatório para emissão de uma Nota F
 ### Geral
 
 * <strong>natureza_operacao</strong>: Descrição da natureza da operação a ser realizada pela nota fiscal.
-* <strong>forma_pagamento</strong>: Forma de pagamento utilizado no operação. Valores possíveis:
-
-0 – à vista;
-
-1 – à prazo;
-
-2 – outros.
-
 * <strong>data_emissao</strong>: Data da emissão da NFe. Formato padrão ISO, exemplo: “2016-12-25T12:00-0300”.
 * <strong>tipo_documento</strong>: Tipo da NFe. Valores possíveis:
 
