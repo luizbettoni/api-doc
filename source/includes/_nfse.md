@@ -147,6 +147,8 @@ um formato único de campos para todas as prefeituras. A listagem dos campos seg
 	- **cnpj**: (String) CNPJ do intermediário do serviço, se aplicável. Caracteres não numéricos são ignorados.
 	- **inscricao_municipal**: (String) Inscrição municipal do intermediário do serviço, se aplicável. Caracteres não numéricos são ignorados.
 
+Alguns municípios podem ter campos adicionais ou algumas regras específicas para preenchimento de campos. Uma boa prática é consultar a nossa [lista de municípios atendidos](https://focusnfe.com.br/cidades-atendidas/) e ver se existe algum artigo escrito sobre especificidades do seu município.
+
 ## Envio
 ```python
 # Faça o download e instalação da biblioteca requests, através do python-pip.
