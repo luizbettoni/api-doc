@@ -459,6 +459,23 @@ A lista de campos calculados automaticamente segue abaixo:
 | valor_pis                                 | pis_valor                           | Apenas se não for item de serviço                           |   
 | valor_cofins                              | cofins_valor                        | Apenas se não for item de serviço  
 
+## Status API
+
+Aqui você encontra os status possíveis para NFe.
+
+HTTP CODE/STATUS | Status API Focus | Descrição | Correção
+---|---|---|---|
+422 - unprocessable entity | erro_validacao_schema | Erro na validação do Schema XML. | Verifique o detalhamento do erro na resposta da API.
+422 - unprocessable entity | nfe_nao_autorizada | Nota fiscal não autorizada. | O cancelamento só é possível para NFe's autorizadas.
+404 - not found | nao_encontrado | Utilize o método POST. | O método de envio usado é diferente de POST, por favor, use o HTTP POST.
+404 - not found | nao_encontrado | Nota fiscal não encontrada. | Verifique se a nota a ser cancelada realmente existe antes de enviar o cancelamento.
+400 - bad request | requisicao_invalida | Parâmetro "justificativa" não informado. | Você precisa usar o parâmetro 'justificativa'. Consulte a nossa documentação.
+400 - bad request | requisicao_invalida | Parâmetro "justificativa" deve ter entre 15 e 255 caracteres. | A sua justificativa não possui de 15 à 255 careacteres.
+400 - bad request | requisicao_invalida | Parâmetro X não informado. | Onde X é o campo que não foi informado em sua requisição.
+400 - bad request | requisicao_invalida | Não existe série com os critérios informados. | Os critérios de inutilização não existem. Verifique a nossa documentação.
+400 - bad request | requisicao_invalida | CNPJ do emitente não autorizado ou não informado. | Verifique o campo "cnpj_emitente" em seu JSON. É preciso habilitar a emissão de NFe no cadastro do emitente(Painel API). 
+400 - bad request | requisicao_invalida | CNPJ/UF do emitente não autorizado ou não informado. | Verifique os campos "cnpj_emitente" e "uf_emitente". É preciso habilitar a emissão de NFe no cadastro do emitente(Painel API). 
+403 - forbidden | permissao_negada | CNPJ do emitente não autorizado. | O emitente utilizado não está autorizado a emitir NFe ou foi informado o CNPJ do emitente incorretamente no JSON.
 
 ## Envio
 
