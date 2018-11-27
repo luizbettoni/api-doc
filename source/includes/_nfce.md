@@ -217,6 +217,20 @@ Além dos campos acima, os campos abaixo são preenchidos automaticament para NF
 * **consumidor_final** = 1, significando “Nota para consumidor final”
 * **finalidade_emissao** = 1, significando “Nota normal”
 
+## Status API
+
+Aqui você encontra os status possíveis para NFCe.
+
+HTTP CODE/STATUS | Status API Focus | Descrição | Correção
+---|---|---|---|
+404 - not found | nfce_nao_encontrada | NFCe não encontrada | Verifique se a NFCe informada existe e está autorizada.
+404 - not found | nfce_nao_autorizada | NFCe não autorizada | O cancelamento só é possível para NFCe's autorizadas.
+400 - bad request | justificativa_nao_informada | Parâmetro "justificativa" não informado | É necessário usar o parâmetro 'justificativa'. Consulte a nossa documentação.
+400 - bad request | forma_emissao_nao_informada | Parâmetro "forma_emissao" inválido ou não informado | Verifique o valor informado no campo "forma_emissao". Consulte a nossa documentação.
+400 - bad request | ref_ausente | Parâmetro "ref" não informado | É necessário usar o parâmetro 'ref' nessa requisição com a API. Consulte a nossa documentação.
+422 - unprocessable entity | ambiente_nao_configurado | Ambiente não configurado para emissão de NFCe | O ambiente de emissão de NFCe não foi configurado para o seu emitente. Entre em contato com a nossa equipe de suporte. 
+422 - unprocessable entity | empresa_nao_configurada | Empresa não configurada para emissão de NFCe | É necessário informar no cadastro do emitente(Painel API) o CSC e id_token(gerados na Sefaz do Estado do emitente), para emissão de NFCe. 
+
 ## Envio
 ```python
 # Faça o download e instalação da biblioteca requests, através do python-pip.
