@@ -1,3 +1,4 @@
+
 # Manifestação
 
 A API para manifestação do sistema Focus permite que você consulte todas as notas recebidas pela sua empresa e permite que você realize a manifestação frente a receita, informando se a operação descrita na nota foi realizada ou não. A API faz ainda a guarda de todos os documentos recebidos para que você consulte quando precisar.
@@ -16,6 +17,22 @@ GET|/v2/nfes_recebidas/CHAVE.json|Consulta as informações da nota fiscal em fo
 GET|/v2/nfes_recebidas/CHAVE.xml|Consulta as informações da nota fiscal em formato XML.
 GET|/v2/nfes_recebidas/CHAVE/cancelamento.xml|Se existir, baixa o XML de cancelamento da nota fiscal informada.
 GET|/v2/nfes_recebidas/CHAVE/carta_correcao.xml|Se existir, baixa o XML da última carta de correção da nota fiscal informada.
+
+## Status API
+
+Aqui você encontra os status possíveis para MDe.
+
+HTTP CODE/STATUS | Status API Focus | Descrição | Correção
+---|---|---|---|
+400 - bad request | manifestacao_nao_aplicavel | Esta Nota Fiscal não pode ser manifestada. | Procure a nossa equipe de suporte para mais detalhes.
+400 - bad request | manifestacao_ja_vinculada | Este tipo de manifestação já foi vinculado à Nota Fiscal. | Consulte as manifestações registradas na NFe antes de realizar uma nova tentativa.
+400 - bad request | requisicao_invalida | Tipo de manifestação não informado | O tipo de manifestação não foi informado ou é inválido. Consulte a nossa documentação.
+400 - bad request | requisicao_invalida | A justificativa deve conter pelo menos 15 caracteres | Sua justificativa possui menos caracteres que o mínimo. Consulte a nossa documentação.
+400 - bad request | requisicao_invalida | Para manifestação de operação não realizada é obrigatório informar o parâmetro 'justificativa'. | Consulte a nossa documentação.
+400 - bad request | requisicao_invalida | CNPJ do emitente não autorizado ou não informado. | Verifique no Painel API se esse emitente está habilitado para realizar MDe. Verifique se o CNPJ foi informado no JSON de envio.
+400 - bad request | requisicao_invalida | CNPJ/UF do emitente não autorizado ou não informado. | Verifique no Painel API se esse emitente está habilitado para realizar MDe. Verifique se o CNPJ foi informado no JSON de envio.
+404 - not found | nao_encontrado | Nota Fiscal ou Manifesto não encontrado | Verifique se a nota fiscal está autorizada e/ou se o manifesto foi registrado na nota fiscal.
+403 - forbidden | permissao_negada | CNPJ do emitente não autorizado. | O emitente utilizado não está autorizado a emitir MDe ou foi informado o CNPJ do emitente incorretamente no JSON.
 
 ## Manifestação
 
