@@ -1733,8 +1733,8 @@ O Enviador de Arquivos não possui um instalador específico, ele é apenas um e
 
 `[nfce]`
 `dir=C:\Users\acras\Desktop\nfces`
-`cnpj_emitente=20220080000106`
-`token=ipPjf0dTqOw66Hih1eyZjWq7IQIIFgxO`
+`cnpj_emitente=07504505000132`
+`token=iDAJmdfgi83ksadvmsdfl1234mdfHSdYO`
 `producao=0`
 `simples=1`
 
