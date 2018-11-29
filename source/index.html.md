@@ -21,6 +21,7 @@ includes:
   - webhooks
   - ncm
   - cfop
+  - cep
   - revenda
   - limite-requisicoes
   - github
