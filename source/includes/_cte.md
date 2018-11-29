@@ -23,7 +23,7 @@ DELETE |	/v2/cfe/REFERENCIA	| Cancela uma CTe com a referência informada
 POST |	/v2/cte/REFERENCIA/carta_correcao	| Cria uma carta de correção para a CTe com a referência informada.
 POST |	/v2/cte/inutilizacao	| Inutiliza uma numeração da CTe
 
-## Campos de uma CTe
+## Campos de um CTe
 
 > Abaixo um exemplo de dados de uma CTe:
 
@@ -152,6 +152,26 @@ Além dos campos descritos acima, cada CTe deverá obrigatoriamente informar um 
 * modal_multimodal [para transporte que utilize mais de um modal.] (https://focusnfe.com.br/dsl/3.0/TransporteMultimodalXML.html)
 
 Para CTe-OS é necessário informar dados adicionais do modal **apenas quando este for rodoviário**. Nos outros casos não é necessário.
+
+## Status API
+
+Aqui você encontra os status possíveis para CTe e CTe OS.
+
+HTTP CODE/STATUS | Status API Focus | Descrição | Correção
+---|---|---|---|
+422 - unprocessable entity | erro_validacao_schema | Erro na validação do Schema XML | Verifique o detalhamento do erro na resposta da API.
+400 - bad request | forma_emissao_invalida | A forma de emissão utilizada é inválida | As formas de emissão disponíveis estão contidas na documentação da API.
+400 - bad request | campos_invalidos | O parâmetro 'numero' não foi informado | É necessário informar o número do CTe, use o campo "numero" em seu JSON.
+400 - bad request | campos_invalidos | O parâmetro 'serie' não foi informado | É necessário informar a série do CTe, use o campo "serie" em seu JSON.
+400 - bad request | campos_invalidos | OCampo 'X não é válido | Onde X é o nome do campo inválido. Verifique a documentação dos campos da API para CTe ou CTe OS.
+400 - bad request | modelo_invalido | Para esta URL só é permitida a emissão de CT-e modelo 57 | Será exibida essa mensagem quando for usado a URL de CTe para emissão de CTe OS ou vice-versa. Consulte as documentações sobre esses documentos.
+400 - bad request | campos_invalidos_modal | Esse status indica erros nos campos do modal usado. Verifique os campos informados e compare com a nossa documentação de campos.
+400 - bad request | empresa_nao_habilitada | Empresa ainda não habilitada para emissão de CT-e | Verifique o cadastro do emitente no Painel API, deve-se habilitar CTe e/ou CTe OS para começar a emitir este documento.
+409 - conflict | cte_ja_autorizado | Já existe um CT-e autorizado utilizando esta referência | Altere a referência da requisição e tente novamente.
+409 - conflict | cte_em_processamento | Já existe um CT-e utilizando essa referencia e ele está em processamento | Altere a referência da requisição e tente novamente.
+404 - not found | nao_encontrado | CT-e não encontrado| CT-e informado na requisição não foi encontrado.
+400 - bad request | nao_autorizado| CT-e não autorizado | CT-e informado na requisição não foi autorizado, informe o evento GTV apenas para CTe O.S(modelo 67).
+400 - bad request | requisicao_invalida | Sua requisição é inválida porque alguns dos paramêtros básicos não foram cumpridos. Entre em contato com o nosso suporte.
 
 
 ## Envio
