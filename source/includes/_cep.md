@@ -1,4 +1,4 @@
-# Consulta de CEP
+# Consulta de CEP (beta)
 
 O Código de Endereçamento Postal - CEP - é um código utilizado pelo Correrios para fins de encaminhamento, tratamento e distribuição de postagens. O código, formado por oito digitos numéricos, é dividio em duas partes:
 
@@ -19,7 +19,7 @@ RSRSSSD-PREFIXO, sendo:
 <sub>fonte:https://www.correios.com.br/a-a-z/cep-codigo-de-enderecamento-postal</sub>
 
 
-Nós disponibilizamos uma API para consultar uma descrição detalhada das informações do CEP. 
+Nós disponibilizamos uma API para consultar uma descrição detalhada das informações do CEP.
 
 ```shell
 # pesquisa por CFOPs que iniciam com o dígito 2
