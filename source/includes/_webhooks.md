@@ -64,6 +64,17 @@ A vantagem de utilizar gatilhos é que não haverá a necessidade de fazer "pull
 
 Na ocorrência de falha na execução do POST para a URL definida (exemplo: servidor fora do ar ou alguma resposta HTTP diferente de 20X) a API tentará um reenvio nos seguintes intervalos: 1 minuto, 30 minutos, 1 hora, 3 horas, 24 horas até o momento em que a API irá desistir de acionar o gatilho.
 
+## Status API
+
+Aqui você encontra os status possíveis para os gatilhos (webhooks).
+
+HTTP CODE/STATUS | Status API Focus | Descrição | Correção
+---|---|---|---|
+404 - not found | nao_encontrado | Seu gatilho não foi encontrado. | Verifique se o seu gatilho foi criado com sucesso. Consulte nossa documentação.
+400 - bad request | requisicao_invalida | Parâmetro "event" deve ser nfe, nfse ou nfe_recebida. |  Informe um dos valores esperados para o parâmetro "event" e tente novamente.
+400 - bad request | requisicao_invalida | Já existe um gatilho para este evento. | Não é possível ter mais de um gatilho por evento.
+400 - bad request | requisicao_invalida | URL inválida: X | Onde X é a URL inválida informado no retorno da API. Consulte nossa documentação.
+
 ## Eventos
 
 Os seguintes eventos causam o acionamento do gatilho:

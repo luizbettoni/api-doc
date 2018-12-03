@@ -147,6 +147,23 @@ um formato único de campos para todas as prefeituras. A listagem dos campos seg
 	- **cnpj**: (String) CNPJ do intermediário do serviço, se aplicável. Caracteres não numéricos são ignorados.
 	- **inscricao_municipal**: (String) Inscrição municipal do intermediário do serviço, se aplicável. Caracteres não numéricos são ignorados.
 
+Alguns municípios podem ter campos adicionais ou algumas regras específicas para preenchimento de campos. Uma boa prática é consultar a nossa [lista de municípios atendidos](https://focusnfe.com.br/cidades-atendidas/) e ver se existe algum artigo escrito sobre especificidades do seu município.
+
+## Status API
+
+Aqui você encontra os status possíveis para NFSe.
+
+HTTP CODE/STATUS | Status API Focus | Descrição | Correção
+---|---|---|---|
+404 - not found | nao_encontrado | Nota fiscal não encontrada | Verifique o método utilizado (deve-se usar POST) ou a nota fiscal não foi encontrada.
+400 - bad request | nfe_cancelada| Nota fiscal já cancelada| Não é possível realizar a operação solicitada, pois a nota fiscal já foi cancelada.
+400 - bad request | nfe_nao_autorizada | Nota fiscal não autorizada não pode ser cancelada | O cancelamento só é possível para NFSe's autorizadas.
+400 - bad request | requisicao_invalida | | Sua requisição é inválida porque alguns dos paramêtros básicos não foram cumpridos. Consulte a nossa documentação.
+400 - bad request | empresa_nao_habilitada | Emitente ainda não habilitado para emissão de NFSe | Configure a emissão de NFSe através do Painel API e tente novamente.
+400 - bad request | certificado_vencido | O certificado do emitente está vencido | É necessário renovar ou adquirir um novo certificado digital modelo A1.
+422 - unprocessable entity | nfe_autorizada | Nota fiscal já autorizada | A operação solicitada não pode ser realizada, pois a NFSe já foi autorizada.
+422 - unprocessable entity | em_processamento | Nota fiscal em processamento | Sua nota está sendo processada pela prefeitura, aguarde alguns minutos antes de consultá-la novamente.
+
 ## Envio
 ```python
 # Faça o download e instalação da biblioteca requests, através do python-pip.
