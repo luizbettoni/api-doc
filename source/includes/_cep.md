@@ -185,24 +185,6 @@ console.log("Corpo: " + request.responseText);
 
 ```
 
-> Dados de resposta da consulta
-
-```json
-[
-  {
-    "cep": "69909032",
-    "tipo": "logradouro",
-    "nome": "",
-    "uf": "AC",
-    "nome_localidade": "Rio Branco",
-    "tipo_logradouro": "Rua",
-    "nome_logradouro": "Colinas",
-    "nome_bairro_inicial": "Rosa Linda",
-    "descricao": "Rua Colinas, Rio Branco, AC"
-  }
-]
-```
-
 Para realizar uma consulta de CEP, utilize o endereço abaixo:
 
 `http://homologacao.acrasnfe.acras.com.br/v2/ceps`
@@ -221,3 +203,38 @@ Caso já saiba o CEP exato, e queira apenas recuperar sua descrição, utilize o
 abaixo, substituindo CODIGO_CEP pelo código.
 
 `http://producao.acrasnfe.acras.com.br/v2/ceps/CODIGO_CEP`
+
+
+## Resposta da API
+
+> Dados de resposta da consulta
+
+```json
+[
+  {
+    "cep": "69909032",
+    "tipo": "logradouro",
+    "nome": "",
+    "uf": "AC",
+    "nome_localidade": "Rio Branco",
+    "codigo_ibge": "1200401",
+    "tipo_logradouro": "Rua",
+    "nome_logradouro": "Colinas",
+    "nome_bairro_inicial": "Rosa Linda",
+    "descricao": "Rua Colinas, Rio Branco, AC"
+  }
+]
+```
+
+Para cada consulta à nossa API de CEP a resposta trará um ou mais objetos JSON, com os campos como neste exemplo ao lado. Abaixo, a descrição de cada um dos campos:
+
+* **cep**: Código CEP, conforme base dos Correios.
+* **tipo**: Informa qual o tipo do CEP, que pode ser: localidade, logradouro, unidade operacional ou grande usuário.
+* **nome**: Para CEPs do tipo localidade, o campo se refere ao nome da localidade. Nos outros casos, repete o campo 'nome_localidade'.
+* **uf**: A sigla do Estado (Unidade da Federação) a qual pertence a localização do CEP.
+* **nome_localidade**: O nome do local, seja ele município, povoado, distrito, unidade operacional, etc. 
+* **codigo_ibge**: Código de identificação utilizado pelo IBGE, caso a localidade seja um município.
+* **tipo_logradouro**: Informa o tipo do logradouro. Exs: 'Rua', 'Avenida', 'Viela', etc.
+* **nome_logradouro**: Nome do logradouro correspondente à consulta.
+* **nome_bairro_inicial**: Nome do bairro onde inicia o CEP retornado na consulta.
+* **descricao**: Junção dos valores retornados nos campos 'tipo_logradouro', 'nome_logradouro', 'nome_localidade' e 'uf'.
