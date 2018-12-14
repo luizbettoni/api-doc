@@ -441,6 +441,11 @@
           </li>
           <li>
             <a href="#consulta-de-cep-beta_consulta-de-cep-beta" class="toc-h1 toc-link" data-title="consulta-de-cep-beta">Consulta de CEP (beta)</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#consulta-de-cep-beta_resposta-da-api" class="toc-h2 toc-link" data-title="resposta-da-api">Resposta da API</a>
+                  </li>
+              </ul>
           </li>
           <li>
             <a href="#revenda_revenda" class="toc-h1 toc-link" data-title="revenda">Revenda</a>
@@ -11389,23 +11394,6 @@ Passamos o token como quarto parametro deste metodo, como autenticador do HTTP B
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Corpo: "</span> <span class="o">+</span> <span class="nx">request</span><span class="p">.</span><span class="nx">responseText</span><span class="p">);</span>
 
 </code></pre>
-<blockquote>
-<p>Dados de resposta da consulta</p>
-</blockquote>
-<pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
-  </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"cep"</span><span class="p">:</span><span class="w"> </span><span class="s2">"69909032"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"tipo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"logradouro"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"nome"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"uf"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AC"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"nome_localidade"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Rio Branco"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"tipo_logradouro"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Rua"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"nome_logradouro"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Colinas"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"nome_bairro_inicial"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Rosa Linda"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"descricao"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Rua Colinas, Rio Branco, AC"</span><span class="w">
-  </span><span class="p">}</span><span class="w">
-</span><span class="p">]</span><span class="w">
-</span></code></pre>
 <p>Para realizar uma consulta de CEP, utilize o endereço abaixo:</p>
 
 <p><code>http://homologacao.acrasnfe.acras.com.br/v2/ceps</code></p>
@@ -11425,6 +11413,39 @@ Passamos o token como quarto parametro deste metodo, como autenticador do HTTP B
 abaixo, substituindo CODIGO_CEP pelo código.</p>
 
 <p><code>http://producao.acrasnfe.acras.com.br/v2/ceps/CODIGO_CEP</code></p>
+<h2 id='consulta-de-cep-beta_resposta-da-api'>Resposta da API</h2>
+<blockquote>
+<p>Dados de resposta da consulta</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"cep"</span><span class="p">:</span><span class="w"> </span><span class="s2">"69909032"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"tipo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"logradouro"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"nome"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"uf"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AC"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"nome_localidade"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Rio Branco"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"codigo_ibge"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1200401"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"tipo_logradouro"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Rua"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"nome_logradouro"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Colinas"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"nome_bairro_inicial"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Rosa Linda"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"descricao"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Rua Colinas, Rio Branco, AC"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre>
+<p>Para cada consulta à nossa API de CEP a resposta trará um ou mais objetos JSON, com os campos como neste exemplo ao lado. Abaixo, a descrição de cada um dos campos:</p>
+
+<ul>
+<li><strong>cep</strong>: Código CEP, conforme base dos Correios.</li>
+<li><strong>tipo</strong>: Informa qual o tipo do CEP, que pode ser: localidade, logradouro, unidade operacional ou grande usuário.</li>
+<li><strong>nome</strong>: Para CEPs do tipo localidade, o campo se refere ao nome da localidade. Nos outros casos, repete o campo &#39;nome_localidade&#39;.</li>
+<li><strong>uf</strong>: A sigla do Estado (Unidade da Federação) a qual pertence a localização do CEP.</li>
+<li><strong>nome_localidade</strong>: O nome do local, seja ele município, povoado, distrito, unidade operacional, etc. </li>
+<li><strong>codigo_ibge</strong>: Código de identificação utilizado pelo IBGE, caso a localidade seja um município.</li>
+<li><strong>tipo_logradouro</strong>: Informa o tipo do logradouro. Exs: &#39;Rua&#39;, &#39;Avenida&#39;, &#39;Viela&#39;, etc.</li>
+<li><strong>nome_logradouro</strong>: Nome do logradouro correspondente à consulta.</li>
+<li><strong>nome_bairro_inicial</strong>: Nome do bairro onde inicia o CEP retornado na consulta.</li>
+<li><strong>descricao</strong>: Junção dos valores retornados nos campos &#39;tipo_logradouro&#39;, &#39;nome_logradouro&#39;, &#39;nome_localidade&#39; e &#39;uf&#39;.</li>
+</ul>
 <h1 id='revenda_revenda'>Revenda</h1>
 <p>A API de Revenda ainda não foi migrada para a versão 2.0, você pode consultar a <a href="https://focusnfe.com.br/api/doc/revenda/">versão anterior aqui</a></p>
 <h1 id='limite-de-requisicoes_limite-de-requisicoes'>Limite de requisições</h1>
