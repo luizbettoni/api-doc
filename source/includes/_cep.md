@@ -232,11 +232,11 @@ Para cada consulta à nossa API de CEP a resposta trará um ou mais objetos JSON
 * **tipo**:(*) Informa qual o tipo do CEP, que pode ser: localidade, logradouro, unidade_operacional ou grande_usuario.
 * **nome**: Para CEPs do tipo "unidade_operacional" ou "grande_usuario", o campo retorna o nome dos estabelecimentos.
 * **uf**: A sigla do Estado (Unidade da Federação) a qual pertence a localização do CEP.
-* **nome_localidade**: O nome do local, seja ele município, povoado, distrito, unidade operacional, etc. 
-* **codigo_ibge**: Código de identificação utilizado pelo IBGE, caso a localidade seja um município.
+* **nome_localidade**: O nome do local, seja ele uma localidade, unidade operacional ou grande usuário.
+* **codigo_município**: Código de identificação utilizado pelo IBGE, caso a localidade seja um município.
 * **tipo_logradouro**: Informa o tipo do logradouro. Exs: 'Rua', 'Avenida', 'Viela', etc.
 * **nome_logradouro**: Nome do logradouro correspondente à consulta.
-* **nome_bairro_inicial**: Nome do bairro onde inicia o CEP retornado na consulta.
+* **bairro**: Nome do bairro onde inicia o CEP retornado na consulta.
 * **descricao**: Junção dos valores retornados nos campos 'tipo_logradouro', 'nome_logradouro', 'nome_localidade' e 'uf'.
 
 \* localidade se refere a um município, povoado ou distrito.
