@@ -229,8 +229,8 @@ abaixo, substituindo CODIGO_CEP pelo código.
 Para cada consulta à nossa API de CEP a resposta trará um ou mais objetos JSON, com os campos como neste exemplo ao lado. Abaixo, a descrição de cada um dos campos:
 
 * **cep**: Código CEP, conforme base dos Correios.
-* **tipo**: Informa qual o tipo do CEP, que pode ser: localidade, logradouro, unidade operacional ou grande usuário.
-* **nome**: Para CEPs do tipo localidade, o campo se refere ao nome da localidade. Nos outros casos, repete o campo 'nome_localidade'.
+* **tipo**:(*) Informa qual o tipo do CEP, que pode ser: localidade, logradouro, unidade_operacional ou grande_usuario.
+* **nome**: Para CEPs do tipo "unidade_operacional" ou "grande_usuario", o campo retorna o nome dos estabelecimentos.
 * **uf**: A sigla do Estado (Unidade da Federação) a qual pertence a localização do CEP.
 * **nome_localidade**: O nome do local, seja ele município, povoado, distrito, unidade operacional, etc. 
 * **codigo_ibge**: Código de identificação utilizado pelo IBGE, caso a localidade seja um município.
@@ -238,3 +238,8 @@ Para cada consulta à nossa API de CEP a resposta trará um ou mais objetos JSON
 * **nome_logradouro**: Nome do logradouro correspondente à consulta.
 * **nome_bairro_inicial**: Nome do bairro onde inicia o CEP retornado na consulta.
 * **descricao**: Junção dos valores retornados nos campos 'tipo_logradouro', 'nome_logradouro', 'nome_localidade' e 'uf'.
+
+\* localidade se refere a um município, povoado ou distrito.
+\* logradouro são localizações em vias de tráfego de áreas urbanas ou rurais
+\* unidade_operacional designa uma unidade do Correios que possue CEP próprio
+\* grande_usuario é utilizado para instituições, privadas ou públicas, que são referência pelo seu tamanho ou importância no local, tendo CEP próprio
