@@ -421,6 +421,9 @@
                   <li>
                     <a href="#gatilhos-webhooks_exclusao" class="toc-h2 toc-link" data-title="exclusao">Exclusão</a>
                   </li>
+                  <li>
+                    <a href="#gatilhos-webhooks_teste-e-reenvio-de-notificacoes" class="toc-h2 toc-link" data-title="teste-e-reenvio-de-notificacoes">Teste e reenvio de notificações</a>
+                  </li>
               </ul>
           </li>
           <li>
@@ -10253,7 +10256,7 @@ url = "https://api.focusnfe.com.br"
 <li><strong>ref</strong>: A referência da emissão.</li>
 <li><strong>numero_rps</strong>: Número do RPS da nota.</li>
 <li><strong>serie_rps</strong>: Série do RPS da nota.</li>
-<li><strong>status</strong>: 
+<li><strong>status</strong>:
 
 <ul>
 <li><strong>processando_autorizacao</strong>: A nota ainda está em processamento pela API. Você deverá aguardar o processamento da Prefeitura.</li>
@@ -10268,7 +10271,7 @@ url = "https://api.focusnfe.com.br"
 <li><strong>caminho_xml_nota_fsical</strong>: Caminho para download do XML da nota fiscal.</li>
 </ul>
 
-<p>A vantagem de utilizar gatilhos é que não haverá a necessidade de fazer &quot;pulling&quot; (realizar constantes requisições a fim de verificar o status da nota).</p>
+<p>A vantagem de utilizar gatilhos é que não haverá a necessidade de fazer &quot;polling&quot; (realizar constantes requisições a fim de verificar o status da nota).</p>
 
 <p>Na ocorrência de falha na execução do POST para a URL definida (exemplo: servidor fora do ar ou alguma resposta HTTP diferente de 20X) a API tentará um reenvio nos seguintes intervalos: 1 minuto, 30 minutos, 1 hora, 3 horas, 24 horas até o momento em que a API irá desistir de acionar o gatilho.</p>
 <h2 id='gatilhos-webhooks_status-api'>Status API</h2>
@@ -10748,6 +10751,34 @@ Passamos o token como quarto parametro deste metodo, como autenticador do HTTP B
 <p><code>https://api.focusnfe.com.br/v2/hooks/HOOK_ID</code></p>
 
 <p>Utilize o método HTTP <strong>DELETE</strong> para excluir o gatilho. Em caso de sucesso será exibido os dados do gatilho excluído acrescentado do atributo &quot;deleted&quot; com o valor &quot;true&quot;.</p>
+<h2 id='gatilhos-webhooks_teste-e-reenvio-de-notificacoes'>Teste e reenvio de notificações</h2>
+<p>Para efeitos de teste ou para recuperar notificações perdidas é possível solicitar à API o reenvio desta notificação para todos os gatilhos cadastrados.</p>
+
+<p>Para isso é disponibilizado um endereço para cada tipo de documento que aceita gatilhos. Basta enviar uma requisição POST para os endereços abaixo:</p>
+
+<blockquote>
+<p>Dados de resposta da solicitação de reenvio de notificação de uma NFe</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Vj5rmkBq"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://minha.url/nfe"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"authorization"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"event"</span><span class="p">:</span><span class="w"> </span><span class="s2">"nfe"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"cnpj"</span><span class="p">:</span><span class="w"> </span><span class="s2">"51916585000125"</span><span class="p">,</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre>
+<ul>
+<li>NFe: <code>https://api.focusnfe.com.br/v2/nfe/REFERENCIA/hook</code></li>
+<li>NFSe: <code>https://api.focusnfe.com.br/v2/nfse/REFERENCIA/hook</code></li>
+<li>NFe Recebida: <code>https://api.focusnfe.com.br/v2/nfes_recebidas/CHAVE_NFE/hook</code></li>
+</ul>
+
+<p>O corpo da requisição do método POST pode ser vazio.</p>
+
+<p>Caso a nota seja encontrada, será devolvido um array contendo todos os gatilhos que foram acionados ou um array vazio se não houver gatilhos cadastrados.</p>
 <h1 id='consulta-de-ncm_consulta-de-ncm'>Consulta de NCM</h1>
 <p>NCM significa &quot;Nomenclatura Comum do Mercosul&quot; e trata-se de um código de oito dígitos estabelecido através da convenção de categorização de mercadorias adotada desde 1995 pelo Uruguai, Paraguai, Brasil e Argentina e que toma por base o Sistema Harmonizado (SH). Este código é utilizado na emissão de NFe e de NFCe.</p>
 
@@ -11436,14 +11467,21 @@ abaixo, substituindo CODIGO_CEP pelo código.</p>
 
 <ul>
 <li><strong>cep</strong>: Código CEP, conforme base dos Correios.</li>
-<li><strong>tipo</strong>: Informa qual o tipo do CEP, que pode ser: localidade, logradouro, unidade operacional ou grande usuário.</li>
-<li><strong>nome</strong>: Para CEPs do tipo localidade, o campo se refere ao nome da localidade. Nos outros casos, repete o campo &#39;nome_localidade&#39;.</li>
+<li><strong>tipo</strong>: Informa qual o tipo do CEP, que pode ser:
+
+<ul>
+<li>localidade - se refere a um município, povoado ou distrito.</li>
+<li>logradouro - são localizações em vias de tráfego de áreas urbanas ou rurais</li>
+<li>unidade_operacional - designa uma unidade do Correios que possue CEP próprio</li>
+<li>grande_usuario -  é utilizado para instituições, privadas ou públicas, que são referência pelo seu tamanho ou importância no local, tendo CEP próprio</li>
+</ul></li>
+<li><strong>nome</strong>: Para CEPs do tipo &quot;unidade_operacional&quot; ou &quot;grande_usuario&quot;, o campo retorna o nome dos estabelecimentos.</li>
 <li><strong>uf</strong>: A sigla do Estado (Unidade da Federação) a qual pertence a localização do CEP.</li>
-<li><strong>nome_localidade</strong>: O nome do local, seja ele município, povoado, distrito, unidade operacional, etc. </li>
-<li><strong>codigo_ibge</strong>: Código de identificação utilizado pelo IBGE, caso a localidade seja um município.</li>
+<li><strong>nome_localidade</strong>: O nome do local, seja ele uma localidade, unidade operacional ou grande usuário.</li>
+<li><strong>codigo_município</strong>: Código de identificação utilizado pelo IBGE, caso a localidade seja um município.</li>
 <li><strong>tipo_logradouro</strong>: Informa o tipo do logradouro. Exs: &#39;Rua&#39;, &#39;Avenida&#39;, &#39;Viela&#39;, etc.</li>
 <li><strong>nome_logradouro</strong>: Nome do logradouro correspondente à consulta.</li>
-<li><strong>nome_bairro_inicial</strong>: Nome do bairro onde inicia o CEP retornado na consulta.</li>
+<li><strong>bairro</strong>: Nome do bairro onde inicia o CEP retornado na consulta.</li>
 <li><strong>descricao</strong>: Junção dos valores retornados nos campos &#39;tipo_logradouro&#39;, &#39;nome_logradouro&#39;, &#39;nome_localidade&#39; e &#39;uf&#39;.</li>
 </ul>
 <h1 id='revenda_revenda'>Revenda</h1>
