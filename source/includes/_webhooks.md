@@ -49,7 +49,7 @@ Para NFSe:
 * **ref**: A referência da emissão.
 * **numero_rps**: Número do RPS da nota.
 * **serie_rps**: Série do RPS da nota.
-* **status**: 
+* **status**:
   - **processando_autorizacao**: A nota ainda está em processamento pela API. Você deverá aguardar o processamento da Prefeitura.
   - **autorizado**: A nota foi autorizada, neste caso é fornecido os dados completos da nota como chave e arquivos para download
   - **cancelado**: O documento foi cancelado, neste caso é fornecido o caminho para download do XML de cancelamento (caminho_xml_cancelamento).
@@ -60,7 +60,7 @@ Para NFSe:
 * **url**: URL para visualização da nota fiscal a partir do portal da Prefeitura.
 * **caminho_xml_nota_fsical**: Caminho para download do XML da nota fiscal.
 
-A vantagem de utilizar gatilhos é que não haverá a necessidade de fazer "pulling" (realizar constantes requisições a fim de verificar o status da nota).
+A vantagem de utilizar gatilhos é que não haverá a necessidade de fazer "polling" (realizar constantes requisições a fim de verificar o status da nota).
 
 Na ocorrência de falha na execução do POST para a URL definida (exemplo: servidor fora do ar ou alguma resposta HTTP diferente de 20X) a API tentará um reenvio nos seguintes intervalos: 1 minuto, 30 minutos, 1 hora, 3 horas, 24 horas até o momento em que a API irá desistir de acionar o gatilho.
 
@@ -560,3 +560,32 @@ Para excluir um gatilho, utilize a URL
 `https://api.focusnfe.com.br/v2/hooks/HOOK_ID`
 
 Utilize o método HTTP **DELETE** para excluir o gatilho. Em caso de sucesso será exibido os dados do gatilho excluído acrescentado do atributo "deleted" com o valor "true".
+
+## Teste e reenvio de notificações
+
+Para efeitos de teste ou para recuperar notificações perdidas é possível solicitar à API o reenvio desta notificação para todos os gatilhos cadastrados.
+
+Para isso é disponibilizado um endereço para cada tipo de documento que aceita gatilhos. Basta enviar uma requisição POST para os endereços abaixo:
+
+> Dados de resposta da solicitação de reenvio de notificação de uma NFe
+
+```json
+[
+
+  {
+    "id": "Vj5rmkBq",
+    "url": "http://minha.url/nfe",
+    "authorization": null,
+    "event": "nfe",
+    "cnpj": "51916585000125",
+  }
+]
+```
+
+* NFe: `https://api.focusnfe.com.br/v2/nfe/REFERENCIA/hook`
+* NFSe: `https://api.focusnfe.com.br/v2/nfse/REFERENCIA/hook`
+* NFe Recebida: `https://api.focusnfe.com.br/v2/nfes_recebidas/CHAVE_NFE/hook`
+
+O corpo da requisição do método POST pode ser vazio.
+
+Caso a nota seja encontrada, será devolvido um array contendo todos os gatilhos que foram acionados ou um array vazio se não houver gatilhos cadastrados.
