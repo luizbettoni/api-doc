@@ -15,6 +15,7 @@ includes:
   - nfe
   - nfce
   - cte
+  - mdfe
   - backups
   - nfse
   - manifestacao
