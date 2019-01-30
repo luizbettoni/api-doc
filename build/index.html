@@ -349,6 +349,29 @@
               </ul>
           </li>
           <li>
+            <a href="#mdf-e-beta_mdf-e-beta" class="toc-h1 toc-link" data-title="mdf-e-beta">MDF-e (beta)</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#mdf-e-beta_urls" class="toc-h2 toc-link" data-title="urls">URLs</a>
+                  </li>
+                  <li>
+                    <a href="#mdf-e-beta_campos-de-um-mdf-e" class="toc-h2 toc-link" data-title="campos-de-um-mdf-e">Campos de um MDF-e</a>
+                  </li>
+                  <li>
+                    <a href="#mdf-e-beta_status-api" class="toc-h2 toc-link" data-title="status-api">Status API</a>
+                  </li>
+                  <li>
+                    <a href="#mdf-e-beta_envio" class="toc-h2 toc-link" data-title="envio">Envio</a>
+                  </li>
+                  <li>
+                    <a href="#mdf-e-beta_consulta" class="toc-h2 toc-link" data-title="consulta">Consulta</a>
+                  </li>
+                  <li>
+                    <a href="#mdf-e-beta_cancelamento" class="toc-h2 toc-link" data-title="cancelamento">Cancelamento</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
             <a href="#backups-nfe-nfce-e-cte_backups-nfe-nfce-e-cte" class="toc-h1 toc-link" data-title="backups-nfe-nfce-e-cte">Backups (NFe, NFCe e CTe)</a>
           </li>
           <li>
@@ -7474,6 +7497,355 @@ serao convertidos a JSON e enviados para nossa API.
 <li><strong>numero_final</strong>: Número final a ser inutilizado</li>
 <li><strong>caminho_xml</strong>: Caminho do XML para download caso a inutilização tenha sido autorizada pela SEFAZ.</li>
 </ul>
+<h1 id='mdf-e-beta_mdf-e-beta'>MDF-e (beta)</h1>
+<p>A MDF-e (Manifesto Eletrônico de Documentos Fiscais) é utilizada para rastrear a circulação física da carga em transportes interestaduais, transporte de carga fracionada ou por transporte de bens que utilizam mais de uma NFe.</p>
+
+<p>Esta API está em beta, no momento, apenas as seguintes operações estão disponíveis:</p>
+
+<ul>
+<li>Emissão de MDF-e (sem emissão da DAMDF-e)</li>
+<li>Cancelamento de MDF-e</li>
+</ul>
+
+<p>Através da API MDF-e é possível:</p>
+
+<ul>
+<li>Emitir MDF-e (Conhecimento de Transporte Eletrônico) utilizando dados simplificados. Este processo é <strong>assíncrono</strong>. Ou seja, após a emissão a nota será enfileirada para processamento.</li>
+<li>Cancelar uma MDF-e</li>
+<li>Consultar o status de MDF-e emitidas.</li>
+<li>Emitir os eventos: inclusão de condutor e encerramento.</li>
+<li>Consulta de MDF-es não encerrados</li>
+</ul>
+<h2 id='mdf-e-beta_urls'>URLs</h2>
+<table><thead>
+<tr>
+<th>Método</th>
+<th>URL (recurso)</th>
+<th>Ação</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>POST</td>
+<td>/v2/mdfe?ref=REFERENCIA</td>
+<td>Cria uma MDF-e e envia para processamento.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td>/v2/mdfe/REFERENCIA</td>
+<td>Consulta a MDF-e com a referência informada e o seu status de processamento</td>
+</tr>
+<tr>
+<td>DELETE</td>
+<td>/v2/mdfe/REFERENCIA</td>
+<td>Cancela uma MDF-e com a referência informada</td>
+</tr>
+<tr>
+<td>POST</td>
+<td>/v2/mdfe/REFERENCIA/inclusao_condutor</td>
+<td>Inclui um novo condutor.</td>
+</tr>
+<tr>
+<td>POST</td>
+<td>/v2/mdfe/REFERENCIA/encerramento</td>
+<td>Encerra uma MDF-e</td>
+</tr>
+</tbody></table>
+<h2 id='mdf-e-beta_campos-de-um-mdf-e'>Campos de um MDF-e</h2>
+<blockquote>
+<p>Abaixo um exemplo de dados de uma MDF-e:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="w">
+</span><span class="p">{</span><span class="w">
+  </span><span class="s2">"modal_aereo"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"marca_nacionalidade_aeronave"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ABCD"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"marca_matricula_aeronave"</span><span class="p">:</span><span class="w"> </span><span class="s2">"123456"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"numero_voo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AB1234"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"aerodromo_embarque"</span><span class="p">:</span><span class="w"> </span><span class="s2">"OACI"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"aerodromo_destino"</span><span class="p">:</span><span class="w"> </span><span class="s2">"OACI"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"data_voo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-06-15"</span><span class="w">
+
+  </span><span class="p">},</span><span class="w">
+  </span><span class="s2">"emitente"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"tipo_transporte"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"serie"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"modo_transporte"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"data_emissao"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-01-30"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"uf_inicio"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BA"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"uf_fim"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PR"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"municipios_carregamento"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"codigo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2927408"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"nome"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Salvador"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"percursos"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"uf_percurso"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PR"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"data_hora_previsto_inicio_viagem"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-01-16"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"cnpj_emitente"</span><span class="p">:</span><span class="w"> </span><span class="s2">"22274451000119"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"inscricao_estadual_emitente"</span><span class="p">:</span><span class="w"> </span><span class="s2">"25231737"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"municipios_descarregamento"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"codigo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4119152"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"nome"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Pinhais"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"conhecimentos_transporte"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="s2">"chave_cte"</span><span class="p">:</span><span class="w"> </span><span class="s2">"21111100317911000149570011000000051123456786"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">]</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"quantidade_total_cte"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"valor_total_carga"</span><span class="p">:</span><span class="w"> </span><span class="s2">"20000.00"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"codigo_unidade_medida_peso_bruto"</span><span class="p">:</span><span class="w"> </span><span class="s2">"01"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"peso_bruto"</span><span class="p">:</span><span class="w"> </span><span class="s2">"11.0000"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+
+</span></code></pre>
+<p>Abaixo você poderá consultar os campos da MDF-e. Nesta página, você pode buscar os campos pela TAG XML ou pela nossa tradução para API.</p>
+
+<p><a href="https://focusnfe.com.br/dsl/mdfe3.0/MDFeXML.html">Documentação completa dos campos MDF-e</a></p>
+
+<p>Além dos campos descritos acima, cada MDF-e deverá obrigatoriamente informar um <strong>modal</strong>, que é a forma de transporte da carga. Você deverá informar uma das seguintes chaves nos dados, clique em cada link para visualizar os campos completos:</p>
+
+<ul>
+<li>modal_rodoviario <a href="https://focusnfe.com.br/dsl/mdfe3.0/TransporteRodoviarioXML.html">para transporte rodoviário.</a></li>
+<li>modal_aereo <a href="https://focusnfe.com.br/dsl/mdfe3.0/TransporteAereoXML.html">para transporte aéreo.</a></li>
+<li>modal_aquaviario <a href="https://focusnfe.com.br/dsl/mdfe3.0/TransporteAquaviarioXML.html">para transporte aquaviário.</a></li>
+<li>modal_ferroviario <a href="https://focusnfe.com.br/dsl/mdfe3.0/TransporteFerroviarioXML.html">para transporte ferroviário.</a></li>
+</ul>
+<h2 id='mdf-e-beta_status-api'>Status API</h2>
+<p>Aqui você encontra os status possíveis</p>
+
+<table><thead>
+<tr>
+<th>HTTP CODE/STATUS</th>
+<th>Status API Focus</th>
+<th>Descrição</th>
+<th>Correção</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>422 - unprocessable entity</td>
+<td>erro_validacao_schema</td>
+<td>Erro na validação do Schema XML</td>
+<td>Verifique o detalhamento do erro na resposta da API.</td>
+</tr>
+<tr>
+<td>400 - bad request</td>
+<td>forma_emissao_invalida</td>
+<td>A forma de emissão utilizada é inválida</td>
+<td>As formas de emissão disponíveis estão contidas na documentação da API.</td>
+</tr>
+<tr>
+<td>400 - bad request</td>
+<td>campos_invalidos</td>
+<td>OCampo &#39;X não é válido</td>
+<td>Onde X é o nome do campo inválido. Verifique a documentação dos campos da API para MDF-e.</td>
+</tr>
+<tr>
+<td>400 - bad request</td>
+<td>campos_invalidos_modal</td>
+<td>Esse status indica erros nos campos do modal usado. Verifique os campos informados e compare com a nossa documentação de campos.</td>
+<td></td>
+</tr>
+<tr>
+<td>400 - bad request</td>
+<td>empresa_nao_habilitada</td>
+<td>Empresa ainda não habilitada para emissão de MDF-e</td>
+<td>Verifique o cadastro do emitente no Painel API, deve-se habilitar MDF-e para começar a emitir este documento.</td>
+</tr>
+<tr>
+<td>409 - conflict</td>
+<td>mdfe_ja_autorizado</td>
+<td>Já existe um MDF-e autorizado utilizando esta referência</td>
+<td>Altere a referência da requisição e tente novamente.</td>
+</tr>
+<tr>
+<td>409 - conflict</td>
+<td>mdfe_em_processamento</td>
+<td>Já existe um MDF-e utilizando essa referencia e ele está em processamento</td>
+<td>Altere a referência da requisição e tente novamente.</td>
+</tr>
+<tr>
+<td>404 - not found</td>
+<td>nao_encontrado</td>
+<td>MDF-e não encontrado</td>
+<td>MDF-e informado na requisição não foi encontrado.</td>
+</tr>
+<tr>
+<td>400 - bad request</td>
+<td>requisicao_invalida</td>
+<td>Sua requisição é inválida porque alguns dos paramêtros básicos não foram cumpridos. Entre em contato com o nosso suporte.</td>
+<td></td>
+</tr>
+</tbody></table>
+<h2 id='mdf-e-beta_envio'>Envio</h2><pre class="highlight shell tab-shell"><code><span class="c"># arquivo.json deve conter os dados da MDF-e</span>
+curl -u token_enviado_pelo_suporte: <span class="se">\</span>
+  -X POST -T arquivo.json http://homologacao.acrasnfe.acras.com.br/v2/mdfe?ref<span class="o">=</span>12345
+</code></pre>
+<p>Para enviar uma MDF-e utilize a URL abaixo, alterando o ambiente de produção para homologação, caso esteja emitindo notas de teste.</p>
+
+<p>Envia uma <strong>MDF-e</strong> para autorização:</p>
+
+<p><code>https://api.focusnfe.com.br/v2/mdfe?ref=REFERENCIA</code></p>
+
+<p>Utilize o comando <strong>HTTP POST</strong> para enviar a sua nota para nossa API. Envie como corpo do POST os dados em formato JSON da MDF-e.</p>
+
+<p>Nesta etapa, é feita uma primeira validação dos dados da nota. Caso ocorra algum problema, por exemplo, algum campo faltante, formato incorreto
+ou algum problema com o emitente a nota <strong>não será aceita para processamento</strong> e será devolvida a mensagem de erro apropriada. Veja a seção <a href="#introducao_erros">erros</a>.</p>
+
+<p>Caso a nota seja validada corretamente, a nota será <strong>aceita para processamento</strong>. Isto significa que a nota irá para uma fila de processamento
+onde eventualmente será processada (processamento assíncrono). Com isto, a nota poderá ser autorizada ou ocorrer um erro na autorização, de acordo com a validação da SEFAZ.</p>
+
+<p>Para verificar se a nota já foi autorizada, você terá que efetuar uma <a href="#mdfe_consulta">consulta</a>.</p>
+<h2 id='mdf-e-beta_consulta'>Consulta</h2><pre class="highlight shell tab-shell"><code>curl -u token_enviado_pelo_suporte: <span class="se">\</span>
+  http://homologacao.acrasnfe.acras.com.br/v2/mdfe/12345
+</code></pre>
+<p>Para consultar uma MDF-e utilize a URL abaixo, alterando o ambiente de produção para homologação, caso esteja emitindo notas de teste.</p>
+
+<p>Consultar as informações de uma MDF-e:</p>
+
+<p><code>https://api.focusnfe.com.br/v2/mdfe/REFERENCIA?completa=(0|1)</code></p>
+
+<p>Utilize o comando <strong>HTTP GET</strong> para consultar a sua nota para nossa API.</p>
+
+<table><thead>
+<tr>
+<th>Parâmetro Opcional</th>
+<th>Ação</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>completa = 0 ou 1</td>
+<td>Habilita a API há mostrar campos adicionais na requisição de consulta.</td>
+</tr>
+</tbody></table>
+
+<p>Campos de retorno:</p>
+
+<ul>
+<li><strong>cnpj_emitente</strong>: O CNPJ emitente da MDF-e (o CNPJ de sua empresa).</li>
+<li><strong>ref</strong>:A referência da emissão.</li>
+<li><strong>status</strong>: A situação da MDF-e, podendo ser:
+
+<ul>
+<li><strong>processando_autorizacao</strong>: A nota ainda está em processamento pela API. Você deverá aguardar o processamento pela SEFAZ.</li>
+<li><strong>autorizado</strong>: A nota foi autorizada, neste caso é fornecido os dados completos da nota como chave e arquivos para download</li>
+<li><strong>cancelado</strong>: O documento foi cancelado, neste caso é fornecido o caminho para download do XML de cancelamento (caminho_xml_cancelamento).</li>
+<li><strong>erro_autorizacao</strong>: Houve um erro de autorização por parte da SEFAZ. A mensagem de erro você encontrará nos campos status_sefaz e mensagem_sefaz. É possível fazer o reenvio da nota com a mesma referência se ela estiver neste estado.</li>
+<li><strong>denegado</strong>: O documento foi denegado. Uma SEFAZ pode denegar uma nota se houver algum erro cadastral nos dados do destinatário ou do emitente. A mensagem de erro você encontrará nos campos status_sefaz e mensagem_sefaz. Não é possível reenviar a nota caso este estado seja alcançado pois é gerado um número, série, chave de MDF-e e XML para esta nota. O XML deverá ser armazenado pelo mesmo período de uma nota autorizada ou cancelada.</li>
+</ul></li>
+<li><strong>status_sefaz</strong>: O status da nota na SEFAZ.</li>
+<li><strong>mensagem_sefaz</strong>: Mensagem descritiva da SEFAZ detalhando o status.</li>
+<li><strong>serie</strong>: A série da MDF-e, caso ela tenha sido autorizada.</li>
+<li><strong>numero</strong>: O número da MDF-e, caso ela tenha sido autorizada.</li>
+<li><strong>modelo</strong>: O modelo da MDF-e, caso ela tenha sido autorizada. No momento sempre assume o valor 58.</li>
+<li><strong>chave_mdfe</strong>: A chave da MDF-e, caso ela tenha sido autorizada.</li>
+<li><strong>caminho_xml_nota_fiscal</strong>: caso a nota tenha sido autorizada, retorna o caminho para download do XML.</li>
+<li><strong>caminho_damdfe</strong>: caso a nota tenha sido autorizada retorna o caminho para download do DAMDF-e.</li>
+<li><strong>caminho_xml</strong>: caso tenha sido emitida alguma carta de correção, aqui aparecerá o caminho para fazer o download do XML.</li>
+<li><strong>caminho_xml_cancelamento</strong>: Caso a nota esteja cancelada, é fornecido o caminho para fazer o download do XML de cancelamento.</li>
+</ul>
+
+<p>Caso na requisição seja passado o parâmetro <code>completa=1</code> será adicionado mais 6 campos:</p>
+
+<ul>
+<li><strong>requisicao</strong>: Inclui os dados completos da requisição da MDF-e, da mesma forma que constam no XML da nota.</li>
+<li><strong>protocolo</strong>: Inclui os dados completos do protocolo devolvido pela SEFAZ.</li>
+<li><strong>requisicao_cancelamento</strong>: Inclui os dados completos da requisição de cancelamento da MDF-e.</li>
+<li><strong>protocolo_cancelamento</strong>: Inclui os dados completos do protocolo devolvido pela SEFAZ.</li>
+</ul>
+
+<blockquote>
+<p>Exemplo de resposta da consulta de MDF-e:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"cnpj_emitente"</span><span class="p">:</span><span class="w"> </span><span class="s2">"11111151000119"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ref123"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"autorizado"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"status_sefaz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"100"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"mensagem_sefaz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Autorizado o uso do MDF-e"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"chave"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MDFe21111114611151000119570010000000111973476363"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"numero"</span><span class="p">:</span><span class="w"> </span><span class="s2">"11"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"serie"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"modelo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"58"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"caminho_xml"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://focusnfe.s3-sa-east-1.amazonaws.com/arquivos_development/11111151000119/201805/XMLs/311110000007009_v03.00-protMDF-e.xml"</span><span class="p">,</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<blockquote>
+<p>Exemplo de resposta com o parâmetro, completa, recebendo o valor &quot;1&quot;:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+
+  </span><span class="s2">"cnpj_emitente"</span><span class="p">:</span><span class="w"> </span><span class="s2">"11111151000119"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ref123"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"autorizado"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"status_sefaz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"100"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"mensagem_sefaz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Autorizado o uso do CT-e"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"chave"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MDF-e21111114611151000119570010000000111973476363"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"numero"</span><span class="p">:</span><span class="w"> </span><span class="s2">"11"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"serie"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"modelo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"57"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"caminho_xml"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://focusnfe.s3-sa-east-1.amazonaws.com/arquivos_development/11111151000119/201805/XMLs/311110000007009_v03.00-protMDF-e.xml"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"caminho_xml_carta_correcao"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://focusnfe.s3-sa-east-1.amazonaws.com/arquivos_development/11111151000119/201805/XMLs/311110000007012_v03.00-eventoMDF-e.xml"</span><span class="w">
+  </span><span class="s2">"requisicao"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="err">/*</span><span class="w"> </span><span class="err">campos</span><span class="w"> </span><span class="err">da</span><span class="w"> </span><span class="err">MDF-e</span><span class="w"> </span><span class="err">aqui</span><span class="w"> </span><span class="err">omitida</span><span class="w"> </span><span class="err">*/</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+  </span><span class="s2">"protocolo"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"versao"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3.00"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"id_tag"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MDFe329180000007009"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"ambiente"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"versao_aplicativo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"RS20180430143216"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"chave"</span><span class="p">:</span><span class="w"> </span><span class="s2">"21111114611151000119570010000000111973476363"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"data_recimento"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-05-10T15:23:36-03:00"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"protocolo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"329180000007009"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"digest_value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PsPzcf7bCOwvNW+v2F+ZAzJPXJE="</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"100"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"motivo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Autorizado o uso do MDF-e"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre><h2 id='mdf-e-beta_cancelamento'>Cancelamento</h2><pre class="highlight shell tab-shell"><code>curl -u token_enviado_pelo_suporte: <span class="se">\</span>
+  -X DELETE -d <span class="s1">'{"justificativa":"Teste de cancelamento"}'</span> <span class="se">\</span>
+  http://homologacao.acrasnfe.acras.com.br/v2/mdfe/12345
+</code></pre>
+<blockquote>
+<p>Resposta da API para a requisição de cancelamento:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"status_sefaz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"135"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"mensagem_sefaz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Evento registrado e vinculado a MDF-e"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cancelado"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"caminho_xml"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://focusnfe.s3-sa-east-1.amazonaws.com/arquivos_development/14674451000119/201805/XMLs/329180000006929_v03.00-eventoMDF-e.xml"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>Para cancelar uma MDF-e, basta fazer uma requisição à URL abaixo, alterando o ambiente de produção para homologação, caso esteja emitindo notas de teste.</p>
+
+<p>Cancelar uma MDF-e já autorizada:</p>
+
+<p><code>https://api.focusnfe.com.br/v2/mdfe/REFERENCIA</code></p>
+
+<p>Utilize o comando <strong>HTTP DELETE</strong> para cancelar a sua nota para nossa API. Este método é síncrono, ou seja, a comunicação com a SEFAZ será feita imediatamente e devolvida a resposta na mesma requisição.</p>
+
+<p>O parâmetros de cancelamento deverão ser enviados da seguinte forma:</p>
+
+<ul>
+<li><strong>justificativa</strong>: Justificativa do cancelamento. Deverá conter de 15 a 255 caracteres.</li>
+</ul>
+
+<p>A API irá em seguida devolver os seguintes campos:</p>
+
+<ul>
+<li><strong>status</strong>: cancelado, se a nota pode ser cancelada, ou erro_cancelamento, se houve algum erro ao cancelar a nota.</li>
+<li><strong>status_sefaz</strong>: O status do cancelamento na SEFAZ.</li>
+<li><strong>mensagem_sefaz</strong>: Mensagem descritiva da SEFAZ detalhando o status.</li>
+<li><strong>caminho_xml</strong>: Caso a nota tenha sido cancelada, será informado aqui o caminho para download do XML de cancelamento.</li>
+</ul>
+<h3 id='mdf-e-beta_prazo-de-cancelamento'>Prazo de cancelamento</h3>
+<p>A MDF-e poderá ser cancelada em até 24 horas após a emissão.</p>
 <h1 id='backups-nfe-nfce-e-cte_backups-nfe-nfce-e-cte'>Backups (NFe, NFCe e CTe)</h1>
 <p>Atualmente, realizamos o backup de todos os arquivos XML’s das notas fiscais emitidas pela nossa API. Vale lembrar que o XML é um arquivo com validade legal e deve ser armazenado pelos emitentes, para fins fiscais, por no mínimo 5 anos após a emissão.</p>
 
