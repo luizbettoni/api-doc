@@ -369,6 +369,12 @@
                   <li>
                     <a href="#mdf-e-beta_cancelamento" class="toc-h2 toc-link" data-title="cancelamento">Cancelamento</a>
                   </li>
+                  <li>
+                    <a href="#mdf-e-beta_inclusao-de-condutor" class="toc-h2 toc-link" data-title="inclusao-de-condutor">Inclusão de Condutor</a>
+                  </li>
+                  <li>
+                    <a href="#mdf-e-beta_encerramento" class="toc-h2 toc-link" data-title="encerramento">Encerramento</a>
+                  </li>
               </ul>
           </li>
           <li>
@@ -7500,11 +7506,13 @@ serao convertidos a JSON e enviados para nossa API.
 <h1 id='mdf-e-beta_mdf-e-beta'>MDF-e (beta)</h1>
 <p>A MDF-e (Manifesto Eletrônico de Documentos Fiscais) é utilizada para rastrear a circulação física da carga em transportes interestaduais, transporte de carga fracionada ou por transporte de bens que utilizam mais de uma NFe.</p>
 
-<p>Esta API está em beta, no momento, apenas as seguintes operações estão disponíveis:</p>
+<p>As seguintes operações estão disponíveis:</p>
 
 <ul>
 <li>Emissão de MDF-e (sem emissão da DAMDF-e)</li>
+<li>Inclusão de condutor</li>
 <li>Cancelamento de MDF-e</li>
+<li>Encerramento de MDF-e</li>
 </ul>
 
 <p>Através da API MDF-e é possível:</p>
@@ -7514,7 +7522,6 @@ serao convertidos a JSON e enviados para nossa API.
 <li>Cancelar uma MDF-e</li>
 <li>Consultar o status de MDF-e emitidas.</li>
 <li>Emitir os eventos: inclusão de condutor e encerramento.</li>
-<li>Consulta de MDF-es não encerrados</li>
 </ul>
 <h2 id='mdf-e-beta_urls'>URLs</h2>
 <table><thead>
@@ -7736,6 +7743,7 @@ onde eventualmente será processada (processamento assíncrono). Com isto, a not
 <li><strong>processando_autorizacao</strong>: A nota ainda está em processamento pela API. Você deverá aguardar o processamento pela SEFAZ.</li>
 <li><strong>autorizado</strong>: A nota foi autorizada, neste caso é fornecido os dados completos da nota como chave e arquivos para download</li>
 <li><strong>cancelado</strong>: O documento foi cancelado, neste caso é fornecido o caminho para download do XML de cancelamento (caminho_xml_cancelamento).</li>
+<li><strong>encerrado</strong>: O documento foi autorizado e posteriormente encerrado, neste caso é fornecido o caminho para download do XML de encerramento (caminho_xml_encerramento).</li>
 <li><strong>erro_autorizacao</strong>: Houve um erro de autorização por parte da SEFAZ. A mensagem de erro você encontrará nos campos status_sefaz e mensagem_sefaz. É possível fazer o reenvio da nota com a mesma referência se ela estiver neste estado.</li>
 <li><strong>denegado</strong>: O documento foi denegado. Uma SEFAZ pode denegar uma nota se houver algum erro cadastral nos dados do destinatário ou do emitente. A mensagem de erro você encontrará nos campos status_sefaz e mensagem_sefaz. Não é possível reenviar a nota caso este estado seja alcançado pois é gerado um número, série, chave de MDF-e e XML para esta nota. O XML deverá ser armazenado pelo mesmo período de uma nota autorizada ou cancelada.</li>
 </ul></li>
@@ -7748,7 +7756,8 @@ onde eventualmente será processada (processamento assíncrono). Com isto, a not
 <li><strong>caminho_xml_nota_fiscal</strong>: caso a nota tenha sido autorizada, retorna o caminho para download do XML.</li>
 <li><strong>caminho_damdfe</strong>: caso a nota tenha sido autorizada retorna o caminho para download do DAMDF-e.</li>
 <li><strong>caminho_xml</strong>: caso tenha sido emitida alguma carta de correção, aqui aparecerá o caminho para fazer o download do XML.</li>
-<li><strong>caminho_xml_cancelamento</strong>: Caso a nota esteja cancelada, é fornecido o caminho para fazer o download do XML de cancelamento.</li>
+<li><strong>caminho_xml_cancelamento</strong>: Caso a MDFe esteja cancelada, é fornecido o caminho para fazer o download do XML de cancelamento.</li>
+<li><strong>caminho_xml_encerramento</strong>: Caso a MDFe esteja encerrada, é fornecido o caminho para fazer o download do XML de encerramento.</li>
 </ul>
 
 <p>Caso na requisição seja passado o parâmetro <code>completa=1</code> será adicionado mais 6 campos:</p>
@@ -7758,6 +7767,11 @@ onde eventualmente será processada (processamento assíncrono). Com isto, a not
 <li><strong>protocolo</strong>: Inclui os dados completos do protocolo devolvido pela SEFAZ.</li>
 <li><strong>requisicao_cancelamento</strong>: Inclui os dados completos da requisição de cancelamento da MDF-e.</li>
 <li><strong>protocolo_cancelamento</strong>: Inclui os dados completos do protocolo devolvido pela SEFAZ.</li>
+<li><strong>requisicao_encerramento</strong>: Inclui os dados completos da requisição de cancelamento da MDF-e.</li>
+<li><strong>protocolo_encerramento</strong>: Inclui os dados completos do protocolo devolvido pela SEFAZ.</li>
+<li><strong>condutores_incluidos</strong>: Inclui uma lista de dados de condutores que foram incluídos posteriormente. Cada chave contém:
+** <strong>requisicao</strong>: Inclui os dados completos da requisição de inclusão de condutores
+** <strong>protocolo</strong>: Inclui os dados completos do protocolo devolvido pela SEFAZ.</li>
 </ul>
 
 <blockquote>
@@ -7846,6 +7860,81 @@ onde eventualmente será processada (processamento assíncrono). Com isto, a not
 </ul>
 <h3 id='mdf-e-beta_prazo-de-cancelamento'>Prazo de cancelamento</h3>
 <p>A MDF-e poderá ser cancelada em até 24 horas após a emissão.</p>
+<h2 id='mdf-e-beta_inclusao-de-condutor'>Inclusão de Condutor</h2><pre class="highlight shell tab-shell"><code>curl -u token_enviado_pelo_suporte: <span class="se">\</span>
+  -X POST -d <span class="s1">'{"nome":"João da Silva","cpf":"68971569140"}'</span> <span class="se">\</span>
+  http://homologacao.acrasnfe.acras.com.br/v2/mdfe/12345/inclusao_condutor
+</code></pre>
+<blockquote>
+<p>Resposta da API para a requisição de cancelamento:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"status_sefaz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"135"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"mensagem_sefaz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Evento registrado e vinculado a MDF-e"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"incluido"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"caminho_xml"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://focusnfe.s3-sa-east-1.amazonaws.com/arquivos_development/14674451000119/201805/XMLs/329180000006929_v03.00-eventoMDF-e.xml"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>Para incluir um condutor adicional em uma MDF-e autorizada, basta fazer uma requisição à URL abaixo, alterando o ambiente de produção para homologação, caso esteja emitindo notas de teste.</p>
+
+<p>Incluir um condutor em uma MDF-e autorizada:</p>
+
+<p><code>https://api.focusnfe.com.br/v2/mdfe/REFERENCIA/inclusao_condutor</code></p>
+
+<p>Utilize o comando <strong>HTTP POST</strong> para incluir um condutor. Este método é síncrono, ou seja, a comunicação com a SEFAZ será feita imediatamente e devolvida a resposta na mesma requisição.</p>
+
+<p>Os parâmetros de inclusão deverão ser enviados da seguinte forma:</p>
+
+<ul>
+<li><strong>nome</strong>: Nome completo do condutor</li>
+<li><strong>cpf</strong>: CPF do condutor</li>
+</ul>
+
+<p>A API irá em seguida devolver os seguintes campos:</p>
+
+<ul>
+<li><strong>status</strong>: incluido, se o condutor foi incluído com sucesso, ou erro_inclusao, se houve algum erro ao incluir o condutor</li>
+<li><strong>status_sefaz</strong>: O status da operação na SEFAZ.</li>
+<li><strong>mensagem_sefaz</strong>: Mensagem descritiva da SEFAZ detalhando o status.</li>
+<li><strong>caminho_xml</strong>: Caso o condutor tenha sido incluído, será informado aqui o caminho para download do XML de inclusão.</li>
+</ul>
+<h2 id='mdf-e-beta_encerramento'>Encerramento</h2><pre class="highlight shell tab-shell"><code>curl -u token_enviado_pelo_suporte: <span class="se">\</span>
+  -X POST -d <span class="s1">'{"data":"2019-03-05","sigla_uf":"SP","nome_municipio":"São Paulo"}'</span> <span class="se">\</span>
+  http://homologacao.acrasnfe.acras.com.br/v2/mdfe/12345/encerramento
+</code></pre>
+<blockquote>
+<p>Resposta da API para a requisição de encerramento:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"status_sefaz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"135"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"mensagem_sefaz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Evento registrado e vinculado a MDF-e"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"encerrado"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"caminho_xml"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://focusnfe.s3-sa-east-1.amazonaws.com/arquivos_development/14674451000119/201805/XMLs/329180000006929_v03.00-eventoMDF-e.xml"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>Após o término da operação, o MDFe terá que ser obrigatoriamente encerrado. Para isso basta fazer uma requisição à URL abaixo, alterando o ambiente de produção para homologação, caso esteja emitindo notas de teste.</p>
+
+<p>Encerrar uma MDF-e autorizada:</p>
+
+<p><code>https://api.focusnfe.com.br/v2/mdfe/REFERENCIA/encerrar</code></p>
+
+<p>Utilize o comando <strong>HTTP POST</strong> para incluir um condutor. Este método é síncrono, ou seja, a comunicação com a SEFAZ será feita imediatamente e devolvida a resposta na mesma requisição.</p>
+
+<p>Os parâmetros de encerramento deverão ser enviados da seguinte forma:</p>
+
+<ul>
+<li><strong>data</strong>: Data do encerramento</li>
+<li><strong>sigla_uf</strong>: UF do município de encerramento</li>
+<li><strong>nome_municipio</strong>: Nome do município de encerramento</li>
+</ul>
+
+<p>A API irá em seguida devolver os seguintes campos:</p>
+
+<ul>
+<li><strong>status</strong>: encerrado, se o MDFe foi encerrado com sucesso, ou erro_encerramento, se houve algum erro ao encerrar o MDFe</li>
+<li><strong>status_sefaz</strong>: O status da operação na SEFAZ.</li>
+<li><strong>mensagem_sefaz</strong>: Mensagem descritiva da SEFAZ detalhando o status.</li>
+<li><strong>caminho_xml</strong>: Caso o encerramento tenha sido realizado, será informado aqui o caminho para download do XML.</li>
+</ul>
 <h1 id='backups-nfe-nfce-e-cte_backups-nfe-nfce-e-cte'>Backups (NFe, NFCe e CTe)</h1>
 <p>Atualmente, realizamos o backup de todos os arquivos XML’s das notas fiscais emitidas pela nossa API. Vale lembrar que o XML é um arquivo com validade legal e deve ser armazenado pelos emitentes, para fins fiscais, por no mínimo 5 anos após a emissão.</p>
 
