@@ -46,6 +46,8 @@ Algumas prefeituras possuem nota fiscal eletrônica de serviços mas não possue
 
 A API do Focus NFe atende essas situações fornecendo uma interface padronizada para geração destes arquivos, usando um formato muito similar com o já usado para autorizar NFSe’s individualmente.
 
+A maior mudança é que o campo "prestador" fica em primeiro nível na nota, enquanto campos referentes a nota, como "servico", "tomador", "data_emissao" e demais, ficam aninhados dentro do campo "lista_nfse", que abriga as notas emitidas. Ao lado, mostramos um exemplo de como fica o JSON para gerar o lote.
+
 ## Envio
 
 ```python
@@ -101,10 +103,13 @@ nfse["servico"]["valor_servicos"] = "1.00"
 lote_nfse["lista_nfse"].append(nfse)
 
 #print (json.dumps(nfse))
-r = requests.post(url, params=ref, data=json.dumps(lote_nfse), auth=(token,""))
+resposta = requests.post(url, params=ref, data=json.dumps(lote_nfse), auth=(token,""))
 
-# Mostra na tela o codigo HTTP da requisicao e a mensagem de retorno da API
-print(r.status_code, r.text)
+# Salvar os dados da resposta em arquivo destino a importação no sistima da prefeitura
+
+arquivo_lote_rps = open('arquivo_lote_rps.txt', 'w')
+arquivo_lote_rps.write(resposta.text)
+arquivo_lote_rps.close()
 
 
 ```
@@ -112,7 +117,7 @@ print(r.status_code, r.text)
 ```shell
 # arquivo.json deve conter os dados da NFSe
 curl -u token_enviado_pelo_suporte: \
-  -X POST -T arquivo.json http://homologacao.acrasnfe.acras.com.br/v2/lotes_nfse
+  -X POST -T arquivo.json http://homologacao.acrasnfe.acras.com.br/v2/lotes_nfse > arquivo_lote_rps.txt
 ```
 
 ```java
@@ -128,7 +133,7 @@ import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 
 public class NFSeAutorizar {
 
-  public static void main(String[] args) throws JSONException{
+  public static void main(String[] args) throws Exception{
 
     String login = "Token_enviado_pelo_suporte";
 
@@ -205,11 +210,10 @@ public class NFSeAutorizar {
 
     String body = resposta.getEntity(String.class);
 
-    /* As três linhas a seguir exibem as informações retornadas pela nossa API.
-     * Aqui o seu sistema deverá interpretar e lidar com o retorno. */
-    System.out.print("HTTP Code: ");
-    System.out.print(httpCode);
-    System.out.printf(body);
+    /* Salvar os dados da resposta em arquivo destino a importação no sistima da prefeitura. */
+    BufferedWriter writer = new BufferedWriter(new FileWriter("arquivo_lote_rps.txt"));
+    writer.write(body);
+    writer.close();
   }
 }
 ```
@@ -294,11 +298,8 @@ requisicao.body = lote_nfse.to_json
 # aqui enviamos a requisição ao servidor e obtemos a resposta
 resposta = http.request(requisicao)
 
-# imprimindo o código HTTP da resposta
-puts "Código retornado pela requisição: " + resposta.code
-
-# imprimindo o corpo da resposta
-puts "Corpo da resposta: " + resposta.body
+# Salvar os dados da resposta em arquivo destino a importação no sistima da prefeitura. 
+File.open('arquivo_lote_rps.txt', 'w') { |arquivo| arquivo.puts resposta.body }
 
 ```
 
@@ -355,12 +356,11 @@ puts "Corpo da resposta: " + resposta.body
  curl_setopt($ch, CURLOPT_USERPWD, "$login:$password");
  $body = curl_exec($ch);
  $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
- //as três linhas abaixo imprimem as informações retornadas pela API, aqui o seu sistema deverá
- //interpretar e lidar com o retorno
- print($http_code."\n");
- print($body."\n\n");
- print("");
- curl_close($ch);
+ 
+  // Salvar os dados da resposta em arquivo destino a importação no sistima da prefeitura. 
+  $arquivo_lote_rps = fopen("arquivo_lote_rps.txt", "w") or die("Não foi possível abrir o arquivo!");
+  fwrite($arquivo_lote_rps, $body);
+  fclose($arquivo_lote_rps);
  ?>
 ```
 
@@ -372,6 +372,7 @@ Here's how to include the module in your project and use as the browser-based XH
 Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensitive systems (eg Linux) using uppercase letters won't work.
 */
 let XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+let fs = require('fs')
 
 let request = new XMLHttpRequest();
 
@@ -431,16 +432,15 @@ let lote_nfse = {
 // Aqui fazermos a serializacao do JSON com os dados da nota e enviamos atraves do metodo usado.
 request.send(JSON.stringify(lote_nfse));
 
-// Sua aplicacao tera que ser capaz de tratar as respostas da API.
-console.log("HTTP code: " + request.status);
-console.log("Corpo: " + request.responseText);
+// Salvar os dados da resposta em arquivo destino a importação no sistima da prefeitura. 
+fs.writeFile('arquivo_lote_rps.txt', request.responseText);
 
 ```
-Para o envio é utilizada a URL abaixo (caso o envio seja em homologação, alterar para a URL correspondente):
+Para gerar o arquivo do lote RPS, o envio dos dados é feito utilizando a URL abaixo (caso o envio seja em homologação, alterar para a URL correspondente):
 
 `https://api.focusnfe.com.br/v2/lotes_nfse?ref=REFERENCIA`
 
-Os dados que devem ir no POST é um arquivo JSON muito similar ao arquivo de autorização de NFSe, consistindo pelos seguintes campos:
+Os dados que devem ir no POST é um arquivo JSON muito similar ao arquivo de autorização de NFSe. Caso não haja nenhuma falha, a API retornará os dados para geração do arquivo. As informações que devem ser enviadas consistem nos seguintes campos:
 
 - **prestador**:
   - **cnpj**: CNPJ do prestador de serviços.
@@ -478,8 +478,11 @@ token="token_enviado_pelo_suporte"
 
 r = requests.get(url+ref, auth=(token,""))
 
-# Mostra na tela o codigo HTTP da requisicao e a mensagem de retorno da API
-print(r.status_code, r.text)
+# Salvar os dados da resposta em arquivo destino a importação no sistima da prefeitura
+
+arquivo_lote_rps = open('arquivo_lote_rps.txt', 'w')
+arquivo_lote_rps.write(resposta.text)
+arquivo_lote_rps.close()
 
 
 ```
@@ -488,7 +491,7 @@ print(r.status_code, r.text)
 
 ```shell
 curl -u token_enviado_pelo_suporte: \
-  -X GET http://homologacao.acrasnfe.acras.com.br/v2/lotes_nfse/12345
+  -X GET http://homologacao.acrasnfe.acras.com.br/v2/lotes_nfse/12345 > arquivo_lote_rps.txt
 ```
 
 ```java
@@ -501,7 +504,7 @@ import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 
 public class NFSeConsulta {
 
-  public static void main(String[] args){
+  public static void main(String[] args) throws Exception{
 
     String login = "Token_enviado_pelo_suporte";
 
@@ -527,11 +530,10 @@ public class NFSeConsulta {
 
     String body = resposta.getEntity(String.class);
 
-    /* As três linhas abaixo imprimem as informações retornadas pela API.
-      * Aqui o seu sistema deverá interpretar e lidar com o retorno. */
-    System.out.print("HTTP Code: ");
-    System.out.print(httpCode);
-    System.out.printf(body);
+    /* Salvar os dados da resposta em arquivo destino a importação no sistima da prefeitura. */
+    BufferedWriter writer = new BufferedWriter(new FileWriter("arquivo_lote_rps.txt"));
+    writer.write(body);
+    writer.close();
   }
 }
 ```
@@ -575,11 +577,8 @@ requisicao.basic_auth(token, '')
 # aqui enviamos a requisição ao servidor e obtemos a resposta
 resposta = http.request(requisicao)
 
-# imprimindo o código HTTP da resposta
-puts "Código retornado pela requisição: " + resposta.code
-
-# imprimindo o corpo da resposta
-puts "Corpo da resposta: " + resposta.body
+# Salvar os dados da resposta em arquivo destino a importação no sistima da prefeitura. 
+File.open('arquivo_lote_rps.txt', 'w') { |arquivo| arquivo.puts resposta.body }
 
 ```
 
@@ -600,13 +599,11 @@ puts "Corpo da resposta: " + resposta.body
  curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
  curl_setopt($ch, CURLOPT_USERPWD, "$login:$password");
  $body = curl_exec($ch);
- $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
- //as três linhas abaixo imprimem as informações retornadas pela API, aqui o seu sistema deverá
- //interpretar e lidar com o retorno
- print($http_code."\n");
- print($body."\n\n");
- print("");
- curl_close($ch);
+
+  // Salvar os dados da resposta em arquivo destino a importação no sistima da prefeitura. 
+  $arquivo_lote_rps = fopen("arquivo_lote_rps.txt", "w") or die("Não foi possível abrir o arquivo!");
+  fwrite($arquivo_lote_rps, $body);
+  fclose($arquivo_lote_rps);
  ?>
 ```
 
@@ -617,20 +614,21 @@ As orientacoes a seguir foram extraidas do site do NPMJS: https://www.npmjs.com/
 Here's how to include the module in your project and use as the browser-based XHR object.
 Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensitive systems (eg Linux) using uppercase letters won't work.
 */
-var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+let XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+let fs = require('fs')
 
-var request = new XMLHttpRequest();
+let request = new XMLHttpRequest();
 
-var token = "Token_enviado_pelo_suporte";
+let token = "Token_enviado_pelo_suporte";
 
 // Substituir pela sua identificação interna da nota
-var ref = "12345";
+let ref = "12345";
 
 /*
 Para ambiente de producao use a URL abaixo:
 "https://api.focusnfe.com.br"
 */
-var url = "http://homologacao.acrasnfe.acras.com.br/v2/lotes_nfse/" + ref;
+let url = "http://homologacao.acrasnfe.acras.com.br/v2/lotes_nfse/" + ref;
 
 /*
 Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
@@ -640,13 +638,13 @@ request.open('GET', url, false, token);
 
 request.send();
 
-// Sua aplicacao tera que ser capaz de tratar as respostas da API.
-console.log("HTTP code: " + request.status);
-console.log("Corpo: " + request.responseText);
+// Salvar os dados da resposta em arquivo destino a importação no sistima da prefeitura. 
+fs.writeFile('arquivo_lote_rps.txt', request.responseText);
 
 ```
+Para os lotes que já foram gerados, é possível fazer a consulta do mesmo. O retorno para a requisição será igual ao do envio, ou seja, serão retornardo os dados para gerar o arquivo para realizar a importação no site da prefeitura.
 
-Esta operação está disponível na URL abaixo, caso queira consultar novamente o arquivo gerado:
+Esta operação está disponível na URL abaixo:
 
 `https://api.focusnfe.com.br/v2/lotes_nfse/REFERENCIA`
 
