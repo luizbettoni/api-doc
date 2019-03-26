@@ -18,6 +18,7 @@ includes:
   - mdfe
   - backups
   - nfse
+  - lote_nfse
   - manifestacao
   - webhooks
   - ncm
