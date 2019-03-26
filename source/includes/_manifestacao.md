@@ -45,7 +45,7 @@ import requests
 Para ambiente de produção use a variável abaixo:
 url = "https://api.focusnfe.com.br"
 '''
-url = "http://homologacao.acrasnfe.acras.com.br/v2/nfes_recebidas/"
+url = "https://homologacao.focusnfe.com.br/v2/nfes_recebidas/"
 
 token="token_enviado_pelo_suporte"
 
@@ -73,7 +73,7 @@ print(r.status_code, r.text)
 # substitua CHAVE pela chave da nota
 curl -u token_enviado_pelo_suporte: \
   -X POST -d '{"tipo":"confirmacao"}' \
-  http://homologacao.acrasnfe.acras.com.br/v2/nfes_recebidas/CHAVE/manifesto
+  https://homologacao.focusnfe.com.br/v2/nfes_recebidas/CHAVE/manifesto
 ```
 
 ```java
@@ -95,7 +95,7 @@ public class Manifestar {
 		
 		/* Para ambiente de produção use a variável abaixo:
 		String server = "https://api.focusnfe.com.br/"; */
-		String server = "http://homologacao.acrasnfe.acras.com.br/";
+		String server = "https://homologacao.focusnfe.com.br/";
 		String url = server.concat("v2/nfes_recebidas/"+chave+"/manifesto");
 			
 		/* Aqui criamos um hashmap para receber a chave "tipo" e o valor que pode ser: ciencia, confirmacao, desconhecimento ou nao_realizada. */		
@@ -142,7 +142,7 @@ chave = "chave_de_identificacao_da_NFe"
 
 # endereço da api que deve ser usado conforme o ambiente: produção ou homologação
 servidor_producao = "https://api.focusnfe.com.br/"
-servidor_homologacao = "http://homologacao.acrasnfe.acras.com.br/"
+servidor_homologacao = "https://homologacao.focusnfe.com.br/"
 
 # no caso do ambiente de envio ser em produção, utilizar servidor_producao
 url_envio = servidor_homologacao + "v2/nfes_recebidas/" + chave + "/manifesto"
@@ -194,7 +194,7 @@ puts "Corpo da resposta: " + resposta.body
    Consulte nossa documentação, para conhecer os demais tipos possíveis: https://goo.gl/a9o7hm */
  $tipo = array("tipo" => "confirmacao");
 // Para ambiente de Produção, utilize a URL: https://api.focusnfe.com.br/.  
- $server = "http://homologacao.acrasnfe.acras.com.br/";
+ $server = "https://homologacao.focusnfe.com.br/";
  $ch = curl_init();
  curl_setopt($ch, CURLOPT_URL, $server."v2/nfes_recebidas/".$chave."/manifesto");
  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -233,7 +233,7 @@ var chave = "chave_da_nota_fiscal";
 Para ambiente de producao use a URL abaixo:
 "https://api.focusnfe.com.br"
 */
-var url = "http://homologacao.acrasnfe.acras.com.br/v2/nfes_recebidas/" + chave + "/manifesto";
+var url = "https://homologacao.focusnfe.com.br/v2/nfes_recebidas/" + chave + "/manifesto";
 
 /*
 Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
@@ -326,7 +326,7 @@ import requests
 Para ambiente de produção use a variável abaixo:
 url = "https://api.focusnfe.com.br"
 '''
-url = "http://homologacao.acrasnfe.acras.com.br/v2/nfes_recebidas/"
+url = "https://homologacao.focusnfe.com.br/v2/nfes_recebidas/"
 
 token="token_enviado_pelo_suporte"
 
@@ -357,7 +357,7 @@ public class ConsultarUltimaManifestacao {
 		
 		/* Para ambiente de produção use a variável abaixo:
 		String server = "https://api.focusnfe.com.br/"; */
-		String server = "http://homologacao.acrasnfe.acras.com.br/";
+		String server = "https://homologacao.focusnfe.com.br/";
 		String url = server.concat("v2/nfes_recebidas/"+chave+"/manifesto");
 		
 		/* Configuração para realizar o HTTP BasicAuth. */
@@ -393,7 +393,7 @@ chave = "chave_de_identificacao_da_NFe"
 
 # endereço da api que deve ser usado conforme o ambiente: produção ou homologação
 servidor_producao = "https://api.focusnfe.com.br/"
-servidor_homologacao = "http://homologacao.acrasnfe.acras.com.br/"
+servidor_homologacao = "https://homologacao.focusnfe.com.br/"
 
 # no caso do ambiente de envio ser em produção, utilizar servidor_producao
 url_envio = servidor_homologacao + "v2/nfes_recebidas/" + chave + "/manifesto"
@@ -431,7 +431,7 @@ puts "Corpo da resposta: " + resposta.body
  $login = "Token_enviado_pelo_Suporte";
  $chave = "Chave_de_identificação_da_NFe";
 // Para ambiente de Produção, utilize a URL: https://api.focusnfe.com.br/.  
- $server = "http://homologacao.acrasnfe.acras.com.br/";
+ $server = "https://homologacao.focusnfe.com.br/";
 
  $ch = curl_init();
  curl_setopt($ch, CURLOPT_URL, $server."v2/nfes_recebidas/".$chave."/manifesto");
@@ -473,7 +473,7 @@ import requests
 Para ambiente de produção use a variável abaixo:
 url = "https://api.focusnfe.com.br"
 '''
-url = "http://homologacao.acrasnfe.acras.com.br/v2/nfes_recebidas?cnpj="
+url = "https://homologacao.focusnfe.com.br/v2/nfes_recebidas?cnpj="
 
 token="token_enviado_pelo_suporte"
 
@@ -489,7 +489,7 @@ print(r.status_code, r.text)
 
 ```shell
 curl -u token_enviado_pelo_suporte: \
-  "http://homologacao.acrasnfe.acras.com.br/v2/nfes_recebidas?cnpj=SEU_CNPJ"
+  "https://homologacao.focusnfe.com.br/v2/nfes_recebidas?cnpj=SEU_CNPJ"
 ```
 
 ```java
@@ -509,7 +509,7 @@ public class ConsultarTodosManifestos {
 		
 		/* Para ambiente de produção use a variável abaixo:
 		String server = "https://api.focusnfe.com.br/"; */
-		String server = "http://homologacao.acrasnfe.acras.com.br/";
+		String server = "https://homologacao.focusnfe.com.br/";
 		String url = server.concat("v2/nfes_recebidas?cnpj="+cnpj);
 		
 		/* Configuração para realizar o HTTP BasicAuth. */
@@ -545,7 +545,7 @@ cnpj = "CNPJ_da_sua_empresa"
 
 # endereço da api que deve ser usado conforme o ambiente: produção ou homologação
 servidor_producao = "https://api.focusnfe.com.br/"
-servidor_homologacao = "http://homologacao.acrasnfe.acras.com.br/"
+servidor_homologacao = "https://homologacao.focusnfe.com.br/"
 
 # no caso do ambiente de envio ser em produção, utilizar servidor_producao
 url_envio = servidor_homologacao + "v2/nfes_recebidas?cnpj=" + cnpj
@@ -583,7 +583,7 @@ puts "Corpo da resposta: " + resposta.body
  $login = "Token_enviado_pelo_Suporte";
  $cnpj = "CNPJ_da_sua_empresa";
 // Para ambiente de Produção, utilize a URL: https://api.focusnfe.com.br/.  
- $server = "http://homologacao.acrasnfe.acras.com.br/";
+ $server = "https://homologacao.focusnfe.com.br/";
 
  $ch = curl_init();
    curl_setopt($ch, CURLOPT_URL, $server."v2/nfes_recebidas?cnpj=".$cnpj);
@@ -623,7 +623,7 @@ var cnpj = "cnpj_do_destinatario_da_nota";
 Para ambiente de producao use a URL abaixo:
 "https://api.focusnfe.com.br"
 */
-var url = "http://homologacao.acrasnfe.acras.com.br/v2/nfes_recebidas?cnpj=" + cnpj;
+var url = "https://homologacao.focusnfe.com.br/v2/nfes_recebidas?cnpj=" + cnpj;
 
 /*
 Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
@@ -761,7 +761,7 @@ var chave = "chave_da_nota_fiscal";
 Para ambiente de producao use a URL abaixo:
 "https://api.focusnfe.com.br"
 */
-var url = "http://homologacao.acrasnfe.acras.com.br/v2/nfes_recebidas/" + chave + ".xml";
+var url = "https://homologacao.focusnfe.com.br/v2/nfes_recebidas/" + chave + ".xml";
 
 /*
 Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
@@ -786,7 +786,7 @@ import requests
 Para ambiente de produção use a variável abaixo:
 url = "https://api.focusnfe.com.br"
 '''
-url = "http://homologacao.acrasnfe.acras.com.br/v2/nfes_recebidas/"
+url = "https://homologacao.focusnfe.com.br/v2/nfes_recebidas/"
 
 token="token_enviado_pelo_suporte"
 
@@ -801,7 +801,7 @@ print(r.status_code, r.text)
 
 ```shell
 curl -u token_enviado_pelo_suporte: \
-  http://homologacao.acrasnfe.acras.com.br/v2/nfe_recebidas/CHAVE.xml
+  https://homologacao.focusnfe.com.br/v2/nfe_recebidas/CHAVE.xml
 ```
 
 ```java
@@ -821,7 +821,7 @@ public class DownloadNotaEspecificaXml {
 		
 		/* Para ambiente de produção use a variável abaixo:
 		String server = "https://api.focusnfe.com.br/"; */
-		String server = "http://homologacao.acrasnfe.acras.com.br/";
+		String server = "https://homologacao.focusnfe.com.br/";
 		String url = server.concat("v2/nfes_recebidas/"+chave+".xml");
 		
 		/* Configuração para realizar o HTTP BasicAuth. */
@@ -857,7 +857,7 @@ chave = "chave_de_identificacao_da_NFe"
 
 # endereço da api que deve ser usado conforme o ambiente: produção ou homologação
 servidor_producao = "https://api.focusnfe.com.br/"
-servidor_homologacao = "http://homologacao.acrasnfe.acras.com.br/"
+servidor_homologacao = "https://homologacao.focusnfe.com.br/"
 
 # no caso do ambiente de envio ser em produção, utilizar servidor_producao
 url_envio = servidor_homologacao + "v2/nfes_recebidas/" + chave + ".xml"
@@ -895,7 +895,7 @@ puts "Corpo da resposta: " + resposta.body
  $login = "Token_enviado_pelo_Suporte";
  $chave = "Chave_de_identificação_da_NFe";
 // Para ambiente de Produção, utilize a URL: https://api.focusnfe.com.br/.  
- $server = "http://homologacao.acrasnfe.acras.com.br/";
+ $server = "https://homologacao.focusnfe.com.br/";
  $ch = curl_init();
  curl_setopt($ch, CURLOPT_URL, $server."v2/nfes_recebidas/".$chave.".xml");
  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -936,7 +936,7 @@ var chave = "chave_da_nota_fiscal";
 Para ambiente de producao use a URL abaixo:
 "https://api.focusnfe.com.br"
 */
-var url = "http://homologacao.acrasnfe.acras.com.br/v2/nfes_recebidas/" + chave + ".json?completa=1";
+var url = "https://homologacao.focusnfe.com.br/v2/nfes_recebidas/" + chave + ".json?completa=1";
 
 /*
 Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
@@ -961,7 +961,7 @@ import requests
 Para ambiente de produção use a variável abaixo:
 url = "https://api.focusnfe.com.br"
 '''
-url = "http://homologacao.acrasnfe.acras.com.br/v2/nfes_recebidas/"
+url = "https://homologacao.focusnfe.com.br/v2/nfes_recebidas/"
 
 token="token_enviado_pelo_suporte"
 
@@ -978,7 +978,7 @@ print(r.status_code, r.text)l
 
 ```shell
 curl -u token_enviado_pelo_suporte: \
-  "http://homologacao.acrasnfe.acras.com.br/v2/nfe_recebidas/CHAVE.json?completa=1"
+  "https://homologacao.focusnfe.com.br/v2/nfe_recebidas/CHAVE.json?completa=1"
 ```
 
 ```java
@@ -998,7 +998,7 @@ public class DownloadNotaEspecifica {
 		
 		/* Para ambiente de produção use a variável abaixo:
 		String server = "https://api.focusnfe.com.br/"; */
-		String server = "http://homologacao.acrasnfe.acras.com.br/";
+		String server = "https://homologacao.focusnfe.com.br/";
 		String url = server.concat("v2/nfes_recebidas/"+chave+".json?completa=1");
 		
 		/* Configuração para realizar o HTTP BasicAuth. */
@@ -1034,7 +1034,7 @@ chave = "chave_de_identificacao_da_NFe"
 
 # endereço da api que deve ser usado conforme o ambiente: produção ou homologação
 servidor_producao = "https://api.focusnfe.com.br/"
-servidor_homologacao = "http://homologacao.acrasnfe.acras.com.br/"
+servidor_homologacao = "https://homologacao.focusnfe.com.br/"
 
 # no caso do ambiente de envio ser em produção, utilizar servidor_producao
 url_envio = servidor_homologacao + "v2/nfes_recebidas/" + chave + ".json?completa=1"
@@ -1072,7 +1072,7 @@ puts "Corpo da resposta: " + resposta.body
  $login = "Token_enviado_pelo_Suporte";
  $chave = "Chave_de_identificação_da_NFe";
 // Para ambiente de Produção, utilize a URL: https://api.focusnfe.com.br/.  
- $server = "http://homologacao.acrasnfe.acras.com.br/";
+ $server = "https://homologacao.focusnfe.com.br/";
  $ch = curl_init();
  curl_setopt($ch, CURLOPT_URL, $server."v2/nfes_recebidas/".$chave.".json?completa=1");
  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -1112,7 +1112,7 @@ var chave = "chave_da_nota_fiscal";
 Para ambiente de producao use a URL abaixo:
 "https://api.focusnfe.com.br"
 */
-var url = "http://homologacao.acrasnfe.acras.com.br/v2/nfes_recebidas/" + chave + "/cancelamento.xml";
+var url = "https://homologacao.focusnfe.com.br/v2/nfes_recebidas/" + chave + "/cancelamento.xml";
 
 /*
 Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
@@ -1138,7 +1138,7 @@ import requests
 Para ambiente de produção use a variável abaixo:
 url = "https://api.focusnfe.com.br"
 '''
-url = "http://homologacao.acrasnfe.acras.com.br/v2/nfes_recebidas/"
+url = "https://homologacao.focusnfe.com.br/v2/nfes_recebidas/"
 
 token="token_enviado_pelo_suporte"
 
@@ -1153,7 +1153,7 @@ print(r.status_code, r.text)
 
 ```shell
 curl -u token_enviado_pelo_suporte: \
-  http://homologacao.acrasnfe.acras.com.br/v2/nfe_recebidas/CHAVE/cancelamento.xml
+  https://homologacao.focusnfe.com.br/v2/nfe_recebidas/CHAVE/cancelamento.xml
 ```
 
 ```java
@@ -1173,7 +1173,7 @@ public class DownloadCancelamentoXml {
 		
 		/* Para ambiente de produção use a variável abaixo:
 		String server = "https://api.focusnfe.com.br/"; */
-		String server = "http://homologacao.acrasnfe.acras.com.br/";
+		String server = "https://homologacao.focusnfe.com.br/";
 		String url = server.concat("v2/nfes_recebidas/"+chave+"/cancelamento.xml");
 		
 		/* Configuração para realizar o HTTP BasicAuth. */
@@ -1209,7 +1209,7 @@ chave = "chave_de_identificacao_da_NFe"
 
 # endereço da api que deve ser usado conforme o ambiente: produção ou homologação
 servidor_producao = "https://api.focusnfe.com.br/"
-servidor_homologacao = "http://homologacao.acrasnfe.acras.com.br/"
+servidor_homologacao = "https://homologacao.focusnfe.com.br/"
 
 # no caso do ambiente de envio ser em produção, utilizar servidor_producao
 url_envio = servidor_homologacao + "v2/nfes_recebidas/" + chave + "/cancelamento.xml"
@@ -1247,7 +1247,7 @@ puts "Corpo da resposta: " + resposta.body
  $login = "Token_enviado_pelo_Suporte";
  $chave = "Chave_de_identificação_da_NFe";
 // Para ambiente de Produção, utilize a URL: https://api.focusnfe.com.br/.  
- $server = "http://homologacao.acrasnfe.acras.com.br/";
+ $server = "https://homologacao.focusnfe.com.br/";
  $ch = curl_init();
  curl_setopt($ch, CURLOPT_URL, $server."v2/nfes_recebidas/".$chave."/cancelamento.xml");
  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -1287,7 +1287,7 @@ var chave = "chave_da_nota_fiscal";
 Para ambiente de producao use a URL abaixo:
 "https://api.focusnfe.com.br"
 */
-var url = "http://homologacao.acrasnfe.acras.com.br/v2/nfes_recebidas/" + chave + "carta_correcao.xml";
+var url = "https://homologacao.focusnfe.com.br/v2/nfes_recebidas/" + chave + "carta_correcao.xml";
 
 /*
 Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
@@ -1311,7 +1311,7 @@ import requests
 Para ambiente de produção use a variável abaixo:
 url = "https://api.focusnfe.com.br"
 '''
-url = "http://homologacao.acrasnfe.acras.com.br/v2/nfes_recebidas/"
+url = "https://homologacao.focusnfe.com.br/v2/nfes_recebidas/"
 
 token="token_enviado_pelo_suporte"
 
@@ -1327,7 +1327,7 @@ print(r.status_code, r.text)
 
 ```shell
 curl -u token_enviado_pelo_suporte: \
-  http://homologacao.acrasnfe.acras.com.br/v2/nfe_recebidas/CHAVE/carta_correcao.xml
+  https://homologacao.focusnfe.com.br/v2/nfe_recebidas/CHAVE/carta_correcao.xml
 ```
 
 ```java
@@ -1347,7 +1347,7 @@ public class DownloadXmlCce {
 		
 		/* Para ambiente de produção use a variável abaixo:
 		String server = "https://api.focusnfe.com.br/"; */
-		String server = "http://homologacao.acrasnfe.acras.com.br/";
+		String server = "https://homologacao.focusnfe.com.br/";
 		String url = server.concat("v2/nfes_recebidas/"+chave+"/carta_correcao.xml");
 		
 		/* Configuração para realizar o HTTP BasicAuth. */
@@ -1383,7 +1383,7 @@ chave = "chave_de_identificacao_da_NFe"
 
 # endereço da api que deve ser usado conforme o ambiente: produção ou homologação
 servidor_producao = "https://api.focusnfe.com.br/"
-servidor_homologacao = "http://homologacao.acrasnfe.acras.com.br/"
+servidor_homologacao = "https://homologacao.focusnfe.com.br/"
 
 # no caso do ambiente de envio ser em produção, utilizar servidor_producao
 url_envio = servidor_homologacao + "v2/nfes_recebidas/" + chave + "/carta_correcao.xml"
@@ -1421,7 +1421,7 @@ puts "Corpo da resposta: " + resposta.body
  $login = "Token_enviado_pelo_Suporte";
  $chave = "Chave_de_identificação_da_NFe";
 // Para ambiente de Produção, utilize a URL: https://api.focusnfe.com.br/.  
- $server = "http://homologacao.acrasnfe.acras.com.br/";
+ $server = "https://homologacao.focusnfe.com.br/";
  $ch = curl_init();
  curl_setopt($ch, CURLOPT_URL, $server."v2/nfes_recebidas/".$chave."/carta_correcao.xml");
  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
