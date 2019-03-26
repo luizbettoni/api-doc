@@ -17,13 +17,13 @@ CCPPSÇII, sendo:
 ```shell
 # pesquisa por códigos NCM do capítulo 90
 curl -u token_enviado_pelo_suporte: \
-  http://homologacao.acrasnfe.acras.com.br/v2/ncms?capitulo=90
+  https://homologacao.focusnfe.com.br/v2/ncms?capitulo=90
 ```
 
 ```php
 <?php
 $ch = curl_init();
-$server = "http://homologacao.acrasnfe.acras.com.br";
+$server = "https://homologacao.focusnfe.com.br";
 curl_setopt($ch, CURLOPT_URL, $server."/v2/ncms?capitulo=90");
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 curl_setopt($ch, CURLOPT_HTTPHEADER, array());
@@ -55,7 +55,7 @@ public class ExemploConsultaHook {
 
         /* Para ambiente de produção use a variável abaixo:
         String server = "https://api.focusnfe.com.br/"; */
-        String server = "http://homologacao.acrasnfe.acras.com.br/";
+        String server = "https://homologacao.focusnfe.com.br/";
 
         String url = server.concat("v2/ncms?capitulo=90");
 
@@ -93,7 +93,7 @@ token = "codigo_alfanumerico_token"
 
 # endereço da api que deve ser usado conforme o ambiente: produção ou homologação
 servidor_producao = "https://api.focusnfe.com.br/"
-servidor_homologacao = "http://homologacao.acrasnfe.acras.com.br/"
+servidor_homologacao = "https://homologacao.focusnfe.com.br/"
 
 # no caso do ambiente de envio ser em produção, utilizar servidor_producao
 url_envio = servidor_homologacao + "v2/ncms?capitulo=90"
@@ -133,7 +133,7 @@ import requests
 Para ambiente de produção use a variável abaixo:
 url = "https://api.focusnfe.com.br"
 '''
-url = "http://homologacao.acrasnfe.acras.com.br/v2/ncms?capitulo=90"
+url = "https://homologacao.focusnfe.com.br/v2/ncms?capitulo=90"
 
 token="token_enviado_pelo_suporte"
 
@@ -161,7 +161,7 @@ var token = "Token_enviado_pelo_suporte";
 Para ambiente de producao use a URL abaixo:
 "https://api.focusnfe.com.br"
 */
-var url = "http://homologacao.acrasnfe.acras.com.br/v2/ncms?capitulo=90";
+var url = "https://homologacao.focusnfe.com.br/v2/ncms?capitulo=90";
 
 /*
 Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
@@ -227,7 +227,7 @@ console.log("Corpo: " + request.responseText);
 
 Para consultar os NCMs disponíveis, utilize o endereço abaixo:
 
-`http://homologacao.acrasnfe.acras.com.br/v2/ncms`
+`https://homologacao.focusnfe.com.br/v2/ncms`
 
 
 Utilize o método HTTP **GET**. São aceitos os seguintes parâmetros de pesquisa:
@@ -239,7 +239,7 @@ Utilize o método HTTP **GET**. São aceitos os seguintes parâmetros de pesquis
 Caso já saiba o código NCM exato, e queira apenas recuperar sua descrição, utilize o link
 abaixo, substituindo CODIGO_NCM pelo código.
 
-`http://homologacao.acrasnfe.acras.com.br/v2/ncms/CODIGO_NCM`
+`https://homologacao.focusnfe.com.br/v2/ncms/CODIGO_NCM`
 
 
 ## Paginação
@@ -250,12 +250,12 @@ Para buscar os demais registros, utilize o parâmetro **offset**. Exemplo:
 
 Vamos supor que a chamada abaixo devolva 123 ocorrências:
 
-`http://homologacao.acrasnfe.acras.com.br/v2/ncms?codigo=7022`
+`https://homologacao.focusnfe.com.br/v2/ncms?codigo=7022`
 
 A segunda e terceira páginas da consulta poderão ser acessados desta forma:
 
 Registros 51 a 100:
-`http://homologacao.acrasnfe.acras.com.br/v2/ncms?codigo=7022&offset=50`
+`https://homologacao.focusnfe.com.br/v2/ncms?codigo=7022&offset=50`
 
 Registros 101 a 123:
-`http://homologacao.acrasnfe.acras.com.br/v2/ncms?codigo=7022&offset=100`
+`https://homologacao.focusnfe.com.br/v2/ncms?codigo=7022&offset=100`

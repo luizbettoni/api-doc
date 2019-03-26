@@ -24,13 +24,13 @@ Nós disponibilizamos uma API para consultar uma descrição detalhada das infor
 ```shell
 # pesquisa por CFOPs que iniciam com o dígito 2
 curl -u token_enviado_pelo_suporte: \
-  http://homologacao.acrasnfe.acras.com.br/v2/ceps?uf=AC&logradouro=colinas
+  https://homologacao.focusnfe.com.br/v2/ceps?uf=AC&logradouro=colinas
 ```
 
 ```php
 <?php
 $ch = curl_init();
-$server = "http://homologacao.acrasnfe.acras.com.br";
+$server = "https://homologacao.focusnfe.com.br";
 curl_setopt($ch, CURLOPT_URL, $server."/v2/ceps?uf=AC&logradouro=colinas");
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 curl_setopt($ch, CURLOPT_HTTPHEADER, array());
@@ -62,7 +62,7 @@ public class ExemploConsultaHook {
 
         /* Para ambiente de produção use a variável abaixo:
         String server = "https://api.focusnfe.com.br/"; */
-        String server = "http://homologacao.acrasnfe.acras.com.br/";
+        String server = "https://homologacao.focusnfe.com.br/";
 
         String url = server.concat("v2/ceps?uf=AC&logradouro=colinas");
 
@@ -100,7 +100,7 @@ token = "codigo_alfanumerico_token"
 
 # endereço da api que deve ser usado conforme o ambiente: produção ou homologação
 servidor_producao = "https://api.focusnfe.com.br/"
-servidor_homologacao = "http://homologacao.acrasnfe.acras.com.br/"
+servidor_homologacao = "https://homologacao.focusnfe.com.br/"
 
 # no caso do ambiente de envio ser em produção, utilizar servidor_producao
 url_envio = servidor_homologacao + "v2/ceps?uf=AC&logradouro=colinas"
@@ -140,7 +140,7 @@ import requests
 Para ambiente de produção use a variável abaixo:
 url = "https://api.focusnfe.com.br"
 '''
-url = "http://homologacao.acrasnfe.acras.com.br/v2/ceps?uf=AC&logradouro=colinas"
+url = "https://homologacao.focusnfe.com.br/v2/ceps?uf=AC&logradouro=colinas"
 
 token="token_enviado_pelo_suporte"
 
@@ -168,7 +168,7 @@ var token = "Token_enviado_pelo_suporte";
 Para ambiente de producao use a URL abaixo:
 "https://api.focusnfe.com.br"
 */
-var url = "http://homologacao.acrasnfe.acras.com.br/v2/ceps?uf=AC&logradouro=colinas";
+var url = "https://homologacao.focusnfe.com.br/v2/ceps?uf=AC&logradouro=colinas";
 
 /*
 Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
@@ -187,7 +187,7 @@ console.log("Corpo: " + request.responseText);
 
 Para realizar uma consulta de CEP, utilize o endereço abaixo:
 
-`http://homologacao.acrasnfe.acras.com.br/v2/ceps`
+`https://homologacao.focusnfe.com.br/v2/ceps`
 
 
 Utilize o método HTTP **GET**. São aceitos os seguintes parâmetros de pesquisa:

@@ -23,13 +23,13 @@ Por exemplo, o código 5101 refere-se a venda de produção do estabelecimento p
 ```shell
 # pesquisa por CFOPs que iniciam com o dígito 2
 curl -u token_enviado_pelo_suporte: \
-  http://homologacao.acrasnfe.acras.com.br/v2/cfops?codigo=2
+  https://homologacao.focusnfe.com.br/v2/cfops?codigo=2
 ```
 
 ```php
 <?php
 $ch = curl_init();
-$server = "http://homologacao.acrasnfe.acras.com.br";
+$server = "https://homologacao.focusnfe.com.br";
 curl_setopt($ch, CURLOPT_URL, $server."/v2/cfops?codigo=2");
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 curl_setopt($ch, CURLOPT_HTTPHEADER, array());
@@ -61,7 +61,7 @@ public class ExemploConsultaHook {
 
         /* Para ambiente de produção use a variável abaixo:
         String server = "https://api.focusnfe.com.br/"; */
-        String server = "http://homologacao.acrasnfe.acras.com.br/";
+        String server = "https://homologacao.focusnfe.com.br/";
 
         String url = server.concat("v2/cfops?codigo=2");
 
@@ -99,7 +99,7 @@ token = "codigo_alfanumerico_token"
 
 # endereço da api que deve ser usado conforme o ambiente: produção ou homologação
 servidor_producao = "https://api.focusnfe.com.br/"
-servidor_homologacao = "http://homologacao.acrasnfe.acras.com.br/"
+servidor_homologacao = "https://homologacao.focusnfe.com.br/"
 
 # no caso do ambiente de envio ser em produção, utilizar servidor_producao
 url_envio = servidor_homologacao + "v2/cfops?codigo=2"
@@ -139,7 +139,7 @@ import requests
 Para ambiente de produção use a variável abaixo:
 url = "https://api.focusnfe.com.br"
 '''
-url = "http://homologacao.acrasnfe.acras.com.br/v2/cfops?codigo=2"
+url = "https://homologacao.focusnfe.com.br/v2/cfops?codigo=2"
 
 token="token_enviado_pelo_suporte"
 
@@ -167,7 +167,7 @@ var token = "Token_enviado_pelo_suporte";
 Para ambiente de producao use a URL abaixo:
 "https://api.focusnfe.com.br"
 */
-var url = "http://homologacao.acrasnfe.acras.com.br/v2/cfops?codigo=2";
+var url = "https://homologacao.focusnfe.com.br/v2/cfops?codigo=2";
 
 /*
 Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
@@ -221,7 +221,7 @@ console.log("Corpo: " + request.responseText);
 
 Para consultar os CFOPs disponíveis, utilize o endereço abaixo:
 
-`http://homologacao.acrasnfe.acras.com.br/v2/cfops`
+`https://homologacao.focusnfe.com.br/v2/cfops`
 
 
 Utilize o método HTTP **GET**. São aceitos os seguintes parâmetros de pesquisa:
@@ -232,7 +232,7 @@ Utilize o método HTTP **GET**. São aceitos os seguintes parâmetros de pesquis
 Caso já saiba o código CFOP exato, e queira apenas recuperar sua descrição, utilize o link
 abaixo, substituindo CODIGO_CFOP pelo código.
 
-`http://homologacao.acrasnfe.acras.com.br/v2/cfops?CODIGO_CFOP`
+`https://homologacao.focusnfe.com.br/v2/cfops?CODIGO_CFOP`
 
 
 ## Paginação
@@ -243,12 +243,12 @@ Para buscar os demais registros, utilize o parâmetro **offset**. Exemplo:
 
 Vamos supor que a chamada abaixo devolva 123 ocorrências:
 
-`http://homologacao.acrasnfe.acras.com.br/v2/cfops?codigo=2`
+`https://homologacao.focusnfe.com.br/v2/cfops?codigo=2`
 
 A segunda e terceira páginas da consulta poderão ser acessados desta forma:
 
 Registros 51 a 100:
-`http://homologacao.acrasnfe.acras.com.br/v2/cfops?codigo=2&offset=50`
+`https://homologacao.focusnfe.com.br/v2/cfops?codigo=2&offset=50`
 
 Registros 101 a 123:
-`http://homologacao.acrasnfe.acras.com.br/v2/cfops?codigo=2&offset=100`
+`https://homologacao.focusnfe.com.br/v2/cfops?codigo=2&offset=100`

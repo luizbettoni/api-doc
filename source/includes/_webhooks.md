@@ -102,7 +102,7 @@ import requests
 Para ambiente de produção use a variável abaixo:
 url = "https://api.focusnfe.com.br"
 '''
-url = "http://homologacao.acrasnfe.acras.com.br/v2/hooks"
+url = "https://homologacao.focusnfe.com.br/v2/hooks"
 
 token="token_enviado_pelo_suporte"
 
@@ -126,12 +126,12 @@ print(r.status_code, r.text)
 ```shell
 curl -u token_enviado_pelo_suporte: \
   -X POST -d '{"cnpj":"51916585000125","event":"nfe","url":"http://minha.url/nfe"}' \
-  http://homologacao.acrasnfe.acras.com.br/v2/hooks
+  https://homologacao.focusnfe.com.br/v2/hooks
 ```
 ```php
 <?php
 $ch = curl_init();
-$server = "http://homologacao.acrasnfe.acras.com.br";
+$server = "https://homologacao.focusnfe.com.br";
 curl_setopt($ch, CURLOPT_URL, $server."/v2/hooks");
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 curl_setopt($ch, CURLOPT_POST, 1);
@@ -168,7 +168,7 @@ public class ExemploCriacaoHook {
 
         /* Para ambiente de produção use a variável abaixo:
         String server = "https://api.focusnfe.com.br/"; */
-        String server = "http://homologacao.acrasnfe.acras.com.br/";
+        String server = "https://homologacao.focusnfe.com.br/";
 
         String url = server.concat("v2/hooks");
 
@@ -214,7 +214,7 @@ var request = new XMLHttpRequest();
 
 var token = "Token_enviado_pelo_suporte";
 
-var url = "http://homologacao.acrasnfe.acras.com.br/v2/hooks";
+var url = "https://homologacao.focusnfe.com.br/v2/hooks";
 
 /*
 Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
@@ -273,7 +273,7 @@ import requests
 Para ambiente de produção use a variável abaixo:
 url = "https://api.focusnfe.com.br"
 '''
-url = "http://homologacao.acrasnfe.acras.com.br/v2/hooks/"
+url = "https://homologacao.focusnfe.com.br/v2/hooks/"
 
 token="token_enviado_pelo_suporte"
 
@@ -289,14 +289,14 @@ print(r.status_code, r.text)l
 
 ```shell
 curl -u token_enviado_pelo_suporte: \
-  http://homologacao.acrasnfe.acras.com.br/v2/hooks/Vj5rmkBq
+  https://homologacao.focusnfe.com.br/v2/hooks/Vj5rmkBq
 ```
 
 ```php
 <?php
 $ch = curl_init();
 $hook_id = "Vj5rmkBq"
-$server = "http://homologacao.acrasnfe.acras.com.br";
+$server = "https://homologacao.focusnfe.com.br";
 curl_setopt($ch, CURLOPT_URL, $server."/v2/hooks/" . $hook_id);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 curl_setopt($ch, CURLOPT_HTTPHEADER, array());
@@ -331,7 +331,7 @@ public class ExemploConsultaHook {
 
         /* Para ambiente de produção use a variável abaixo:
         String server = "https://api.focusnfe.com.br/"; */
-        String server = "http://homologacao.acrasnfe.acras.com.br/";
+        String server = "https://homologacao.focusnfe.com.br/";
 
         String url = server.concat("v2/hooks/"+hookId);
 
@@ -372,7 +372,7 @@ var token = "Token_enviado_pelo_suporte";
 
 var hook_id = "n65g0RP1";
 
-var url = "http://homologacao.acrasnfe.acras.com.br/v2/hooks/" + hook_id;
+var url = "https://homologacao.focusnfe.com.br/v2/hooks/" + hook_id;
 
 /*
 Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
@@ -422,7 +422,7 @@ import requests
 Para ambiente de produção use a variável abaixo:
 url = "https://api.focusnfe.com.br"
 '''
-url = "http://homologacao.acrasnfe.acras.com.br/v2/hooks/"
+url = "https://homologacao.focusnfe.com.br/v2/hooks/"
 
 token="token_enviado_pelo_suporte"
 
@@ -439,14 +439,14 @@ print(r.status_code, r.text)
 
 ```shell
 curl -u token_enviado_pelo_suporte: -X DELETE \
- http://homologacao.acrasnfe.acras.com.br/v2/hooks/Vj5rmkBq
+ https://homologacao.focusnfe.com.br/v2/hooks/Vj5rmkBq
 ```
 
 ```php
 <?php
 $ch = curl_init();
 $hook_id = "Vj5rmkBq"
-$server = "http://homologacao.acrasnfe.acras.com.br";
+$server = "https://homologacao.focusnfe.com.br";
 curl_setopt($ch, CURLOPT_URL, $server . "/v2/hooks/" . $hook_id);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
@@ -483,7 +483,7 @@ public class ExemploExclusaoHook {
 
         /* Para ambiente de produção use a variável abaixo:
         String server = "https://api.focusnfe.com.br/"; */
-        String server = "http://homologacao.acrasnfe.acras.com.br/";
+        String server = "https://homologacao.focusnfe.com.br/";
 
         String url = server.concat("v2/hooks/"+hookId);
 
@@ -524,7 +524,7 @@ var token = "Token_enviado_pelo_suporte";
 
 var hook_id = "n65g0RP1";
 
-var url = "http://homologacao.acrasnfe.acras.com.br/v2/hooks/" + hook_id;
+var url = "https://homologacao.focusnfe.com.br/v2/hooks/" + hook_id;
 
 /*
 Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API

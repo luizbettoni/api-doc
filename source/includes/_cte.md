@@ -179,9 +179,9 @@ HTTP CODE/STATUS | Status API Focus | Descrição | Correção
 ```shell
 # arquivo.json deve conter os dados da CTe
 curl -u token_enviado_pelo_suporte: \
-  -X POST -T cte.json http://homologacao.acrasnfe.acras.com.br/v2/cte?ref=12345
+  -X POST -T cte.json https://homologacao.focusnfe.com.br/v2/cte?ref=12345
 curl -u token_enviado_pelo_suporte: \
-  -X POST -T cte_os.json http://homologacao.acrasnfe.acras.com.br/v2/cte_os?ref=12345
+  -X POST -T cte_os.json https://homologacao.focusnfe.com.br/v2/cte_os?ref=12345
 ```
 
 ```java
@@ -207,7 +207,7 @@ public class Autorizar {
 		
 		/* Para ambiente de produção use a variável abaixo:
 		String server = "https://api.focusnfe.com.br/"; */
- 		String server = "http://homologacao.acrasnfe.acras.com.br/";
+ 		String server = "https://homologacao.focusnfe.com.br/";
  		
  		String url = server.concat("v2/cte_os?ref="+ref);
 	
@@ -332,7 +332,7 @@ ref = "id_referencia_nota"
 
 # endereço da api que deve ser usado conforme o ambiente: produção ou homologação
 servidor_producao = "https://api.focusnfe.com.br/"
-servidor_homologacao = "http://homologacao.acrasnfe.acras.com.br/"
+servidor_homologacao = "https://homologacao.focusnfe.com.br/"
 
 # no caso do ambiente de envio ser em produção, utilizar servidor_producao
 url_envio = servidor_homologacao + "v2/cte?ref=" + ref
@@ -462,7 +462,7 @@ var ref = "12345";
 Para ambiente de producao use a URL abaixo:
 "https://api.focusnfe.com.br"
 */
-var url = "http://homologacao.acrasnfe.acras.com.br/v2/cte_os?ref=" + ref;
+var url = "https://homologacao.focusnfe.com.br/v2/cte_os?ref=" + ref;
 
 /*
 Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API.
@@ -560,7 +560,7 @@ console.log("Corpo: " + request.responseText);
 // Para ambiente de produção use a variável abaixo:
 // $server = "https://api.focusnfe.com.br/";
 
-$server = "http://homologacao.acrasnfe.acras.com.br";
+$server = "https://homologacao.focusnfe.com.br";
 
 // Substituir pela sua identificação interno do CTe.
 $ref = "12345";
@@ -674,7 +674,7 @@ import requests
 Para ambiente de produção use a variável abaixo:
 url = "https://api.focusnfe.com.br"
 '''
-url = "http://homologacao.acrasnfe.acras.com.br/v2/cte_os"
+url = "https://homologacao.focusnfe.com.br/v2/cte_os"
 
 # Substituir pela sua identificação interno do CTe.
 ref = {"ref":"12345"}
@@ -792,7 +792,7 @@ Ao contrátio da CTe convencional, a CTe OS é processada de forma **síncrona**
 
 ```shell
 curl -u token_enviado_pelo_suporte: \
-  http://homologacao.acrasnfe.acras.com.br/v2/cte/12345
+  https://homologacao.focusnfe.com.br/v2/cte/12345
 ```
 
 ```java
@@ -814,7 +814,7 @@ public class Consulta {
 		
 		/* Para ambiente de produção use a variável abaixo:
 		String server = "https://api.focusnfe.com.br/"; */
- 		String server = "http://homologacao.acrasnfe.acras.com.br/";
+ 		String server = "https://homologacao.focusnfe.com.br/";
  		
 		String url = server.concat("v2/cte/"+ref+"?completa=1");
 		
@@ -856,7 +856,7 @@ ref = "id_referencia_nota"
 
 # endereço da api que deve ser usado conforme o ambiente: produção ou homologação
 servidor_producao = "https://api.focusnfe.com.br/"
-servidor_homologacao = "http://homologacao.acrasnfe.acras.com.br/"
+servidor_homologacao = "https://homologacao.focusnfe.com.br/"
 
 # no caso do ambiente de envio ser em produção, utilizar servidor_producao
 url_envio = servidor_homologacao + "v2/cte/" + ref + "?completa=1"
@@ -907,7 +907,7 @@ var ref = "12345";
 Para ambiente de producao use a URL abaixo:
 "https://api.focusnfe.com.br"
 */
-var url = "http://homologacao.acrasnfe.acras.com.br/v2/cte/" + ref + "?completa=1";
+var url = "https://homologacao.focusnfe.com.br/v2/cte/" + ref + "?completa=1";
 
 /*
 Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API.
@@ -936,7 +936,7 @@ $password = "";
 // Para ambiente de produção use a variável abaixo:
 // $server = "https://api.focusnfe.com.br";
 
-$server = "http://homologacao.acrasnfe.acras.com.br";
+$server = "https://homologacao.focusnfe.com.br";
 
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_URL, $server."/v2/cte/" . $ref."?completa=1");
@@ -964,7 +964,7 @@ import requests
 Para ambiente de produção use a variável abaixo:
 url = "https://api.focusnfe.com.br"
 '''
-url = "http://homologacao.acrasnfe.acras.com.br/v2/cte/"
+url = "https://homologacao.focusnfe.com.br/v2/cte/"
 
 # Substituir pela sua identificação interno do CTe.
 ref = "12345"
@@ -1127,7 +1127,7 @@ public class Cancelar {
 		
 		/* Para ambiente de produção use a variável abaixo:
 		String server = "https://api.focusnfe.com.br/"; */
- 		String server = "http://homologacao.acrasnfe.acras.com.br/";
+ 		String server = "https://homologacao.focusnfe.com.br/";
  		
  		String url = server.concat("v2/cte/"+ref);
  		/* Aqui criamos um hashmap para receber a chave "justificativa" e o valor desejado. */
@@ -1176,7 +1176,7 @@ ref = "id_referencia_nota"
 
 # endereço da api que deve ser usado conforme o ambiente: produção ou homologação
 servidor_producao = "https://api.focusnfe.com.br/"
-servidor_homologacao = "http://homologacao.acrasnfe.acras.com.br/"
+servidor_homologacao = "https://homologacao.focusnfe.com.br/"
 
 # no caso do ambiente de envio ser em produção, utilizar servidor_producao
 url_envio = servidor_homologacao + "v2/cte/" + ref
@@ -1235,7 +1235,7 @@ var ref = "12345";
 Para ambiente de producao use a URL abaixo:
 "https://api.focusnfe.com.br"
 */
-var url = "http://homologacao.acrasnfe.acras.com.br/v2/cte/"+ ref;
+var url = "https://homologacao.focusnfe.com.br/v2/cte/"+ ref;
 
 /*
 Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da AP
@@ -1268,7 +1268,7 @@ $ref   = "12345";
 // Para ambiente de produção use a variável abaixo:
 // $server = "https://api.focusnfe.com.br";
 
-$server = "http://homologacao.acrasnfe.acras.com.br";
+$server = "https://homologacao.focusnfe.com.br";
 
 $justificativa = array ("justificativa" => "A sua justificativa de cancelamento aqui.");
 
@@ -1303,7 +1303,7 @@ import requests
 Para ambiente de produção use a variável abaixo:
 url = "https://api.focusnfe.com.br"
 '''
-url = "http://homologacao.acrasnfe.acras.com.br/v2/cte/"
+url = "https://homologacao.focusnfe.com.br/v2/cte/"
 
 # Substituir pela sua identificação interno do CTe.
 ref = "12345"
@@ -1327,7 +1327,7 @@ print(r.status_code, r.text)
 ```shell
 curl -u token_enviado_pelo_suporte: \
   -X DELETE -d '{"justificativa":"Teste de cancelamento de nota"}' \
-  http://homologacao.acrasnfe.acras.com.br/v2/cte/12345
+  https://homologacao.focusnfe.com.br/v2/cte/12345
 ```
 
 > Resposta da API para a requisição de cancelamento:
@@ -1396,7 +1396,7 @@ public class EmitirCce {
 		
 		/* Para ambiente de produção use a variável abaixo:
 		String server = "https://api.focusnfe.com.br/"; */
-		String server = "http://homologacao.acrasnfe.acras.com.br/";
+		String server = "https://homologacao.focusnfe.com.br/";
 		
 		String url = server.concat("v2/cte/"+ref+"/carta_correcao");
 
@@ -1447,7 +1447,7 @@ ref = "id_referencia_nota"
 
 # endereço da api que deve ser usado conforme o ambiente: produção ou homologação
 servidor_producao = "https://api.focusnfe.com.br/"
-servidor_homologacao = "http://homologacao.acrasnfe.acras.com.br/"
+servidor_homologacao = "https://homologacao.focusnfe.com.br/"
 
 # no caso do ambiente de envio ser em produção, utilizar servidor_producao
 url_envio = servidor_homologacao + "v2/cte/" + ref + "/carta_correcao"
@@ -1510,7 +1510,7 @@ var cce = {"campo_corrigido": "uf_inicio", "valor_corrigido": "PR"};
 Para ambiente de producao use a URL abaixo:
 "https://api.focusnfe.com.br"
 */
-var url = "http://homologacao.acrasnfe.acras.com.br/v2/cte/"+ ref + "/carta_correcao";
+var url = "https://homologacao.focusnfe.com.br/v2/cte/"+ ref + "/carta_correcao";
 
 /*
 Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API.
@@ -1533,7 +1533,7 @@ console.log("Corpo: " + request.responseText);
 // Para ambiente de produção use a variável abaixo:
 // $server = "https://api.focusnfe.com.br";
 
-$server = "http://homologacao.acrasnfe.acras.com.br";
+$server = "https://homologacao.focusnfe.com.br";
 
 // Substituir pela sua identificação interno do CTe.
 $ref = "12345";
@@ -1574,7 +1574,7 @@ import requests
 Para ambiente de produção use a variável abaixo:
 url = "https://api.focusnfe.com.br"
 '''
-url = "http://homologacao.acrasnfe.acras.com.br/v2/cte/"
+url = "https://homologacao.focusnfe.com.br/v2/cte/"
 
 # Substituir pela sua identificação interno do CTe.
 ref = "12345"
@@ -1597,7 +1597,7 @@ print(r.status_code, r.text)
 ```shell
 curl -u token_enviado_pelo_suporte: \
   -X POST -d '{"campo_corrigido":"observacoes","valor_corrigido":"Nova observação"}' \
-  http://homologacao.acrasnfe.acras.com.br/v2/cte/12345/carta_correcao
+  https://homologacao.focusnfe.com.br/v2/cte/12345/carta_correcao
 ```
 
 > Resposta da API para a requisição de CCe:
@@ -1660,7 +1660,7 @@ public class Inutilizar {
 		
 		/* Para ambiente de produção use a variável abaixo:
 		String server = "https://api.focusnfe.com.br/"; */
- 		String server = "http://homologacao.acrasnfe.acras.com.br/";
+ 		String server = "https://homologacao.focusnfe.com.br/";
  		
  		String url = server.concat("v2/cte/inutilizacao");
  		
@@ -1715,7 +1715,7 @@ token = "codigo_alfanumerico_token"
 
 # endereço da api que deve ser usado conforme o ambiente: produção ou homologação
 servidor_producao = "https://api.focusnfe.com.br/"
-servidor_homologacao = "http://homologacao.acrasnfe.acras.com.br/"
+servidor_homologacao = "https://homologacao.focusnfe.com.br/"
 
 # no caso do ambiente de envio ser em produção, utilizar servidor_producao
 url_envio = servidor_homologacao + "v2/cte/inutilizacao"
@@ -1776,7 +1776,7 @@ var token = "Token_enviado_pelo_suporte";
 Para ambiente de producao use a URL abaixo:
 "https://api.focusnfe.com.br"
 */
-var url = "http://homologacao.acrasnfe.acras.com.br/v2/cte/inutilizacao";
+var url = "https://homologacao.focusnfe.com.br/v2/cte/inutilizacao";
 
 /*
 Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
@@ -1808,7 +1808,7 @@ console.log("Corpo: " + request.responseText);
 // Para ambiente de produção use a variável abaixo:
 // $server = "https://api.focusnfe.com.br";
 
-$server = "http://homologacao.acrasnfe.acras.com.br";
+$server = "https://homologacao.focusnfe.com.br";
 
 $login = "Token_enviado_pelo_suporte";
 $password = "";
@@ -1852,7 +1852,7 @@ import requests
 Para ambiente de produção use a variável abaixo:
 url = "https://api.focusnfe.com.br"
 '''
-url = "http://homologacao.acrasnfe.acras.com.br/v2/cte/inutilizacao"
+url = "https://homologacao.focusnfe.com.br/v2/cte/inutilizacao"
 
 token="Token_enviado_pelo_suporte"
 
