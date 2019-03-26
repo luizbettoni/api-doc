@@ -118,7 +118,7 @@ HTTP CODE/STATUS | Status API Focus | Descrição | Correção
 ```shell
 # arquivo.json deve conter os dados da MDF-e
 curl -u token_enviado_pelo_suporte: \
-  -X POST -T arquivo.json http://homologacao.acrasnfe.acras.com.br/v2/mdfe?ref=12345
+  -X POST -T arquivo.json https://homologacao.focusnfe.com.br/v2/mdfe?ref=12345
 ```
 
 
@@ -142,7 +142,7 @@ Para verificar se a nota já foi autorizada, você terá que efetuar uma [consul
 
 ```shell
 curl -u token_enviado_pelo_suporte: \
-  http://homologacao.acrasnfe.acras.com.br/v2/mdfe/12345
+  https://homologacao.focusnfe.com.br/v2/mdfe/12345
 ```
 
 Para consultar uma MDF-e utilize a URL abaixo, alterando o ambiente de produção para homologação, caso esteja emitindo notas de teste.
@@ -251,7 +251,7 @@ Caso na requisição seja passado o parâmetro `completa=1` será adicionado mai
 ```shell
 curl -u token_enviado_pelo_suporte: \
   -X DELETE -d '{"justificativa":"Teste de cancelamento"}' \
-  http://homologacao.acrasnfe.acras.com.br/v2/mdfe/12345
+  https://homologacao.focusnfe.com.br/v2/mdfe/12345
 ```
 
 > Resposta da API para a requisição de cancelamento:
@@ -293,7 +293,7 @@ A MDF-e poderá ser cancelada em até 24 horas após a emissão.
 ```shell
 curl -u token_enviado_pelo_suporte: \
   -X POST -d '{"nome":"João da Silva","cpf":"68971569140"}' \
-  http://homologacao.acrasnfe.acras.com.br/v2/mdfe/12345/inclusao_condutor
+  https://homologacao.focusnfe.com.br/v2/mdfe/12345/inclusao_condutor
 ```
 
 > Resposta da API para a requisição de cancelamento:
@@ -333,7 +333,7 @@ A API irá em seguida devolver os seguintes campos:
 ```shell
 curl -u token_enviado_pelo_suporte: \
   -X POST -d '{"data":"2019-03-05","sigla_uf":"SP","nome_municipio":"São Paulo"}' \
-  http://homologacao.acrasnfe.acras.com.br/v2/mdfe/12345/encerramento
+  https://homologacao.focusnfe.com.br/v2/mdfe/12345/encerramento
 ```
 
 > Resposta da API para a requisição de encerramento:

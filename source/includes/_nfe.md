@@ -483,7 +483,7 @@ HTTP CODE/STATUS | Status API Focus | Descrição | Correção
 ```shell
 # arquivo.json deve conter os dados da NFe
 curl -u token_enviado_pelo_suporte: \
-  -X POST -T arquivo.json http://homologacao.acrasnfe.acras.com.br/v2/nfe
+  -X POST -T arquivo.json https://homologacao.focusnfe.com.br/v2/nfe
 ```
 
 ```php
@@ -491,7 +491,7 @@ curl -u token_enviado_pelo_suporte: \
 /* Você deve definir isso globalmente para sua aplicação.
 Para ambiente de produção utilize e a variável abaixo:
 $server = "https://api.focusnfe.com.br"; */
-$server = "http://homologacao.acrasnfe.acras.com.br";
+$server = "https://homologacao.focusnfe.com.br";
 // Substituir a variável, ref, pela sua identificação interna de nota.
 $ref = "12345";
 $login = "token_enviado_pelo_suporte";
@@ -589,7 +589,7 @@ public class NFeAutorizar {
 
 		/* Para ambiente de produção use a variável abaixo:
 		String server = "https://api.focusnfe.com.br/"; */
- 		String server = "http://homologacao.acrasnfe.acras.com.br/";
+ 		String server = "https://homologacao.focusnfe.com.br/";
 
  		String url = server.concat("v2/nfe?ref="+ref);
 
@@ -706,7 +706,7 @@ ref = "id_referencia_nota"
 
 # endereço da api que deve ser usado conforme o ambiente: produção ou homologação
 servidor_producao = "https://api.focusnfe.com.br/"
-servidor_homologacao = "http://homologacao.acrasnfe.acras.com.br/"
+servidor_homologacao = "https://homologacao.focusnfe.com.br/"
 
 # no caso do ambiente de envio ser em produção, utilizar servidor_producao
 url_envio = servidor_homologacao + "v2/nfe?ref=" + ref
@@ -813,7 +813,7 @@ var ref = "12345";
 Para ambiente de producao use a URL abaixo:
 "https://api.focusnfe.com.br"
 */
-var url = "http://homologacao.acrasnfe.acras.com.br/v2/nfe?ref=" + ref;
+var url = "https://homologacao.focusnfe.com.br/v2/nfe?ref=" + ref;
 
 /*
 Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
@@ -893,7 +893,7 @@ import requests
 Para ambiente de produção use a variável abaixo:
 url = "https://api.focusnfe.com.br"
 '''
-url = "http://homologacao.acrasnfe.acras.com.br/v2/nfe"
+url = "https://homologacao.focusnfe.com.br/v2/nfe"
 
 # Substituir pela sua identificação interna da nota
 ref = {"ref":"12345"}
@@ -1017,7 +1017,7 @@ import requests
 Para ambiente de produção use a variável abaixo:
 url = "https://api.focusnfe.com.br"
 '''
-url = "http://homologacao.acrasnfe.acras.com.br/v2/nfe/"
+url = "https://homologacao.focusnfe.com.br/v2/nfe/"
 
 # Substituir pela sua identificação interna da nota
 ref = "12345"
@@ -1035,7 +1035,7 @@ print(r.status_code, r.text)
 
 ```shell
 curl -u token_enviado_pelo_suporte: \
-  http://homologacao.acrasnfe.acras.com.br/v2/nfe/12345
+  https://homologacao.focusnfe.com.br/v2/nfe/12345
 ```
 
 ```php
@@ -1043,7 +1043,7 @@ curl -u token_enviado_pelo_suporte: \
 /* Você deve definir isso globalmente para sua aplicação.
 Para ambiente de produção utilize e a variável abaixo:
 $server = "https://api.focusnfe.com.br"; */
-$server = "http://homologacao.acrasnfe.acras.com.br";
+$server = "https://homologacao.focusnfe.com.br";
 // Substituir a variável, ref, pela sua identificação interna de nota.
 $ref = "12345";
 $login = "token_enviado_pelo_suporte";
@@ -1084,7 +1084,7 @@ public class NFeConsulta {
 
 		/* Para ambiente de produção use a variável abaixo:
 		String server = "https://api.focusnfe.com.br/"; */
- 		String server = "http://homologacao.acrasnfe.acras.com.br/";
+ 		String server = "https://homologacao.focusnfe.com.br/";
 
 		String url = server.concat("v2/nfe/"+ref+"?completa=1");
 
@@ -1125,7 +1125,7 @@ ref = "id_referencia_nota"
 
 # endereço da api que deve ser usado conforme o ambiente: produção ou homologação
 servidor_producao = "https://api.focusnfe.com.br/"
-servidor_homologacao = "http://homologacao.acrasnfe.acras.com.br/"
+servidor_homologacao = "https://homologacao.focusnfe.com.br/"
 
 # no caso do ambiente de envio ser em produção, utilizar servidor_producao
 url_envio = servidor_homologacao + "v2/nfe/" + ref
@@ -1176,7 +1176,7 @@ var ref = "12345";
 Para ambiente de producao use a URL abaixo:
 "https://api.focusnfe.com.br"
 */
-var url = "http://homologacao.acrasnfe.acras.com.br/v2/nfe/" + ref + "?completa=1";
+var url = "https://homologacao.focusnfe.com.br/v2/nfe/" + ref + "?completa=1";
 
 /*
 Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
@@ -1337,7 +1337,7 @@ Quando houver uma tentativa anterior de emissão, conforme descrito na seção �
 ```shell
 curl -u token_enviado_pelo_suporte: \
   -X DELETE -d '{"justificativa":"Teste de cancelamento de nota"}' \
-  http://homologacao.acrasnfe.acras.com.br/v2/nfe/12345
+  https://homologacao.focusnfe.com.br/v2/nfe/12345
 ```
 
 ```php
@@ -1345,7 +1345,7 @@ curl -u token_enviado_pelo_suporte: \
 /* Você deve definir isso globalmente para sua aplicação.
 Para ambiente de produção utilize e a variável abaixo:
 $server = "https://api.focusnfe.com.br"; */
-$server = "http://homologacao.acrasnfe.acras.com.br";
+$server = "https://homologacao.focusnfe.com.br";
 // Substituir a variável, ref, pela sua identificação interna de nota.
 $ref = "12345";
 $login = "token_enviado_pelo_suporte";
@@ -1390,7 +1390,7 @@ public class NFeCancelamento {
 
 		/* Para ambiente de produção use a variável abaixo:
 		String server = "https://api.focusnfe.com.br/"; */
- 		String server = "http://homologacao.acrasnfe.acras.com.br/";
+ 		String server = "https://homologacao.focusnfe.com.br/";
 
  		String url = server.concat("v2/nfe/"+ref);
  		/* Aqui criamos um hashmap para receber a chave "justificativa" e o valor desejado. */
@@ -1438,7 +1438,7 @@ ref = "id_referencia_nota"
 
 # endereço da api que deve ser usado conforme o ambiente: produção ou homologação
 servidor_producao = "https://api.focusnfe.com.br/"
-servidor_homologacao = "http://homologacao.acrasnfe.acras.com.br/"
+servidor_homologacao = "https://homologacao.focusnfe.com.br/"
 
 # no caso do ambiente de envio ser em produção, utilizar servidor_producao
 url_envio = servidor_homologacao + "v2/nfe/" + ref
@@ -1498,7 +1498,7 @@ var ref = "12345";
 Para ambiente de producao use a URL abaixo:
 "https://api.focusnfe.com.br"
 */
-var url = "http://homologacao.acrasnfe.acras.com.br/v2/nfe/"+ ref;
+var url = "https://homologacao.focusnfe.com.br/v2/nfe/"+ ref;
 
 /*
 Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
@@ -1529,7 +1529,7 @@ import requests
 Para ambiente de produção use a variável abaixo:
 url = "https://api.focusnfe.com.br"
 '''
-url = "http://homologacao.acrasnfe.acras.com.br/v2/nfe/"
+url = "https://homologacao.focusnfe.com.br/v2/nfe/"
 
 # Substituir pela sua identificação interna da nota
 ref = "12345"
@@ -1587,7 +1587,7 @@ A NFe poderá ser cancelada em até 24 horas após a emissão. No entanto, algun
 ```shell
 curl -u token_enviado_pelo_suporte: \
   -X POST -d '{"correcao":"Teste de carta de correcao"}' \
-  http://homologacao.acrasnfe.acras.com.br/v2/nfe/12345/carta_correcao
+  https://homologacao.focusnfe.com.br/v2/nfe/12345/carta_correcao
 ```
 
 ```php
@@ -1595,7 +1595,7 @@ curl -u token_enviado_pelo_suporte: \
 /* Você deve definir isso globalmente para sua aplicação.
 Para ambiente de produção utilize e a variável abaixo:
 $server = "https://api.focusnfe.com.br"; */
-$server = "http://homologacao.acrasnfe.acras.com.br";
+$server = "https://homologacao.focusnfe.com.br";
 // Substituir a variável, ref, pela sua identificação interna de nota.
 $ref = "12345";
 $login = "token_enviado_pelo_suporte";
@@ -1642,7 +1642,7 @@ public class NFeCCe {
 
 		/* Para ambiente de produção use a variável abaixo:
 		String server = "https://api.focusnfe.com.br/"; */
-		String server = "http://homologacao.acrasnfe.acras.com.br/";
+		String server = "https://homologacao.focusnfe.com.br/";
 
 		String url = server.concat("v2/nfe/"+ref+"/carta_correcao");
 
@@ -1691,7 +1691,7 @@ ref = "id_referencia_nota"
 
 # endereço da api que deve ser usado conforme o ambiente: produção ou homologação
 servidor_producao = "https://api.focusnfe.com.br/"
-servidor_homologacao = "http://homologacao.acrasnfe.acras.com.br/"
+servidor_homologacao = "https://homologacao.focusnfe.com.br/"
 
 # no caso do ambiente de envio ser em produção, utilizar servidor_producao
 url_envio = servidor_homologacao + "v2/nfe/" + ref + "/carta_correcao"
@@ -1751,7 +1751,7 @@ var ref = "12345";
 Para ambiente de producao use a URL abaixo:
 "https://api.focusnfe.com.br"
 */
-var url = "http://homologacao.acrasnfe.acras.com.br/v2/nfe/"+ ref + "/carta_correcao";
+var url = "https://homologacao.focusnfe.com.br/v2/nfe/"+ ref + "/carta_correcao";
 
 /*
 Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
@@ -1782,7 +1782,7 @@ import requests
 Para ambiente de produção use a variável abaixo:
 url = "https://api.focusnfe.com.br"
 '''
-url = "http://homologacao.acrasnfe.acras.com.br/v2/nfe/"
+url = "https://homologacao.focusnfe.com.br/v2/nfe/"
 
 # Substituir pela sua identificação interna da nota
 ref = "12345"
@@ -1850,7 +1850,7 @@ Para uma mesma nota fiscal é possível enviar mais de uma carta de correção, 
 ```shell
 curl -u token_enviado_pelo_suporte: \
   -X POST -d '{"emails":["alguem@example.org"]}' \
-  http://homologacao.acrasnfe.acras.com.br/v2/nfe/12345/email
+  https://homologacao.focusnfe.com.br/v2/nfe/12345/email
 ```
 
 ```php
@@ -1858,7 +1858,7 @@ curl -u token_enviado_pelo_suporte: \
 /* Você deve definir isso globalmente para sua aplicação
 Para ambiente de produção utilize e a variável abaixo:
 $server = "https://api.focusnfe.com.br"; */
-$server = "http://homologacao.acrasnfe.acras.com.br";
+$server = "https://homologacao.focusnfe.com.br";
 // Substituir a variável, ref, pela sua identificação interna de nota.
 $ref = "12345";
 $login = "token_enviado_pelo_suporte";
@@ -1908,7 +1908,7 @@ public class NFeEnviaEmail {
 
 		/* Para ambiente de produção use a variável abaixo:
 		String server = "https://api.focusnfe.com.br/"; */
- 		String server = "http://homologacao.acrasnfe.acras.com.br/";
+ 		String server = "https://homologacao.focusnfe.com.br/";
 
 		String url = server.concat("v2/nfe/"+ref+"/email");
 
@@ -1961,7 +1961,7 @@ ref = "id_referencia_nota"
 
 # endereço da api que deve ser usado conforme o ambiente: produção ou homologação
 servidor_producao = "https://api.focusnfe.com.br/"
-servidor_homologacao = "http://homologacao.acrasnfe.acras.com.br/"
+servidor_homologacao = "https://homologacao.focusnfe.com.br/"
 
 # no caso do ambiente de envio ser em produção, utilizar servidor_producao
 url_envio = servidor_homologacao + "v2/nfe/" + ref + "/email"
@@ -2021,7 +2021,7 @@ var ref = "12345";
 Para ambiente de producao use a URL abaixo:
 "https://api.focusnfe.com.br"
 */
-var url = "http://homologacao.acrasnfe.acras.com.br/v2/nfe/" + ref + "/email";
+var url = "https://homologacao.focusnfe.com.br/v2/nfe/" + ref + "/email";
 
 /*
 Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
@@ -2051,7 +2051,7 @@ import requests
 Para ambiente de produção use a variável abaixo:
 url = "https://api.focusnfe.com.br"
 '''
-url = "http://homologacao.acrasnfe.acras.com.br/v2/nfe/"
+url = "https://homologacao.focusnfe.com.br/v2/nfe/"
 
 # Substituir pela sua identificação interna da nota
 ref = "12345"
@@ -2089,7 +2089,7 @@ A API imediatamente devolve a requisição com a confirmação dos emails. Os em
 ```shell
 curl -u token_enviado_pelo_suporte: \
   -X POST -d '{"cnpj":"51916585000125","serie":"1","numero_inicial":"7","numero_final":"9","justificativa":"Teste de inutilizacao de nota"}' \
-  http://homologacao.acrasnfe.acras.com.br/v2/nfe/inutilizacao
+  https://homologacao.focusnfe.com.br/v2/nfe/inutilizacao
 ```
 
 ```php
@@ -2097,7 +2097,7 @@ curl -u token_enviado_pelo_suporte: \
 /* Você deve definir isso globalmente para sua aplicação.
 Para ambiente de produção utilize e a variável abaixo:
 $server = "https://api.focusnfe.com.br"; */
-$server = "http://homologacao.acrasnfe.acras.com.br";
+$server = "https://homologacao.focusnfe.com.br";
 // Substituir a variável, ref, pela sua identificação interna de nota.
 $login = "token_enviado_pelo_suporte";
 $password = "";
@@ -2145,7 +2145,7 @@ public class NFeInutilizacao {
 
 		/* Para ambiente de produção use a variável abaixo:
 		String server = "https://api.focusnfe.com.br/"; */
- 		String server = "http://homologacao.acrasnfe.acras.com.br/";
+ 		String server = "https://homologacao.focusnfe.com.br/";
 
  		String url = server.concat("v2/nfe/inutilizacao");
 
@@ -2198,7 +2198,7 @@ token = "codigo_alfanumerico_token"
 
 # endereço da api que deve ser usado conforme o ambiente: produção ou homologação
 servidor_producao = "https://api.focusnfe.com.br/"
-servidor_homologacao = "http://homologacao.acrasnfe.acras.com.br/"
+servidor_homologacao = "https://homologacao.focusnfe.com.br/"
 
 # no caso do ambiente de envio ser em produção, utilizar servidor_producao
 url_envio = servidor_homologacao + "v2/nfe/inutilizacao"
@@ -2259,7 +2259,7 @@ var token = "Token_enviado_pelo_suporte";
 Para ambiente de producao use a URL abaixo:
 "https://api.focusnfe.com.br"
 */
-var url = "http://homologacao.acrasnfe.acras.com.br/v2/nfe/inutilizacao";
+var url = "https://homologacao.focusnfe.com.br/v2/nfe/inutilizacao";
 
 /*
 Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
@@ -2293,7 +2293,7 @@ import requests
 Para ambiente de produção use a variável abaixo:
 url = "https://api.focusnfe.com.br"
 '''
-url = "http://homologacao.acrasnfe.acras.com.br/v2/nfe/inutilizacao"
+url = "https://homologacao.focusnfe.com.br/v2/nfe/inutilizacao"
 
 token="token_enviado_pelo_suporte"
 
@@ -2412,7 +2412,7 @@ token={token-enviado-pelo-suporte-focusnfe}
 
 Na seção **Diretorios** são configurados os diretórios de comunicação (envio e retorno) onde a aplicação do cliente irá salvar e ler arquivos respectivamente. Também é configurado o diretório de logs, onde o comunicador irá gravar os logs das operações realizadas por ele.
 
-A seção **Conexão** possui duas configurações cruciais para a correta comunicação com o Focus NFe. A url determina o endereço de comunicação que pode ser o de homologação (http://homologacao.acrasnfe.acras.com.br) e produção (http://producao.acrasnfe.acras.com.br).
+A seção **Conexão** possui duas configurações cruciais para a correta comunicação com o Focus NFe. A url determina o endereço de comunicação que pode ser o de homologação (https://homologacao.focusnfe.com.br) e produção (http://producao.acrasnfe.acras.com.br).
 
 O token é a chave de acesso, fornecida pelo suporte, que irá garantir que a aplicação do cliente tem acesso ao Focus NFe.
 

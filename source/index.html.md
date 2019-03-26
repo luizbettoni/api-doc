@@ -112,9 +112,9 @@ Este é o ambiente com validade fiscal e tributária, pois isso, recomendamos qu
 
 O endereço dos servidores são os seguintes:
 
-Homologação: `http://homologacao.acrasnfe.acras.com.br` (note que não é utilizado SSL).
+Homologação: `https://homologacao.focusnfe.com.br`
 
-Produção: `https://api.focusnfe.com.br` (obrigatório o uso de SSL).
+Produção: `https://api.focusnfe.com.br`
 
 **Considerações sobre o uso de SSL**
 
@@ -134,7 +134,7 @@ curl_setopt($ch, CURLOPT_CAINFO, "/pasta/no/servidor/ca.crt");
 
 ```
 
-Verifique em sua linguagem de programação se é necessário alguma configuração adicional para uso de SSL em produção.
+Verifique em sua linguagem de programação se é necessário alguma configuração adicional para uso de SSL.
 Pode ser necessário indicar explicitamente a confiar na autoridade certificadora que emitiu o certificado SSL.
 
 [Você pode baixar a cadeia de certificados aqui](https://focusnfe.com.br/downloads/ca.crt)
