@@ -5,7 +5,7 @@ A MDF-e (Manifesto Eletrônico de Documentos Fiscais) é utilizada para rastrear
 
 As seguintes operações estão disponíveis:
 
-* Emissão de MDF-e (sem emissão da DAMDF-e)
+* Emissão de MDF-e com geração da DAMDF-e
 * Inclusão de condutor
 * Cancelamento de MDF-e
 * Encerramento de MDF-e
