@@ -763,7 +763,7 @@ console.log("Corpo: " + request.responseText);
   "serie_rps": "1",
   "status": "autorizado",
   "numero": "233",
-  "codigo_verificacao": "DUMMY",
+  "codigo_verificacao": "DU1M-M2Y",
   "data_emissao": "2019-05-27T00:00:00-03:00",
   "url": "https://200.189.192.82/PilotoNota_Portal/Default.aspx?doc=07504505000132&num=233&cod=DUMMY",
   "caminho_xml_nota_fiscal": "/notas_fiscais_servico/NFSe075045050001324106902-004949940-433-DUMMY.xml"
@@ -774,7 +774,16 @@ console.log("Corpo: " + request.responseText);
 
 ```json
 {
-  "status": "cancelado"
+  "cnpj_prestador": "07504505000132",
+  "ref": "nfs-2",
+  "numero_rps": "224",
+  "serie_rps": "1",
+  "status": "cancelado",
+  "numero": "233",
+  "codigo_verificacao": "DU1M-M2Y",
+  "data_emissao": "2019-05-27T00:00:00-03:00",
+  "url": "https://200.189.192.82/PilotoNota_Portal/Default.aspx?doc=07504505000132&num=233&cod=DUMMY",
+  "caminho_xml_nota_fiscal": "/notas_fiscais_servico/NFSe075045050001324106902-004949940-433-DUMMY.xml"
 }
 ```
 
