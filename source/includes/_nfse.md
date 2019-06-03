@@ -174,7 +174,7 @@ import requests
 Para ambiente de produção use a variável abaixo:
 url = "https://api.focusnfe.com.br"
 '''
-url = "https://homologacao.focusnfe.com.br/v2/nfse.json"
+url = "https://homologacao.focusnfe.com.br/v2/nfse"
 
 # Substituir pela sua identificação interna da nota
 ref = {"ref":"12345"}
@@ -553,7 +553,7 @@ Para enviar uma NFSe utilize a URL abaixo, alterando o ambiente de produção pa
 
 Envia uma NFSe para autorização:
 
-`https://api.focusnfe.com.br/v2/nfse.json?ref=REFERENCIA`
+`https://api.focusnfe.com.br/v2/nfse?ref=REFERENCIA`
 
 Utilize o comando **HTTP POST** para enviar a sua nota para nossa API.
 
@@ -581,15 +581,13 @@ ref = "12345"
 
 token="token_enviado_pelo_suporte"
 
-r = requests.get(url+ref+".json", params=completa, auth=(token,""))
+r = requests.get(url+ref, params=completa, auth=(token,""))
 
 # Mostra na tela o codigo HTTP da requisicao e a mensagem de retorno da API
 print(r.status_code, r.text)
 
 
 ```
-
-
 
 ```shell
 curl -u token_enviado_pelo_suporte: \
@@ -753,18 +751,70 @@ console.log("Corpo: " + request.responseText);
 
 
 
-> Exemplo de resposta da consulta de NFSe:
+> Exemplos de resposta da API Focus NFSe por **status**:
+
+> **autorizado**
 
 ```json
 {
-  "cnpj_prestador":"19151707200188",
-  "ref":"123",
-  "status":"autorizado",
-  "numero":"9999",
-  "codigo_verificacao":"311299647",
-  "data_emissao":"2017-09-09T10:20:00-03:00",
-  "url":"http://visualizar.ginfes.com.br/report/consultarNota?__report=nfs_ver2&amp;cdVerificacao=311299647&amp;numNota=9999&amp;cnpjPrestador=19151707200188",
-"caminho_xml_nota_fiscal":"/notas_fiscais_servico/NFSe191517072001883518800-1898781-9999-312276647.xml"
+  "cnpj_prestador": "07504505000132",
+  "ref": "nfs-2",
+  "numero_rps": "224",
+  "serie_rps": "1",
+  "status": "autorizado",
+  "numero": "233",
+  "codigo_verificacao": "DU1M-M2Y",
+  "data_emissao": "2019-05-27T00:00:00-03:00",
+  "url": "https://200.189.192.82/PilotoNota_Portal/Default.aspx?doc=07504505000132&num=233&cod=DUMMY",
+  "caminho_xml_nota_fiscal": "/notas_fiscais_servico/NFSe075045050001324106902-004949940-433-DUMMY.xml"
+}
+```
+
+> **cancelado**
+
+```json
+{
+  "cnpj_prestador": "07504505000132",
+  "ref": "nfs-2",
+  "numero_rps": "224",
+  "serie_rps": "1",
+  "status": "cancelado",
+  "numero": "233",
+  "codigo_verificacao": "DU1M-M2Y",
+  "data_emissao": "2019-05-27T00:00:00-03:00",
+  "url": "https://200.189.192.82/PilotoNota_Portal/Default.aspx?doc=07504505000132&num=233&cod=DUMMY",
+  "caminho_xml_nota_fiscal": "/notas_fiscais_servico/NFSe075045050001324106902-004949940-433-DUMMY.xml"
+}
+```
+
+> **erro_autorizacao**
+
+```json
+{
+  "cnpj_prestador": "07504505000132",
+  "ref": "nfs-2",
+  "numero_rps": "224",
+  "serie_rps": "1",
+  "status": "erro_autorizacao",
+  "erros": [
+    {
+      "codigo": "E145",
+      "mensagem": "Regime Especial de Tributação ausente/inválido.",
+      "correcao": null
+    }
+  ]
+}
+```
+
+> **processando_autorizacao**
+
+```json
+{
+  "cnpj_prestador": "07504505000132",
+  "ref": "nfs-2",
+  "numero_rps": "224",
+  "serie_rps": "1",
+  "status": "processando_autorizacao",
 }
 ```
 
@@ -775,9 +825,25 @@ Para consultar uma NFSe utilize a URL abaixo, alterando o ambiente de produção
 
 Recupera informações sobre a NFSe:
 
-`https://api.focusnfe.com.br/v2/nfse/REFERENCIA.json`
+`https://api.focusnfe.com.br/v2/nfse/REFERENCIA`
 
 Utilize o comando **HTTP GET** para consultar a sua nota para nossa API.
+
+
+* **status:** Indica a etapa do processamento interno da nota fiscal (API Focus NFe e/ou Prefeitura), podendo ser:
+   * **autorizado:** A NFSe foi autorizada com sucesso, neste caso, é fornecido os caminhos para acessar a DANFSe e XML.
+   * **cancelado:** Indica que a operação de cancelamento do documento foi realizada com sucesso.
+   * **erro_autorizacao:** Houve algum erro durante a emissão da NFSe. A mensagem de erro você encontrará dentro do campo "erros". É possível reenviar a nota com a mesma referência após realizar as correções indicadas.
+   * **processando_autorizacao:** A NFSe está sendo processada internamente (API Focus NFe) e/ou pela prefeitura, consulte após alguns minutos.
+* **cnpj_prestador:** O CNPJ emitente da nota fiscal (conhecido também como "prestador do serviço").
+* **ref:** Essa é a referência usada na sua requisição.
+* **numero_rps:** Número do RPS de controle da Prefeitura.
+* **serie_rps:** A série da nota fiscal, caso ela tenha sido autorizada.
+* **erros:** Quando ocorrerem erros na emissão, será aqui que mostraremos a orientação da Prefeitura.
+* **url:** URL para acesso e download do DANFSe (versão HTML).
+* **data_emissao:** Data da emissão da nota fiscal.
+* **caminho_xml_nota_fiscal:** Caminho para acesso e download do XML da nota fiscal.
+* **codigo_verificacao:** Código de verificação para consulta da NFSe, pode ser usado no portal da cidade para consulta.
 
 ## Cancelamento
 ```python
@@ -803,7 +869,7 @@ serao convertidos a JSON e enviados para nossa API
 justificativa={}
 justificativa["justificativa"] = "Sua justificativa aqui!"
 
-r = requests.delete(url+ref+".json", data=json.dumps(justificativa), auth=(token,""))
+r = requests.delete(url+ref, data=json.dumps(justificativa), auth=(token,""))
 
 # Mostra na tela o codigo HTTP da requisicao e a mensagem de retorno da API
 print(r.status_code, r.text)
@@ -1011,7 +1077,7 @@ Para cancelar uma NFSe, basta fazer uma requisição à URL abaixo, alterando o 
 
 **Cancelar uma NFSe já autorizada:**
 
-`https://api.focusnfe.com.br/v2/nfse/REFERENCIA.json`
+`https://api.focusnfe.com.br/v2/nfse/REFERENCIA`
 
 Utilize o comando **HTTP DELETE** para cancelar a sua nota para nossa API.
 Este método é síncrono, ou seja, a comunicação com a prefeitura será feita imediatamente e devolvida a resposta na mesma requisição.
