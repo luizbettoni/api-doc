@@ -516,7 +516,7 @@
       <div class="dark-box"></div>
       <div class="content">
         <h1 id='introducao_introducao'>Introdução</h1>
-<aside class="warning">Esta é a API para a versão mais recente (v2). Para acessar a documentação da API v1 <a href='https://focusnfe.com.br/doc/v1'>clique aqui</a>.</aside>
+<aside>Esta é a documentação da API para a versão mais recente (v2). </aside>
 
 <p>A API do Focus NFe permite que você emita ou consulte documentos fiscais (NFe, NFSe, NFCe) a partir do seu sistema, seja qual for a tecnologia que ele utilize através da geração de dados em um formato simplificado, sem a necessidade de gerara a assinatura digital destes documentos. A API ainda gerencia toda a comunicação com os servidores da SEFAZ de cada estado ou com os servidores da prefeitura, no caso de NFSe.</p>
 
@@ -8234,7 +8234,7 @@ um formato único de campos para todas as prefeituras. A listagem dos campos seg
 Para ambiente de produção use a variável abaixo:
 url = "https://api.focusnfe.com.br"
 '''</span>
-<span class="n">url</span> <span class="o">=</span> <span class="s">"https://homologacao.focusnfe.com.br/v2/nfse.json"</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s">"https://homologacao.focusnfe.com.br/v2/nfse"</span>
 
 <span class="c"># Substituir pela sua identificação interna da nota</span>
 <span class="n">ref</span> <span class="o">=</span> <span class="p">{</span><span class="s">"ref"</span><span class="p">:</span><span class="s">"12345"</span><span class="p">}</span>
@@ -8595,7 +8595,7 @@ Passamos o token como quarto parametro deste metodo, como autenticador do HTTP B
 
 <p>Envia uma NFSe para autorização:</p>
 
-<p><code>https://api.focusnfe.com.br/v2/nfse.json?ref=REFERENCIA</code></p>
+<p><code>https://api.focusnfe.com.br/v2/nfse?ref=REFERENCIA</code></p>
 
 <p>Utilize o comando <strong>HTTP POST</strong> para enviar a sua nota para nossa API.</p>
 
@@ -8620,7 +8620,7 @@ url = "https://api.focusnfe.com.br"
 
 <span class="n">token</span><span class="o">=</span><span class="s">"token_enviado_pelo_suporte"</span>
 
-<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="o">+</span><span class="n">ref</span><span class="o">+</span><span class="s">".json"</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">completa</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="p">(</span><span class="n">token</span><span class="p">,</span><span class="s">""</span><span class="p">))</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="o">+</span><span class="n">ref</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">completa</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="p">(</span><span class="n">token</span><span class="p">,</span><span class="s">""</span><span class="p">))</span>
 
 <span class="c"># Mostra na tela o codigo HTTP da requisicao e a mensagem de retorno da API</span>
 <span class="k">print</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
@@ -8773,17 +8773,66 @@ Passamos o token como quarto parametro deste metodo, como autenticador do HTTP B
 
 </code></pre>
 <blockquote>
-<p>Exemplo de resposta da consulta de NFSe:</p>
+<p>Exemplos de resposta da API Focus NFSe por <strong>status</strong>:</p>
+
+<p><strong>autorizado</strong></p>
 </blockquote>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="s2">"cnpj_prestador"</span><span class="p">:</span><span class="s2">"19151707200188"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"ref"</span><span class="p">:</span><span class="s2">"123"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"status"</span><span class="p">:</span><span class="s2">"autorizado"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"numero"</span><span class="p">:</span><span class="s2">"9999"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"codigo_verificacao"</span><span class="p">:</span><span class="s2">"311299647"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"data_emissao"</span><span class="p">:</span><span class="s2">"2017-09-09T10:20:00-03:00"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"url"</span><span class="p">:</span><span class="s2">"http://visualizar.ginfes.com.br/report/consultarNota?__report=nfs_ver2&amp;amp;cdVerificacao=311299647&amp;amp;numNota=9999&amp;amp;cnpjPrestador=19151707200188"</span><span class="p">,</span><span class="w">
-</span><span class="s2">"caminho_xml_nota_fiscal"</span><span class="p">:</span><span class="s2">"/notas_fiscais_servico/NFSe191517072001883518800-1898781-9999-312276647.xml"</span><span class="w">
+  </span><span class="s2">"cnpj_prestador"</span><span class="p">:</span><span class="w"> </span><span class="s2">"07504505000132"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"nfs-2"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"numero_rps"</span><span class="p">:</span><span class="w"> </span><span class="s2">"224"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"serie_rps"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"autorizado"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"numero"</span><span class="p">:</span><span class="w"> </span><span class="s2">"233"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"codigo_verificacao"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DU1M-M2Y"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"data_emissao"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-05-27T00:00:00-03:00"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://200.189.192.82/PilotoNota_Portal/Default.aspx?doc=07504505000132&amp;num=233&amp;cod=DUMMY"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"caminho_xml_nota_fiscal"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/notas_fiscais_servico/NFSe075045050001324106902-004949940-433-DUMMY.xml"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<blockquote>
+<p><strong>cancelado</strong></p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"cnpj_prestador"</span><span class="p">:</span><span class="w"> </span><span class="s2">"07504505000132"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"nfs-2"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"numero_rps"</span><span class="p">:</span><span class="w"> </span><span class="s2">"224"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"serie_rps"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cancelado"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"numero"</span><span class="p">:</span><span class="w"> </span><span class="s2">"233"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"codigo_verificacao"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DU1M-M2Y"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"data_emissao"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-05-27T00:00:00-03:00"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://200.189.192.82/PilotoNota_Portal/Default.aspx?doc=07504505000132&amp;num=233&amp;cod=DUMMY"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"caminho_xml_nota_fiscal"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/notas_fiscais_servico/NFSe075045050001324106902-004949940-433-DUMMY.xml"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<blockquote>
+<p><strong>erro_autorizacao</strong></p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"cnpj_prestador"</span><span class="p">:</span><span class="w"> </span><span class="s2">"07504505000132"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"nfs-2"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"numero_rps"</span><span class="p">:</span><span class="w"> </span><span class="s2">"224"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"serie_rps"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"erro_autorizacao"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"erros"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"codigo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"E145"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"mensagem"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Regime Especial de Tributação ausente/inválido."</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"correcao"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<blockquote>
+<p><strong>processando_autorizacao</strong></p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"cnpj_prestador"</span><span class="p">:</span><span class="w"> </span><span class="s2">"07504505000132"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"nfs-2"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"numero_rps"</span><span class="p">:</span><span class="w"> </span><span class="s2">"224"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"serie_rps"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"processando_autorizacao"</span><span class="p">,</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <p>Após emitir uma nota, você poderá usar a operação de consulta para verificar se a nota já foi aceita para processamento, se está
@@ -8793,9 +8842,29 @@ ainda em processamento ou se a nota já foi processada.</p>
 
 <p>Recupera informações sobre a NFSe:</p>
 
-<p><code>https://api.focusnfe.com.br/v2/nfse/REFERENCIA.json</code></p>
+<p><code>https://api.focusnfe.com.br/v2/nfse/REFERENCIA</code></p>
 
 <p>Utilize o comando <strong>HTTP GET</strong> para consultar a sua nota para nossa API.</p>
+
+<ul>
+<li><strong>status:</strong> Indica a etapa do processamento interno da nota fiscal (API Focus NFe e/ou Prefeitura), podendo ser:
+
+<ul>
+<li><strong>autorizado:</strong> A NFSe foi autorizada com sucesso, neste caso, é fornecido os caminhos para acessar a DANFSe e XML.</li>
+<li><strong>cancelado:</strong> Indica que a operação de cancelamento do documento foi realizada com sucesso.</li>
+<li><strong>erro_autorizacao:</strong> Houve algum erro durante a emissão da NFSe. A mensagem de erro você encontrará dentro do campo &quot;erros&quot;. É possível reenviar a nota com a mesma referência após realizar as correções indicadas.</li>
+<li><strong>processando_autorizacao:</strong> A NFSe está sendo processada internamente (API Focus NFe) e/ou pela prefeitura, consulte após alguns minutos.</li>
+</ul></li>
+<li><strong>cnpj_prestador:</strong> O CNPJ emitente da nota fiscal (conhecido também como &quot;prestador do serviço&quot;).</li>
+<li><strong>ref:</strong> Essa é a referência usada na sua requisição.</li>
+<li><strong>numero_rps:</strong> Número do RPS de controle da Prefeitura.</li>
+<li><strong>serie_rps:</strong> A série da nota fiscal, caso ela tenha sido autorizada.</li>
+<li><strong>erros:</strong> Quando ocorrerem erros na emissão, será aqui que mostraremos a orientação da Prefeitura.</li>
+<li><strong>url:</strong> URL para acesso e download do DANFSe (versão HTML).</li>
+<li><strong>data_emissao:</strong> Data da emissão da nota fiscal.</li>
+<li><strong>caminho_xml_nota_fiscal:</strong> Caminho para acesso e download do XML da nota fiscal.</li>
+<li><strong>codigo_verificacao:</strong> Código de verificação para consulta da NFSe, pode ser usado no portal da cidade para consulta.</li>
+</ul>
 <h2 id='nfse_cancelamento'>Cancelamento</h2><pre class="highlight python tab-python"><code><span class="c"># Faça o download e instalação da biblioteca requests, através do python-pip.</span>
 <span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">requests</span>
@@ -8818,7 +8887,7 @@ serao convertidos a JSON e enviados para nossa API
 <span class="n">justificativa</span><span class="o">=</span><span class="p">{}</span>
 <span class="n">justificativa</span><span class="p">[</span><span class="s">"justificativa"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"Sua justificativa aqui!"</span>
 
-<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">url</span><span class="o">+</span><span class="n">ref</span><span class="o">+</span><span class="s">".json"</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">justificativa</span><span class="p">),</span> <span class="n">auth</span><span class="o">=</span><span class="p">(</span><span class="n">token</span><span class="p">,</span><span class="s">""</span><span class="p">))</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">url</span><span class="o">+</span><span class="n">ref</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">justificativa</span><span class="p">),</span> <span class="n">auth</span><span class="o">=</span><span class="p">(</span><span class="n">token</span><span class="p">,</span><span class="s">""</span><span class="p">))</span>
 
 <span class="c"># Mostra na tela o codigo HTTP da requisicao e a mensagem de retorno da API</span>
 <span class="k">print</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
@@ -9008,7 +9077,7 @@ Passamos o token como quarto parametro deste metodo, como autenticador do HTTP B
 
 <p><strong>Cancelar uma NFSe já autorizada:</strong></p>
 
-<p><code>https://api.focusnfe.com.br/v2/nfse/REFERENCIA.json</code></p>
+<p><code>https://api.focusnfe.com.br/v2/nfse/REFERENCIA</code></p>
 
 <p>Utilize o comando <strong>HTTP DELETE</strong> para cancelar a sua nota para nossa API.
 Este método é síncrono, ou seja, a comunicação com a prefeitura será feita imediatamente e devolvida a resposta na mesma requisição.</p>
