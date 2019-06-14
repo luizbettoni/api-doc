@@ -8583,12 +8583,22 @@ Passamos o token como quarto parametro deste metodo, como autenticador do HTTP B
 
 </code></pre>
 <blockquote>
-<p>Resposta da API para a requisição de envio:</p>
+<p>Exemplos de respostas da API por <strong>status</strong> para a requisição de envio:</p>
+
+<p><strong>processando_autorizacao</strong> (requisição enviada com sucesso para API)</p>
 </blockquote>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="s2">"cnpj_prestador"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CNPJ_PRESTADOR"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"REFERENCIA"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"processando_autorizacao"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<blockquote>
+<p><strong>requisicao_invalida</strong> (requisição com campos faltantes/erro de estrutura no JSON)</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"codigo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"requisicao_invalida"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"mensagem"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Parâmetro </span><span class="se">\"</span><span class="s2">prestador.codigo_municipio</span><span class="se">\"</span><span class="s2"> não informado"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <p>Para enviar uma NFSe utilize a URL abaixo, alterando o ambiente de produção para homologação, caso esteja emitindo notas de teste.</p>
@@ -8773,7 +8783,7 @@ Passamos o token como quarto parametro deste metodo, como autenticador do HTTP B
 
 </code></pre>
 <blockquote>
-<p>Exemplos de resposta da API Focus NFSe por <strong>status</strong>:</p>
+<p>Exemplos de respostas da API por <strong>status</strong> para a requisição de consulta:</p>
 
 <p><strong>autorizado</strong></p>
 </blockquote>
@@ -8865,6 +8875,19 @@ ainda em processamento ou se a nota já foi processada.</p>
 <li><strong>caminho_xml_nota_fiscal:</strong> Caminho para acesso e download do XML da nota fiscal.</li>
 <li><strong>codigo_verificacao:</strong> Código de verificação para consulta da NFSe, pode ser usado no portal da cidade para consulta.</li>
 </ul>
+<h3 id='nfse_download-do-xml-e-consulta-do-documento-auxiliar-da-nfse'>Download do XML e consulta do documento auxiliar da NFSe</h3>
+<p>Após a autorização da nota fiscal de serviço eletrônica será disponibilizado os campos:</p>
+
+<ul>
+<li> <strong>caminho_xml_nota_fiscal</strong> - Representa o caminho para montar a URL para download do XML. Por exemplo, se você utilizou o servidor api.focusnfe.com.br e o caminho_xml_nota_fiscal contém o caminho &quot;/notas_fiscais_servico/NFSe075045050001324106902-004940940-428-DUMMY.xml&quot; você poderá acessar o XML pela URL completa https://api.focusnfe.com.br/notas_fiscais_servico/NFSe075045050001324106902-004940940-428-DUMMY.xml</li>
+<li><strong>url</strong>. A URL para consultar a NFSe direto no portal da prefeitura em formato <strong>HTML</strong>.</li>
+</ul>
+
+<p>Utilize o método <strong>HTTP GET</strong> para ambas as consultas.</p>
+
+<p>Não há obrigatoriedade legal de salvar o XML da nota, salvo quando o município utiliza NFe (modelo 55) ou
+NFCe (modelo 65) para emissão de notas de prestação de serviços. Nestes casos nossa API faz a guarda automática
+dos arquivos.</p>
 <h2 id='nfse_cancelamento'>Cancelamento</h2><pre class="highlight python tab-python"><code><span class="c"># Faça o download e instalação da biblioteca requests, através do python-pip.</span>
 <span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">requests</span>
@@ -9067,10 +9090,34 @@ Passamos o token como quarto parametro deste metodo, como autenticador do HTTP B
 
 </code></pre>
 <blockquote>
-<p>Resposta da API para a requisição de cancelamento:</p>
+<p>Exemplos de respostas da API por <strong>status</strong> para a requisição de cancelamento:</p>
+
+<p><strong>cancelado</strong> (requisição realizada com sucesso)</p>
 </blockquote>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cancelado"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<blockquote>
+<p><strong>erro_cancelamento</strong> (requisição com erro)</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"erro_cancelamento"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"erros"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"codigo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"E523"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"mensagem"</span><span class="p">:</span><span class="w"> </span><span class="s2">"nota que você está tentando cancelar está fora do prazo permitido para cancelamento"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"correcao"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<blockquote>
+<p><strong>nfe_cancelada</strong> (quando a nota já consta como cancelada)</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"codigo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"nfe_cancelada"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"mensagem"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Nota Fiscal já cancelada"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <p>Para cancelar uma NFSe, basta fazer uma requisição à URL abaixo, alterando o ambiente de produção para homologação, caso esteja emitindo notas de teste.</p>
