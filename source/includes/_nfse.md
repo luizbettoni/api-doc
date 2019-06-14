@@ -882,6 +882,8 @@ Homologação
 
 `http://200.189.192.82/PilotoNota_Portal/Default.aspx?doc=07504505000132&num=428&cod=DUMMY`
 
+Utilize o método **HTTP GET** para ambas as consultas.
+
 
 ## Cancelamento
 ```python
