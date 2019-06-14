@@ -539,13 +539,24 @@ console.log("Corpo: " + request.responseText);
 ```
 
 
-> Resposta da API para a requisição de envio:
+> Exemplos de respostas da API por status para a requisição de envio:
+
+> **processando_autorizacao** (requisição enviada com sucesso para API)
 
 ```json
 {
   "cnpj_prestador": "CNPJ_PRESTADOR",
   "ref": "REFERENCIA",
   "status": "processando_autorizacao"
+}
+```
+
+> **requisicao_invalida** (requisição com campos faltantes/erro de estrutura no JSON)
+
+```json
+{
+  "codigo": "requisicao_invalida",
+  "mensagem": "Parâmetro \"prestador.codigo_municipio\" não informado"
 }
 ```
 
@@ -749,9 +760,7 @@ console.log("Corpo: " + request.responseText);
 
 ```
 
-
-
-> Exemplos de resposta da API Focus NFSe por **status**:
+> Exemplos de respostas da API por **status** para a requisição de consulta:
 
 > **autorizado**
 
@@ -767,14 +776,6 @@ console.log("Corpo: " + request.responseText);
   "data_emissao": "2019-05-27T00:00:00-03:00",
   "url": "https://200.189.192.82/PilotoNota_Portal/Default.aspx?doc=07504505000132&num=233&cod=DUMMY",
   "caminho_xml_nota_fiscal": "/notas_fiscais_servico/NFSe075045050001324106902-004949940-433-DUMMY.xml"
-}
-```
-
-> **cancelado**
-
-```json
-{
-  "status": "cancelado"
 }
 ```
 
@@ -835,6 +836,32 @@ Utilize o comando **HTTP GET** para consultar a sua nota para nossa API.
 * **data_emissao:** Data da emissão da nota fiscal.
 * **caminho_xml_nota_fiscal:** Caminho para acesso e download do XML da nota fiscal.
 * **codigo_verificacao:** Código de verificação para consulta da NFSe, pode ser usado no portal da cidade para consulta.
+
+### Download do XML e consulta do documento auxiliar da NFSe
+
+Após a autorização da nota fiscal de serviço eletrônica será disponibilizado o campo **caminho_xml_nota_fiscal** e **url**. No primeiro campo, o conteúdo será parâmetros de URL para acesso ao XML, no segundo, a URL para consultar a NFSe direto no portal da prefeitura em formato **HTML**.
+
+Produção
+
+#### XML
+
+`https://api.focusnfe.com.br/notas_fiscais_servico/NFSe075045050001324106902-004940940-428-DUMMY.xml`
+
+#### Documento auxiliar NFSe
+
+`http://200.189.192.82/PilotoNota_Portal/Default.aspx?doc=07504505000132&num=428&cod=DUMMY`
+
+
+Homologação
+
+#### XML
+
+`https://homologacao.focusnfe.com.br/notas_fiscais_servico/NFSe075045050001324106902-004940940-428-DUMMY.xml`
+
+#### Documento auxiliar NFSe
+
+`http://200.189.192.82/PilotoNota_Portal/Default.aspx?doc=07504505000132&num=428&cod=DUMMY`
+
 
 ## Cancelamento
 ```python
@@ -1055,15 +1082,41 @@ console.log("Corpo: " + request.responseText);
 
 ```
 
+> Exemplos de respostas da API por **status** para a requisição de cancelamento:
 
-
-> Resposta da API para a requisição de cancelamento:
+> **cancelado** (requisição realizada com sucesso)
 
 ```json
 {
   "status": "cancelado"
 }
 ```
+
+> **erro_cancelamento** (requisição com erro)
+
+```json
+{
+  "status": "erro_cancelamento",
+  "erros": [
+    {
+      "codigo": "E523",
+      "mensagem": "nota que você está tentando cancelar está fora do prazo permitido para cancelamento",
+      "correcao": null
+    }
+  ]
+}
+```
+
+> **nfe_cancelada** (quando a nota já consta como cancelada)
+
+```json
+{
+  "codigo": "nfe_cancelada",
+  "mensagem": "Nota Fiscal já cancelada"
+}
+```
+
+
 Para cancelar uma NFSe, basta fazer uma requisição à URL abaixo, alterando o ambiente de produção para homologação, caso esteja emitindo notas de teste.
 
 **Cancelar uma NFSe já autorizada:**
