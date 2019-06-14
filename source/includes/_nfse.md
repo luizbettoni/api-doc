@@ -539,13 +539,24 @@ console.log("Corpo: " + request.responseText);
 ```
 
 
-> Resposta da API para a requisição de envio:
+> Exemplos de respostas da API por **status** para a requisição de envio:
+
+> **processando_autorizacao** (requisição enviada com sucesso para API)
 
 ```json
 {
   "cnpj_prestador": "CNPJ_PRESTADOR",
   "ref": "REFERENCIA",
   "status": "processando_autorizacao"
+}
+```
+
+> **requisicao_invalida** (requisição com campos faltantes/erro de estrutura no JSON)
+
+```json
+{
+  "codigo": "requisicao_invalida",
+  "mensagem": "Parâmetro \"prestador.codigo_municipio\" não informado"
 }
 ```
 
@@ -749,9 +760,7 @@ console.log("Corpo: " + request.responseText);
 
 ```
 
-
-
-> Exemplos de resposta da API Focus NFSe por **status**:
+> Exemplos de respostas da API por **status** para a requisição de consulta:
 
 > **autorizado**
 
@@ -844,6 +853,19 @@ Utilize o comando **HTTP GET** para consultar a sua nota para nossa API.
 * **data_emissao:** Data da emissão da nota fiscal.
 * **caminho_xml_nota_fiscal:** Caminho para acesso e download do XML da nota fiscal.
 * **codigo_verificacao:** Código de verificação para consulta da NFSe, pode ser usado no portal da cidade para consulta.
+
+### Download do XML e consulta do documento auxiliar da NFSe
+
+Após a autorização da nota fiscal de serviço eletrônica será disponibilizado os campos:
+
+*  **caminho_xml_nota_fiscal** - Representa o caminho para montar a URL para download do XML. Por exemplo, se você utilizou o servidor api.focusnfe.com.br e o caminho_xml_nota_fiscal contém o caminho "/notas_fiscais_servico/NFSe075045050001324106902-004940940-428-DUMMY.xml" você poderá acessar o XML pela URL completa https://api.focusnfe.com.br/notas_fiscais_servico/NFSe075045050001324106902-004940940-428-DUMMY.xml
+* **url**. A URL para consultar a NFSe direto no portal da prefeitura em formato **HTML**.
+
+Utilize o método **HTTP GET** para ambas as consultas.
+
+Não há obrigatoriedade legal de salvar o XML da nota, salvo quando o município utiliza NFe (modelo 55) ou
+NFCe (modelo 65) para emissão de notas de prestação de serviços. Nestes casos nossa API faz a guarda automática
+dos arquivos.
 
 ## Cancelamento
 ```python
@@ -1064,15 +1086,41 @@ console.log("Corpo: " + request.responseText);
 
 ```
 
+> Exemplos de respostas da API por **status** para a requisição de cancelamento:
 
-
-> Resposta da API para a requisição de cancelamento:
+> **cancelado** (requisição realizada com sucesso)
 
 ```json
 {
   "status": "cancelado"
 }
 ```
+
+> **erro_cancelamento** (requisição com erro)
+
+```json
+{
+  "status": "erro_cancelamento",
+  "erros": [
+    {
+      "codigo": "E523",
+      "mensagem": "nota que você está tentando cancelar está fora do prazo permitido para cancelamento",
+      "correcao": null
+    }
+  ]
+}
+```
+
+> **nfe_cancelada** (quando a nota já consta como cancelada)
+
+```json
+{
+  "codigo": "nfe_cancelada",
+  "mensagem": "Nota Fiscal já cancelada"
+}
+```
+
+
 Para cancelar uma NFSe, basta fazer uma requisição à URL abaixo, alterando o ambiente de produção para homologação, caso esteja emitindo notas de teste.
 
 **Cancelar uma NFSe já autorizada:**
