@@ -539,7 +539,7 @@ console.log("Corpo: " + request.responseText);
 ```
 
 
-> Exemplos de respostas da API por status para a requisição de envio:
+> Exemplos de respostas da API por **status** para a requisição de envio:
 
 > **processando_autorizacao** (requisição enviada com sucesso para API)
 
@@ -779,8 +779,6 @@ console.log("Corpo: " + request.responseText);
 }
 ```
 
-<<<<<<< HEAD
-=======
 > **cancelado**
 
 ```json
@@ -798,7 +796,6 @@ console.log("Corpo: " + request.responseText);
 }
 ```
 
->>>>>>> 44b91c41133f71aafbaa20bfe571729109dbc9be
 > **erro_autorizacao**
 
 ```json
