@@ -856,31 +856,16 @@ Utilize o comando **HTTP GET** para consultar a sua nota para nossa API.
 
 ### Download do XML e consulta do documento auxiliar da NFSe
 
-Após a autorização da nota fiscal de serviço eletrônica será disponibilizado o campo **caminho_xml_nota_fiscal** e **url**. No primeiro campo, o conteúdo será parâmetros de URL para acesso ao XML, no segundo, a URL para consultar a NFSe direto no portal da prefeitura em formato **HTML**.
+Após a autorização da nota fiscal de serviço eletrônica será disponibilizado os campos:
 
-Produção
-
-#### XML
-
-`https://api.focusnfe.com.br/notas_fiscais_servico/NFSe075045050001324106902-004940940-428-DUMMY.xml`
-
-#### Documento auxiliar NFSe
-
-`http://200.189.192.82/PilotoNota_Portal/Default.aspx?doc=07504505000132&num=428&cod=DUMMY`
-
-
-Homologação
-
-#### XML
-
-`https://homologacao.focusnfe.com.br/notas_fiscais_servico/NFSe075045050001324106902-004940940-428-DUMMY.xml`
-
-#### Documento auxiliar NFSe
-
-`http://200.189.192.82/PilotoNota_Portal/Default.aspx?doc=07504505000132&num=428&cod=DUMMY`
+*  **caminho_xml_nota_fiscal** - Representa o caminho para montar a URL para download do XML. Por exemplo, se você utilizou o servidor api.focusnfe.com.br e o caminho_xml_nota_fiscal contém o caminho "/notas_fiscais_servico/NFSe075045050001324106902-004940940-428-DUMMY.xml" você poderá acessar o XML pela URL completa https://api.focusnfe.com.br/notas_fiscais_servico/NFSe075045050001324106902-004940940-428-DUMMY.xml
+* **url**. A URL para consultar a NFSe direto no portal da prefeitura em formato **HTML**.
 
 Utilize o método **HTTP GET** para ambas as consultas.
 
+Não há obrigatoriedade legal de salvar o XML da nota, salvo quando o município utiliza NFe (modelo 55) ou
+NFCe (modelo 65) para emissão de notas de prestação de serviços. Nestes casos nossa API faz a guarda automática
+dos arquivos.
 
 ## Cancelamento
 ```python
