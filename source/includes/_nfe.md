@@ -1007,7 +1007,42 @@ Quando isto ocorre nós não esperamos a SEFAZ do estado voltar e reenviamos ass
 
 O sistema cliente da API pode acompanhar este processo de forma transparente, conforme descrito na seção “Consulta” deste manual.
 
+> Exemplos de respostas da API por **status** para a requisição de envio:
+
+> autorizado
+
+```json
+{
+  "cnpj_emitente": "07504505000132",
+  "ref": "referencia_000899_nfe",
+  "status": "autorizado",
+  "status_sefaz": "100",
+  "mensagem_sefaz": "Autorizado o uso da NF-e",
+  "chave_nfe": "NFe41190607504505000132550010000000221923094166",
+  "numero": "22",
+  "serie": "1",
+  "caminho_xml_nota_fiscal": "/arquivos_development/07504505000132/201906/XMLs/41190607504505000132550010000000221923094166-nfe.xml",
+  "caminho_danfe": "/arquivos_development/07504505000132/201906/DANFEs/41190607504505000132550010000000221923094166.pdf"
+}
+```
+
+> erro_validacao_schema
+
+```json
+{
+  "codigo": "erro_validacao_schema",
+  "mensagem": "Erro na validação do Schema XML, verifique o detalhamento dos erros",
+  "erros": [
+    {
+      "mensagem": "Preencha pelo menos um documento do destinatário: cnpj_destinatario ou cpf_destinatario",
+      "campo": null
+    }
+  ]
+}
+```
+
 ## Consulta
+
 
 ```python
 # Faça o download e instalação da biblioteca requests, através do python-pip.
@@ -1192,73 +1227,7 @@ console.log("Corpo: " + request.responseText);
 
 ```
 
-> Exemplo de resposta da consulta de NFe:
-
-```json
-{
-  "cnpj_emitente": "CNPJ_DO_EMITENTE",
-  "ref": "REFERENCIA",
-  "status": "cancelado",
-  "status_sefaz": "135",
-  "mensagem_sefaz": "Evento registrado e vinculado a NF-e",
-  "numero": "25",
-  "serie": "3",
-  "chave_nfe": "NFe91180177643353000172550030000000251381549464",
-  "caminho_xml_nota_fiscal": "/arquivos_development/77623353000000/201201/XMLs/91180177643353000172550030000000251381549464-nfe.xml",
-  "caminho_xml_cancelamento": "/arquivos_development/77623353000000/201201/XMLs/91180177643353000172550030000000251381549464-can.xml",
-  "caminho_xml_carta_correcao": "/arquivos_development/77623353000000/201201/XMLs/91180177643353000172550030000000251381549464-cce-01.xml",
-  "caminho_pdf_carta_correcao": "/notas_fiscais/NFe91180177643353000172550030000000251381549464/cartas_correcao/1.pdf",
-  "numero_carta_correcao": 1
-}
-```
-
-Após emitir uma nota, você poderá usar a operação de consulta para verificar se a nota já foi aceita para processamento, se está
-ainda em processamento ou se a nota já foi processada.
-
-Para consultar uma NFe utilize a URL abaixo, alterando o ambiente de produção para homologação, caso esteja emitindo notas de teste.
-
-Consultar as informações de uma NFe:
-
-`https://api.focusnfe.com.br/v2/nfe/REFERENCIA?completa=(0|1)`
-
-Utilize o comando **HTTP GET** para consultar a sua nota para nossa API.
-
-Parâmetro Opcional | Ação
--------|-------|-----
-completa = 0 ou 1 | Habilita a API há mostrar campos adicionais na requisição de consulta.
-
-Campos de retorno:
-
-* **status**: A situação da NFe, podendo ser:
-  - **processando_autorizacao**: A nota ainda está em processamento pela API. Você deverá aguardar o processamento pela SEFAZ.
-  - **autorizado**: A nota foi autorizada, neste caso é fornecido os dados completos da nota como chave e arquivos para download
-  - **cancelado**: O documento foi cancelado, neste caso é fornecido o caminho para download do XML de cancelamento (caminho_xml_cancelamento).
-  - **erro_autorizacao**: Houve um erro de autorização por parte da SEFAZ. A mensagem de erro você encontrará nos campos status_sefaz e mensagem_sefaz. É possível fazer o reenvio da nota com a mesma referência se ela estiver neste estado.
-  - **denegado**: O documento foi denegado. Uma SEFAZ pode denegar uma nota se houver algum erro cadastral nos dados do destinatário ou do emitente. A mensagem de erro você encontrará nos campos status_sefaz e mensagem_sefaz. Não é possível reenviar a nota caso este estado seja alcançado pois é gerado um número, série, chave de NFe e XML para esta nota. O XML deverá ser armazenado pelo mesmo período de uma nota autorizada ou cancelada.
-* **status_sefaz**: O status da nota na SEFAZ.
-* **mensagem_sefaz**: Mensagem descritiva da SEFAZ detalhando o status.
-* **serie**: A série da nota fiscal, caso ela tenha sido autorizada.
-* **numero**: O número da nota fiscal, caso ela tenha sido autorizada.
-* **cnpj_emitente**: O CNPJ emitente da nota fiscal (o CNPJ de sua empresa).
-* **ref**:A referência da emissão.
-* **chave_nfe**: A chave da NFe, caso ela tenha sido autorizada.
-* **caminho_xml_nota_fiscal**: caso a nota tenha sido autorizada, retorna o caminho para download do XML.
-* **caminho_danfe**: caso a nota tenha sido autorizada retorna o caminho para download do DANFe.
-* **caminho_xml_carta_correcao**: caso tenha sido emitida alguma carta de correção, aqui aparecerá o caminho para fazer o download do XML.
-* **caminho_pdf_carta_correcao**: caso tenha sido emitida alguma carta de correção, aqui aparecerá o caminho para fazer o download do PDF da carta.
-* **numero_carta_correcao**: o número da carta de correção, caso tenha sido emitida.
-* **caminho_xml_cancelamento**: Caso a nota esteja cancelada, é fornecido o caminho para fazer o download do XML de cancelamento.
-
-Caso na requisição seja passado o parâmetro `completa=1` será adicionado mais 6 campos:
-
-* **requisicao_nota_fiscal**: Inclui os dados completos da requisição da nota fiscal, da mesma forma que constam no XML da nota.
-* **protocolo_nota_fiscal**: Inclui os dados completos do protocolo devolvido pela SEFAZ.
-* **requisicao_cancelamento**: Inclui os dados completos da requisição de cancelamento da nota fiscal.
-* **protocolo_cancelamento**: Inclui os dados completos do protocolo devolvido pela SEFAZ.
-* **requisicao_carta_correcao**: Inclui os dados completos da requisição de Carta de Correção Eletrônica da NFe.
-* **protocolo_carta_correcao**: Inclui os dados completos do protocolo devolvido pela SEFAZ.
-
-> Exemplo de resposta com o parâmetro opcional, completa, recebendo o valor "1":
+> Exemplo de resposta com o parâmetro opcional, **completa**, recebendo o valor "1":
 
 ```json
 {
@@ -1320,6 +1289,132 @@ Caso na requisição seja passado o parâmetro `completa=1` será adicionado mai
   }
 }
 ```
+> Exemplos de respostas da API por **status** para a requisição de consulta:
+
+> autorizado
+
+```json
+{
+  "cnpj_emitente": "07504505000132",
+  "ref": "referencia_000899_nfe",
+  "status": "autorizado",
+  "status_sefaz": "100",
+  "mensagem_sefaz": "Autorizado o uso da NF-e",
+  "chave_nfe": "NFe41190607504505000132550010000000221923094166",
+  "numero": "22",
+  "serie": "1",
+  "caminho_xml_nota_fiscal": "/arquivos_development/07504505000132/201906/XMLs/41190607504505000132550010000000221923094166-nfe.xml",
+  "caminho_danfe": "/arquivos_development/07504505000132/201906/DANFEs/41190607504505000132550010000000221923094166.pdf"
+}
+```
+
+> autorizado (com CCe)
+
+```json
+{
+  "cnpj_emitente": "07504505000132",
+  "ref": "referencia_000899_nfe",
+  "status": "autorizado",
+  "status_sefaz": "135",
+  "mensagem_sefaz": "Evento registrado e vinculado a NF-e",
+  "chave_nfe": "NFe41190607504505000132550010000000221923094166",
+  "numero": "22",
+  "serie": "1",
+  "caminho_xml_nota_fiscal": "/arquivos_development/07504505000132/201906/XMLs/41190607504505000132550010000000221923094166-nfe.xml",
+  "caminho_danfe": "/arquivos_development/07504505000132/201906/DANFEs/41190607504505000132550010000000221923094166.pdf",
+  "caminho_xml_carta_correcao": "/arquivos_development/07504505000132/201906/XMLs/41190607504505000132550010000000221923094166-cce-01.xml",
+  "caminho_pdf_carta_correcao": "/notas_fiscais/NFe41190607504505000132550010000000221923094166/cartas_correcao/1.pdf",
+  "numero_carta_correcao": 1
+}
+```
+
+> processando_autorizacao
+
+```json
+{
+  "cnpj_emitente": "07504505000132",
+  "ref": "referencia_000899_nfe",
+  "status": "processando_autorizacao"
+}
+```
+
+> erro_autorizacao
+
+```json
+{
+  "cnpj_emitente": "07504505000132",
+  "ref": "referencia_000899_nfe",
+  "status": "erro_autorizacao",
+  "status_sefaz": "598",
+  "mensagem_sefaz": "NF-e emitida em ambiente de homologacao com Razao Social do destinatario diferente de NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL"
+}
+```
+
+> cancelado
+
+```json
+{
+  "cnpj_emitente": "07504505000132",
+  "ref": "referencia_000899_nfe",
+  "status": "cancelado",
+  "status_sefaz": "135",
+  "mensagem_sefaz": "Evento registrado e vinculado a NF-e",
+  "numero": "22",
+  "serie": "1",
+  "chave_nfe": "NFe41190607504505000132550010000000221923094166",
+  "caminho_xml_nota_fiscal": "/arquivos_development/07504505000132/201906/XMLs/41190607504505000132550010000000221923094166-nfe.xml",
+  "caminho_xml_cancelamento": "/arquivos_development/07504505000132/201906/XMLs/41190607504505000132550010000000221923094166-can.xml",
+  "caminho_xml_carta_correcao": "/arquivos_development/07504505000132/201906/XMLs/41190607504505000132550010000000221923094166-cce-02.xml",
+  "caminho_pdf_carta_correcao": "/notas_fiscais/NFe41190607504505000132550010000000221923094166/cartas_correcao/2.pdf",
+  "numero_carta_correcao": 2
+}
+```
+
+Após emitir uma nota, você poderá usar a operação de consulta para verificar se a nota já foi aceita para processamento, se está
+ainda em processamento ou se a nota já foi processada.
+
+Para consultar uma NFe utilize a URL abaixo, alterando o ambiente de produção para homologação, caso esteja emitindo notas de teste.
+
+Consultar as informações de uma NFe:
+
+`https://api.focusnfe.com.br/v2/nfe/REFERENCIA?completa=(0|1)`
+
+Utilize o comando **HTTP GET** para consultar a sua nota para nossa API.
+
+Parâmetro Opcional | Ação
+-------|-------|-----
+completa = 0 ou 1 | Habilita a API há mostrar campos adicionais na requisição de consulta.
+
+Campos de retorno:
+
+* **status**: A situação da NFe, podendo ser:
+  - **processando_autorizacao**: A nota ainda está em processamento pela API. Você deverá aguardar o processamento pela SEFAZ.
+  - **autorizado**: A nota foi autorizada, neste caso é fornecido os dados completos da nota como chave e arquivos para download
+  - **cancelado**: O documento foi cancelado, neste caso é fornecido o caminho para download do XML de cancelamento (caminho_xml_cancelamento).
+  - **erro_autorizacao**: Houve um erro de autorização por parte da SEFAZ. A mensagem de erro você encontrará nos campos status_sefaz e mensagem_sefaz. É possível fazer o reenvio da nota com a mesma referência se ela estiver neste estado.
+  - **denegado**: O documento foi denegado. Uma SEFAZ pode denegar uma nota se houver algum erro cadastral nos dados do destinatário ou do emitente. A mensagem de erro você encontrará nos campos status_sefaz e mensagem_sefaz. Não é possível reenviar a nota caso este estado seja alcançado pois é gerado um número, série, chave de NFe e XML para esta nota. O XML deverá ser armazenado pelo mesmo período de uma nota autorizada ou cancelada.
+* **status_sefaz**: O status da nota na SEFAZ.
+* **mensagem_sefaz**: Mensagem descritiva da SEFAZ detalhando o status.
+* **serie**: A série da nota fiscal, caso ela tenha sido autorizada.
+* **numero**: O número da nota fiscal, caso ela tenha sido autorizada.
+* **cnpj_emitente**: O CNPJ emitente da nota fiscal (o CNPJ de sua empresa).
+* **ref**:A referência da emissão.
+* **chave_nfe**: A chave da NFe, caso ela tenha sido autorizada.
+* **caminho_xml_nota_fiscal**: caso a nota tenha sido autorizada, retorna o caminho para download do XML.
+* **caminho_danfe**: caso a nota tenha sido autorizada retorna o caminho para download do DANFe.
+* **caminho_xml_carta_correcao**: caso tenha sido emitida alguma carta de correção, aqui aparecerá o caminho para fazer o download do XML.
+* **caminho_pdf_carta_correcao**: caso tenha sido emitida alguma carta de correção, aqui aparecerá o caminho para fazer o download do PDF da carta.
+* **numero_carta_correcao**: o número da carta de correção, caso tenha sido emitida.
+* **caminho_xml_cancelamento**: Caso a nota esteja cancelada, é fornecido o caminho para fazer o download do XML de cancelamento.
+
+Caso na requisição seja passado o parâmetro `completa=1` será adicionado mais 6 campos:
+
+* **requisicao_nota_fiscal**: Inclui os dados completos da requisição da nota fiscal, da mesma forma que constam no XML da nota.
+* **protocolo_nota_fiscal**: Inclui os dados completos do protocolo devolvido pela SEFAZ.
+* **requisicao_cancelamento**: Inclui os dados completos da requisição de cancelamento da nota fiscal.
+* **protocolo_cancelamento**: Inclui os dados completos do protocolo devolvido pela SEFAZ.
+* **requisicao_carta_correcao**: Inclui os dados completos da requisição de Carta de Correção Eletrônica da NFe.
+* **protocolo_carta_correcao**: Inclui os dados completos do protocolo devolvido pela SEFAZ.
 
 ### Reenvio Automático em Contingência – algumas considerações
 
@@ -1332,7 +1427,18 @@ Quando houver uma tentativa anterior de emissão, conforme descrito na seção �
 * caminho_xml_nota_fiscal
 * caminho_xml_cancelamento
 
+### Download do XML da NFe
+
+Após a autorização da nota fiscal eletrônica será disponibilizado os campos:
+
+caminho_xml_nota_fiscal - Representa o caminho para montar a URL para download do XML. Por exemplo, se você utilizou o ambiente de produção (https://api.focusnfe.com.br) e o caminho_xml_nota_fiscal contém o caminho "/arquivos_development/77623353000000/201201/XMLs/91180177643353000172550030000000251381549464-nfe.xml" você poderá acessar o XML pela URL completa https://api.focusnfe.com.br/arquivos_development/77623353000000/201201/XMLs/91180177643353000172550030000000251381549464-nfe.xml
+
+Utilize o método **HTTP GET** para essa consulta.
+
+Existe obrigatoriedade legal para armazenar o XML de todas as notas NFe (modelo 55) por pelo menos 5 anos após a data de autorização da nota. Nossa API faz a guarda automática dos arquivos por esse período.
+
 ## Cancelamento
+
 
 ```shell
 curl -u token_enviado_pelo_suporte: \
@@ -1549,17 +1655,6 @@ r = requests.delete(url+ref, data=json.dumps(justificativa), auth=(token,""))
 print(r.status_code, r.text)
 ```
 
-> Resposta da API para a requisição de cancelamento:
-
-```json
-{
-  "status_sefaz": "135",
-  "mensagem_sefaz": "Evento registrado e vinculado a NF-e",
-  "status": "cancelado",
-  "caminho_xml_cancelamento": "/arquivos_development/77993353000000/204703/XMLs/41180377993353000000000030000000885414063742-can.xml"
-}
-```
-
 Para cancelar uma NFe, basta fazer uma requisição à URL abaixo, alterando o ambiente de produção para homologação, caso esteja emitindo notas de teste.
 
 Cancelar uma NFe já autorizada:
@@ -1581,6 +1676,28 @@ A API irá em seguida devolver os seguintes campos:
 
 ### Prazo de cancelamento
 A NFe poderá ser cancelada em até 24 horas após a emissão. No entanto, alguns estados podem permitir um prazo maior para o cancelamento.
+
+> Exemplos de respostas da API por **status** para a requisição de cancelamento:
+
+> cancelado
+
+```json
+{
+  "status_sefaz": "135",
+  "mensagem_sefaz": "Evento registrado e vinculado a NF-e",
+  "status": "cancelado",
+  "caminho_xml_cancelamento": "/arquivos_development/07504505000132/201906/XMLs/41190607504505000132550010000000221923094166-can.xml"
+}
+```
+
+> requisicao_invalida
+
+```json
+{
+  "codigo": "requisicao_invalida",
+  "mensagem": "Parâmetro \"justificativa\" deve ter entre 15 e 255 caracteres"
+}
+```
 
 ## Carta de Correção Eletrônica
 
@@ -1801,16 +1918,17 @@ r = requests.post(url+ref+"/carta_correcao", data=json.dumps(cce), auth=(token,"
 # Mostra na tela o codigo HTTP da requisicao e a mensagem de retorno da API
 print(r.status_code, r.text)
 ```
+> Exemplos de respostas da API por **status** para a requisição de carta de correção:
 
-> Resposta da API para a requisição de CCe:
+> autorizado
 
 ```json
 {
   "status_sefaz": "135",
   "mensagem_sefaz": "Evento registrado e vinculado a NF-e",
   "status": "autorizado",
-  "caminho_xml_carta_correcao": "/arquivos_development/77793353000000/201803/XMLs/99180377993353000000550030000000271021711350-cce-01.xml",
-  "caminho_pdf_carta_correcao": "/notas_fiscais/NFe411803777933530000002550030000000277771711350/cartas_correcao/1.pdf",
+  "caminho_xml_carta_correcao": "/arquivos_development/07504505000132/201906/XMLs/41190607504505000132550010000000221923094166-cce-01.xml",
+  "caminho_pdf_carta_correcao": "/notas_fiscais/NFe41190607504505000132550010000000221923094166/cartas_correcao/1.pdf",
   "numero_carta_correcao": 1
 }
 ```
@@ -2086,6 +2204,7 @@ A API imediatamente devolve a requisição com a confirmação dos emails. Os em
 
 ## Inutilização
 
+
 ```shell
 curl -u token_enviado_pelo_suporte: \
   -X POST -d '{"cnpj":"51916585000125","serie":"1","numero_inicial":"7","numero_final":"9","justificativa":"Teste de inutilizacao de nota"}' \
@@ -2314,20 +2433,6 @@ r = requests.post(url, data=json.dumps(inutilizacao), auth=(token,""))
 print(r.status_code, r.text)
 ```
 
-> Resposta da API para a requisição de inutilização:
-
-```json
- {
-  "status_sefaz": "102",
-  "mensagem_sefaz": "Inutilizacao de numero homologado",
-  "serie": "3",
-  "numero_inicial": "800",
-  "numero_final": "801",
-  "status": "autorizado",
-  "caminho_xml": "/arquivos_development/71113353000900/207701/XMLs/999992335309999955003000000800000000801-inu.xml"
-}
-```
-
 Em uma situação normal você não precisará informar ao SEFAZ a inutilização de um número da NFe, pois a API controla automaticamente a numeração das notas. Porém, se por alguma situação específica for necessário a inutilização de alguma faixa de números você poderá chamar as seguintes operações:
 
 Envio de inutilização de faixa de numeração:
@@ -2353,6 +2458,35 @@ A API irá enviar uma resposta com os seguintes campos:
 * **numero_inicial**: Número inicial a ser inutilizado
 * **numero_final**: Número final a ser inutilizado
 * **caminho_xml**: Caminho do XML para download caso a inutilização tenha sido autorizada pela SEFAZ.
+
+> Exemplos de respostas da API por status para a requisição de inutilização:
+
+> autorizado
+
+```json
+{
+  "status_sefaz": "102",
+  "mensagem_sefaz": "Inutilizacao de numero homologado",
+  "serie": "1",
+  "numero_inicial": "999",
+  "numero_final": "1000",
+  "status": "autorizado",
+  "caminho_xml": "/arquivos_development/07504505000132/201906/XMLs/190750450500013255001000000999000001000-inu.xml"
+}
+```
+
+> erro_autorizacao
+
+```json
+{
+  "status_sefaz": "256",
+  "mensagem_sefaz": "Uma NF-e da faixa ja esta inutilizada na Base de dados da SEFAZ",
+  "serie": "1",
+  "numero_inicial": "1000",
+  "numero_final": "1000",
+  "status": "erro_autorizacao"
+}
+```
 
 ## Outras documentações
 ### Enviador de Arquivos

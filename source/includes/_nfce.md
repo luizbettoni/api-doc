@@ -232,6 +232,8 @@ HTTP CODE/STATUS | Status API Focus | Descrição | Correção
 422 - unprocessable entity | empresa_nao_configurada | Empresa não configurada para emissão de NFCe | É necessário informar no cadastro do emitente(Painel API) o CSC e id_token(gerados na Sefaz do Estado do emitente), para emissão de NFCe. 
 
 ## Envio
+
+
 ```python
 # Faça o download e instalação da biblioteca requests, através do python-pip.
 import json
@@ -659,7 +661,6 @@ console.log("Corpo: " + request.responseText);
 
 ```
 
-
 Para enviar uma NFCe utilize a URL abaixo, alterando o ambiente de produção para homologação, caso esteja emitindo notas de teste.
 
 Envia uma NFCe para autorização:
@@ -674,7 +675,41 @@ A numeração da nota (número e série) pode ser definido automaticamente pela 
 
 O envio de uma NFCe é um processo **síncrono**, ou seja, diferente da NFe a nota é autorizada ou rejeitada na mesma requisição. A resposta da requisição irá conter o mesmo resultado que a operação da consulta, descrita a seguir.
 
+> Exemplos de respostas da API por **status** para a requisição de envio:
+
+> autorizado
+
+```json
+{
+  "cnpj_emitente": "07504505000132",
+  "ref": "referencia_000899",
+  "status": "autorizado",
+  "status_sefaz": "100",
+  "mensagem_sefaz": "Autorizado o uso da NF-e",
+  "chave_nfe": "NFe41190607504505000132650010000000121743484310",
+  "numero": "12",
+  "serie": "1",
+  "caminho_xml_nota_fiscal": "/arquivos_development/07504505000132/201906/XMLs/41190607504505000132650010000000121743484310-nfe.xml",
+  "caminho_danfe": "/notas_fiscais_consumidor/NFe41190607504505000132650010000000121743484310.html",
+  "qrcode_url": "http://www.fazenda.pr.gov.br/nfce/qrcode/?p=41190607504505000132650010000000121743484310|2|2|1|5E264C0E28D801197219894CDFCF2FCCC5237F08",
+  "url_consulta_nf": "http://www.fazenda.pr.gov.br/nfce/consulta"
+}
+```
+
+> erro_autorizacao
+
+```json
+{
+  "cnpj_emitente": "07504505000132",
+  "ref": "referencia_000899",
+  "status": "erro_autorizacao",
+  "status_sefaz": "591",
+  "mensagem_sefaz": "Informado CSOSN para emissor que nao e do Simples Nacional (CRT diferente de 1). [nItem:1]"
+}
+```
+
 ## Consulta
+
 ```python
 # Faça o download e instalação da biblioteca requests, através do python-pip.
 import requests
@@ -980,7 +1015,69 @@ Caso na requisição seja passado o parâmetro `completa=1` será adicionado mai
 }
 ```
 
+### Download do XML da NFCe
+
+Após a autorização da nota fiscal de consumidor eletrônica será disponibilizado os campos:
+
+caminho_xml_nota_fiscal - Representa o caminho para montar a URL para download do XML. Por exemplo, se você utilizou o ambiente de produção (https://api.focusnfe.com.br) e o caminho_xml_nota_fiscal contém o caminho "/arquivos/733530172/201704/XMLs/41170777627353999172550010000003871980884091-nfe.xml" você poderá acessar o XML pela URL completa https://api.focusnfe.com.br/arquivos/733530172/201704/XMLs/41170777627353999172550010000003871980884091-nfe.xml
+
+Utilize o método **HTTP GET** para essa consulta.
+
+Existe obrigatoriedade legal para armazenar o XML de todas as notas NFCe (modelo 65) por pelo menos 5 anos após a data de autorização da nota. Nossa API faz a guarda automática dos arquivos por esse período.
+
+> Exemplos de respostas da API por **status** para a requisição de consulta:
+
+> autorizado
+
+```json
+{
+  "cnpj_emitente": "07504505000132",
+  "ref": "referencia_000899",
+  "status": "autorizado",
+  "status_sefaz": "100",
+  "mensagem_sefaz": "Autorizado o uso da NF-e",
+  "chave_nfe": "NFe41190607504505000132650010000000121743484310",
+  "numero": "12",
+  "serie": "1",
+  "caminho_xml_nota_fiscal": "/arquivos_development/07504505000132/201906/XMLs/41190607504505000132650010000000121743484310-nfe.xml",
+  "caminho_danfe": "/notas_fiscais_consumidor/NFe41190607504505000132650010000000121743484310.html",
+  "qrcode_url": "http://www.fazenda.pr.gov.br/nfce/qrcode/?p=41190607504505000132650010000000121743484310|2|2|1|5E264C0E28D801197219894CDFCF2FCCC5237F08",
+  "url_consulta_nf": "http://www.fazenda.pr.gov.br/nfce/consulta"
+}
+```
+
+> erro_autorizacao
+
+```json
+{
+  "cnpj_emitente": "07504505000132",
+  "ref": "referencia_0008992",
+  "status": "erro_autorizacao",
+  "status_sefaz": "591",
+  "mensagem_sefaz": "Informado CSOSN para emissor que nao e do Simples Nacional (CRT diferente de 1). [nItem:1]"
+}
+```
+
+> cancelado
+
+```json
+{
+  "cnpj_emitente": "07504505000132",
+  "ref": "referencia_000899",
+  "status": "cancelado",
+  "status_sefaz": "135",
+  "mensagem_sefaz": "Evento registrado e vinculado a NF-e",
+  "numero": "12",
+  "serie": "1",
+  "chave_nfe": "NFe41190607504505000132650010000000121743484310",
+  "caminho_xml_nota_fiscal": "/arquivos_development/07504505000132/201906/XMLs/41190607504505000132650010000000121743484310-nfe.xml",
+  "caminho_xml_cancelamento": "/arquivos_development/07504505000132/201906/XMLs/41190607504505000132650010000000121743484310-can.xml"
+}
+```
+
 ## Cancelamento
+
+
 ```python
 # Faça o download e instalação da biblioteca requests, através do python-pip.
 import json
@@ -1222,9 +1319,43 @@ A API irá em seguida devolver os seguintes campos:
 
 **Prazo de cancelamento**
 
-A NFCe poderá ser cancelada em até 24 horas após a emissão.
+A NFCe poderá ser cancelada em até 30 minutos após a emissão.
+
+> Exemplos de respostas da API por **status** para a requisição de cancelamento:
+
+> cancelado
+
+```json
+{
+  "status_sefaz": "135",
+  "mensagem_sefaz": "Evento registrado e vinculado a NF-e",
+  "status": "cancelado",
+  "caminho_xml_cancelamento": "/arquivos_development/07504505000132/201906/XMLs/41190607504505000132650010000000121743484310-can.xml"
+}
+```
+
+> requisicao_invalida
+
+```json
+{
+  "codigo": "requisicao_invalida",
+  "mensagem": "Parâmetro \"justificativa\" deve ter entre 15 e 255 caracteres"
+}
+```
+
+> nfe_nao_autorizada
+
+```json
+{
+  "codigo": "nfe_nao_autorizada",
+  "mensagem": "Nota fiscal não autorizada"
+}
+```
+
 
 ## Inutilização
+
+
 ```python
 # Faça o download e instalação da biblioteca requests, através do python-pip.
 import json
@@ -1481,6 +1612,35 @@ A API irá enviar uma resposta com os seguintes campos:
 * **numero_inicial:** Número inicial a ser inutilizado
 * **numero_final:** Número final a ser inutilizado
 * **caminho_xml:** Caminho do XML para download caso a inutilização tenha sido autorizada pela SEFAZ.
+
+> Exemplos de respostas da API por **status** para a requisição de inutilização:
+
+> autorizado
+
+```json
+{
+  "status_sefaz": "102",
+  "mensagem_sefaz": "Inutilizacao de numero homologado",
+  "serie": "1",
+  "numero_inicial": "999",
+  "numero_final": "1000",
+  "status": "autorizado",
+  "caminho_xml": "/arquivos_development/07504505000132/201906/XMLs/190750450500013265001000000999000001000-inu.xml"
+}
+```
+
+> erro_autorizacao
+
+```json
+{
+  "status_sefaz": "241",
+  "mensagem_sefaz": "Um numero da faixa ja foi utilizado",
+  "serie": "1",
+  "numero_inicial": "1",
+  "numero_final": "9",
+  "status": "erro_autorizacao"
+}
+```
 
 ## Reenvio de e-mail
 ```python
