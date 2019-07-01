@@ -42,7 +42,7 @@
 }
 ```
 
-Algumas prefeituras possuem nota fiscal eletrônica de serviços mas não possuem a possibilidade de integrar com outros sistemas através de webservices. Nestes casos a prefeitura disponibiliza uma forma de importar várias notas fiscais para emissão em lote, evitando o trabalho de digitar e autorizar cada NFSe de forma manual.
+Algumas prefeituras possuem nota fiscal eletrônica de serviços mas não possuem a possibilidade de integrar com outros sistemas através de webservices. Nestes casos a prefeitura disponibiliza uma forma de importar vários RPS (Recibo Provisório de Serviço) que serão convertidos em notas de serviço, evitando o trabalho de digitar e autorizar cada NFSe de forma manual.
 
 A API do Focus NFe atende essas situações fornecendo uma interface padronizada para geração destes arquivos, usando um formato muito similar com o já usado para autorizar NFSe’s individualmente.
 
@@ -57,9 +57,9 @@ import requests
 
 '''
 Para ambiente de produção use a variável abaixo:
-url = "https://api.focusnfe.com.br/v2/lotes_nfse"
+url = "https://api.focusnfe.com.br/v2/lotes_rps"
 '''
-url = "https://homologacao.focusnfe.com.br/v2/lotes_nfse"
+url = "https://homologacao.focusnfe.com.br/v2/lotes_rps"
 
 # Substituir pela sua identificação interna da nota
 ref = {"ref":"12345"}
@@ -117,7 +117,7 @@ arquivo_lote_rps.close()
 ```shell
 # arquivo.json deve conter os dados da NFSe
 curl -u token_enviado_pelo_suporte: \
-  -X POST -T arquivo.json https://homologacao.focusnfe.com.br/v2/lotes_nfse > arquivo_lote_rps.txt
+  -X POST -T arquivo.json https://homologacao.focusnfe.com.br/v2/lotes_rps > arquivo_lote_rps.txt
 ```
 
 ```java
@@ -144,7 +144,7 @@ public class NFSeAutorizar {
     String server = "https://api.focusnfe.com.br/"; */
     String server = "https://homologacao.focusnfe.com.br/";
 
-    String url = server.concat("v2/lotes_nfse?ref="+ref);
+    String url = server.concat("v2/lotes_rps?ref="+ref);
 
     /* Configuração para realizar o HTTP BasicAuth. */
     Object config = new DefaultClientConfig();
@@ -237,7 +237,7 @@ servidor_producao = "https://api.focusnfe.com.br/"
 servidor_homologacao = "https://homologacao.focusnfe.com.br/"
 
 # no caso do ambiente de envio ser em produção, utilizar servidor_producao
-url_envio = servidor_homologacao + "v2/lotes_nfse?ref=" + ref
+url_envio = servidor_homologacao + "v2/lotes_rps?ref=" + ref
 
 # altere os campos conforme a nota que será enviada
 lote_nfse = {  
@@ -348,7 +348,7 @@ File.open('arquivo_lote_rps.txt', 'w') { |arquivo| arquivo.puts resposta.body }
   );
  // Inicia o processo de envio das informações usando o cURL
  $ch = curl_init();
- curl_setopt($ch, CURLOPT_URL, $server."/v2/lotes_nfse?ref=" . $ref);
+ curl_setopt($ch, CURLOPT_URL, $server."/v2/lotes_rps?ref=" . $ref);
  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
  curl_setopt($ch, CURLOPT_POST, 1);
  curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($lote_nfse));
@@ -385,7 +385,7 @@ let ref = "12345";
 Para ambiente de producao use a URL abaixo:
 "https://api.focusnfe.com.br"
 */
-let url = "https://homologacao.focusnfe.com.br/v2/lotes_nfse?ref=" + ref;
+let url = "https://homologacao.focusnfe.com.br/v2/lotes_rps?ref=" + ref;
 
 /*
 Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
@@ -438,7 +438,7 @@ fs.writeFile('arquivo_lote_rps.txt', request.responseText);
 ```
 Para gerar o arquivo do lote RPS, o envio dos dados é feito utilizando a URL abaixo (caso o envio seja em homologação, alterar para a URL correspondente):
 
-`https://api.focusnfe.com.br/v2/lotes_nfse?ref=REFERENCIA`
+`https://api.focusnfe.com.br/v2/lotes_rps?ref=REFERENCIA`
 
 Os dados que devem ir no POST é um arquivo JSON muito similar ao arquivo de autorização de NFSe. Caso não haja nenhuma falha, a API retornará os dados para geração do arquivo. As informações que devem ser enviadas consistem nos seguintes campos:
 
@@ -469,7 +469,7 @@ import requests
 Para ambiente de produção use a variável abaixo:
 url = "https://api.focusnfe.com.br"
 '''
-url = "https://homologacao.focusnfe.com.br/v2/lotes_nfse/"
+url = "https://homologacao.focusnfe.com.br/v2/lotes_rps/"
 
 # Substituir pela sua identificação interna da nota
 ref = "12345"
@@ -491,7 +491,7 @@ arquivo_lote_rps.close()
 
 ```shell
 curl -u token_enviado_pelo_suporte: \
-  -X GET https://homologacao.focusnfe.com.br/v2/lotes_nfse/12345 > arquivo_lote_rps.txt
+  -X GET https://homologacao.focusnfe.com.br/v2/lotes_rps/12345 > arquivo_lote_rps.txt
 ```
 
 ```java
@@ -515,7 +515,7 @@ public class NFSeConsulta {
     String server = "https://api.focusnfe.com.br/"; */
     String server = "https://homologacao.focusnfe.com.br/";
 
-    String url = server.concat("v2/lotes_nfse/"+ref);
+    String url = server.concat("v2/lotes_rps/"+ref);
 
     /* Configuração para realizar o HTTP BasicAuth. */
     Object config = new DefaultClientConfig();
@@ -556,7 +556,7 @@ servidor_producao = "https://api.focusnfe.com.br/"
 servidor_homologacao = "https://homologacao.focusnfe.com.br/"
 
 # no caso do ambiente de envio ser em produção, utilizar servidor_producao
-url_envio = servidor_homologacao + "v2/lotes_nfse/" + ref
+url_envio = servidor_homologacao + "v2/lotes_rps/" + ref
 
 # criamos uma objeto uri para envio da nota
 uri = URI(url_envio)
@@ -593,7 +593,7 @@ File.open('arquivo_lote_rps.txt', 'w') { |arquivo| arquivo.puts resposta.body }
  // $server = "https://api.focusnfe.com.br";
  $server = "https://homologacao.focusnfe.com.br"; // Servidor de homologação
  $ch = curl_init();
- curl_setopt($ch, CURLOPT_URL, $server."/v2/lotes_nfse/" . $ref);
+ curl_setopt($ch, CURLOPT_URL, $server."/v2/lotes_rps/" . $ref);
  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
  curl_setopt($ch, CURLOPT_HTTPHEADER, array());
  curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
@@ -628,7 +628,7 @@ let ref = "12345";
 Para ambiente de producao use a URL abaixo:
 "https://api.focusnfe.com.br"
 */
-let url = "https://homologacao.focusnfe.com.br/v2/lotes_nfse/" + ref;
+let url = "https://homologacao.focusnfe.com.br/v2/lotes_rps/" + ref;
 
 /*
 Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
@@ -646,7 +646,7 @@ Para os lotes que já foram gerados, é possível fazer a consulta do mesmo. O r
 
 Esta operação está disponível na URL abaixo:
 
-`https://api.focusnfe.com.br/v2/lotes_nfse/REFERENCIA`
+`https://api.focusnfe.com.br/v2/lotes_rps/REFERENCIA`
 
 - **retorno:**
   - **HTTP status 200 (OK)** – É devolvido o conteúdo do arquivo de importação como resposta
@@ -664,7 +664,7 @@ Para ambiente de produção use a variável abaixo:
 url = "https://api.focusnfe.com.br"
 '''
 ref = "12345"
-url = "https://homologacao.focusnfe.com.br/v2/lotes_nfse/" + ref + "/resposta"
+url = "https://homologacao.focusnfe.com.br/v2/lotes_rps/" + ref + "/resposta"
 
 # Substituir pela sua identificação interna da nota
 
@@ -685,7 +685,7 @@ print(r.status_code, r.text)
 
 ```shell
 curl -u token_enviado_pelo_suporte: \
-  -X POST https://homologacao.focusnfe.com.br/v2/lotes_nfse/12345/resposta -T caminho/arquivo_retorno.txt
+  -X POST https://homologacao.focusnfe.com.br/v2/lotes_rps/12345/resposta -T caminho/arquivo_retorno.txt
 ```
 
 ```java
@@ -712,7 +712,7 @@ public class LoteNFSeConsulta {
     String server = "https://api.focusnfe.com.br/"; */
     String server = "https://homologacao.focusnfe.com.br/";
 
-    String url = server.concat("v2/lotes_nfse/"+ref);
+    String url = server.concat("v2/lotes_rps/"+ref);
 
     /* Configuração para realizar o HTTP BasicAuth. */
     Object config = new DefaultClientConfig();
@@ -757,7 +757,7 @@ servidor_producao = "https://api.focusnfe.com.br/"
 servidor_homologacao = "https://homologacao.focusnfe.com.br/"
 
 # no caso do ambiente de envio ser em produção, utilizar servidor_producao
-url_envio = servidor_homologacao + "v2/lotes_nfse/" + ref
+url_envio = servidor_homologacao + "v2/lotes_rps/" + ref
 
 # criamos uma objeto uri para envio da nota
 uri = URI(url_envio)
@@ -806,7 +806,7 @@ puts "Corpo da resposta: " + resposta.body
   // $server = "https://api.focusnfe.com.br";
   $server = "https://homologacao.focusnfe.com.br"; // Servidor de homologação
   $ch = curl_init();
-  curl_setopt($ch, CURLOPT_URL, $server."/v2/lotes_nfse/" . $ref . "/resposta");
+  curl_setopt($ch, CURLOPT_URL, $server."/v2/lotes_rps/" . $ref . "/resposta");
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
   curl_setopt($ch, CURLOPT_POST, 1);
   curl_setopt($ch, CURLOPT_POSTFIELDS, $retorno);
@@ -844,7 +844,7 @@ let ref = "12345";
 Para ambiente de producao use a URL abaixo:
 "https://api.focusnfe.com.br"
 */
-let url = "https://homologacao.focusnfe.com.br/v2/lotes_nfse/" + ref + "/resposta";
+let url = "https://homologacao.focusnfe.com.br/v2/lotes_rps/" + ref + "/resposta";
 
 // Aqui é feita a leitura do conteúdo do arquivo de retorno baixado no site da prefeitura
 let retorno = fs.readFile('caminho/arquivo_retorno.txt');
@@ -865,7 +865,7 @@ console.log("Corpo: " + request.responseText);
 
 Algumas prefeituras disponibilizam um arquivo de resposta, que poderá informar erros no arquivo enviado ou informar dados da nota fiscal gerada (por exemplo número e código de verificação). Quando implementado, é possível enviar a resposta da prefeitura para nossa API, utilizando a URL abaixo, e iremos gerar a resposta de acordo com o padrão da nossa API:
 
-`https://api.focusnfe.com.br/v2/lotes_nfse/REFERENCIA/resposta`
+`https://api.focusnfe.com.br/v2/lotes_rps/REFERENCIA/resposta`
 
 - **retorno:**
  - **HTTP status 201 (Created)** – Arquivo de importação gerado. É devolvido o status de cada nota enviada. Nenhuma nota é processada se alguma nota tiver algum erro.
