@@ -1888,18 +1888,26 @@ A API imediatamente devolve a requisição com a confirmação dos emails. Os em
 
 Para os usuários de tecnologias que não permitem o acesso à API via Web Services ou que não desejam programar o acesso HTTP, disponibilizamos um comunicador que realiza toda comunicação com os Web Services de nossa API. Para utilizar o enviador de arquivos basta rodar um executável simples e salvar as notas em uma pasta específica que o enviador fará o resto.
 
-Instalação e Configuração
+###Instalação e Configuração
+
 O Enviador de Arquivos não possui um instalador específico, ele é apenas um executável standalone. Este executável quando é rodado irá ler as configurações de um arquivo texto chamado nfce.ini que deve estar localizado na mesma pasta em que ele está e que possui o formato a seguir:
 
 `[nfce]`
+
 `dir=C:\Users\acras\Desktop\nfces`
+
 `cnpj_emitente=07504505000132`
+
 `token=iDAJmdfgi83ksadvmsdfl1234mdfHSdYO`
+
 `producao=0`
+
 `simples=1`
 
 Quando usado para emitir Cupom Fiscal Eletrônico SAT os campos abaixo são habilitados:
+
 `codigo_ativacao_sat=bema1234`
+
 `assinatura_sat=SGR-SAT SISTEMA DE GESTAO E RETAGUARDA DO SAT`
 
 Onde:
@@ -1925,8 +1933,9 @@ Abaixo do diretório base os diretórios a seguir serão utilizados pelo Enviado
 * **tmp:** Este diretório salva o XML após a conversão dos campos, usado tanto para NFCe como para CFe SAT.
 
 Os arquivos a serem enviados devem possuir as extensões: 
-* Para NFCe, .nfce (envios) e .canc (cancelamentos);
-* Para CFe SAT, .cfe (envios) e .cfecanc (cancelamentos);
+
+* Para **NFCe**, .nfce (envios) e .canc (cancelamentos);
+* Para **CFe SAT**, .cfe (envios) e .cfecanc (cancelamentos);
 
 E, deve ser nomeados com a referência a ser utilizada para aquela nota (veja a seção referência nesta documentação). É importante observar que o Enviador de Arquivos não possui qualquer inteligência com relação à referência utilizada, de forma que ele irá apenas repassar para a API. Se uma referência já previamente utilizada for usada novamente você irá receber o erro de nota já autorizada.
 
@@ -1936,12 +1945,13 @@ Para realizar o cancelamento da NFCe ou do CFe SAT é necessário salvar um arqu
 Na emissão de cancelamento para NFCe o arquivo deverá a justificativa do cancelamento (que deve conter entre 15 e 200 caracteres).
 
 > Arquivo de cancelamento do CFe SAT (.cfecanc):
-´´´json
+
+```json
 {
     "chave": "77781082373077987991599000999380000289999993",
     "cpf": "93515817050"
 }
-´´´
+```
 
 Após processado o cancelamento um arquivo com o mesmo nome será gravado no diretório "retornos" contendo um JSON simples com o resultado da operação indicando se houve sucesso ou erro.
 
