@@ -1815,7 +1815,7 @@ url_envio = servidor_homologacao + "v2/nfe/" + ref + "/carta_correcao"
 
 # altere os campos conforme a nota que será enviada
 correcao = {  
-  campo_correcao: "Informe aqui os campos que foram corrigidos na NFe."
+  correcao: "Informe aqui os campos que foram corrigidos na NFe."
 }
 
 # criamos uma objeto uri para envio da nota
