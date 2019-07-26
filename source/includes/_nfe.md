@@ -41,6 +41,7 @@ Abaixo, iremos mostrar os campos de uso obrigatório para emissão de uma Nota F
   "tipo_documento":1,
   "finalidade_emissao":1,
   "cnpj_emitente":"SEU_CNPJ",
+  "cpf_emitente": "SEU_CPF",
   "nome_emitente":"Sua Raz\u00e3o Social Ltda",
   "nome_fantasia_emitente":"Fantasia do Emitente",
   "logradouro_emitente":"Rua Quinze de Abril",
@@ -139,7 +140,8 @@ Abaixo, iremos mostrar os campos de uso obrigatório para emissão de uma Nota F
 
 ### Emitente
 
-* <strong>cnpj_emitente</strong>: CNPJ do emitente da nota.
+* <strong>cnpj_emitente</strong>: CNPJ do emitente da nota. Deve ser usado esse campo ou o "cpf_emitente".
+* <strong>cpf_emitente</strong>: CPF do emitente da nota. Deve ser usado esse campo ou o "cnpj_emitente".
 * <strong>inscricao_estadual_emitente</strong>: Informar a Inscrição Estadual do emitente.
 * <strong>logradouro_emitente</strong>: Logradouro do emitente.
 * <strong>numero_emitente</strong>: Número do logradouro do emitente.

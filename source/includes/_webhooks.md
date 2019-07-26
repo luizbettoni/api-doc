@@ -59,6 +59,10 @@ Para NFSe:
 * **data_emissao**: Data da emissão da nota fiscal.
 * **url**: URL para visualização da nota fiscal a partir do portal da Prefeitura.
 * **caminho_xml_nota_fsical**: Caminho para download do XML da nota fiscal.
+* **erros**: Grupo contendo os detalhes do erro de emissão.
+  - **codigo**: Código do erro na prefeitura.
+  - **mensagem**: Mensagem de erro enviada pela prefeitura.
+  - **correcao**: Orientação do que deve ser feito para corrigir o erro.
 
 A vantagem de utilizar gatilhos é que não haverá a necessidade de fazer "polling" (realizar constantes requisições a fim de verificar o status da nota).
 
