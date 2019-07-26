@@ -847,6 +847,7 @@ Você deve substituir <code>REFERENCIA</code> pela referência gerada pela sua a
   </span><span class="s2">"tipo_documento"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="w">
   </span><span class="s2">"finalidade_emissao"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="w">
   </span><span class="s2">"cnpj_emitente"</span><span class="p">:</span><span class="s2">"SEU_CNPJ"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"cpf_emitente"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SEU_CPF"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"nome_emitente"</span><span class="p">:</span><span class="s2">"Sua Raz</span><span class="se">\u</span><span class="s2">00e3o Social Ltda"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"nome_fantasia_emitente"</span><span class="p">:</span><span class="s2">"Fantasia do Emitente"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"logradouro_emitente"</span><span class="p">:</span><span class="s2">"Rua Quinze de Abril"</span><span class="p">,</span><span class="w">
@@ -951,7 +952,8 @@ Você deve substituir <code>REFERENCIA</code> pela referência gerada pela sua a
 <p>9 – Operação não presencial, outros.</p>
 <h3 id='nfe_emitente'>Emitente</h3>
 <ul>
-<li><strong>cnpj_emitente</strong>: CNPJ do emitente da nota.</li>
+<li><strong>cnpj_emitente</strong>: CNPJ do emitente da nota. Deve ser usado esse campo ou o &quot;cpf_emitente&quot;.</li>
+<li><strong>cpf_emitente</strong>: CPF do emitente da nota. Deve ser usado esse campo ou o &quot;cnpj_emitente&quot;.</li>
 <li><strong>inscricao_estadual_emitente</strong>: Informar a Inscrição Estadual do emitente.</li>
 <li><strong>logradouro_emitente</strong>: Logradouro do emitente.</li>
 <li><strong>numero_emitente</strong>: Número do logradouro do emitente.</li>
@@ -11983,6 +11985,13 @@ url = "https://api.focusnfe.com.br"
 <li><strong>data_emissao</strong>: Data da emissão da nota fiscal.</li>
 <li><strong>url</strong>: URL para visualização da nota fiscal a partir do portal da Prefeitura.</li>
 <li><strong>caminho_xml_nota_fsical</strong>: Caminho para download do XML da nota fiscal.</li>
+<li><strong>erros</strong>: Grupo contendo os detalhes do erro de emissão.
+
+<ul>
+<li><strong>codigo</strong>: Código do erro na prefeitura.</li>
+<li><strong>mensagem</strong>: Mensagem de erro enviada pela prefeitura.</li>
+<li><strong>correcao</strong>: Orientação do que deve ser feito para corrigir o erro.</li>
+</ul></li>
 </ul>
 
 <p>A vantagem de utilizar gatilhos é que não haverá a necessidade de fazer &quot;polling&quot; (realizar constantes requisições a fim de verificar o status da nota).</p>
