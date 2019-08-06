@@ -4402,11 +4402,11 @@ curl -u token_enviado_pelo_suporte: <span class="se">\</span>
 
         <span class="n">ClientResponse</span> <span class="n">resposta</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">post</span><span class="o">(</span><span class="n">ClientResponse</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">json</span><span class="o">);</span>
 
-        <span class="kt">int</span> <span class="n">httpCode</span> <span class="o">=</span> <span class="n">resposta</span><span class="o">.</span><span class="na">getStatus</span><span class="o">();</span> 
+        <span class="kt">int</span> <span class="n">httpCode</span> <span class="o">=</span> <span class="n">resposta</span><span class="o">.</span><span class="na">getStatus</span><span class="o">();</span>
 
         <span class="n">String</span> <span class="n">body</span> <span class="o">=</span> <span class="n">resposta</span><span class="o">.</span><span class="na">getEntity</span><span class="o">(</span><span class="n">String</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
 
-        <span class="cm">/* As três linhas a seguir exibem as informações retornadas pela nossa API. 
+        <span class="cm">/* As três linhas a seguir exibem as informações retornadas pela nossa API.
          * Aqui o seu sistema deverá interpretar e lidar com o retorno. */</span>
         <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="s">"HTTP Code: "</span><span class="o">);</span>
         <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="n">httpCode</span><span class="o">);</span>
@@ -4672,6 +4672,26 @@ Passamos o token como quarto parametro deste metodo, como autenticador do HTTP B
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <blockquote>
+<p>autorizado em contingência offline e ainda não efetivado</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"cnpj_emitente"</span><span class="p">:</span><span class="w"> </span><span class="s2">"07504505000132"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"referencia_000899"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"autorizado"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"status_sefaz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"100"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"mensagem_sefaz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Autorizado o uso da NF-e"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"chave_nfe"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NFe41190607504505000132650010000000121743484310"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"numero"</span><span class="p">:</span><span class="w"> </span><span class="s2">"12"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"serie"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"caminho_xml_nota_fiscal"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/arquivos_development/07504505000132/201906/XMLs/41190607504505000132650010000000121743484310-nfe.xml"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"caminho_danfe"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/notas_fiscais_consumidor/NFe41190607504505000132650010000000121743484310.html"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"qrcode_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://www.fazenda.pr.gov.br/nfce/qrcode/?p=41190607504505000132650010000000121743484310|2|2|1|5E264C0E28D801197219894CDFCF2FCCC5237F08"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"url_consulta_nf"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://www.fazenda.pr.gov.br/nfce/consulta"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"contingencia_offline"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"contingencia_offline_efetivada"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<blockquote>
 <p>erro_autorizacao</p>
 </blockquote>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
@@ -4681,7 +4701,20 @@ Passamos o token como quarto parametro deste metodo, como autenticador do HTTP B
   </span><span class="s2">"status_sefaz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"591"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"mensagem_sefaz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Informado CSOSN para emissor que nao e do Simples Nacional (CRT diferente de 1). [nItem:1]"</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre><h2 id='nfce_consulta'>Consulta</h2><pre class="highlight python tab-python"><code><span class="c"># Faça o download e instalação da biblioteca requests, através do python-pip.</span>
+</span></code></pre><h3 id='nfce_emissao-automatica-em-contingencia-offline'>Emissão automática em contingência offline</h3>
+<p>Ao tentar emitir uma NFCe, iremos tentar comunicação com a SEFAZ. Caso a comunicação seja realizada com sucesso, a nota será emitida e a DANFCe gerada. Porém, caso a comunicação não seja possível, iremos imediatamente emitir uma <em>outra nota</em> (com numeração subsequente) em contingência offline, nos estados onde isso for possível. Isso significa gerar um XML e DANFCe temporários até que a comunicação com a SEFAZ seja reestabelecida. Ao final, os dados gerados serão devolvidos na requisição de autorização. Todo este processo é síncrono.</p>
+
+<p>É necessário emitir uma outra nota pois não há garantias de que a SEFAZ não tenha recebido a requisição original. Desta forma, é mais prudente emitir a nota com outro número e posteriormente consultar a nota original para confirmar o seu status, assim evitamos erros de duplicidade de numeração ao fazer a efetivação da contingência quando os servidores da SEFAZ voltarem a responder.</p>
+
+<p>Será de responsabilidade de nossa API, após devolver o XML e DANFCe temporários, tentar reestabelecer comunicação com a SEFAZ ao longo das próximas 24 horas após a emissão. Quando conseguirmos conectividade novamente serão efetuadas duas ações:</p>
+
+<ul>
+<li>A nota emitida em contingência será efetividade na SEFAZ e iremos substituir o XML e DANFCe por suas versões definitivas</li>
+<li>Iremos consultar o status da requisição original. Caso a nota tenha sido autorizada, é feito o cancelamento da nota. Caso ela realmente não tenha sido autorizada, o número é reaproveitado para as próximas emissões.</li>
+</ul>
+
+<p>O sistema cliente da API pode acompanhar este processo de forma transparente, conforme descrito na seção “Consulta” deste manual.</p>
+<h2 id='nfce_consulta'>Consulta</h2><pre class="highlight python tab-python"><code><span class="c"># Faça o download e instalação da biblioteca requests, através do python-pip.</span>
 <span class="kn">import</span> <span class="nn">requests</span>
 
 <span class="s">'''
@@ -4712,7 +4745,7 @@ url = "https://api.focusnfe.com.br"
 <span class="kn">import</span> <span class="nn">com.sun.jersey.api.client.config.DefaultClientConfig</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">com.sun.jersey.api.client.filter.HTTPBasicAuthFilter</span><span class="o">;</span>
 
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">NFCeConsulta</span> <span class="o">{</span> 
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">NFCeConsulta</span> <span class="o">{</span>
 
     <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
 
@@ -4736,11 +4769,11 @@ url = "https://api.focusnfe.com.br"
 
         <span class="n">ClientResponse</span> <span class="n">resposta</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">ClientResponse</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
 
-        <span class="kt">int</span> <span class="n">httpCode</span> <span class="o">=</span> <span class="n">resposta</span><span class="o">.</span><span class="na">getStatus</span><span class="o">();</span> 
+        <span class="kt">int</span> <span class="n">httpCode</span> <span class="o">=</span> <span class="n">resposta</span><span class="o">.</span><span class="na">getStatus</span><span class="o">();</span>
 
         <span class="n">String</span> <span class="n">body</span> <span class="o">=</span> <span class="n">resposta</span><span class="o">.</span><span class="na">getEntity</span><span class="o">(</span><span class="n">String</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
 
-        <span class="cm">/* As três linhas abaixo imprimem as informações retornadas pela API. 
+        <span class="cm">/* As três linhas abaixo imprimem as informações retornadas pela API.
          * Aqui o seu sistema deverá interpretar e lidar com o retorno. */</span>
         <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="s">"HTTP Code: "</span><span class="o">);</span>
         <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="n">httpCode</span><span class="o">);</span>
@@ -4906,6 +4939,18 @@ Passamos o token como quarto parametro deste metodo, como autenticador do HTTP B
 <li><strong>caminho_xml_nota_fiscal:</strong> caso a nota tenha sido autorizada, retorna o caminho para download do XML.</li>
 <li><strong>caminho_danfe:</strong> caso a nota tenha sido autorizada retorna o caminho para download do DANFe.</li>
 <li><strong>caminho_xml_cancelamento:</strong> Caso a nota esteja cancelada, é fornecido o caminho para fazer o download do XML de cancelamento.</li>
+<li><strong>contingencia_offline</strong> Este campo irá aparecer apenas quando a nota tiver sido emitida em contingência offline.</li>
+<li><strong>contingencia_offline_efetivada</strong> Quando a nota tiver sido emitida em contingência offline, este campo irá mostrar se a nota já foi efetivada (transmitida para a SEFAZ) ou não.</li>
+<li><strong>tentativa_anterior</strong>: Nos casos de contingência offline, esta chave irá conter outros campos quando conseguirmos determinar o que houve com a tentativa original. Esta seção poderá conter os seguintes campos:
+
+<ul>
+<li>status: autorizado, processando_autorizacao ou cancelado. A API irá automaticamente proceder com o cancelamento quando necessário</li>
+<li>serie</li>
+<li>numero</li>
+<li>chave_nfe</li>
+<li>caminho_xml_nota_fiscal</li>
+<li>caminho_xml_cancelamento</li>
+</ul></li>
 </ul>
 
 <p>Caso na requisição seja passado o parâmetro <code>completa=1</code> será adicionado mais 6 campos:</p>
@@ -5107,11 +5152,11 @@ serao convertidos a JSON e enviados para nossa API
 
         <span class="n">ClientResponse</span> <span class="n">resposta</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">delete</span><span class="o">(</span><span class="n">ClientResponse</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">json</span><span class="o">);</span>
 
-        <span class="kt">int</span> <span class="n">httpCode</span> <span class="o">=</span> <span class="n">resposta</span><span class="o">.</span><span class="na">getStatus</span><span class="o">();</span> 
+        <span class="kt">int</span> <span class="n">httpCode</span> <span class="o">=</span> <span class="n">resposta</span><span class="o">.</span><span class="na">getStatus</span><span class="o">();</span>
 
         <span class="n">String</span> <span class="n">body</span> <span class="o">=</span> <span class="n">resposta</span><span class="o">.</span><span class="na">getEntity</span><span class="o">(</span><span class="n">String</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
 
-       <span class="cm">/* As três linhas abaixo imprimem as informações retornadas pela API. 
+       <span class="cm">/* As três linhas abaixo imprimem as informações retornadas pela API.
         * Aqui o seu sistema deverá interpretar e lidar com o retorno. */</span>
         <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="s">"HTTP Code: "</span><span class="o">);</span>
         <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="n">httpCode</span><span class="o">);</span>
@@ -5353,7 +5398,7 @@ serao convertidos em JSON e enviados para nossa API
         <span class="n">dadosInutilizacao</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"numero_final"</span><span class="o">,</span> <span class="s">"7732"</span><span class="o">);</span>
         <span class="n">dadosInutilizacao</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"justificativa"</span><span class="o">,</span> <span class="s">"Informe aqui a justificativa para realizar a inutilizacao da numeracao."</span><span class="o">);</span>
 
-        <span class="cm">/* Criamos um objeto JSON que irá receber o input dos dados, para então enviar a requisição. */</span> 
+        <span class="cm">/* Criamos um objeto JSON que irá receber o input dos dados, para então enviar a requisição. */</span>
         <span class="n">JSONObject</span> <span class="n">json</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JSONObject</span> <span class="o">(</span><span class="n">dadosInutilizacao</span><span class="o">);</span>
 
         <span class="cm">/* Testar se o JSON gerado está dentro do formato esperado.
@@ -5368,15 +5413,15 @@ serao convertidos em JSON e enviados para nossa API
 
         <span class="n">ClientResponse</span> <span class="n">resposta</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">post</span><span class="o">(</span><span class="n">ClientResponse</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">json</span><span class="o">);</span>
 
-        <span class="kt">int</span> <span class="n">httpCode</span> <span class="o">=</span> <span class="n">resposta</span><span class="o">.</span><span class="na">getStatus</span><span class="o">();</span> 
+        <span class="kt">int</span> <span class="n">httpCode</span> <span class="o">=</span> <span class="n">resposta</span><span class="o">.</span><span class="na">getStatus</span><span class="o">();</span>
 
         <span class="n">String</span> <span class="n">body</span> <span class="o">=</span> <span class="n">resposta</span><span class="o">.</span><span class="na">getEntity</span><span class="o">(</span><span class="n">String</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
 
-       <span class="cm">/* As três linhas abaixo imprimem as informações retornadas pela API. 
+       <span class="cm">/* As três linhas abaixo imprimem as informações retornadas pela API.
         * Aqui o seu sistema deverá interpretar e lidar com o retorno. */</span>
         <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="s">"HTTP Code: "</span><span class="o">);</span>
         <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="n">httpCode</span><span class="o">);</span>
-        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="n">body</span><span class="o">);</span> 
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="n">body</span><span class="o">);</span>
     <span class="o">}</span>
 <span class="o">}</span>
 </code></pre><pre class="highlight ruby tab-ruby"><code>
@@ -5617,12 +5662,12 @@ serao convertidos a JSON e enviados para nossa API
         <span class="n">String</span> <span class="n">url</span> <span class="o">=</span> <span class="n">server</span><span class="o">.</span><span class="na">concat</span><span class="o">(</span><span class="s">"v2/nfce/"</span><span class="o">+</span><span class="n">ref</span><span class="o">+</span><span class="s">"/email"</span><span class="o">);</span>
 
         <span class="cm">/* Criamos o um objeto JSON que receberá um JSON Array com a lista de e-mails. */</span>
-        <span class="n">JSONObject</span> <span class="n">json</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JSONObject</span> <span class="o">();</span>    
+        <span class="n">JSONObject</span> <span class="n">json</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JSONObject</span> <span class="o">();</span>
         <span class="n">JSONArray</span> <span class="n">listaEmails</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JSONArray</span><span class="o">();</span>
         <span class="n">listaEmails</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"email_01@acras.com.br"</span><span class="o">);</span>
         <span class="n">listaEmails</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"email_02@acras.com.br"</span><span class="o">);</span>
         <span class="n">listaEmails</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"email_03@acras.com.br"</span><span class="o">);</span>
-        <span class="n">json</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"emails"</span><span class="o">,</span> <span class="n">listaEmails</span><span class="o">);</span>    
+        <span class="n">json</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"emails"</span><span class="o">,</span> <span class="n">listaEmails</span><span class="o">);</span>
 
         <span class="cm">/* Testar se o JSON gerado está dentro do formato esperado.
         System.out.print(json); */</span>
@@ -5636,15 +5681,15 @@ serao convertidos a JSON e enviados para nossa API
 
         <span class="n">ClientResponse</span> <span class="n">resposta</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">post</span><span class="o">(</span><span class="n">ClientResponse</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">json</span><span class="o">);</span>
 
-        <span class="kt">int</span> <span class="n">httpCode</span> <span class="o">=</span> <span class="n">resposta</span><span class="o">.</span><span class="na">getStatus</span><span class="o">();</span> 
+        <span class="kt">int</span> <span class="n">httpCode</span> <span class="o">=</span> <span class="n">resposta</span><span class="o">.</span><span class="na">getStatus</span><span class="o">();</span>
 
         <span class="n">String</span> <span class="n">body</span> <span class="o">=</span> <span class="n">resposta</span><span class="o">.</span><span class="na">getEntity</span><span class="o">(</span><span class="n">String</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
 
-        <span class="cm">/* As três linhas abaixo imprimem as informações retornadas pela API. 
+        <span class="cm">/* As três linhas abaixo imprimem as informações retornadas pela API.
          * Aqui o seu sistema deverá interpretar e lidar com o retorno. */</span>
         <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="s">"HTTP Code: "</span><span class="o">);</span>
         <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="n">httpCode</span><span class="o">);</span>
-        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="n">body</span><span class="o">);</span> 
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="n">body</span><span class="o">);</span>
     <span class="o">}</span>
 <span class="o">}</span>
 </code></pre><pre class="highlight ruby tab-ruby"><code>
@@ -5830,7 +5875,7 @@ Passamos o token como quarto parametro deste metodo, como autenticador do HTTP B
 <li><strong>tmp:</strong> Este diretório salva o XML após a conversão dos campos, usado tanto para NFCe como para CFe SAT.</li>
 </ul>
 
-<p>Os arquivos a serem enviados devem possuir as extensões: </p>
+<p>Os arquivos a serem enviados devem possuir as extensões:</p>
 
 <ul>
 <li>Para <strong>NFCe</strong>, .nfce (envios) e .canc (cancelamentos);</li>
