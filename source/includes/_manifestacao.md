@@ -155,7 +155,7 @@ tipo_manifestacao = {
 # caso escolha o tipo "nao_realizada", é preciso informar o campo/chave "justificativa"
 # justificativa: "Informe aqui a sua justificativa do motivo da não realização da operação."
 
-# criamos uma objeto uri para envio da nota
+# criamos um objeto uri para envio da nota
 uri = URI(url_envio)
 
 # também criamos um objeto da classe HTTP a partir do host da uri
@@ -398,7 +398,7 @@ servidor_homologacao = "https://homologacao.focusnfe.com.br/"
 # no caso do ambiente de envio ser em produção, utilizar servidor_producao
 url_envio = servidor_homologacao + "v2/nfes_recebidas/" + chave + "/manifesto"
 
-# criamos uma objeto uri para envio da nota
+# criamos um objeto uri para envio da nota
 uri = URI(url_envio)
 
 # também criamos um objeto da classe HTTP a partir do host da uri
@@ -550,7 +550,7 @@ servidor_homologacao = "https://homologacao.focusnfe.com.br/"
 # no caso do ambiente de envio ser em produção, utilizar servidor_producao
 url_envio = servidor_homologacao + "v2/nfes_recebidas?cnpj=" + cnpj
 
-# criamos uma objeto uri para envio da nota
+# criamos um objeto uri para envio da nota
 uri = URI(url_envio)
 
 # também criamos um objeto da classe HTTP a partir do host da uri
@@ -862,7 +862,7 @@ servidor_homologacao = "https://homologacao.focusnfe.com.br/"
 # no caso do ambiente de envio ser em produção, utilizar servidor_producao
 url_envio = servidor_homologacao + "v2/nfes_recebidas/" + chave + ".xml"
 
-# criamos uma objeto uri para envio da nota
+# criamos um objeto uri para envio da nota
 uri = URI(url_envio)
 
 # também criamos um objeto da classe HTTP a partir do host da uri
@@ -1039,7 +1039,7 @@ servidor_homologacao = "https://homologacao.focusnfe.com.br/"
 # no caso do ambiente de envio ser em produção, utilizar servidor_producao
 url_envio = servidor_homologacao + "v2/nfes_recebidas/" + chave + ".json?completa=1"
 
-# criamos uma objeto uri para envio da nota
+# criamos um objeto uri para envio da nota
 uri = URI(url_envio)
 
 # também criamos um objeto da classe HTTP a partir do host da uri
@@ -1214,7 +1214,7 @@ servidor_homologacao = "https://homologacao.focusnfe.com.br/"
 # no caso do ambiente de envio ser em produção, utilizar servidor_producao
 url_envio = servidor_homologacao + "v2/nfes_recebidas/" + chave + "/cancelamento.xml"
 
-# criamos uma objeto uri para envio da nota
+# criamos um objeto uri para envio da nota
 uri = URI(url_envio)
 
 # também criamos um objeto da classe HTTP a partir do host da uri
@@ -1388,7 +1388,7 @@ servidor_homologacao = "https://homologacao.focusnfe.com.br/"
 # no caso do ambiente de envio ser em produção, utilizar servidor_producao
 url_envio = servidor_homologacao + "v2/nfes_recebidas/" + chave + "/carta_correcao.xml"
 
-# criamos uma objeto uri para envio da nota
+# criamos um objeto uri para envio da nota
 uri = URI(url_envio)
 
 # também criamos um objeto da classe HTTP a partir do host da uri
