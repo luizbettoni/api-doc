@@ -276,7 +276,7 @@ lote_nfse = {
   ]
 }
 
-# criamos uma objeto uri para envio da nota
+# criamos um objeto uri para envio da nota
 uri = URI(url_envio)
 
 # também criamos um objeto da classe HTTP a partir do host da uri
@@ -558,7 +558,7 @@ servidor_homologacao = "https://homologacao.focusnfe.com.br/"
 # no caso do ambiente de envio ser em produção, utilizar servidor_producao
 url_envio = servidor_homologacao + "v2/lotes_rps/" + ref
 
-# criamos uma objeto uri para envio da nota
+# criamos um objeto uri para envio da nota
 uri = URI(url_envio)
 
 # também criamos um objeto da classe HTTP a partir do host da uri
@@ -759,7 +759,7 @@ servidor_homologacao = "https://homologacao.focusnfe.com.br/"
 # no caso do ambiente de envio ser em produção, utilizar servidor_producao
 url_envio = servidor_homologacao + "v2/lotes_rps/" + ref
 
-# criamos uma objeto uri para envio da nota
+# criamos um objeto uri para envio da nota
 uri = URI(url_envio)
 
 # também criamos um objeto da classe HTTP a partir do host da uri
