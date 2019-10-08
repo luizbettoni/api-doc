@@ -20,6 +20,7 @@ includes:
   - nfse
   - lote_rps
   - manifestacao
+  - manifestacao-cte
   - webhooks
   - ncm
   - cfop
