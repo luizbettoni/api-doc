@@ -131,7 +131,7 @@ um formato único de campos para todas as prefeituras. A listagem dos campos seg
 	- **base_calculo**: (Decimal) Base de cálculo do ISS, valor padrão igual ao valor_servicos. Campo ignorado pelo município de São Paulo.
 	- **aliquota**: (Decimal) Aliquota do ISS. Algumas cidades permitem usar 4 dígitos decimais.
 	- **desconto_incondicionado**: (Decimal) Valor do desconto incondicionado. Campo ignorado pelo município de São Paulo.
-	- **desconto_condicionado**: (Decimal) Valor do desconto incondicionado. Campo ignorado pelo município de São Paulo.
+	- **desconto_condicionado**: (Decimal) Valor do desconto condicionado. Campo ignorado pelo município de São Paulo.
 	- **item_lista_servico**(*): (String) Informar o código da lista de serviços, de acordo com a Lei Complementar 116/2003. Utilize outra tabela para o município de São Paulo.
 	- **codigo_cnae**: (String) Informar o código CNAE de 8 dígitos. Campo ignorado pelo município de São Paulo.
 	- **codigo_tributario_municipio**: (String) Informar o código tributário de acordo com a tabela de cada município (não há um padrão). Campo ignorado pelo município de São Paulo.
@@ -380,7 +380,7 @@ dados_da_nota = {
   }
 }
 
-# criamos uma objeto uri para envio da nota
+# criamos um objeto uri para envio da nota
 uri = URI(url_envio)
 
 # também criamos um objeto da classe HTTP a partir do host da uri
@@ -670,7 +670,7 @@ servidor_homologacao = "https://homologacao.focusnfe.com.br/"
 # no caso do ambiente de envio ser em produção, utilizar servidor_producao
 url_envio = servidor_homologacao + "v2/nfse/" + ref
 
-# criamos uma objeto uri para envio da nota
+# criamos um objeto uri para envio da nota
 uri = URI(url_envio)
 
 # também criamos um objeto da classe HTTP a partir do host da uri
@@ -985,7 +985,7 @@ justificativa_cancelamento = {
   justificativa: "Informe aqui a sua justificativa para realizar o cancelamento da NFSe."
 }
 
-# criamos uma objeto uri para envio da nota
+# criamos um objeto uri para envio da nota
 uri = URI(url_envio)
 
 # também criamos um objeto da classe HTTP a partir do host da uri
@@ -1266,7 +1266,7 @@ emails_destinatarios = {
   emails: ["email_01@acras.com.br", "email_02@acras.com.br", "email_03@acras.com.br"]
 }
 
-# criamos uma objeto uri para envio da nota
+# criamos um objeto uri para envio da nota
 uri = URI(url_envio)
 
 # também criamos um objeto da classe HTTP a partir do host da uri
