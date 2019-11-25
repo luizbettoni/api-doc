@@ -21,6 +21,7 @@ includes:
   - lote_rps
   - manifestacao
   - manifestacao-cte
+  - nfses-recebidas
   - webhooks
   - ncm
   - cfop
