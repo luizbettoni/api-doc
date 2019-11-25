@@ -13666,6 +13666,8 @@ Passamos o token como quarto parametro deste metodo, como autenticador do HTTP B
 <li><strong>sigla_uf</strong>: UF do prestador.</li>
 <li><strong>codigo_municipio</strong>: Código IBGE do município do prestador.</li>
 </ul>
+
+<p>Você pode também configurar o gatilho &quot;nfse_recebida&quot; para receber estes dados diretamente em sua aplicação assim que estiverem disponíveis na API. Consulte a seção de <a href="#gatilhos-webhooks_gatilhos-webhooks">Gatilhos / Webhooks</a></p>
 <h1 id='gatilhos-webhooks_gatilhos-webhooks'>Gatilhos / Webhooks</h1><h2 id='gatilhos-webhooks_informacoes-gerais'>Informações gerais</h2>
 <p>Gatilhos ou &quot;WebHooks&quot; são eventos automaticos que são disparados a partir de mudanças especificas na nota fiscal. Quando isso ocorre, é enviado os dados da nota fiscal no formato JSON para uma URL a sua escolha, através do método POST. Cada acionamento do gatilho contém os dados de apenas uma nota. A API enviará as seguintes informações para sua URL:</p>
 
@@ -13798,10 +13800,10 @@ Passamos o token como quarto parametro deste metodo, como autenticador do HTTP B
 <li>Erro na emissão de uma nota fiscal</li>
 <li>Emissão de nota fiscal realizada com sucesso</li>
 </ul></li>
-<li><strong>Manifestação</strong>:
+<li><strong>Documentos fiscais recebidos (manifestação)</strong>:
 
 <ul>
-<li>Recebimento de um novo documento fiscal</li>
+<li>Recebimento de um novo documento fiscal (CTe, NFe ou NFSe)</li>
 </ul></li>
 </ul>
 
@@ -13957,7 +13959,7 @@ Passamos o token como quarto parametro deste metodo, como autenticador do HTTP B
 
 <ul>
 <li> <strong>cnpj</strong> – CNPJ da empresa.</li>
-<li> <strong>event</strong> – Informe qual evento que gostará de escutar: nfe, nfse ou nfe_recebida</li>
+<li> <strong>event</strong> – Informe qual evento que gostará de escutar: nfe, nfse, nfe_recebida ou nfse_recebida</li>
 <li> <strong>url</strong> – URL que deverá ser chamada quando o gatilho for ativado</li>
 </ul>
 
