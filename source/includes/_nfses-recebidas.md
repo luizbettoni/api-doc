@@ -270,3 +270,5 @@ Os dados devolvidos no corpo da requisição serão um array de objetos em JSON 
 * **nome_municipio**: Nome do município do prestador.
 * **sigla_uf**: UF do prestador.
 * **codigo_municipio**: Código IBGE do município do prestador.
+
+Você pode também configurar o gatilho "nfse_recebida" para receber estes dados diretamente em sua aplicação assim que estiverem disponíveis na API. Consulte a seção de [Gatilhos / Webhooks](#gatilhos-webhooks_gatilhos-webhooks)
