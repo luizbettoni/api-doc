@@ -475,17 +475,17 @@ HTTP CODE/STATUS | Status API Focus | Descrição | Correção
 400 - bad request | requisicao_invalida | Parâmetro "justificativa" deve ter entre 15 e 255 caracteres. | A sua justificativa não possui de 15 à 255 careacteres.
 400 - bad request | requisicao_invalida | Parâmetro X não informado. | Onde X é o campo que não foi informado em sua requisição.
 400 - bad request | requisicao_invalida | Não existe série com os critérios informados. | Os critérios de inutilização não existem. Verifique a nossa documentação.
-400 - bad request | requisicao_invalida | CNPJ do emitente não autorizado ou não informado. | Verifique o campo "cnpj_emitente" em seu JSON. É preciso habilitar a emissão de NFe no cadastro do emitente(Painel API). 
-400 - bad request | requisicao_invalida | CNPJ/UF do emitente não autorizado ou não informado. | Verifique os campos "cnpj_emitente" e "uf_emitente". É preciso habilitar a emissão de NFe no cadastro do emitente(Painel API). 
+400 - bad request | requisicao_invalida | CNPJ do emitente não autorizado ou não informado. | Verifique o campo "cnpj_emitente" em seu JSON. É preciso habilitar a emissão de NFe no cadastro do emitente(Painel API).
+400 - bad request | requisicao_invalida | CNPJ/UF do emitente não autorizado ou não informado. | Verifique os campos "cnpj_emitente" e "uf_emitente". É preciso habilitar a emissão de NFe no cadastro do emitente(Painel API).
 403 - forbidden | permissao_negada | CNPJ do emitente não autorizado. | O emitente utilizado não está autorizado a emitir NFe ou foi informado o CNPJ do emitente incorretamente no JSON.
 
 ## Envio
 
 
 ```shell
-# arquivo.json deve conter os dados da NFe
+# arquivo.json deve conter os dados da NFe, substitua REFERENCIA pela referência de sua escolha
 curl -u token_enviado_pelo_suporte: \
-  -X POST -T arquivo.json https://homologacao.focusnfe.com.br/v2/nfe
+  -X POST -T arquivo.json https://homologacao.focusnfe.com.br/v2/nfe?ref=REFERENCIA
 ```
 
 ```php
@@ -2542,13 +2542,13 @@ envio =P:envios
 retorno =P:retornos
 logs=P:logs
 [Conexao]
-url =http://producao.acrasnfe.acras.com.br/
+url =https://api.focusnfe.com.br/
 token={token-enviado-pelo-suporte-focusnfe}
 </pre>
 
 Na seção **Diretorios** são configurados os diretórios de comunicação (envio e retorno) onde a aplicação do cliente irá salvar e ler arquivos respectivamente. Também é configurado o diretório de logs, onde o comunicador irá gravar os logs das operações realizadas por ele.
 
-A seção **Conexão** possui duas configurações cruciais para a correta comunicação com o Focus NFe. A url determina o endereço de comunicação que pode ser o de homologação (https://homologacao.focusnfe.com.br) e produção (http://producao.acrasnfe.acras.com.br).
+A seção **Conexão** possui duas configurações cruciais para a correta comunicação com o Focus NFe. A url determina o endereço de comunicação que pode ser o de homologação (https://homologacao.focusnfe.com.br) e produção (https://api.focusnfe.com.br).
 
 O token é a chave de acesso, fornecida pelo suporte, que irá garantir que a aplicação do cliente tem acesso ao Focus NFe.
 
