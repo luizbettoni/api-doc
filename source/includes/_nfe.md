@@ -483,9 +483,9 @@ HTTP CODE/STATUS | Status API Focus | Descrição | Correção
 
 
 ```shell
-# arquivo.json deve conter os dados da NFe
+# arquivo.json deve conter os dados da NFe, substitua REFERENCIA pela referência de sua escolha
 curl -u token_enviado_pelo_suporte: \
-  -X POST -T arquivo.json https://homologacao.focusnfe.com.br/v2/nfe
+  -X POST -T arquivo.json https://homologacao.focusnfe.com.br/v2/nfe?ref=REFERENCIA
 ```
 
 ```php
