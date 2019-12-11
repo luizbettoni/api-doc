@@ -202,7 +202,7 @@ São necessários ao menos outros dois parâmetros, caso não seja informado o c
 Caso já saiba o CEP exato, e queira apenas recuperar sua descrição, utilize o link
 abaixo, substituindo CODIGO_CEP pelo código.
 
-`http://producao.acrasnfe.acras.com.br/v2/ceps/CODIGO_CEP`
+`https://api.focusnfe.com.br/v2/ceps/CODIGO_CEP`
 
 
 ## Resposta da API
