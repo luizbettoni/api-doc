@@ -26,6 +26,7 @@ includes:
   - ncm
   - cfop
   - cep
+  - municipios
   - revenda
   - limite-requisicoes
   - github
