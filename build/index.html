@@ -13680,7 +13680,7 @@ Passamos o token como quarto parametro deste metodo, como autenticador do HTTP B
 
 <p>Você pode também configurar o gatilho &quot;nfse_recebida&quot; para receber estes dados diretamente em sua aplicação assim que estiverem disponíveis na API. Consulte a seção de <a href="#gatilhos-webhooks_gatilhos-webhooks">Gatilhos / Webhooks</a></p>
 <h1 id='gatilhos-webhooks_gatilhos-webhooks'>Gatilhos / Webhooks</h1><h2 id='gatilhos-webhooks_informacoes-gerais'>Informações gerais</h2>
-<p>Gatilhos ou &quot;WebHooks&quot; são eventos automaticos que são disparados a partir de mudanças especificas na nota fiscal. Quando isso ocorre, é enviado os dados da nota fiscal no formato JSON para uma URL a sua escolha, através do método POST. Cada acionamento do gatilho contém os dados de apenas uma nota. A API enviará as seguintes informações para sua URL:</p>
+<p>Gatilhos ou &quot;WebHooks&quot; são eventos automáticos que são disparados a partir de mudanças especificas na nota fiscal. Quando isso ocorre, é enviado os dados da nota fiscal no formato JSON para uma URL da sua escolha através do método POST. Cada acionamento do gatilho contém os dados de apenas uma nota. Abaixo segue um exemplo de como a API enviará as seguintes informações para sua URL, caso a nota autorizada seja uma NFe:</p>
 
 <blockquote>
 <p>Dados enviados para sua URL:</p>
@@ -13972,9 +13972,17 @@ Passamos o token como quarto parametro deste metodo, como autenticador do HTTP B
 <li> <strong>cnpj</strong> – CNPJ da empresa.</li>
 <li> <strong>event</strong> – Informe qual evento que gostará de escutar: nfe, nfse, nfe_recebida ou nfse_recebida</li>
 <li> <strong>url</strong> – URL que deverá ser chamada quando o gatilho for ativado</li>
+<li> <strong>authorization</strong> – (opcional) O valor que for informado neste campo será devolvido no acionamento do gatilho no cabeçalho &quot;Authorization&quot;.
+Desta forma você poderá por exemplo informar um token secreto para garantir que apenas nossa API acione a sua URL.</li>
 </ul>
 
-<p>A API irá devolver como resposta o gatilho criado. É possível ter apenas um gatilho por evento</p>
+<p>A API irá devolver como resposta o gatilho criado. É possível ter apenas um gatilho por evento. No momento é necessário que cada empresa tenha seu próprio gatilho cadastrado.</p>
+
+<p><strong>Dicas para uso do campo authorization</strong>: O propósito deste campo é garantir que a sua URL não seja acessada por nenhum outro serviço que não o nosso. Sugerimos duas formas de usar este campo: você pode usar um token secreto, por exemplo: &quot;lFNVw8q5WMeR3U9FOVOABTp36zrkvtaa&quot;. Desta forma, nossa API irá enviar sempre o seguinte cabeçalho ao acionar o gatilho:</p>
+
+<p><code>Authorization: lFNVw8q5WMeR3U9FOVOABTp36zrkvtaa</code></p>
+
+<p>Este cabeçalho poderá ser verificado do lado do seu sistema, rejeitando requisições que não incluam este cabeçalho. Outra forma de utilizar este campo é usando o método <a href="https://en.wikipedia.org/wiki/Basic_access_authentication">Basic Auth</a>. Este método consiste em usar uma string no formato &quot;Basic YWxndW11c3VhcmlvOmFsZ3VtYXNlbmhh&quot;, onde a última string é o resultado da concatenação de &quot;algumusuario:algumasenha&quot;, e depois aplicada a codificação em Base64. Usando este método, você poderá usar alguma biblioteca disponível na sua linguagem de proramação e simplesmente testar o recebimento do usuário &quot;algumusuario&quot; com a senha &quot;algumasenha&quot;.</p>
 <h2 id='gatilhos-webhooks_consulta'>Consulta</h2><pre class="highlight python tab-python"><code><span class="c"># Faça o download e instalação da biblioteca requests, através do python-pip.</span>
 <span class="kn">import</span> <span class="nn">requests</span>
 
