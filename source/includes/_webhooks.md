@@ -2,7 +2,7 @@
 
 ## Informações gerais
 
-Gatilhos ou "WebHooks" são eventos automaticos que são disparados a partir de mudanças especificas na nota fiscal. Quando isso ocorre, é enviado os dados da nota fiscal no formato JSON para uma URL a sua escolha, através do método POST. Cada acionamento do gatilho contém os dados de apenas uma nota. A API enviará as seguintes informações para sua URL:
+Gatilhos ou "WebHooks" são eventos automáticos que são disparados a partir de mudanças especificas na nota fiscal. Quando isso ocorre, é enviado os dados da nota fiscal no formato JSON para uma URL da sua escolha através do método POST. Cada acionamento do gatilho contém os dados de apenas uma nota. Abaixo segue um exemplo de como a API enviará as seguintes informações para sua URL, caso a nota autorizada seja uma NFe:
 
 > Dados enviados para sua URL:
 
@@ -265,8 +265,17 @@ Utilize o método HTTP POST para criar um novo gatilho. Esta requisição aceita
 *  **cnpj** – CNPJ da empresa.
 *  **event** – Informe qual evento que gostará de escutar: nfe, nfse, nfe_recebida ou nfse_recebida
 *  **url** – URL que deverá ser chamada quando o gatilho for ativado
+*  **authorization** – (opcional) O valor que for informado neste campo será devolvido no acionamento do gatilho no cabeçalho "Authorization".
+Desta forma você poderá por exemplo informar um token secreto para garantir que apenas nossa API acione a sua URL.
 
-A API irá devolver como resposta o gatilho criado. É possível ter apenas um gatilho por evento
+A API irá devolver como resposta o gatilho criado. É possível ter apenas um gatilho por evento. No momento é necessário que cada empresa tenha seu próprio gatilho cadastrado.
+
+**Dicas para uso do campo authorization**: O propósito deste campo é garantir que a sua URL não seja acessada por nenhum outro serviço que não o nosso. Sugerimos duas formas de usar este campo: você pode usar um token secreto, por exemplo: "lFNVw8q5WMeR3U9FOVOABTp36zrkvtaa". Desta forma, nossa API irá enviar sempre o seguinte cabeçalho ao acionar o gatilho:
+
+`Authorization: lFNVw8q5WMeR3U9FOVOABTp36zrkvtaa`
+
+Este cabeçalho poderá ser verificado do lado do seu sistema, rejeitando requisições que não incluam este cabeçalho. Outra forma de utilizar este campo é usando o método [Basic Auth](https://en.wikipedia.org/wiki/Basic_access_authentication). Este método consiste em usar uma string no formato "Basic YWxndW11c3VhcmlvOmFsZ3VtYXNlbmhh", onde a última string é o resultado da concatenação de "algumusuario:algumasenha", e depois aplicada a codificação em Base64. Usando este método, você poderá usar alguma biblioteca disponível na sua linguagem de proramação e simplesmente testar o recebimento do usuário "algumusuario" com a senha "algumasenha".
+
 
 ## Consulta
 ```python
