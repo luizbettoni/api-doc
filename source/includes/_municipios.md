@@ -1,37 +1,19 @@
-# Consulta de CEP (beta)
+# Consulta de Municípios
 
-O Código de Endereçamento Postal - CEP - é um código utilizado pelo Correrios para fins de encaminhamento, tratamento e distribuição de postagens. O código, formado por oito digitos numéricos, é dividio em duas partes:
+Utilizamos a base de municípios do IBGE para identificar os municípios em nossa API. Desta forma disponibilizamos uma API para busca dos municípios cadastrados, seja para localizá-los pelo nome, para recuperar o código do município ou verificar se o município tem a NFSe implementada em nosso sistema.
 
-a) a primeira é composta por 5 (cinco) dígitos que representam Região, Sub-região, Setor, Subsetor e Divisor de Subsetor;
-
-b) a segunda é composta por 3 (três) dígitos, separada por um traço da primeira, que representa os Identificadores de Distribuição.
-
-Os 8 dígitos do CEP seguem o seguinte formato:
-
-RSRSSSD-PREFIXO, sendo:
-
-* R = Regisão
-* RS = Sub-Região
-* S  = Setor
-* SS  = Sub-setor
-* D = Divisor
-* PREFIXO = 3 dígitos que identificam localidades, logradouros e outros
-<sub>fonte:https://www.correios.com.br/a-a-z/cep-codigo-de-enderecamento-postal</sub>
-
-
-Nós disponibilizamos uma API para consultar uma descrição detalhada das informações do CEP.
 
 ```shell
-# pesquisa por CFOPs que iniciam com o dígito 2
+# pesquisa por todos os municípios do PR
 curl -u token_enviado_pelo_suporte: \
-  https://homologacao.focusnfe.com.br/v2/ceps?uf=AC&logradouro=colinas
+  https://homologacao.focusnfe.com.br/v2/municipios?sigla_uf=PR
 ```
 
 ```php
 <?php
 $ch = curl_init();
 $server = "https://homologacao.focusnfe.com.br";
-curl_setopt($ch, CURLOPT_URL, $server."/v2/ceps?uf=AC&logradouro=colinas");
+curl_setopt($ch, CURLOPT_URL, $server."/v2/municipios?sigla_uf=PR");
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 curl_setopt($ch, CURLOPT_HTTPHEADER, array());
 curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
@@ -64,7 +46,7 @@ public class ExemploConsultaHook {
         String server = "https://api.focusnfe.com.br/"; */
         String server = "https://homologacao.focusnfe.com.br/";
 
-        String url = server.concat("v2/ceps?uf=AC&logradouro=colinas");
+        String url = server.concat("v2/municipios?sigla_uf=PR");
 
         /* Configuração para realizar o HTTP BasicAuth. */
         Object config = new DefaultClientConfig();
@@ -103,7 +85,7 @@ servidor_producao = "https://api.focusnfe.com.br/"
 servidor_homologacao = "https://homologacao.focusnfe.com.br/"
 
 # no caso do ambiente de envio ser em produção, utilizar servidor_producao
-url_envio = servidor_homologacao + "v2/ceps?uf=AC&logradouro=colinas"
+url_envio = servidor_homologacao + "v2/municipios?sigla_uf=PR"
 
 # criamos um objeto uri para envio da nota
 uri = URI(url_envio)
@@ -140,7 +122,7 @@ import requests
 Para ambiente de produção use a variável abaixo:
 url = "https://api.focusnfe.com.br"
 '''
-url = "https://homologacao.focusnfe.com.br/v2/ceps?uf=AC&logradouro=colinas"
+url = "https://homologacao.focusnfe.com.br/v2/municipios?sigla_uf=PR"
 
 token="token_enviado_pelo_suporte"
 
@@ -168,7 +150,7 @@ var token = "Token_enviado_pelo_suporte";
 Para ambiente de producao use a URL abaixo:
 "https://api.focusnfe.com.br"
 */
-var url = "https://homologacao.focusnfe.com.br/v2/ceps?uf=AC&logradouro=colinas";
+var url = "https://homologacao.focusnfe.com.br/v2/municipios?sigla_uf=PR";
 
 /*
 Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
@@ -185,60 +167,70 @@ console.log("Corpo: " + request.responseText);
 
 ```
 
-Para realizar uma consulta de CEP, utilize o endereço abaixo:
+Disponibilizamos dois métodos de consulta:
 
-`https://homologacao.focusnfe.com.br/v2/ceps`
+Método | URL (recurso) | Ação
+-------|-------|-----
+GET |	/v2/municipios	| Busca todos os municípios ou filtra-os de acordo com parâmetros
+GET |	/v2/municipios/CODIGO	| Busca um município único pelo seu código
+
+Os parâmetros disponíveis para consulta dos municípios são atualmente os seguintes:
+
+* sigla_uf: Busca pela sigla do estado, ex: PR
+* nome_municipio: Busca pelo nome exato do município. Ex: Curitiba irá devolver apenas um registro
+* nome: Busca por parte do nome do município. Ex: Curitiba irá devolver os municípios "Curitiba" e "Curitibanos"
 
 
-Utilize o método HTTP **GET**. São aceitos os seguintes parâmetros de pesquisa:
-
-* **codigo_ibge**: Pesquisa pelo CEP referente a uma localidade, conforme o código IBGE do município
-* **uf**: Pesquisa utilizando os dois caractêres referente a Unidade da Federação. Ex: 'PR', para o Estado do Paraná.
-* **logradouro**: Pesquisa pelo logradouro completo ou por parte dele. Mínimo de 3 caracteres.
-* **localidade**: Pesquisa pelo nome completo da localidade ou por parte dele.
-
-São necessários ao menos outros dois parâmetros, caso não seja informado o código IBGE para o munícipio.
-
-Caso já saiba o CEP exato, e queira apenas recuperar sua descrição, utilize o link
-abaixo, substituindo CODIGO_CEP pelo código.
-
-`https://api.focusnfe.com.br/v2/ceps/CODIGO_CEP`
+Caso já saiba o código exato do município, você pode efetuar a busca diretamente em /v2/municipios/CODIGO
 
 
 ## Resposta da API
 
-> Dados de resposta da consulta
+> Exemplo de dados de resposta da consulta
 
 ```json
 [
   {
-    "cep": "69909032",
-    "tipo": "logradouro",
-    "nome": "",
-    "uf": "AC",
-    "nome_localidade": "Rio Branco",
-    "codigo_ibge": "1200401",
-    "tipo_logradouro": "Rua",
-    "nome_logradouro": "Colinas",
-    "nome_bairro_inicial": "Rosa Linda",
-    "descricao": "Rua Colinas, Rio Branco, AC"
+    "codigo_municipio": "4204806",
+    "nome_municipio": "Curitibanos",
+    "sigla_uf": "SC",
+    "nome_uf": "Santa Catarina",
+    "nfse_habilitada": false
+  },
+  {
+    "codigo_municipio": "4106902",
+    "nome_municipio": "Curitiba",
+    "sigla_uf": "PR",
+    "nome_uf": "Paraná",
+    "nfse_habilitada": true
   }
 ]
 ```
 
-Para cada consulta à nossa API de CEP a resposta trará um ou mais objetos JSON, com os campos como neste exemplo ao lado. Abaixo, a descrição de cada um dos campos:
+Para cada consulta à nossa API de ,unicípios a resposta trará um ou mais objetos JSON, com os campos como neste exemplo ao lado. Abaixo, a descrição de cada um dos campos:
 
-* **cep**: Código CEP, conforme base dos Correios.
-* **tipo**: Informa qual o tipo do CEP, que pode ser:
-  * localidade - se refere a um município, povoado ou distrito.
-  * logradouro - são localizações em vias de tráfego de áreas urbanas ou rurais
-  * unidade_operacional - designa uma unidade do Correios que possue CEP próprio
-  * grande_usuario -  é utilizado para instituições, privadas ou públicas, que são referência pelo seu tamanho ou importância no local, tendo CEP próprio
-* **nome**: Para CEPs do tipo "unidade_operacional" ou "grande_usuario", o campo retorna o nome dos estabelecimentos.
-* **uf**: A sigla do Estado (Unidade da Federação) a qual pertence a localização do CEP.
-* **nome_localidade**: O nome do local, seja ele uma localidade, unidade operacional ou grande usuário.
-* **codigo_município**: Código de identificação utilizado pelo IBGE, caso a localidade seja um município.
-* **tipo_logradouro**: Informa o tipo do logradouro. Exs: 'Rua', 'Avenida', 'Viela', etc.
-* **nome_logradouro**: Nome do logradouro correspondente à consulta.
-* **bairro**: Nome do bairro onde inicia o CEP retornado na consulta.
-* **descricao**: Junção dos valores retornados nos campos 'tipo_logradouro', 'nome_logradouro', 'nome_localidade' e 'uf'.
+* **codigo_municipio**: Representa o código do município frente ao IBGE
+* **nome_municipio**: Nome completo do município segundo o IBGE. Podem haver pequenas diferenças de outras bases, como a dos Correios.
+* **sigla_uf**: Sigla do estado do município
+* **nome_uf**: Nome completo do estado onde se encontra o município
+* **nfse_habilitada**: Verdadeiro se já implementamos a NFSe para este município, e falso caso contrário
+
+Novos campos poderão ser adicionados.
+
+## Paginação
+
+Ao fazer uma pesquisa, a API irá devolver o cabeçalho HTTP *X-Total-Count* que representa
+o número total de ocorrências da pesquisa, porém a API devolve apenas 100 registros por vez.
+Para buscar os demais registros, utilize o parâmetro **offset**. Exemplo:
+
+Vamos supor que a chamada abaixo devolva 223 ocorrências:
+
+`https://homologacao.focusnfe.com.br/v2/municipios?sigla_uf=PR`
+
+A segunda e terceira páginas da consulta poderão ser acessados desta forma:
+
+Registros 101 a 200:
+`https://homologacao.focusnfe.com.br/v2/municipios?sigla_uf=PR&offset=100
+
+Registros 201 a 223:
+`https://homologacao.focusnfe.com.br/v2/municipios?sigla_uf=PR&offset=200

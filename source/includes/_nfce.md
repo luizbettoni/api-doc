@@ -228,8 +228,8 @@ HTTP CODE/STATUS | Status API Focus | Descrição | Correção
 400 - bad request | justificativa_nao_informada | Parâmetro "justificativa" não informado | É necessário usar o parâmetro 'justificativa'. Consulte a nossa documentação.
 400 - bad request | forma_emissao_nao_informada | Parâmetro "forma_emissao" inválido ou não informado | Verifique o valor informado no campo "forma_emissao". Consulte a nossa documentação.
 400 - bad request | ref_ausente | Parâmetro "ref" não informado | É necessário usar o parâmetro 'ref' nessa requisição com a API. Consulte a nossa documentação.
-422 - unprocessable entity | ambiente_nao_configurado | Ambiente não configurado para emissão de NFCe | O ambiente de emissão de NFCe não foi configurado para o seu emitente. Entre em contato com a nossa equipe de suporte. 
-422 - unprocessable entity | empresa_nao_configurada | Empresa não configurada para emissão de NFCe | É necessário informar no cadastro do emitente(Painel API) o CSC e id_token(gerados na Sefaz do Estado do emitente), para emissão de NFCe. 
+422 - unprocessable entity | ambiente_nao_configurado | Ambiente não configurado para emissão de NFCe | O ambiente de emissão de NFCe não foi configurado para o seu emitente. Entre em contato com a nossa equipe de suporte.
+422 - unprocessable entity | empresa_nao_configurada | Empresa não configurada para emissão de NFCe | É necessário informar no cadastro do emitente(Painel API) o CSC e id_token(gerados na Sefaz do Estado do emitente), para emissão de NFCe.
 
 ## Envio
 
@@ -333,23 +333,23 @@ import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 public class NFCeAutorizar {
 
 	public static void main(String[] args) throws JSONException{
-		
+
 		String login = "Token_enviado_pelo_suporte";
 
 		/* Substituir pela sua identificação interna da nota. */
 		String ref = "12345";
-		
+
 		/* Para ambiente de produção use a variável abaixo:
 		String server = "https://api.focusnfe.com.br/"; */
  		String server = "https://homologacao.focusnfe.com.br/";
-		
+
 		String url = server.concat("v2/nfce?ref="+ ref+"&completa=1");
- 
+
 	    /* Configuração para realizar o HTTP BasicAuth. */
 		Object config = new DefaultClientConfig();
 		Client client = Client.create((ClientConfig) config);
 		client.addFilter(new HTTPBasicAuthFilter(login, ""));
-		
+
 		/* Aqui são criados as hash's que receberão os dados da nota. */
 		HashMap<String, String> nfce = new HashMap<String, String>();
 		HashMap<String, String> itens = new HashMap<String, String>();
@@ -399,12 +399,12 @@ public class NFCeAutorizar {
 		itens.put("icms_situacao_tributaria", "102");
 		formasPagamento.put("forma_pagamento", "99");
 		formasPagamento.put("valor_pagamento", "1.0000");
-		
+
 		/* Depois de fazer o input dos dados, são criados os objetos JSON já com os valores das hash's. */
 		JSONObject json = new JSONObject (nfce);
 		JSONObject jsonItens = new JSONObject (itens);
 		JSONObject jsonPagamento = new JSONObject (formasPagamento);
-		
+
 		/* Aqui adicionamos os objetos JSON nos campos da API como array no JSON principal. */
 		json.append("items", jsonItens);
 		json.append("formas_pagamento", jsonPagamento);
@@ -413,14 +413,14 @@ public class NFCeAutorizar {
 		System.out.print(json); */
 
 		WebResource request = client.resource(url);
-	
+
 		ClientResponse resposta = request.post(ClientResponse.class, json);
 
-		int httpCode = resposta.getStatus(); 
+		int httpCode = resposta.getStatus();
 
 		String body = resposta.getEntity(String.class);
 
-		/* As três linhas a seguir exibem as informações retornadas pela nossa API. 
+		/* As três linhas a seguir exibem as informações retornadas pela nossa API.
 		 * Aqui o seu sistema deverá interpretar e lidar com o retorno. */
 		System.out.print("HTTP Code: ");
 		System.out.print(httpCode);
@@ -696,6 +696,27 @@ O envio de uma NFCe é um processo **síncrono**, ou seja, diferente da NFe a no
 }
 ```
 
+> autorizado em contingência offline e ainda não efetivado
+
+```json
+{
+  "cnpj_emitente": "07504505000132",
+  "ref": "referencia_000899",
+  "status": "autorizado",
+  "status_sefaz": "100",
+  "mensagem_sefaz": "Autorizado o uso da NF-e",
+  "chave_nfe": "NFe41190607504505000132650010000000121743484310",
+  "numero": "12",
+  "serie": "1",
+  "caminho_xml_nota_fiscal": "/arquivos_development/07504505000132/201906/XMLs/41190607504505000132650010000000121743484310-nfe.xml",
+  "caminho_danfe": "/notas_fiscais_consumidor/NFe41190607504505000132650010000000121743484310.html",
+  "qrcode_url": "http://www.fazenda.pr.gov.br/nfce/qrcode/?p=41190607504505000132650010000000121743484310|2|2|1|5E264C0E28D801197219894CDFCF2FCCC5237F08",
+  "url_consulta_nf": "http://www.fazenda.pr.gov.br/nfce/consulta",
+  "contingencia_offline": true,
+  "contingencia_offline_efetivada": false
+}
+```
+
 > erro_autorizacao
 
 ```json
@@ -707,6 +728,19 @@ O envio de uma NFCe é um processo **síncrono**, ou seja, diferente da NFe a no
   "mensagem_sefaz": "Informado CSOSN para emissor que nao e do Simples Nacional (CRT diferente de 1). [nItem:1]"
 }
 ```
+
+### Emissão automática em contingência offline
+
+Ao tentar emitir uma NFCe, iremos tentar comunicação com a SEFAZ. Caso a comunicação seja realizada com sucesso, a nota será emitida e a DANFCe gerada. Porém, caso a comunicação não seja possível, iremos imediatamente emitir uma *outra nota* (com numeração subsequente) em contingência offline, nos estados onde isso for possível. Isso significa gerar um XML e DANFCe temporários até que a comunicação com a SEFAZ seja reestabelecida. Ao final, os dados gerados serão devolvidos na requisição de autorização. Todo este processo é síncrono.
+
+É necessário emitir uma outra nota pois não há garantias de que a SEFAZ não tenha recebido a requisição original. Desta forma, é mais prudente emitir a nota com outro número e posteriormente consultar a nota original para confirmar o seu status, assim evitamos erros de duplicidade de numeração ao fazer a efetivação da contingência quando os servidores da SEFAZ voltarem a responder.
+
+Será de responsabilidade de nossa API, após devolver o XML e DANFCe temporários, tentar reestabelecer comunicação com a SEFAZ ao longo das próximas 24 horas após a emissão. Quando conseguirmos conectividade novamente serão efetuadas duas ações:
+
+* A nota emitida em contingência será efetividade na SEFAZ e iremos substituir o XML e DANFCe por suas versões definitivas
+* Iremos consultar o status da requisição original. Caso a nota tenha sido autorizada, é feito o cancelamento da nota. Caso ela realmente não tenha sido autorizada, o número é reaproveitado para as próximas emissões.
+
+O sistema cliente da API pode acompanhar este processo de forma transparente, conforme descrito na seção “Consulta” deste manual.
 
 ## Consulta
 
@@ -748,7 +782,7 @@ import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 
-public class NFCeConsulta { 
+public class NFCeConsulta {
 
 	public static void main(String[] args) {
 
@@ -756,13 +790,13 @@ public class NFCeConsulta {
 
 		/* Substituir pela sua identificação interna da nota. */
 		String ref = "12345";
-		
+
 		/* Para ambiente de produção use a variável abaixo:
 		String server = "https://api.focusnfe.com.br/"; */
  		String server = "https://homologacao.focusnfe.com.br/";
-		
+
  		String url = server.concat("v2/nfce/"+ref+"?completa=1");
-		
+
  		/* Configuração para realizar o HTTP BasicAuth. */
 		Object config = new DefaultClientConfig();
 		Client client = Client.create((ClientConfig) config);
@@ -772,11 +806,11 @@ public class NFCeConsulta {
 
 		ClientResponse resposta = request.get(ClientResponse.class);
 
-		int httpCode = resposta.getStatus(); 
+		int httpCode = resposta.getStatus();
 
 		String body = resposta.getEntity(String.class);
-		
-		/* As três linhas abaixo imprimem as informações retornadas pela API. 
+
+		/* As três linhas abaixo imprimem as informações retornadas pela API.
 		 * Aqui o seu sistema deverá interpretar e lidar com o retorno. */
 		System.out.print("HTTP Code: ");
 		System.out.print(httpCode);
@@ -942,6 +976,16 @@ Campos de retorno:
 * **caminho_xml_nota_fiscal:** caso a nota tenha sido autorizada, retorna o caminho para download do XML.
 * **caminho_danfe:** caso a nota tenha sido autorizada retorna o caminho para download do DANFe.
 * **caminho_xml_cancelamento:** Caso a nota esteja cancelada, é fornecido o caminho para fazer o download do XML de cancelamento.
+* **contingencia_offline** Este campo irá aparecer apenas quando a nota tiver sido emitida em contingência offline.
+* **contingencia_offline_efetivada** Quando a nota tiver sido emitida em contingência offline, este campo irá mostrar se a nota já foi efetivada (transmitida para a SEFAZ) ou não.
+* **tentativa_anterior**: Nos casos de contingência offline, esta chave irá conter outros campos quando conseguirmos determinar o que houve com a tentativa original. Esta seção poderá conter os seguintes campos:
+ * status: autorizado, processando_autorizacao ou cancelado. A API irá automaticamente proceder com o cancelamento quando necessário
+ * serie
+ * numero
+ * chave_nfe
+ * caminho_xml_nota_fiscal
+ * caminho_xml_cancelamento
+
 
 Caso na requisição seja passado o parâmetro `completa=1` será adicionado mais 6 campos:
 
@@ -1129,25 +1173,25 @@ import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 public class NFCeCancelamento {
 
 	public static void main(String[] args){
-		
+
 		String login = "Token_enviado_pelo_suporte";
 
 		/* Substituir pela sua identificação interna da nota. */
 		String ref = "12345";
-		
+
 		/* Para ambiente de produção use a variável abaixo:
 		String server = "https://api.focusnfe.com.br/"; */
  		String server = "https://homologacao.focusnfe.com.br/";
-		
+
 		String url = server.concat("v2/nfce/"+ref);
-		
+
 		/* Aqui criamos um hashmap para receber a chave "justificativa" e o valor desejado. */		
 		HashMap<String, String> justificativa = new HashMap<String, String>();
 		justificativa.put("justificativa", "Informe aqui a sua justificativa para realizar o cancelamento da NFCe.");
-		
+
 		/* Criamos um objeto JSON para receber a hash com os dados esperado pela API. */
 		JSONObject json = new JSONObject(justificativa);
-		
+
 		/* Configuração para realizar o HTTP BasicAuth. */
 		Object config = new DefaultClientConfig();
 		Client client = Client.create((ClientConfig) config);
@@ -1157,11 +1201,11 @@ public class NFCeCancelamento {
 
 		ClientResponse resposta = request.delete(ClientResponse.class, json);
 
-		int httpCode = resposta.getStatus(); 
+		int httpCode = resposta.getStatus();
 
 		String body = resposta.getEntity(String.class);
-		
-	   /* As três linhas abaixo imprimem as informações retornadas pela API. 
+
+	   /* As três linhas abaixo imprimem as informações retornadas pela API.
 	    * Aqui o seu sistema deverá interpretar e lidar com o retorno. */
 		System.out.print("HTTP Code: ");
 		System.out.print(httpCode);
@@ -1408,15 +1452,15 @@ import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 public class NFCeInutilizacao {
 
 	public static void main(String[] args) throws JSONException{
-		
+
 		String login = "Token_enviado_pelo_suporte";
-		
+
 		/* Para ambiente de produção use a variável abaixo:
 		String server = "https://api.focusnfe.com.br/"; */
  		String server = "https://homologacao.focusnfe.com.br/";
-		
+
  		String url = server.concat("v2/nfce/inutilizacao");
-		
+
  		/* Aqui criamos um hash que irá receber as chaves e valores esperados para gerar a inutilização. */
 		HashMap<String, String> dadosInutilizacao = new HashMap<String, String>();
 		dadosInutilizacao.put("cnpj", "51916585009999");
@@ -1424,31 +1468,31 @@ public class NFCeInutilizacao {
 		dadosInutilizacao.put("numero_inicial", "7730");
 		dadosInutilizacao.put("numero_final", "7732");
 		dadosInutilizacao.put("justificativa", "Informe aqui a justificativa para realizar a inutilizacao da numeracao.");
-		
-		/* Criamos um objeto JSON que irá receber o input dos dados, para então enviar a requisição. */	
+
+		/* Criamos um objeto JSON que irá receber o input dos dados, para então enviar a requisição. */
 		JSONObject json = new JSONObject (dadosInutilizacao);
-		
+
 		/* Testar se o JSON gerado está dentro do formato esperado.
 		System.out.print(json); */
-		
+
 		/* Configuração para realizar o HTTP BasicAuth. */
 		Object config = new DefaultClientConfig();
 		Client client = Client.create((ClientConfig) config);
 		client.addFilter(new HTTPBasicAuthFilter(login, ""));		
-		
+
 		WebResource request = client.resource(url);
 
 		ClientResponse resposta = request.post(ClientResponse.class, json);
 
-		int httpCode = resposta.getStatus(); 
+		int httpCode = resposta.getStatus();
 
 		String body = resposta.getEntity(String.class);
-		
-	   /* As três linhas abaixo imprimem as informações retornadas pela API. 
+
+	   /* As três linhas abaixo imprimem as informações retornadas pela API.
 	    * Aqui o seu sistema deverá interpretar e lidar com o retorno. */
 		System.out.print("HTTP Code: ");
 		System.out.print(httpCode);
-		System.out.printf(body); 
+		System.out.printf(body);
 	}
 }
 ```
@@ -1694,29 +1738,29 @@ import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 public class NFCeEnviaEmail {
 
 	public static void main(String[] args) throws JSONException{
-		
+
 		String login = "Token_enviado_pelo_suporte";
 
 		/* Substituir pela sua identificação interna da nota. */
 		String ref = "12345";
-		
+
 		/* Para ambiente de produção use a variável abaixo:
 		String server = "https://api.focusnfe.com.br/"; */
  		String server = "https://homologacao.focusnfe.com.br/";
-		
+
 		String url = server.concat("v2/nfce/"+ref+"/email");
-		
+
 		/* Criamos o um objeto JSON que receberá um JSON Array com a lista de e-mails. */
-		JSONObject json = new JSONObject ();	
+		JSONObject json = new JSONObject ();
 		JSONArray listaEmails = new JSONArray();
 		listaEmails.put("email_01@acras.com.br");
 		listaEmails.put("email_02@acras.com.br");
 		listaEmails.put("email_03@acras.com.br");
-		json.put("emails", listaEmails);	
-		
+		json.put("emails", listaEmails);
+
 		/* Testar se o JSON gerado está dentro do formato esperado.
 		System.out.print(json); */
-		
+
 		/* Configuração para realizar o HTTP BasicAuth. */
 		Object config = new DefaultClientConfig();
 		Client client = Client.create((ClientConfig) config);
@@ -1726,15 +1770,15 @@ public class NFCeEnviaEmail {
 
 		ClientResponse resposta = request.post(ClientResponse.class, json);
 
-		int httpCode = resposta.getStatus(); 
+		int httpCode = resposta.getStatus();
 
 		String body = resposta.getEntity(String.class);
-		
-		/* As três linhas abaixo imprimem as informações retornadas pela API. 
+
+		/* As três linhas abaixo imprimem as informações retornadas pela API.
 		 * Aqui o seu sistema deverá interpretar e lidar com o retorno. */
 		System.out.print("HTTP Code: ");
 		System.out.print(httpCode);
-		System.out.printf(body); 
+		System.out.printf(body);
 	}
 }
 ```
@@ -1932,7 +1976,7 @@ Abaixo do diretório base os diretórios a seguir serão utilizados pelo Enviado
 * **pdf:** Aqui é salvo a DANFCe e a impressão do CFe do SAT. Notas ou cupons cancelados não possuem impressão em PDF.
 * **tmp:** Este diretório salva o XML após a conversão dos campos, usado tanto para NFCe como para CFe SAT.
 
-Os arquivos a serem enviados devem possuir as extensões: 
+Os arquivos a serem enviados devem possuir as extensões:
 
 * Para **NFCe**, .nfce (envios) e .canc (cancelamentos);
 * Para **CFe SAT**, .cfe (envios) e .cfecanc (cancelamentos);

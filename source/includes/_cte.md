@@ -1,5 +1,5 @@
 
-# CTe e CTe OS (beta)
+# CTe e CTe OS
 
 
 Através da API CTe é possível:
@@ -199,28 +199,28 @@ import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 public class Autorizar {
 
 	public static void main(String[] args) throws JSONException{
-		
+
 		String login = "Token_enviado_pelo_suporte";
 
 		/* Substituir pela sua identificação interno do CTe. */
 		String ref = "12345";
-		
+
 		/* Para ambiente de produção use a variável abaixo:
 		String server = "https://api.focusnfe.com.br/"; */
  		String server = "https://homologacao.focusnfe.com.br/";
- 		
+
  		String url = server.concat("v2/cte_os?ref="+ref);
-	
+
 		/* Configuração para realizar o HTTP BasicAuth. */
  		Object config = new DefaultClientConfig();
 		Client client = Client.create((ClientConfig) config);
 		client.addFilter(new HTTPBasicAuthFilter(login, ""));
-		
+
 		/* Aqui são criados as hash's que receberão os dados do CTe. */
 		HashMap<String, String> cte = new HashMap<String, String>();
 		HashMap<String, String> seguroCarga = new HashMap<String, String>();
 		HashMap<String, String> documentosReferenciados = new HashMap<String, String>();
-   
+
 		cte.put("bairro_emitente","Sao Cristova");
 		cte.put("bairro_tomador","Bacacheri");
 		cte.put("cep_emitente","99880077");
@@ -285,28 +285,28 @@ public class Autorizar {
 		documentosReferenciados.put("serie","1");
 		documentosReferenciados.put("subserie","1");
 		documentosReferenciados.put("valor","1.00");
-		
+
 		/* Depois de fazer o input dos dados, são criados os objetos JSON já com os valores das hash's. */
 		JSONObject json = new JSONObject (cte);
 		JSONObject jsonSegurosCarga = new JSONObject (segurosCarga);
 		JSONObject jsonDocumentosReferenciados = new JSONObject (documentosReferenciados);
-		
+
 		/* Aqui adicionamos os objetos JSON nos campos da API como array no JSON principal. */
 		json.append("segurosCarga", jsonSegurosCarga);
 		json.append("documentosReferenciados", jsonDocumentosReferenciados);
 
 		/* É recomendado verificar como os dados foram gerados em JSON e se ele está seguindo a estrutura especificada em nossa documentação.*/
-		//System.out.print(json); 
-		
+		//System.out.print(json);
+
 		WebResource request = client.resource(url);
 
 		ClientResponse resposta = request.post(ClientResponse.class, json);
 
-		int httpCode = resposta.getStatus(); 
+		int httpCode = resposta.getStatus();
 
 		String body = resposta.getEntity(String.class);
-		
-		/* As três linhas a seguir exibem as informações retornadas pela nossa API. 
+
+		/* As três linhas a seguir exibem as informações retornadas pela nossa API.
 		 * Aqui o seu sistema deverá interpretar e lidar com o retorno. */
 		System.out.print("HTTP Code: ");
 		System.out.print(httpCode);
@@ -811,13 +811,13 @@ public class Consulta {
 
 		/* Substituir pela sua identificação interno do CTe. */
 		String ref = "12345";
-		
+
 		/* Para ambiente de produção use a variável abaixo:
 		String server = "https://api.focusnfe.com.br/"; */
  		String server = "https://homologacao.focusnfe.com.br/";
- 		
+
 		String url = server.concat("v2/cte/"+ref+"?completa=1");
-		
+
 		/* Configuração para realizar o HTTP BasicAuth. */
 		Object config = new DefaultClientConfig();
 		Client client = Client.create((ClientConfig) config);
@@ -827,11 +827,11 @@ public class Consulta {
 
 		ClientResponse resposta = request.get(ClientResponse.class);
 
-		int httpCode = resposta.getStatus(); 
+		int httpCode = resposta.getStatus();
 
 		String body = resposta.getEntity(String.class);
 
-		/* As três linhas abaixo imprimem as informações retornadas pela API. 
+		/* As três linhas abaixo imprimem as informações retornadas pela API.
 		 * Aqui o seu sistema deverá interpretar e lidar com o retorno. */
 		System.out.print("HTTP Code: ");
 		System.out.print(httpCode);
@@ -1119,38 +1119,38 @@ import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 public class Cancelar {
 
 	public static void main(String[] args){
-		
+
 		String login = "Token_enviado_pelo_suporte";
 
 		/* Substituir pela sua identificação interno do CTe. */
 		String ref = "12345";
-		
+
 		/* Para ambiente de produção use a variável abaixo:
 		String server = "https://api.focusnfe.com.br/"; */
  		String server = "https://homologacao.focusnfe.com.br/";
- 		
+
  		String url = server.concat("v2/cte/"+ref);
  		/* Aqui criamos um hashmap para receber a chave "justificativa" e o valor desejado. */
 		HashMap<String, String> justificativa = new HashMap<String, String>();
 		justificativa.put("justificativa", "Informe aqui a sua justificativa para realizar o cancelamento da NFe.");
-		
+
 		/* Criamos um objeto JSON para receber a hash com os dados esperado pela API. */
 		JSONObject json = new JSONObject(justificativa);
-		
+
 		/* Configuração para realizar o HTTP BasicAuth. */
 		Object config = new DefaultClientConfig();
 		Client client = Client.create((ClientConfig) config);
 		client.addFilter(new HTTPBasicAuthFilter(login, ""));
-	
+
 		WebResource request = client.resource(url);
 
 		ClientResponse resposta = request.delete(ClientResponse.class, json);
 
-		int httpCode = resposta.getStatus(); 
+		int httpCode = resposta.getStatus();
 
 		String body = resposta.getEntity(String.class);
-		
-	   /* As três linhas abaixo imprimem as informações retornadas pela API. 
+
+	   /* As três linhas abaixo imprimem as informações retornadas pela API.
         * Aqui o seu sistema deverá interpretar e lidar com o retorno. */
 		System.out.print("HTTP Code: ");
 		System.out.print(httpCode);
@@ -1390,24 +1390,24 @@ public class EmitirCce {
 	public static void main(String[] args){
 
 		String login = "Token_enviado_pelo_suporte";
-		
+
 		/* Substituir pela sua identificação interno do CTe. */
 		String ref = "12345";
-		
+
 		/* Para ambiente de produção use a variável abaixo:
 		String server = "https://api.focusnfe.com.br/"; */
 		String server = "https://homologacao.focusnfe.com.br/";
-		
+
 		String url = server.concat("v2/cte/"+ref+"/carta_correcao");
 
 		/* Aqui criamos um hashmap para receber a chave "correcao" e o valor desejado. */
 		HashMap<String, String> correcao = new HashMap<String, String>();
 		correcao.put("campo_corrigido", "uf_inicio");
 		correcao.put("valor_corrigido", "PR");
-		
+
 		/* Criamos um objeto JSON para receber a hash com os dados esperado pela API. */
 		JSONObject json = new JSONObject(correcao);
-		
+
 		/* Configuração para realizar o HTTP BasicAuth. */
 		Object config = new DefaultClientConfig();
 		Client client = Client.create((ClientConfig) config);
@@ -1417,11 +1417,11 @@ public class EmitirCce {
 
 		ClientResponse resposta = request.post(ClientResponse.class, json);
 
-		int httpCode = resposta.getStatus(); 
+		int httpCode = resposta.getStatus();
 
 		String body = resposta.getEntity(String.class);
 
-	   /* As três linhas abaixo imprimem as informações retornadas pela API. 
+	   /* As três linhas abaixo imprimem as informações retornadas pela API.
 		* Aqui o seu sistema deverá interpretar e lidar com o retorno. */
 		System.out.print("HTTP Code: ");
 		System.out.print(httpCode);
@@ -1655,15 +1655,15 @@ import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 public class Inutilizar {
 
 	public static void main(String[] args) throws JSONException{
-		
+
 		String login = "Token_enviado_pelo_suporte";
-		
+
 		/* Para ambiente de produção use a variável abaixo:
 		String server = "https://api.focusnfe.com.br/"; */
  		String server = "https://homologacao.focusnfe.com.br/";
- 		
+
  		String url = server.concat("v2/cte/inutilizacao");
- 		
+
  		/* Aqui criamos um hash que irá receber as chaves e valores esperados para gerar a inutilização. */
 		HashMap<String, String> dadosInutilizacao = new HashMap<String, String>();
 		dadosInutilizacao.put("cnpj", "51916585000125");
@@ -1672,13 +1672,13 @@ public class Inutilizar {
 		dadosInutilizacao.put("numero_final", "3");
 		dadosInutilizacao.put("justificativa", "Informe aqui a justificativa para realizar a inutilizacao da numeracao.");
 		dadosInutilizacao.put("modelo", "67");
-		
+
 		/* Criamos um objeto JSON que irá receber o input dos dados, para então enviar a requisição. */
 		JSONObject json = new JSONObject (dadosInutilizacao);
-		
+
 		/* Testar se o JSON gerado está dentro do formato esperado.
 		System.out.print(json); */
-		
+
 		/* Configuração para realizar o HTTP BasicAuth. */
 		Object config = new DefaultClientConfig();
 		Client client = Client.create((ClientConfig) config);
@@ -1688,15 +1688,15 @@ public class Inutilizar {
 
 		ClientResponse resposta = request.post(ClientResponse.class, json);
 
-		int httpCode = resposta.getStatus(); 
+		int httpCode = resposta.getStatus();
 
 		String body = resposta.getEntity(String.class);
-		
-		 /* As três linhas abaixo imprimem as informações retornadas pela API. 
+
+		 /* As três linhas abaixo imprimem as informações retornadas pela API.
 		  * Aqui o seu sistema deverá interpretar e lidar com o retorno. */
 		System.out.print("HTTP Code: ");
 		System.out.print(httpCode);
-		System.out.printf(body); 
+		System.out.printf(body);
 	}
 }
 

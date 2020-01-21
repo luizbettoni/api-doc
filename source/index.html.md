@@ -20,10 +20,13 @@ includes:
   - nfse
   - lote_rps
   - manifestacao
+  - manifestacao-cte
+  - nfses-recebidas
   - webhooks
   - ncm
   - cfop
   - cep
+  - municipios
   - revenda
   - limite-requisicoes
   - github
