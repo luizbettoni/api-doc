@@ -1951,7 +1951,7 @@ Utilize o comando **HTTP POST** para enviar a sua nota para nossa API. Este mét
 
 O parâmetros da carta de correção deverão ser enviados da seguinte forma:
 
-* **correcao**: Texto da carta de correção. Deverá conter de 15 a 255 caracteres.
+* **correcao**: Texto da carta de correção. Deverá conter de 15 a 1000 caracteres.
 * **data_evento**: Campo opcional. Data do evento da carta de correção. Se não informado será usado a data atual
 
 A API irá em seguida devolver os seguintes campos:
