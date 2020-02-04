@@ -5,7 +5,7 @@ Utilizamos a base de municípios do IBGE para identificar os municípios em noss
 
 ```shell
 # pesquisa por todos os municípios do PR
-curl -u token_enviado_pelo_suporte: \
+curl -u token obtido no cadastro da empresa: \
   https://homologacao.focusnfe.com.br/v2/municipios?sigla_uf=PR
 ```
 
@@ -17,7 +17,7 @@ curl_setopt($ch, CURLOPT_URL, $server."/v2/municipios?sigla_uf=PR");
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 curl_setopt($ch, CURLOPT_HTTPHEADER, array());
 curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-curl_setopt($ch, CURLOPT_USERPWD, "token_enviado_pelo_suporte:");
+curl_setopt($ch, CURLOPT_USERPWD, "token obtido no cadastro da empresa:");
 $body = curl_exec($ch);
 $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 // As próximas três linhas são um exemplo de como imprimir as informações de retorno da API.
@@ -124,7 +124,7 @@ url = "https://api.focusnfe.com.br"
 '''
 url = "https://homologacao.focusnfe.com.br/v2/municipios?sigla_uf=PR"
 
-token="token_enviado_pelo_suporte"
+token="token obtido no cadastro da empresa"
 
 r = requests.get(url, auth=(token,""))
 

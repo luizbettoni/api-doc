@@ -44,7 +44,7 @@ url = "https://api.focusnfe.com.br"
 '''
 url = "https://homologacao.focusnfe.com.br/v2/nfses_recebidas?cnpj="
 
-token="token_enviado_pelo_suporte"
+token="token obtido no cadastro da empresa"
 
 cnpj = "cnpj_do_destinatario_da_nota"
 
@@ -57,7 +57,7 @@ print(r.status_code, r.text)
 
 
 ```shell
-curl -u token_enviado_pelo_suporte: \
+curl -u token obtido no cadastro da empresa: \
   "https://homologacao.focusnfe.com.br/v2/nfses_recebidas?cnpj=SEU_CNPJ"
 ```
 

@@ -178,9 +178,9 @@ HTTP CODE/STATUS | Status API Focus | Descrição | Correção
 
 ```shell
 # arquivo.json deve conter os dados da CTe
-curl -u token_enviado_pelo_suporte: \
+curl -u token obtido no cadastro da empresa: \
   -X POST -T cte.json https://homologacao.focusnfe.com.br/v2/cte?ref=12345
-curl -u token_enviado_pelo_suporte: \
+curl -u token obtido no cadastro da empresa: \
   -X POST -T cte_os.json https://homologacao.focusnfe.com.br/v2/cte_os?ref=12345
 ```
 
@@ -791,7 +791,7 @@ Ao contrátio da CTe convencional, a CTe OS é processada de forma **síncrona**
 ## Consulta
 
 ```shell
-curl -u token_enviado_pelo_suporte: \
+curl -u token obtido no cadastro da empresa: \
   https://homologacao.focusnfe.com.br/v2/cte/12345
 ```
 
@@ -1325,7 +1325,7 @@ print(r.status_code, r.text)
 ```
 
 ```shell
-curl -u token_enviado_pelo_suporte: \
+curl -u token obtido no cadastro da empresa: \
   -X DELETE -d '{"justificativa":"Teste de cancelamento de nota"}' \
   https://homologacao.focusnfe.com.br/v2/cte/12345
 ```
@@ -1595,7 +1595,7 @@ print(r.status_code, r.text)
 ```
 
 ```shell
-curl -u token_enviado_pelo_suporte: \
+curl -u token obtido no cadastro da empresa: \
   -X POST -d '{"campo_corrigido":"observacoes","valor_corrigido":"Nova observação"}' \
   https://homologacao.focusnfe.com.br/v2/cte/12345/carta_correcao
 ```

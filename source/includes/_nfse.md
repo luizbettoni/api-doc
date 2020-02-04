@@ -179,7 +179,7 @@ url = "https://homologacao.focusnfe.com.br/v2/nfse"
 # Substituir pela sua identificação interna da nota
 ref = {"ref":"12345"}
 
-token="token_enviado_pelo_suporte"
+token="token obtido no cadastro da empresa"
 
 '''
 Usamos dicionarios para armazenar os campos e valores que em seguida,
@@ -228,7 +228,7 @@ print(r.status_code, r.text)
 
 ```shell
 # arquivo.json deve conter os dados da NFSe
-curl -u token_enviado_pelo_suporte: \
+curl -u token obtido no cadastro da empresa: \
   -X POST -T arquivo.json https://homologacao.focusnfe.com.br/v2/nfse
 ```
 
@@ -418,7 +418,7 @@ puts "Corpo da resposta: " + resposta.body
  $server = "https://homologacao.focusnfe.com.br";
  // Substituir pela sua identificação interna da nota
  $ref = "12345";
- $login = "token_enviado_pelo_suporte";
+ $login = "token obtido no cadastro da empresa";
  $password = "";
  $nfse = array (
     "data_emissao" => "2017-12-27T17:43:14-3:00",
@@ -590,7 +590,7 @@ url = "https://homologacao.focusnfe.com.br/v2/nfse/"
 # Substituir pela sua identificação interna da nota
 ref = "12345"
 
-token="token_enviado_pelo_suporte"
+token="token obtido no cadastro da empresa"
 
 r = requests.get(url+ref, params=completa, auth=(token,""))
 
@@ -601,7 +601,7 @@ print(r.status_code, r.text)
 ```
 
 ```shell
-curl -u token_enviado_pelo_suporte: \
+curl -u token obtido no cadastro da empresa: \
   https://homologacao.focusnfe.com.br/v2/nfse/12345
 ```
 
@@ -702,7 +702,7 @@ puts "Corpo da resposta: " + resposta.body
  // Você deve definir isso globalmente para sua aplicação
  //Substituir pela sua identificação interna da nota
  $ref = "12345";
- $login = "token_enviado_pelo_suporte";
+ $login = "token obtido no cadastro da empresa";
  $password = "";
  // Para ambiente de produção use a variável abaixo:
  // $server = "https://api.focusnfe.com.br";
@@ -882,7 +882,7 @@ url = "https://homologacao.focusnfe.com.br/v2/nfse/"
 # Substituir pela sua identificação interna da nota
 ref = "12345"
 
-token="token_enviado_pelo_suporte"
+token="token obtido no cadastro da empresa"
 
 '''
 Usamos um dicionario para armazenar os campos e valores que em seguida,
@@ -900,7 +900,7 @@ print(r.status_code, r.text)
 ```
 
 ```shell
-curl -u token_enviado_pelo_suporte: \
+curl -u token obtido no cadastro da empresa: \
   -X DELETE -d '{"justificativa":"Teste de cancelamento de nota"}' \
   https://homologacao.focusnfe.com.br/v2/nfse/12345
 ```
@@ -1025,7 +1025,7 @@ puts "Corpo da resposta: " + resposta.body
  // $server = "https://api.focusnfe.com.br";
  $server = "https://homologacao.focusnfe.com.br";
  $justificativa = array ("justificativa" => "Teste de cancelamento de nota");
- $login = "token_enviado_pelo_suporte";
+ $login = "token obtido no cadastro da empresa";
  $password = "";
  curl_setopt($ch, CURLOPT_URL, $server . "/v2/nfse/" . $ref);
  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -1155,7 +1155,7 @@ url = "https://homologacao.focusnfe.com.br/v2/nfse/"
 # Substituir pela sua identificação interna da nota
 ref = "12345"
 
-token="token_enviado_pelo_suporte"
+token="token obtido no cadastro da empresa"
 
 '''
 Usamos um dicionario para armazenar os campos e valores que em seguida,
@@ -1176,7 +1176,7 @@ print(r.status_code, r.text)
 
 
 ```shell
-curl -u token_enviado_pelo_suporte: \
+curl -u token obtido no cadastro da empresa: \
   -X POST -d '{"emails":["alguem@example.org"]}' \
   https://homologacao.focusnfe.com.br/v2/nfse/12345/email
 ```
@@ -1304,7 +1304,7 @@ puts "Corpo da resposta: " + resposta.body
  $server = "https://homologacao.focusnfe.com.br";
  // Substituir pela sua identificação interna da nota
  $ref = "12345";
- $login = "token_enviado_pelo_suporte";
+ $login = "token obtido no cadastro da empresa";
  $password = "";
  $email = array (
    "emails" => array(
