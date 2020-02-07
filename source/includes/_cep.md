@@ -23,7 +23,7 @@ Nós disponibilizamos uma API para consultar uma descrição detalhada das infor
 
 ```shell
 # pesquisa por CFOPs que iniciam com o dígito 2
-curl -u token_enviado_pelo_suporte: \
+curl -u token obtido no cadastro da empresa: \
   https://homologacao.focusnfe.com.br/v2/ceps?uf=AC&logradouro=colinas
 ```
 
@@ -35,7 +35,7 @@ curl_setopt($ch, CURLOPT_URL, $server."/v2/ceps?uf=AC&logradouro=colinas");
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 curl_setopt($ch, CURLOPT_HTTPHEADER, array());
 curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-curl_setopt($ch, CURLOPT_USERPWD, "token_enviado_pelo_suporte:");
+curl_setopt($ch, CURLOPT_USERPWD, "token obtido no cadastro da empresa:");
 $body = curl_exec($ch);
 $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 // As próximas três linhas são um exemplo de como imprimir as informações de retorno da API.
@@ -142,7 +142,7 @@ url = "https://api.focusnfe.com.br"
 '''
 url = "https://homologacao.focusnfe.com.br/v2/ceps?uf=AC&logradouro=colinas"
 
-token="token_enviado_pelo_suporte"
+token="token obtido no cadastro da empresa"
 
 r = requests.get(url, auth=(token,""))
 

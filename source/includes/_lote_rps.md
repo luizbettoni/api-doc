@@ -64,7 +64,7 @@ url = "https://homologacao.focusnfe.com.br/v2/lotes_rps"
 # Substituir pela sua identificação interna da nota
 ref = {"ref":"12345"}
 
-token="token_enviado_pelo_suporte"
+token="token obtido no cadastro da empresa"
 
 '''
 Usamos dicionarios para armazenar os campos e valores que em seguida,
@@ -116,7 +116,7 @@ arquivo_lote_rps.close()
 
 ```shell
 # arquivo.json deve conter os dados da NFSe
-curl -u token_enviado_pelo_suporte: \
+curl -u token obtido no cadastro da empresa: \
   -X POST -T arquivo.json https://homologacao.focusnfe.com.br/v2/lotes_rps > arquivo_lote_rps.txt
 ```
 
@@ -311,7 +311,7 @@ File.open('arquivo_lote_rps.txt', 'w') { |arquivo| arquivo.puts resposta.body }
  $server = "https://homologacao.focusnfe.com.br";
  // Substituir pela sua identificação interna da nota
  $ref = "12345";
- $login = "token_enviado_pelo_suporte";
+ $login = "token obtido no cadastro da empresa";
  $password = "";
  $lote_nfse = array (
    "prestador" => array(
@@ -474,7 +474,7 @@ url = "https://homologacao.focusnfe.com.br/v2/lotes_rps/"
 # Substituir pela sua identificação interna da nota
 ref = "12345"
 
-token="token_enviado_pelo_suporte"
+token="token obtido no cadastro da empresa"
 
 r = requests.get(url+ref, auth=(token,""))
 
@@ -490,7 +490,7 @@ arquivo_lote_rps.close()
 
 
 ```shell
-curl -u token_enviado_pelo_suporte: \
+curl -u token obtido no cadastro da empresa: \
   -X GET https://homologacao.focusnfe.com.br/v2/lotes_rps/12345 > arquivo_lote_rps.txt
 ```
 
@@ -587,7 +587,7 @@ File.open('arquivo_lote_rps.txt', 'w') { |arquivo| arquivo.puts resposta.body }
  // Você deve definir isso globalmente para sua aplicação
  //Substituir pela sua identificação interna da nota
  $ref = "12345";
- $login = "token_enviado_pelo_suporte";
+ $login = "token obtido no cadastro da empresa";
  $password = "";
  // Para ambiente de produção use a variável abaixo:
  // $server = "https://api.focusnfe.com.br";
@@ -668,7 +668,7 @@ url = "https://homologacao.focusnfe.com.br/v2/lotes_rps/" + ref + "/resposta"
 
 # Substituir pela sua identificação interna da nota
 
-token="token_enviado_pelo_suporte"
+token="token obtido no cadastro da empresa"
 
 # Aqui é feita a leitura do conteúdo do arquivo de retorno baixado no site da prefeitura
 arquivo = open("caminho/arquivo_retorno.txt", "r")
@@ -684,7 +684,7 @@ print(r.status_code, r.text)
 
 
 ```shell
-curl -u token_enviado_pelo_suporte: \
+curl -u token obtido no cadastro da empresa: \
   -X POST https://homologacao.focusnfe.com.br/v2/lotes_rps/12345/resposta -T caminho/arquivo_retorno.txt
 ```
 
@@ -796,7 +796,7 @@ puts "Corpo da resposta: " + resposta.body
   // Você deve definir isso globalmente para sua aplicação
   //Substituir pela sua identificação interna da nota
   $ref = "12345";
-  $login = "token_enviado_pelo_suporte";
+  $login = "token obtido no cadastro da empresa";
   $password = "";
 
   // Aqui é feita a leitura do conteúdo do arquivo de retorno baixado no site da prefeitura

@@ -484,7 +484,7 @@ HTTP CODE/STATUS | Status API Focus | Descrição | Correção
 
 ```shell
 # arquivo.json deve conter os dados da NFe, substitua REFERENCIA pela referência de sua escolha
-curl -u token_enviado_pelo_suporte: \
+curl -u token obtido no cadastro da empresa: \
   -X POST -T arquivo.json https://homologacao.focusnfe.com.br/v2/nfe?ref=REFERENCIA
 ```
 
@@ -496,7 +496,7 @@ $server = "https://api.focusnfe.com.br"; */
 $server = "https://homologacao.focusnfe.com.br";
 // Substituir a variável, ref, pela sua identificação interna de nota.
 $ref = "12345";
-$login = "token_enviado_pelo_suporte";
+$login = "token obtido no cadastro da empresa";
 $password = "";
 $nfe = array (
   "natureza_operacao" => "Remessa",
@@ -900,7 +900,7 @@ url = "https://homologacao.focusnfe.com.br/v2/nfe"
 # Substituir pela sua identificação interna da nota
 ref = {"ref":"12345"}
 
-token="token_enviado_pelo_suporte"
+token="token obtido no cadastro da empresa"
 
 '''
 Usamos dicionarios para armazenar os campos e valores que em seguida,
@@ -1059,7 +1059,7 @@ url = "https://homologacao.focusnfe.com.br/v2/nfe/"
 # Substituir pela sua identificação interna da nota
 ref = "12345"
 
-token="token_enviado_pelo_suporte"
+token="token obtido no cadastro da empresa"
 
 # Use este parametro para obter mais informacoes em suas consultas
 completa = "completa=1"
@@ -1071,7 +1071,7 @@ print(r.status_code, r.text)
 ```
 
 ```shell
-curl -u token_enviado_pelo_suporte: \
+curl -u token obtido no cadastro da empresa: \
   https://homologacao.focusnfe.com.br/v2/nfe/12345
 ```
 
@@ -1083,7 +1083,7 @@ $server = "https://api.focusnfe.com.br"; */
 $server = "https://homologacao.focusnfe.com.br";
 // Substituir a variável, ref, pela sua identificação interna de nota.
 $ref = "12345";
-$login = "token_enviado_pelo_suporte";
+$login = "token obtido no cadastro da empresa";
 $password = "";
 // Inicia o processo de envio das informações usando o cURL.
 $ch = curl_init();
@@ -1443,7 +1443,7 @@ Existe obrigatoriedade legal para armazenar o XML de todas as notas NFe (modelo 
 
 
 ```shell
-curl -u token_enviado_pelo_suporte: \
+curl -u token obtido no cadastro da empresa: \
   -X DELETE -d '{"justificativa":"Teste de cancelamento de nota"}' \
   https://homologacao.focusnfe.com.br/v2/nfe/12345
 ```
@@ -1456,7 +1456,7 @@ $server = "https://api.focusnfe.com.br"; */
 $server = "https://homologacao.focusnfe.com.br";
 // Substituir a variável, ref, pela sua identificação interna de nota.
 $ref = "12345";
-$login = "token_enviado_pelo_suporte";
+$login = "token obtido no cadastro da empresa";
 $password = "";
 $justificativa = array ("justificativa" => "Teste de cancelamento de nota");
 // Inicia o processo de envio das informações usando o cURL.
@@ -1642,7 +1642,7 @@ url = "https://homologacao.focusnfe.com.br/v2/nfe/"
 # Substituir pela sua identificação interna da nota
 ref = "12345"
 
-token="token_enviado_pelo_suporte"
+token="token obtido no cadastro da empresa"
 
 '''
 Usamos um dicionario para armazenar os campos e valores que em seguida,
@@ -1704,7 +1704,7 @@ A NFe poderá ser cancelada em até 24 horas após a emissão. No entanto, algun
 ## Carta de Correção Eletrônica
 
 ```shell
-curl -u token_enviado_pelo_suporte: \
+curl -u token obtido no cadastro da empresa: \
   -X POST -d '{"correcao":"Teste de carta de correcao"}' \
   https://homologacao.focusnfe.com.br/v2/nfe/12345/carta_correcao
 ```
@@ -1717,7 +1717,7 @@ $server = "https://api.focusnfe.com.br"; */
 $server = "https://homologacao.focusnfe.com.br";
 // Substituir a variável, ref, pela sua identificação interna de nota.
 $ref = "12345";
-$login = "token_enviado_pelo_suporte";
+$login = "token obtido no cadastro da empresa";
 $password = "";
 $correcao = array (
   "correcao" => "Teste de carta de correcao",
@@ -1906,7 +1906,7 @@ url = "https://homologacao.focusnfe.com.br/v2/nfe/"
 # Substituir pela sua identificação interna da nota
 ref = "12345"
 
-token="token_enviado_pelo_suporte"
+token="token obtido no cadastro da empresa"
 
 '''
 Usamos um dicionario para armazenar os campos e valores que em seguida,
@@ -1951,7 +1951,7 @@ Utilize o comando **HTTP POST** para enviar a sua nota para nossa API. Este mét
 
 O parâmetros da carta de correção deverão ser enviados da seguinte forma:
 
-* **correcao**: Texto da carta de correção. Deverá conter de 15 a 255 caracteres.
+* **correcao**: Texto da carta de correção. Deverá conter de 15 a 1000 caracteres.
 * **data_evento**: Campo opcional. Data do evento da carta de correção. Se não informado será usado a data atual
 
 A API irá em seguida devolver os seguintes campos:
@@ -1968,7 +1968,7 @@ Para uma mesma nota fiscal é possível enviar mais de uma carta de correção, 
 ## Reenvio de e-mail
 
 ```shell
-curl -u token_enviado_pelo_suporte: \
+curl -u token obtido no cadastro da empresa: \
   -X POST -d '{"emails":["alguem@example.org"]}' \
   https://homologacao.focusnfe.com.br/v2/nfe/12345/email
 ```
@@ -1981,7 +1981,7 @@ $server = "https://api.focusnfe.com.br"; */
 $server = "https://homologacao.focusnfe.com.br";
 // Substituir a variável, ref, pela sua identificação interna de nota.
 $ref = "12345";
-$login = "token_enviado_pelo_suporte";
+$login = "token obtido no cadastro da empresa";
 $password = "";
 $email = array (
   "emails" => array(
@@ -2176,7 +2176,7 @@ url = "https://homologacao.focusnfe.com.br/v2/nfe/"
 # Substituir pela sua identificação interna da nota
 ref = "12345"
 
-token="token_enviado_pelo_suporte"
+token="token obtido no cadastro da empresa"
 
 '''
 Usamos um dicionario para armazenar os campos e valores que em seguida,
@@ -2208,7 +2208,7 @@ A API imediatamente devolve a requisição com a confirmação dos emails. Os em
 
 
 ```shell
-curl -u token_enviado_pelo_suporte: \
+curl -u token obtido no cadastro da empresa: \
   -X POST -d '{"cnpj":"51916585000125","serie":"1","numero_inicial":"7","numero_final":"9","justificativa":"Teste de inutilizacao de nota"}' \
   https://homologacao.focusnfe.com.br/v2/nfe/inutilizacao
 ```
@@ -2220,7 +2220,7 @@ Para ambiente de produção utilize e a variável abaixo:
 $server = "https://api.focusnfe.com.br"; */
 $server = "https://homologacao.focusnfe.com.br";
 // Substituir a variável, ref, pela sua identificação interna de nota.
-$login = "token_enviado_pelo_suporte";
+$login = "token obtido no cadastro da empresa";
 $password = "";
 $inutiliza = array (
   "cnpj" => "51916585000125",
@@ -2416,7 +2416,7 @@ url = "https://api.focusnfe.com.br"
 '''
 url = "https://homologacao.focusnfe.com.br/v2/nfe/inutilizacao"
 
-token="token_enviado_pelo_suporte"
+token="token obtido no cadastro da empresa"
 
 '''
 Usamos um dicionario para armazenar os campos e valores que em seguida,

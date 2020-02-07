@@ -47,7 +47,7 @@ url = "https://api.focusnfe.com.br"
 '''
 url = "https://homologacao.focusnfe.com.br/v2/nfes_recebidas/"
 
-token="token_enviado_pelo_suporte"
+token="token obtido no cadastro da empresa"
 
 chave = "chave_da_nota_fiscal"
 
@@ -71,7 +71,7 @@ print(r.status_code, r.text)
 ```shell
 
 # substitua CHAVE pela chave da nota
-curl -u token_enviado_pelo_suporte: \
+curl -u token obtido no cadastro da empresa: \
   -X POST -d '{"tipo":"confirmacao"}' \
   https://homologacao.focusnfe.com.br/v2/nfes_recebidas/CHAVE/manifesto
 ```
@@ -328,7 +328,7 @@ url = "https://api.focusnfe.com.br"
 '''
 url = "https://homologacao.focusnfe.com.br/v2/nfes_recebidas/"
 
-token="token_enviado_pelo_suporte"
+token="token obtido no cadastro da empresa"
 
 chave = "chave_da_nota_fiscal"
 
@@ -475,7 +475,7 @@ url = "https://api.focusnfe.com.br"
 '''
 url = "https://homologacao.focusnfe.com.br/v2/nfes_recebidas?cnpj="
 
-token="token_enviado_pelo_suporte"
+token="token obtido no cadastro da empresa"
 
 cnpj = "cnpj_do_destinatario_da_nota"
 
@@ -488,7 +488,7 @@ print(r.status_code, r.text)
 
 
 ```shell
-curl -u token_enviado_pelo_suporte: \
+curl -u token obtido no cadastro da empresa: \
   "https://homologacao.focusnfe.com.br/v2/nfes_recebidas?cnpj=SEU_CNPJ"
 ```
 
@@ -788,7 +788,7 @@ url = "https://api.focusnfe.com.br"
 '''
 url = "https://homologacao.focusnfe.com.br/v2/nfes_recebidas/"
 
-token="token_enviado_pelo_suporte"
+token="token obtido no cadastro da empresa"
 
 chave = "chave_da_nota_fiscal"
 
@@ -800,7 +800,7 @@ print(r.status_code, r.text)
 ```
 
 ```shell
-curl -u token_enviado_pelo_suporte: \
+curl -u token obtido no cadastro da empresa: \
   https://homologacao.focusnfe.com.br/v2/nfes_recebidas/CHAVE.xml
 ```
 
@@ -963,7 +963,7 @@ url = "https://api.focusnfe.com.br"
 '''
 url = "https://homologacao.focusnfe.com.br/v2/nfes_recebidas/"
 
-token="token_enviado_pelo_suporte"
+token="token obtido no cadastro da empresa"
 
 chave = "chave_da_nota_fiscal"
 
@@ -977,7 +977,7 @@ print(r.status_code, r.text)l
 
 
 ```shell
-curl -u token_enviado_pelo_suporte: \
+curl -u token obtido no cadastro da empresa: \
   "https://homologacao.focusnfe.com.br/v2/nfes_recebidas/CHAVE.json?completa=1"
 ```
 
@@ -1140,7 +1140,7 @@ url = "https://api.focusnfe.com.br"
 '''
 url = "https://homologacao.focusnfe.com.br/v2/nfes_recebidas/"
 
-token="token_enviado_pelo_suporte"
+token="token obtido no cadastro da empresa"
 
 chave = "chave_da_nota_fiscal"
 
@@ -1152,7 +1152,7 @@ print(r.status_code, r.text)
 ```
 
 ```shell
-curl -u token_enviado_pelo_suporte: \
+curl -u token obtido no cadastro da empresa: \
   https://homologacao.focusnfe.com.br/v2/nfes_recebidas/CHAVE/cancelamento.xml
 ```
 
@@ -1313,7 +1313,7 @@ url = "https://api.focusnfe.com.br"
 '''
 url = "https://homologacao.focusnfe.com.br/v2/nfes_recebidas/"
 
-token="token_enviado_pelo_suporte"
+token="token obtido no cadastro da empresa"
 
 chave = "chave_da_nota_fiscal"
 
@@ -1326,7 +1326,7 @@ print(r.status_code, r.text)
 
 
 ```shell
-curl -u token_enviado_pelo_suporte: \
+curl -u token obtido no cadastro da empresa: \
   https://homologacao.focusnfe.com.br/v2/nfes_recebidas/CHAVE/carta_correcao.xml
 ```
 

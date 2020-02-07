@@ -43,6 +43,8 @@ Para NFe e MDe (Manifestação de Destinatário Eletrônica):
 * **numero_carta_correcao**: o número da carta de correção, caso tenha sido emitida.
 * **caminho_xml_cancelamento**: Caso a nota esteja cancelada, é fornecido o caminho para fazer o download do XML de cancelamento.
 
+Ressaltamos que os campos devolvidos são os mesmos da consulta da nota fiscal. Veja o tópico [**Consulta**](https://focusnfe.com.br/doc/#nfe_consulta) na categoria NFe.
+
 Para NFSe:
 
 * **cnpj_prestador**: CNPJ do prestador do serviço.
@@ -63,6 +65,8 @@ Para NFSe:
   - **codigo**: Código do erro na prefeitura.
   - **mensagem**: Mensagem de erro enviada pela prefeitura.
   - **correcao**: Orientação do que deve ser feito para corrigir o erro.
+
+Ressaltamos que os campos devolvidos são os mesmos da consulta da nota fiscal. Veja o tópico [**Consulta**](https://focusnfe.com.br/doc/#nfse_consulta) na categoria NFSe.
 
 A vantagem de utilizar gatilhos é que não haverá a necessidade de fazer "polling" (realizar constantes requisições a fim de verificar o status da nota).
 
@@ -108,7 +112,7 @@ url = "https://api.focusnfe.com.br"
 '''
 url = "https://homologacao.focusnfe.com.br/v2/hooks"
 
-token="token_enviado_pelo_suporte"
+token="token obtido no cadastro da empresa"
 
 '''
 Usamos um dicionario para armazenar os campos e valores que em seguida,
@@ -128,7 +132,7 @@ print(r.status_code, r.text)
 ```
 
 ```shell
-curl -u token_enviado_pelo_suporte: \
+curl -u token obtido no cadastro da empresa: \
   -X POST -d '{"cnpj":"51916585000125","event":"nfe","url":"http://minha.url/nfe"}' \
   https://homologacao.focusnfe.com.br/v2/hooks
 ```
@@ -142,7 +146,7 @@ curl_setopt($ch, CURLOPT_POST, 1);
 curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode(array("cnpj" => "51916585000125",
   "event" => "nfe", "url" => "http://minha.url/nfe")));
 curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-curl_setopt($ch, CURLOPT_USERPWD, "token_enviado_pelo_suporte:");
+curl_setopt($ch, CURLOPT_USERPWD, "token obtido no cadastro da empresa:");
 $body = curl_exec($ch);
 $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 // As próximas três linhas são um exemplo de como imprimir as informações de retorno da API.
@@ -288,7 +292,7 @@ url = "https://api.focusnfe.com.br"
 '''
 url = "https://homologacao.focusnfe.com.br/v2/hooks/"
 
-token="token_enviado_pelo_suporte"
+token="token obtido no cadastro da empresa"
 
 hook_id = "Vj5rmkBq"
 
@@ -301,7 +305,7 @@ print(r.status_code, r.text)l
 ```
 
 ```shell
-curl -u token_enviado_pelo_suporte: \
+curl -u token obtido no cadastro da empresa: \
   https://homologacao.focusnfe.com.br/v2/hooks/Vj5rmkBq
 ```
 
@@ -314,7 +318,7 @@ curl_setopt($ch, CURLOPT_URL, $server."/v2/hooks/" . $hook_id);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 curl_setopt($ch, CURLOPT_HTTPHEADER, array());
 curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-curl_setopt($ch, CURLOPT_USERPWD, "token_enviado_pelo_suporte:");
+curl_setopt($ch, CURLOPT_USERPWD, "token obtido no cadastro da empresa:");
 $body = curl_exec($ch);
 $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 // As próximas três linhas são um exemplo de como imprimir as informações de retorno da API.
@@ -437,7 +441,7 @@ url = "https://api.focusnfe.com.br"
 '''
 url = "https://homologacao.focusnfe.com.br/v2/hooks/"
 
-token="token_enviado_pelo_suporte"
+token="token obtido no cadastro da empresa"
 
 hook_id = "Vj5rmkBq"
 
@@ -451,7 +455,7 @@ print(r.status_code, r.text)
 
 
 ```shell
-curl -u token_enviado_pelo_suporte: -X DELETE \
+curl -u token obtido no cadastro da empresa: -X DELETE \
  https://homologacao.focusnfe.com.br/v2/hooks/Vj5rmkBq
 ```
 
@@ -464,7 +468,7 @@ curl_setopt($ch, CURLOPT_URL, $server . "/v2/hooks/" . $hook_id);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
 curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-curl_setopt($ch, CURLOPT_USERPWD, "token_enviado_pelo_suporte:");
+curl_setopt($ch, CURLOPT_USERPWD, "token obtido no cadastro da empresa:");
 $body = curl_exec($ch);
 $result = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 // As próximas três linhas são um exemplo de como imprimir as informações de retorno da API.
