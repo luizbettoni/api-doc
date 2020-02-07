@@ -1558,7 +1558,7 @@ Você deve substituir <code>REFERENCIA</code> pela referência gerada pela sua a
 </tr>
 </tbody></table>
 <h2 id='nfe_envio'>Envio</h2><pre class="highlight shell tab-shell"><code><span class="c"># arquivo.json deve conter os dados da NFe, substitua REFERENCIA pela referência de sua escolha</span>
-curl -u token obtido no cadastro da empresa: <span class="se">\</span>
+curl -u <span class="s2">"token obtido no cadastro da empresa:"</span> <span class="se">\</span>
   -X POST -T arquivo.json https://homologacao.focusnfe.com.br/v2/nfe?ref<span class="o">=</span>REFERENCIA
 </code></pre><pre class="highlight php tab-php"><code><span class="cp">&lt;?php</span>
 <span class="cm">/* Você deve definir isso globalmente para sua aplicação.
@@ -1652,7 +1652,7 @@ $server = "https://api.focusnfe.com.br"; */</span>
 
     <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">JSONException</span><span class="o">{</span>
 
-        <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_enviado_pelo_suporte"</span><span class="o">;</span>
+        <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_obtido_no_cadastro_da_empresa"</span><span class="o">;</span>
 
         <span class="cm">/* Substituir pela sua identificação interna da nota. */</span>
         <span class="n">String</span> <span class="n">ref</span> <span class="o">=</span> <span class="s">"12345"</span><span class="o">;</span>
@@ -1868,7 +1868,7 @@ Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensi
 
 <span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
 
-<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_enviado_pelo_suporte"</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_obtido_no_cadastro_da_empresa"</span><span class="p">;</span>
 
 <span class="c1">// Substituir pela sua identificação interna da nota.</span>
 <span class="kd">var</span> <span class="nx">ref</span> <span class="o">=</span> <span class="s2">"12345"</span><span class="p">;</span>
@@ -2116,7 +2116,7 @@ url = "https://api.focusnfe.com.br"
 
 <span class="c"># Mostra na tela o codigo HTTP da requisicao e a mensagem de retorno da API</span>
 <span class="k">print</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
-</code></pre><pre class="highlight shell tab-shell"><code>curl -u token obtido no cadastro da empresa: <span class="se">\</span>
+</code></pre><pre class="highlight shell tab-shell"><code>curl -u <span class="s2">"token obtido no cadastro da empresa:"</span> <span class="se">\</span>
   https://homologacao.focusnfe.com.br/v2/nfe/12345
 </code></pre><pre class="highlight php tab-php"><code><span class="cp">&lt;?php</span>
 <span class="cm">/* Você deve definir isso globalmente para sua aplicação.
@@ -2153,7 +2153,7 @@ $server = "https://api.focusnfe.com.br"; */</span>
 
     <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">){</span>
 
-        <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_enviado_pelo_suporte"</span><span class="o">;</span>
+        <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_obtido_no_cadastro_da_empresa"</span><span class="o">;</span>
 
         <span class="cm">/* Substituir pela sua identificação interna da nota. */</span>
         <span class="n">String</span> <span class="n">ref</span> <span class="o">=</span> <span class="s">"12345"</span><span class="o">;</span>
@@ -2237,7 +2237,7 @@ Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensi
 
 <span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
 
-<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_enviado_pelo_suporte"</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_obtido_no_cadastro_da_empresa"</span><span class="p">;</span>
 
 <span class="c1">// Substituir pela sua identificação interna da nota</span>
 <span class="kd">var</span> <span class="nx">ref</span> <span class="o">=</span> <span class="s2">"12345"</span><span class="p">;</span>
@@ -2478,7 +2478,7 @@ ainda em processamento ou se a nota já foi processada.</p>
 <p>Utilize o método <strong>HTTP GET</strong> para essa consulta.</p>
 
 <p>Existe obrigatoriedade legal para armazenar o XML de todas as notas NFe (modelo 55) por pelo menos 5 anos após a data de autorização da nota. Nossa API faz a guarda automática dos arquivos por esse período.</p>
-<h2 id='nfe_cancelamento'>Cancelamento</h2><pre class="highlight shell tab-shell"><code>curl -u token obtido no cadastro da empresa: <span class="se">\</span>
+<h2 id='nfe_cancelamento'>Cancelamento</h2><pre class="highlight shell tab-shell"><code>curl -u <span class="s2">"token obtido no cadastro da empresa:"</span> <span class="se">\</span>
   -X DELETE -d <span class="s1">'{"justificativa":"Teste de cancelamento de nota"}'</span> <span class="se">\</span>
   https://homologacao.focusnfe.com.br/v2/nfe/12345
 </code></pre><pre class="highlight php tab-php"><code><span class="cp">&lt;?php</span>
@@ -2520,7 +2520,7 @@ $server = "https://api.focusnfe.com.br"; */</span>
 
     <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">){</span>
 
-        <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_enviado_pelo_suporte"</span><span class="o">;</span>
+        <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_obtido_no_cadastro_da_empresa"</span><span class="o">;</span>
 
         <span class="cm">/* Substituir pela sua identificação interna da nota. */</span>
         <span class="n">String</span> <span class="n">ref</span> <span class="o">=</span> <span class="s">"12345"</span><span class="o">;</span>
@@ -2620,7 +2620,7 @@ Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensi
 
 <span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
 
-<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_enviado_pelo_suporte"</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_obtido_no_cadastro_da_empresa"</span><span class="p">;</span>
 
 <span class="c1">// Substituir pela sua identificação interna da nota.</span>
 <span class="kd">var</span> <span class="nx">ref</span> <span class="o">=</span> <span class="s2">"12345"</span><span class="p">;</span>
@@ -2720,7 +2720,7 @@ serao convertidos a JSON e enviados para nossa API
   </span><span class="s2">"codigo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"requisicao_invalida"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"mensagem"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Parâmetro </span><span class="se">\"</span><span class="s2">justificativa</span><span class="se">\"</span><span class="s2"> deve ter entre 15 e 255 caracteres"</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre><h2 id='nfe_carta-de-correcao-eletronica'>Carta de Correção Eletrônica</h2><pre class="highlight shell tab-shell"><code>curl -u token obtido no cadastro da empresa: <span class="se">\</span>
+</span></code></pre><h2 id='nfe_carta-de-correcao-eletronica'>Carta de Correção Eletrônica</h2><pre class="highlight shell tab-shell"><code>curl -u <span class="s2">"token obtido no cadastro da empresa:"</span> <span class="se">\</span>
   -X POST -d <span class="s1">'{"correcao":"Teste de carta de correcao"}'</span> <span class="se">\</span>
   https://homologacao.focusnfe.com.br/v2/nfe/12345/carta_correcao
 </code></pre><pre class="highlight php tab-php"><code><span class="cp">&lt;?php</span>
@@ -2764,7 +2764,7 @@ $server = "https://api.focusnfe.com.br"; */</span>
 
     <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">){</span>
 
-        <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_enviado_pelo_suporte"</span><span class="o">;</span>
+        <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_obtido_no_cadastro_da_empresa"</span><span class="o">;</span>
 
         <span class="cm">/* Substituir pela sua identificação interna da nota. */</span>
         <span class="n">String</span> <span class="n">ref</span> <span class="o">=</span> <span class="s">"12345"</span><span class="o">;</span>
@@ -2865,7 +2865,7 @@ Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensi
 
 <span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
 
-<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_enviado_pelo_suporte"</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_obtido_no_cadastro_da_empresa"</span><span class="p">;</span>
 
 <span class="c1">// Substituir pela sua identificação interna da nota.</span>
 <span class="kd">var</span> <span class="nx">ref</span> <span class="o">=</span> <span class="s2">"12345"</span><span class="p">;</span>
@@ -2968,7 +2968,7 @@ serao convertidos a JSON e enviados para nossa API
 </ul>
 
 <p>Para uma mesma nota fiscal é possível enviar mais de uma carta de correção, até o limite de 20 correções, sendo que a última sempre substitui a anterior.</p>
-<h2 id='nfe_reenvio-de-e-mail'>Reenvio de e-mail</h2><pre class="highlight shell tab-shell"><code>curl -u token obtido no cadastro da empresa: <span class="se">\</span>
+<h2 id='nfe_reenvio-de-e-mail'>Reenvio de e-mail</h2><pre class="highlight shell tab-shell"><code>curl -u <span class="s2">"token obtido no cadastro da empresa:"</span> <span class="se">\</span>
   -X POST -d <span class="s1">'{"emails":["alguem@example.org"]}'</span> <span class="se">\</span>
   https://homologacao.focusnfe.com.br/v2/nfe/12345/email
 </code></pre><pre class="highlight php tab-php"><code><span class="cp">&lt;?php</span>
@@ -3015,7 +3015,7 @@ $server = "https://api.focusnfe.com.br"; */</span>
 
     <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">JSONException</span><span class="o">{</span>
 
-        <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_enviado_pelo_suporte"</span><span class="o">;</span>
+        <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_obtido_no_cadastro_da_empresa"</span><span class="o">;</span>
 
         <span class="cm">/* Substituir pela sua identificação interna da nota. */</span>
         <span class="n">String</span> <span class="n">ref</span> <span class="o">=</span> <span class="s">"12345"</span><span class="o">;</span>
@@ -3120,7 +3120,7 @@ Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensi
 
 <span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
 
-<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_enviado_pelo_suporte"</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_obtido_no_cadastro_da_empresa"</span><span class="p">;</span>
 
 <span class="c1">// Substituir pela sua identificação interna da nota.</span>
 <span class="kd">var</span> <span class="nx">ref</span> <span class="o">=</span> <span class="s2">"12345"</span><span class="p">;</span>
@@ -3189,7 +3189,7 @@ serao convertidos a JSON e enviados para nossa API
 </ul>
 
 <p>A API imediatamente devolve a requisição com a confirmação dos emails. Os emails serão enviados em segundo plano, por isso pode levar alguns minutos até que eles cheguem à caixa postal.</p>
-<h2 id='nfe_inutilizacao'>Inutilização</h2><pre class="highlight shell tab-shell"><code>curl -u token obtido no cadastro da empresa: <span class="se">\</span>
+<h2 id='nfe_inutilizacao'>Inutilização</h2><pre class="highlight shell tab-shell"><code>curl -u <span class="s2">"token obtido no cadastro da empresa:"</span> <span class="se">\</span>
   -X POST -d <span class="s1">'{"cnpj":"51916585000125","serie":"1","numero_inicial":"7","numero_final":"9","justificativa":"Teste de inutilizacao de nota"}'</span> <span class="se">\</span>
   https://homologacao.focusnfe.com.br/v2/nfe/inutilizacao
 </code></pre><pre class="highlight php tab-php"><code><span class="cp">&lt;?php</span>
@@ -3237,7 +3237,7 @@ $server = "https://api.focusnfe.com.br"; */</span>
 
     <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">JSONException</span><span class="o">{</span>
 
-        <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_enviado_pelo_suporte"</span><span class="o">;</span>
+        <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_obtido_no_cadastro_da_empresa"</span><span class="o">;</span>
 
         <span class="cm">/* Para ambiente de produção use a variável abaixo:
         String server = "https://api.focusnfe.com.br/"; */</span>
@@ -3343,7 +3343,7 @@ Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensi
 
 <span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
 
-<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_enviado_pelo_suporte"</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_obtido_no_cadastro_da_empresa"</span><span class="p">;</span>
 
 <span class="cm">/*
 Para ambiente de producao use a URL abaixo:
@@ -4351,7 +4351,7 @@ serao convertidos em JSON e enviados para nossa API
 <span class="k">print</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
 
 </code></pre><pre class="highlight shell tab-shell"><code><span class="c"># arquivo.json deve conter os dados da NFCe</span>
-curl -u token obtido no cadastro da empresa: <span class="se">\</span>
+curl -u <span class="s2">"token obtido no cadastro da empresa:"</span> <span class="se">\</span>
   -X POST -T arquivo.json https://homologacao.focusnfe.com.br/v2/nfce
 </code></pre><pre class="highlight java tab-java"><code>
 <span class="kn">import</span> <span class="nn">java.util.HashMap</span><span class="o">;</span>
@@ -4368,7 +4368,7 @@ curl -u token obtido no cadastro da empresa: <span class="se">\</span>
 
     <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">JSONException</span><span class="o">{</span>
 
-        <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_enviado_pelo_suporte"</span><span class="o">;</span>
+        <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_obtido_no_cadastro_da_empresa"</span><span class="o">;</span>
 
         <span class="cm">/* Substituir pela sua identificação interna da nota. */</span>
         <span class="n">String</span> <span class="n">ref</span> <span class="o">=</span> <span class="s">"12345"</span><span class="o">;</span>
@@ -4616,7 +4616,7 @@ Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensi
 
 <span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
 
-<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_enviado_pelo_suporte"</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_obtido_no_cadastro_da_empresa"</span><span class="p">;</span>
 
 <span class="c1">// Substituir pela sua identificação interna da nota</span>
 <span class="kd">var</span> <span class="nx">ref</span> <span class="o">=</span> <span class="s2">"12345"</span><span class="p">;</span>
@@ -4784,7 +4784,7 @@ url = "https://api.focusnfe.com.br"
 <span class="c"># Mostra na tela o codigo HTTP da requisicao e a mensagem de retorno da API</span>
 <span class="k">print</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span><span class="n">l</span>
 
-</code></pre><pre class="highlight shell tab-shell"><code>curl -u token obtido no cadastro da empresa: <span class="se">\</span>
+</code></pre><pre class="highlight shell tab-shell"><code>curl -u <span class="s2">"token obtido no cadastro da empresa:"</span> <span class="se">\</span>
   https://homologacao.focusnfe.com.br/v2/nfce/12345
 </code></pre><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">com.sun.jersey.api.client.Client</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">com.sun.jersey.api.client.ClientResponse</span><span class="o">;</span>
@@ -4797,7 +4797,7 @@ url = "https://api.focusnfe.com.br"
 
     <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
 
-        <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_enviado_pelo_suporte"</span><span class="o">;</span>
+        <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_obtido_no_cadastro_da_empresa"</span><span class="o">;</span>
 
         <span class="cm">/* Substituir pela sua identificação interna da nota. */</span>
         <span class="n">String</span> <span class="n">ref</span> <span class="o">=</span> <span class="s">"12345"</span><span class="o">;</span>
@@ -4906,7 +4906,7 @@ Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensi
 
 <span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
 
-<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_enviado_pelo_suporte"</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_obtido_no_cadastro_da_empresa"</span><span class="p">;</span>
 
 <span class="c1">// Substituir pela sua identificação interna da nota</span>
 <span class="kd">var</span> <span class="nx">ref</span> <span class="o">=</span> <span class="s2">"12345"</span><span class="p">;</span>
@@ -5156,7 +5156,7 @@ serao convertidos a JSON e enviados para nossa API
 <span class="k">print</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
 
 
-</code></pre><pre class="highlight shell tab-shell"><code>curl -u token obtido no cadastro da empresa: <span class="se">\</span>
+</code></pre><pre class="highlight shell tab-shell"><code>curl -u <span class="s2">"token obtido no cadastro da empresa:"</span> <span class="se">\</span>
   -X DELETE -d <span class="s1">'{"justificativa":"Teste de cancelamento de nota"}'</span> <span class="se">\</span>
   https://homologacao.focusnfe.com.br/v2/nfce/12345
 </code></pre><pre class="highlight java tab-java"><code>
@@ -5173,7 +5173,7 @@ serao convertidos a JSON e enviados para nossa API
 
     <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">){</span>
 
-        <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_enviado_pelo_suporte"</span><span class="o">;</span>
+        <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_obtido_no_cadastro_da_empresa"</span><span class="o">;</span>
 
         <span class="cm">/* Substituir pela sua identificação interna da nota. */</span>
         <span class="n">String</span> <span class="n">ref</span> <span class="o">=</span> <span class="s">"12345"</span><span class="o">;</span>
@@ -5300,7 +5300,7 @@ Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensi
 
 <span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
 
-<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_enviado_pelo_suporte"</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_obtido_no_cadastro_da_empresa"</span><span class="p">;</span>
 
 <span class="c1">// Substituir pela sua identificação interna da nota.</span>
 <span class="kd">var</span> <span class="nx">ref</span> <span class="o">=</span> <span class="s2">"12345"</span><span class="p">;</span>
@@ -5412,7 +5412,7 @@ serao convertidos em JSON e enviados para nossa API
 <span class="c"># Mostra na tela o codigo HTTP da requisicao e a mensagem de retorno da API</span>
 <span class="k">print</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
 
-</code></pre><pre class="highlight shell tab-shell"><code>curl -u token obtido no cadastro da empresa: <span class="se">\</span>
+</code></pre><pre class="highlight shell tab-shell"><code>curl -u <span class="s2">"token obtido no cadastro da empresa:"</span> <span class="se">\</span>
   -X POST -d <span class="s1">'{"cnpj":"51916585009999","serie":"9","numero_inicial":"7730","numero_final":"7732","justificativa":"Teste de inutilizacao de nota"}'</span> <span class="se">\</span>
   https://homologacao.focusnfe.com.br/v2/nfce/inutilizacao
 </code></pre><pre class="highlight java tab-java"><code>
@@ -5430,7 +5430,7 @@ serao convertidos em JSON e enviados para nossa API
 
     <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">JSONException</span><span class="o">{</span>
 
-        <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_enviado_pelo_suporte"</span><span class="o">;</span>
+        <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_obtido_no_cadastro_da_empresa"</span><span class="o">;</span>
 
         <span class="cm">/* Para ambiente de produção use a variável abaixo:
         String server = "https://api.focusnfe.com.br/"; */</span>
@@ -5566,7 +5566,7 @@ Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensi
 
 <span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
 
-<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_enviado_pelo_suporte"</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_obtido_no_cadastro_da_empresa"</span><span class="p">;</span>
 
 <span class="cm">/*
 Para ambiente de producao use a URL abaixo:
@@ -5680,7 +5680,7 @@ serao convertidos a JSON e enviados para nossa API
 <span class="c"># Mostra na tela o codigo HTTP da requisicao e a mensagem de retorno da API</span>
 <span class="k">print</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span><span class="n">l</span>
 
-</code></pre><pre class="highlight shell tab-shell"><code>curl -u token obtido no cadastro da empresa: <span class="se">\</span>
+</code></pre><pre class="highlight shell tab-shell"><code>curl -u <span class="s2">"token obtido no cadastro da empresa:"</span> <span class="se">\</span>
   -X POST -d <span class="s1">'{"emails":["alguem@example.org"]}'</span> <span class="se">\</span>
   https://homologacao.focusnfe.com.br/v2/nfce/12345/email
 </code></pre><pre class="highlight java tab-java"><code>
@@ -5698,7 +5698,7 @@ serao convertidos a JSON e enviados para nossa API
 
     <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">JSONException</span><span class="o">{</span>
 
-        <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_enviado_pelo_suporte"</span><span class="o">;</span>
+        <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_obtido_no_cadastro_da_empresa"</span><span class="o">;</span>
 
         <span class="cm">/* Substituir pela sua identificação interna da nota. */</span>
         <span class="n">String</span> <span class="n">ref</span> <span class="o">=</span> <span class="s">"12345"</span><span class="o">;</span>
@@ -5832,7 +5832,7 @@ Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensi
 
 <span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
 
-<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_enviado_pelo_suporte"</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_obtido_no_cadastro_da_empresa"</span><span class="p">;</span>
 
 <span class="c1">// Substituir pela sua identificação interna da nota.</span>
 <span class="kd">var</span> <span class="nx">ref</span> <span class="o">=</span> <span class="s2">"12345"</span><span class="p">;</span>
@@ -6220,9 +6220,9 @@ Para realizar a reimpressão de determinada NFCe basta salvar um arquivo com nom
 </tr>
 </tbody></table>
 <h2 id='cte-e-cte-os_envio'>Envio</h2><pre class="highlight shell tab-shell"><code><span class="c"># arquivo.json deve conter os dados da CTe</span>
-curl -u token obtido no cadastro da empresa: <span class="se">\</span>
+curl -u <span class="s2">"token obtido no cadastro da empresa:"</span> <span class="se">\</span>
   -X POST -T cte.json https://homologacao.focusnfe.com.br/v2/cte?ref<span class="o">=</span>12345
-curl -u token obtido no cadastro da empresa: <span class="se">\</span>
+curl -u <span class="s2">"token obtido no cadastro da empresa:"</span> <span class="se">\</span>
   -X POST -T cte_os.json https://homologacao.focusnfe.com.br/v2/cte_os?ref<span class="o">=</span>12345
 </code></pre><pre class="highlight java tab-java"><code>
 <span class="kn">import</span> <span class="nn">java.util.HashMap</span><span class="o">;</span>
@@ -6239,7 +6239,7 @@ curl -u token obtido no cadastro da empresa: <span class="se">\</span>
 
     <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">JSONException</span><span class="o">{</span>
 
-        <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_enviado_pelo_suporte"</span><span class="o">;</span>
+        <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_obtido_no_cadastro_da_empresa"</span><span class="o">;</span>
 
         <span class="cm">/* Substituir pela sua identificação interno do CTe. */</span>
         <span class="n">String</span> <span class="n">ref</span> <span class="o">=</span> <span class="s">"12345"</span><span class="o">;</span>
@@ -6486,7 +6486,7 @@ Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensi
 
 <span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
 
-<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_enviado_pelo_suporte"</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_obtido_no_cadastro_da_empresa"</span><span class="p">;</span>
 
 <span class="c1">// Substituir pela sua identificação interno do CTe.</span>
 <span class="kd">var</span> <span class="nx">ref</span> <span class="o">=</span> <span class="s2">"12345"</span><span class="p">;</span>
@@ -6595,7 +6595,7 @@ Passamos o token como quarto parametro deste metodo, como autenticador do HTTP B
 <span class="c1">// Substituir pela sua identificação interno do CTe.
 </span><span class="nv">$ref</span> <span class="o">=</span> <span class="s2">"12345"</span><span class="p">;</span>
 
-<span class="nv">$login</span> <span class="o">=</span> <span class="s2">"Token_enviado_pelo_suporte"</span><span class="p">;</span>
+<span class="nv">$login</span> <span class="o">=</span> <span class="s2">"Token_obtido_no_cadastro_da_empresa"</span><span class="p">;</span>
 
 <span class="nv">$password</span> <span class="o">=</span> <span class="s2">""</span><span class="p">;</span>
 
@@ -6706,7 +6706,7 @@ url = "https://api.focusnfe.com.br"
 <span class="c"># Substituir pela sua identificação interno do CTe.</span>
 <span class="n">ref</span> <span class="o">=</span> <span class="p">{</span><span class="s">"ref"</span><span class="p">:</span><span class="s">"12345"</span><span class="p">}</span>
 
-<span class="n">token</span><span class="o">=</span><span class="s">"Token_enviado_pelo_suporte"</span>
+<span class="n">token</span><span class="o">=</span><span class="s">"Token_obtido_no_cadastro_da_empresa"</span>
 
 <span class="s">'''
 Usamos dicionarios para armazenar os campos e valores que em seguida,
@@ -6813,7 +6813,7 @@ onde eventualmente será processada (processamento assíncrono). Com isto, a not
 
 <p>Utilize o comando <strong>HTTP POST</strong> para enviar a sua nota para nossa API.
 Ao contrátio da CTe convencional, a CTe OS é processada de forma <strong>síncrona</strong>, na mesma requição em que os dados são enviadas.</p>
-<h2 id='cte-e-cte-os_consulta'>Consulta</h2><pre class="highlight shell tab-shell"><code>curl -u token obtido no cadastro da empresa: <span class="se">\</span>
+<h2 id='cte-e-cte-os_consulta'>Consulta</h2><pre class="highlight shell tab-shell"><code>curl -u <span class="s2">"token obtido no cadastro da empresa:"</span> <span class="se">\</span>
   https://homologacao.focusnfe.com.br/v2/cte/12345
 </code></pre><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">com.sun.jersey.api.client.Client</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">com.sun.jersey.api.client.ClientResponse</span><span class="o">;</span>
@@ -6826,7 +6826,7 @@ Ao contrátio da CTe convencional, a CTe OS é processada de forma <strong>sínc
 
     <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">){</span>
 
-        <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_enviado_pelo_suporte"</span><span class="o">;</span>
+        <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_obtido_no_cadastro_da_empresa"</span><span class="o">;</span>
 
         <span class="cm">/* Substituir pela sua identificação interno do CTe. */</span>
         <span class="n">String</span> <span class="n">ref</span> <span class="o">=</span> <span class="s">"12345"</span><span class="o">;</span>
@@ -6911,7 +6911,7 @@ Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensi
 
 <span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
 
-<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_enviado_pelo_suporte"</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_obtido_no_cadastro_da_empresa"</span><span class="p">;</span>
 
 <span class="c1">// Substituir pela sua identificação interno do CTe.</span>
 <span class="kd">var</span> <span class="nx">ref</span> <span class="o">=</span> <span class="s2">"12345"</span><span class="p">;</span>
@@ -6940,7 +6940,7 @@ Passamos o token como quarto parametro deste metodo, como autenticador do HTTP B
 <span class="c1">// Substituir pela sua identificação interno do CTe.
 </span><span class="nv">$ref</span> <span class="o">=</span> <span class="s2">"12345"</span><span class="p">;</span>
 
-<span class="nv">$login</span> <span class="o">=</span> <span class="s2">"Token_enviado_pelo_suporte"</span><span class="p">;</span>
+<span class="nv">$login</span> <span class="o">=</span> <span class="s2">"Token_obtido_no_cadastro_da_empresa"</span><span class="p">;</span>
 <span class="nv">$password</span> <span class="o">=</span> <span class="s2">""</span><span class="p">;</span>
 
 <span class="c1">// Para ambiente de produção use a variável abaixo:
@@ -6976,7 +6976,7 @@ url = "https://api.focusnfe.com.br"
 <span class="c"># Substituir pela sua identificação interno do CTe.</span>
 <span class="n">ref</span> <span class="o">=</span> <span class="s">"12345"</span>
 
-<span class="n">token</span><span class="o">=</span><span class="s">"Token_enviado_pelo_suporte"</span>
+<span class="n">token</span><span class="o">=</span><span class="s">"Token_obtido_no_cadastro_da_empresa"</span>
 
 <span class="c"># Use este parametro para obter mais informacoes em suas consultas.</span>
 <span class="n">completa</span> <span class="o">=</span> <span class="s">"completa=1"</span>
@@ -7134,7 +7134,7 @@ url = "https://api.focusnfe.com.br"
 
     <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">){</span>
 
-        <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_enviado_pelo_suporte"</span><span class="o">;</span>
+        <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_obtido_no_cadastro_da_empresa"</span><span class="o">;</span>
 
         <span class="cm">/* Substituir pela sua identificação interno do CTe. */</span>
         <span class="n">String</span> <span class="n">ref</span> <span class="o">=</span> <span class="s">"12345"</span><span class="o">;</span>
@@ -7234,7 +7234,7 @@ Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensi
 
 <span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
 
-<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_enviado_pelo_suporte"</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_obtido_no_cadastro_da_empresa"</span><span class="p">;</span>
 
 <span class="c1">// Substituir pela sua identificação interno do CTe.</span>
 <span class="kd">var</span> <span class="nx">ref</span> <span class="o">=</span> <span class="s2">"12345"</span><span class="p">;</span>
@@ -7277,7 +7277,7 @@ Passamos o token como quarto parametro deste metodo, como autenticador do HTTP B
 
 <span class="nv">$justificativa</span> <span class="o">=</span> <span class="k">array</span> <span class="p">(</span><span class="s2">"justificativa"</span> <span class="o">=&gt;</span> <span class="s2">"A sua justificativa de cancelamento aqui."</span><span class="p">);</span>
 
-<span class="nv">$login</span> <span class="o">=</span> <span class="s2">"Token_enviado_pelo_suporte"</span><span class="p">;</span>
+<span class="nv">$login</span> <span class="o">=</span> <span class="s2">"Token_obtido_no_cadastro_da_empresa"</span><span class="p">;</span>
 <span class="nv">$password</span> <span class="o">=</span> <span class="s2">""</span><span class="p">;</span>
 
 <span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_URL</span><span class="p">,</span> <span class="nv">$server</span> <span class="o">.</span> <span class="s2">"/v2/cte/"</span> <span class="o">.</span> <span class="nv">$ref</span><span class="p">);</span>
@@ -7310,7 +7310,7 @@ url = "https://api.focusnfe.com.br"
 <span class="c"># Substituir pela sua identificação interno do CTe.</span>
 <span class="n">ref</span> <span class="o">=</span> <span class="s">"12345"</span>
 
-<span class="n">token</span><span class="o">=</span><span class="s">"Token_enviado_pelo_suporte"</span>
+<span class="n">token</span><span class="o">=</span><span class="s">"Token_obtido_no_cadastro_da_empresa"</span>
 
 <span class="s">'''
 Usamos um dicionario para armazenar os campos e valores que em seguida,
@@ -7324,7 +7324,7 @@ serao convertidos a JSON e enviados para nossa API.
 <span class="c"># Mostra na tela o codigo HTTP da requisicao e a mensagem de retorno da API.</span>
 <span class="k">print</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
 
-</code></pre><pre class="highlight shell tab-shell"><code>curl -u token obtido no cadastro da empresa: <span class="se">\</span>
+</code></pre><pre class="highlight shell tab-shell"><code>curl -u <span class="s2">"token obtido no cadastro da empresa:"</span> <span class="se">\</span>
   -X DELETE -d <span class="s1">'{"justificativa":"Teste de cancelamento de nota"}'</span> <span class="se">\</span>
   https://homologacao.focusnfe.com.br/v2/cte/12345
 </code></pre>
@@ -7385,7 +7385,7 @@ serao convertidos a JSON e enviados para nossa API.
 
     <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">){</span>
 
-        <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_enviado_pelo_suporte"</span><span class="o">;</span>
+        <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_obtido_no_cadastro_da_empresa"</span><span class="o">;</span>
 
         <span class="cm">/* Substituir pela sua identificação interno do CTe. */</span>
         <span class="n">String</span> <span class="n">ref</span> <span class="o">=</span> <span class="s">"12345"</span><span class="o">;</span>
@@ -7488,7 +7488,7 @@ Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensi
 
 <span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
 
-<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_enviado_pelo_suporte"</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_obtido_no_cadastro_da_empresa"</span><span class="p">;</span>
 
 <span class="c1">// Substituir pela sua identificação interno do CTe.</span>
 <span class="kd">var</span> <span class="nx">ref</span> <span class="o">=</span> <span class="s2">"12345"</span><span class="p">;</span>
@@ -7524,7 +7524,7 @@ Passamos o token como quarto parametro deste metodo, como autenticador do HTTP B
 <span class="c1">// Substituir pela sua identificação interno do CTe.
 </span><span class="nv">$ref</span> <span class="o">=</span> <span class="s2">"12345"</span><span class="p">;</span>
 
-<span class="nv">$login</span> <span class="o">=</span> <span class="s2">"Token_enviado_pelo_suporte"</span><span class="p">;</span>
+<span class="nv">$login</span> <span class="o">=</span> <span class="s2">"Token_obtido_no_cadastro_da_empresa"</span><span class="p">;</span>
 <span class="nv">$password</span> <span class="o">=</span> <span class="s2">""</span><span class="p">;</span>
 
 <span class="nv">$correcao</span> <span class="o">=</span> <span class="k">array</span> <span class="p">(</span>
@@ -7562,7 +7562,7 @@ url = "https://api.focusnfe.com.br"
 <span class="c"># Substituir pela sua identificação interno do CTe.</span>
 <span class="n">ref</span> <span class="o">=</span> <span class="s">"12345"</span>
 
-<span class="n">token</span><span class="o">=</span><span class="s">"Token_enviado_pelo_suporte"</span>
+<span class="n">token</span><span class="o">=</span><span class="s">"Token_obtido_no_cadastro_da_empresa"</span>
 
 <span class="s">'''
 Usamos um dicionario para armazenar os campos e valores que em seguida,
@@ -7575,7 +7575,7 @@ serao convertidos a JSON e enviados para nossa API.
 <span class="c"># Mostra na tela o codigo HTTP da requisicao e a mensagem de retorno da API.</span>
 <span class="k">print</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
 
-</code></pre><pre class="highlight shell tab-shell"><code>curl -u token obtido no cadastro da empresa: <span class="se">\</span>
+</code></pre><pre class="highlight shell tab-shell"><code>curl -u <span class="s2">"token obtido no cadastro da empresa:"</span> <span class="se">\</span>
   -X POST -d <span class="s1">'{"campo_corrigido":"observacoes","valor_corrigido":"Nova observação"}'</span> <span class="se">\</span>
   https://homologacao.focusnfe.com.br/v2/cte/12345/carta_correcao
 </code></pre>
@@ -7634,7 +7634,7 @@ dos campos da API.</p>
 
     <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">JSONException</span><span class="o">{</span>
 
-        <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_enviado_pelo_suporte"</span><span class="o">;</span>
+        <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_obtido_no_cadastro_da_empresa"</span><span class="o">;</span>
 
         <span class="cm">/* Para ambiente de produção use a variável abaixo:
         String server = "https://api.focusnfe.com.br/"; */</span>
@@ -7742,7 +7742,7 @@ Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensi
 
 <span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
 
-<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_enviado_pelo_suporte"</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_obtido_no_cadastro_da_empresa"</span><span class="p">;</span>
 
 <span class="cm">/*
 Para ambiente de producao use a URL abaixo:
@@ -7779,7 +7779,7 @@ Passamos o token como quarto parametro deste metodo, como autenticador do HTTP B
 </span>
 <span class="nv">$server</span> <span class="o">=</span> <span class="s2">"https://homologacao.focusnfe.com.br"</span><span class="p">;</span>
 
-<span class="nv">$login</span> <span class="o">=</span> <span class="s2">"Token_enviado_pelo_suporte"</span><span class="p">;</span>
+<span class="nv">$login</span> <span class="o">=</span> <span class="s2">"Token_obtido_no_cadastro_da_empresa"</span><span class="p">;</span>
 <span class="nv">$password</span> <span class="o">=</span> <span class="s2">""</span><span class="p">;</span>
 
 <span class="nv">$inutiliza</span> <span class="o">=</span> <span class="k">array</span> <span class="p">(</span>
@@ -7820,7 +7820,7 @@ url = "https://api.focusnfe.com.br"
 '''</span>
 <span class="n">url</span> <span class="o">=</span> <span class="s">"https://homologacao.focusnfe.com.br/v2/cte/inutilizacao"</span>
 
-<span class="n">token</span><span class="o">=</span><span class="s">"Token_enviado_pelo_suporte"</span>
+<span class="n">token</span><span class="o">=</span><span class="s">"Token_obtido_no_cadastro_da_empresa"</span>
 
 <span class="s">'''
 Usamos um dicionario para armazenar os campos e valores que em seguida,
@@ -8071,7 +8071,7 @@ serao convertidos a JSON e enviados para nossa API.
 </tr>
 </tbody></table>
 <h2 id='mdf-e-beta_envio'>Envio</h2><pre class="highlight shell tab-shell"><code><span class="c"># arquivo.json deve conter os dados da MDF-e</span>
-curl -u token obtido no cadastro da empresa: <span class="se">\</span>
+curl -u <span class="s2">"token obtido no cadastro da empresa:"</span> <span class="se">\</span>
   -X POST -T arquivo.json https://homologacao.focusnfe.com.br/v2/mdfe?ref<span class="o">=</span>12345
 </code></pre>
 <p>Para enviar uma MDF-e utilize a URL abaixo, alterando o ambiente de produção para homologação, caso esteja emitindo notas de teste.</p>
@@ -8089,7 +8089,7 @@ ou algum problema com o emitente a nota <strong>não será aceita para processam
 onde eventualmente será processada (processamento assíncrono). Com isto, a nota poderá ser autorizada ou ocorrer um erro na autorização, de acordo com a validação da SEFAZ.</p>
 
 <p>Para verificar se a nota já foi autorizada, você terá que efetuar uma <a href="#mdfe_consulta">consulta</a>.</p>
-<h2 id='mdf-e-beta_consulta'>Consulta</h2><pre class="highlight shell tab-shell"><code>curl -u token obtido no cadastro da empresa: <span class="se">\</span>
+<h2 id='mdf-e-beta_consulta'>Consulta</h2><pre class="highlight shell tab-shell"><code>curl -u <span class="s2">"token obtido no cadastro da empresa:"</span> <span class="se">\</span>
   https://homologacao.focusnfe.com.br/v2/mdfe/12345
 </code></pre>
 <p>Para consultar uma MDF-e utilize a URL abaixo, alterando o ambiente de produção para homologação, caso esteja emitindo notas de teste.</p>
@@ -8202,7 +8202,7 @@ onde eventualmente será processada (processamento assíncrono). Com isto, a not
     </span><span class="s2">"motivo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Autorizado o uso do MDF-e"</span><span class="w">
   </span><span class="p">},</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre><h2 id='mdf-e-beta_cancelamento'>Cancelamento</h2><pre class="highlight shell tab-shell"><code>curl -u token obtido no cadastro da empresa: <span class="se">\</span>
+</span></code></pre><h2 id='mdf-e-beta_cancelamento'>Cancelamento</h2><pre class="highlight shell tab-shell"><code>curl -u <span class="s2">"token obtido no cadastro da empresa:"</span> <span class="se">\</span>
   -X DELETE -d <span class="s1">'{"justificativa":"Teste de cancelamento"}'</span> <span class="se">\</span>
   https://homologacao.focusnfe.com.br/v2/mdfe/12345
 </code></pre>
@@ -8240,7 +8240,7 @@ onde eventualmente será processada (processamento assíncrono). Com isto, a not
 </ul>
 <h3 id='mdf-e-beta_prazo-de-cancelamento'>Prazo de cancelamento</h3>
 <p>A MDF-e poderá ser cancelada em até 24 horas após a emissão.</p>
-<h2 id='mdf-e-beta_inclusao-de-condutor'>Inclusão de Condutor</h2><pre class="highlight shell tab-shell"><code>curl -u token obtido no cadastro da empresa: <span class="se">\</span>
+<h2 id='mdf-e-beta_inclusao-de-condutor'>Inclusão de Condutor</h2><pre class="highlight shell tab-shell"><code>curl -u <span class="s2">"token obtido no cadastro da empresa:"</span> <span class="se">\</span>
   -X POST -d <span class="s1">'{"nome":"João da Silva","cpf":"68971569140"}'</span> <span class="se">\</span>
   https://homologacao.focusnfe.com.br/v2/mdfe/12345/inclusao_condutor
 </code></pre>
@@ -8277,7 +8277,7 @@ onde eventualmente será processada (processamento assíncrono). Com isto, a not
 <li><strong>mensagem_sefaz</strong>: Mensagem descritiva da SEFAZ detalhando o status.</li>
 <li><strong>caminho_xml</strong>: Caso o condutor tenha sido incluído, será informado aqui o caminho para download do XML de inclusão.</li>
 </ul>
-<h2 id='mdf-e-beta_encerramento'>Encerramento</h2><pre class="highlight shell tab-shell"><code>curl -u token obtido no cadastro da empresa: <span class="se">\</span>
+<h2 id='mdf-e-beta_encerramento'>Encerramento</h2><pre class="highlight shell tab-shell"><code>curl -u <span class="s2">"token obtido no cadastro da empresa:"</span> <span class="se">\</span>
   -X POST -d <span class="s1">'{"data":"2019-03-05","sigla_uf":"SP","nome_municipio":"São Paulo"}'</span> <span class="se">\</span>
   https://homologacao.focusnfe.com.br/v2/mdfe/12345/encerramento
 </code></pre>
@@ -8651,7 +8651,7 @@ serao convertidos em JSON e enviados para nossa API
 
 
 </code></pre><pre class="highlight shell tab-shell"><code><span class="c"># arquivo.json deve conter os dados da NFSe</span>
-curl -u token obtido no cadastro da empresa: <span class="se">\</span>
+curl -u <span class="s2">"token obtido no cadastro da empresa:"</span> <span class="se">\</span>
   -X POST -T arquivo.json https://homologacao.focusnfe.com.br/v2/nfse
 </code></pre><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">java.util.HashMap</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">org.codehaus.jettison.json.JSONException</span><span class="o">;</span>
@@ -8667,7 +8667,7 @@ curl -u token obtido no cadastro da empresa: <span class="se">\</span>
 
     <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">JSONException</span><span class="o">{</span>
 
-        <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_enviado_pelo_suporte"</span><span class="o">;</span>
+        <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_obtido_no_cadastro_da_empresa"</span><span class="o">;</span>
 
         <span class="cm">/* Substituir pela sua identificação interna da nota. */</span>
         <span class="n">String</span> <span class="n">ref</span> <span class="o">=</span> <span class="s">"12345"</span><span class="o">;</span>
@@ -8892,7 +8892,7 @@ Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensi
 
 <span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
 
-<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_enviado_pelo_suporte"</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_obtido_no_cadastro_da_empresa"</span><span class="p">;</span>
 
 <span class="c1">// Substituir pela sua identificação interna da nota</span>
 <span class="kd">var</span> <span class="nx">ref</span> <span class="o">=</span> <span class="s2">"12345"</span><span class="p">;</span>
@@ -9002,7 +9002,7 @@ url = "https://api.focusnfe.com.br"
 <span class="k">print</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
 
 
-</code></pre><pre class="highlight shell tab-shell"><code>curl -u token obtido no cadastro da empresa: <span class="se">\</span>
+</code></pre><pre class="highlight shell tab-shell"><code>curl -u <span class="s2">"token obtido no cadastro da empresa:"</span> <span class="se">\</span>
   https://homologacao.focusnfe.com.br/v2/nfse/12345
 </code></pre><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">com.sun.jersey.api.client.Client</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">com.sun.jersey.api.client.ClientResponse</span><span class="o">;</span>
@@ -9015,7 +9015,7 @@ url = "https://api.focusnfe.com.br"
 
     <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">){</span>
 
-        <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_enviado_pelo_suporte"</span><span class="o">;</span>
+        <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_obtido_no_cadastro_da_empresa"</span><span class="o">;</span>
 
         <span class="cm">/* Substituir pela sua identificação interna da nota. */</span>
         <span class="n">String</span> <span class="n">ref</span> <span class="o">=</span> <span class="s">"12345"</span><span class="o">;</span>
@@ -9124,7 +9124,7 @@ Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensi
 
 <span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
 
-<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_enviado_pelo_suporte"</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_obtido_no_cadastro_da_empresa"</span><span class="p">;</span>
 
 <span class="c1">// Substituir pela sua identificação interna da nota</span>
 <span class="kd">var</span> <span class="nx">ref</span> <span class="o">=</span> <span class="s2">"12345"</span><span class="p">;</span>
@@ -9282,7 +9282,7 @@ serao convertidos a JSON e enviados para nossa API
 <span class="k">print</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
 
 
-</code></pre><pre class="highlight shell tab-shell"><code>curl -u token obtido no cadastro da empresa: <span class="se">\</span>
+</code></pre><pre class="highlight shell tab-shell"><code>curl -u <span class="s2">"token obtido no cadastro da empresa:"</span> <span class="se">\</span>
   -X DELETE -d <span class="s1">'{"justificativa":"Teste de cancelamento de nota"}'</span> <span class="se">\</span>
   https://homologacao.focusnfe.com.br/v2/nfse/12345
 </code></pre><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">java.util.HashMap</span><span class="o">;</span>
@@ -9298,7 +9298,7 @@ serao convertidos a JSON e enviados para nossa API
 
     <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">){</span>
 
-        <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_enviado_pelo_suporte"</span><span class="o">;</span>
+        <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_obtido_no_cadastro_da_empresa"</span><span class="o">;</span>
 
         <span class="cm">/* Substituir pela sua identificação interna da nota. */</span>
         <span class="n">String</span> <span class="n">ref</span> <span class="o">=</span> <span class="s">"12345"</span><span class="o">;</span>
@@ -9425,7 +9425,7 @@ Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensi
 
 <span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
 
-<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_enviado_pelo_suporte"</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_obtido_no_cadastro_da_empresa"</span><span class="p">;</span>
 
 <span class="c1">// Substituir pela sua identificação interna da nota.</span>
 <span class="kd">var</span> <span class="nx">ref</span> <span class="o">=</span> <span class="s2">"12345"</span><span class="p">;</span>
@@ -9533,7 +9533,7 @@ serao convertidos a JSON e enviados para nossa API
 <span class="k">print</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
 
 
-</code></pre><pre class="highlight shell tab-shell"><code>curl -u token obtido no cadastro da empresa: <span class="se">\</span>
+</code></pre><pre class="highlight shell tab-shell"><code>curl -u <span class="s2">"token obtido no cadastro da empresa:"</span> <span class="se">\</span>
   -X POST -d <span class="s1">'{"emails":["alguem@example.org"]}'</span> <span class="se">\</span>
   https://homologacao.focusnfe.com.br/v2/nfse/12345/email
 </code></pre><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.codehaus.jettison.json.JSONArray</span><span class="o">;</span>
@@ -9550,7 +9550,7 @@ serao convertidos a JSON e enviados para nossa API
 
     <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">JSONException</span><span class="o">{</span>
 
-        <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_enviado_pelo_suporte"</span><span class="o">;</span>
+        <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_obtido_no_cadastro_da_empresa"</span><span class="o">;</span>
 
         <span class="cm">/* Substituir pela sua identificação interna da nota. */</span>
         <span class="n">String</span> <span class="n">ref</span> <span class="o">=</span> <span class="s">"12345"</span><span class="o">;</span>
@@ -9686,7 +9686,7 @@ Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensi
 
 <span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
 
-<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_enviado_pelo_suporte"</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_obtido_no_cadastro_da_empresa"</span><span class="p">;</span>
 
 <span class="c1">// Substituir pela sua identificação interna da nota.</span>
 <span class="kd">var</span> <span class="nx">ref</span> <span class="o">=</span> <span class="s2">"12345"</span><span class="p">;</span>
@@ -9835,7 +9835,7 @@ serao convertidos em JSON e enviados para nossa API
 
 
 </code></pre><pre class="highlight shell tab-shell"><code><span class="c"># arquivo.json deve conter os dados da NFSe</span>
-curl -u token obtido no cadastro da empresa: <span class="se">\</span>
+curl -u <span class="s2">"token obtido no cadastro da empresa:"</span> <span class="se">\</span>
   -X POST -T arquivo.json https://homologacao.focusnfe.com.br/v2/lotes_rps &gt; arquivo_lote_rps.txt
 </code></pre><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">java.util.HashMap</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">org.codehaus.jettison.json.JSONException</span><span class="o">;</span>
@@ -9851,7 +9851,7 @@ curl -u token obtido no cadastro da empresa: <span class="se">\</span>
 
   <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span><span class="o">{</span>
 
-    <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_enviado_pelo_suporte"</span><span class="o">;</span>
+    <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_obtido_no_cadastro_da_empresa"</span><span class="o">;</span>
 
     <span class="cm">/* Substituir pela sua identificação interna da nota. */</span>
     <span class="n">String</span> <span class="n">ref</span> <span class="o">=</span> <span class="s">"12345"</span><span class="o">;</span>
@@ -10083,7 +10083,7 @@ Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensi
 
 <span class="kd">let</span> <span class="nx">request</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
 
-<span class="kr">const</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_enviado_pelo_suporte"</span><span class="p">;</span>
+<span class="kr">const</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_obtido_no_cadastro_da_empresa"</span><span class="p">;</span>
 
 <span class="c1">// Substituir pela sua identificação interna da nota</span>
 <span class="kd">let</span> <span class="nx">ref</span> <span class="o">=</span> <span class="s2">"12345"</span><span class="p">;</span>
@@ -10212,7 +10212,7 @@ url = "https://api.focusnfe.com.br"
 <span class="n">arquivo_lote_rps</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
 
-</code></pre><pre class="highlight shell tab-shell"><code>curl -u token obtido no cadastro da empresa: <span class="se">\</span>
+</code></pre><pre class="highlight shell tab-shell"><code>curl -u <span class="s2">"token obtido no cadastro da empresa:"</span> <span class="se">\</span>
   -X GET https://homologacao.focusnfe.com.br/v2/lotes_rps/12345 &gt; arquivo_lote_rps.txt
 </code></pre><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">com.sun.jersey.api.client.Client</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">com.sun.jersey.api.client.ClientResponse</span><span class="o">;</span>
@@ -10225,7 +10225,7 @@ url = "https://api.focusnfe.com.br"
 
   <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span><span class="o">{</span>
 
-    <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_enviado_pelo_suporte"</span><span class="o">;</span>
+    <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_obtido_no_cadastro_da_empresa"</span><span class="o">;</span>
 
     <span class="cm">/* Substituir pela sua identificação interna da nota. */</span>
     <span class="n">String</span> <span class="n">ref</span> <span class="o">=</span> <span class="s">"12345"</span><span class="o">;</span>
@@ -10329,7 +10329,7 @@ Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensi
 
 <span class="kd">let</span> <span class="nx">request</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
 
-<span class="kd">let</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_enviado_pelo_suporte"</span><span class="p">;</span>
+<span class="kd">let</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_obtido_no_cadastro_da_empresa"</span><span class="p">;</span>
 
 <span class="c1">// Substituir pela sua identificação interna da nota</span>
 <span class="kd">let</span> <span class="nx">ref</span> <span class="o">=</span> <span class="s2">"12345"</span><span class="p">;</span>
@@ -10389,7 +10389,7 @@ url = "https://api.focusnfe.com.br"
 <span class="k">print</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
 
 
-</code></pre><pre class="highlight shell tab-shell"><code>curl -u token obtido no cadastro da empresa: <span class="se">\</span>
+</code></pre><pre class="highlight shell tab-shell"><code>curl -u <span class="s2">"token obtido no cadastro da empresa:"</span> <span class="se">\</span>
   -X POST https://homologacao.focusnfe.com.br/v2/lotes_rps/12345/resposta -T caminho/arquivo_retorno.txt
 </code></pre><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">java.nio.file.Files</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">java.nio.file.Paths</span><span class="o">;</span>
@@ -10405,7 +10405,7 @@ url = "https://api.focusnfe.com.br"
 
   <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">IOException</span> <span class="o">{</span>
 
-    <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_enviado_pelo_suporte"</span><span class="o">;</span>
+    <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_obtido_no_cadastro_da_empresa"</span><span class="o">;</span>
 
     <span class="cm">/* Substituir pela sua identificação interna da nota. */</span>
     <span class="n">String</span> <span class="n">ref</span> <span class="o">=</span> <span class="s">"12345"</span><span class="o">;</span>
@@ -10528,7 +10528,7 @@ Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensi
 
 <span class="kd">let</span> <span class="nx">request</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
 
-<span class="kd">let</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_enviado_pelo_suporte"</span><span class="p">;</span>
+<span class="kd">let</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_obtido_no_cadastro_da_empresa"</span><span class="p">;</span>
 
 <span class="c1">// Substituir pela sua identificação interna da nota</span>
 <span class="kd">let</span> <span class="nx">ref</span> <span class="o">=</span> <span class="s2">"12345"</span><span class="p">;</span>
@@ -10723,7 +10723,7 @@ serao convertidos a JSON e enviados para nossa API
 
 </code></pre><pre class="highlight shell tab-shell"><code>
 <span class="c"># substitua CHAVE pela chave da nota</span>
-curl -u token obtido no cadastro da empresa: <span class="se">\</span>
+curl -u <span class="s2">"token obtido no cadastro da empresa:"</span> <span class="se">\</span>
   -X POST -d <span class="s1">'{"tipo":"confirmacao"}'</span> <span class="se">\</span>
   https://homologacao.focusnfe.com.br/v2/nfes_recebidas/CHAVE/manifesto
 </code></pre><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">java.util.HashMap</span><span class="o">;</span>
@@ -10739,7 +10739,7 @@ curl -u token obtido no cadastro da empresa: <span class="se">\</span>
 
     <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
 
-        <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_enviado_pelo_Suporte"</span><span class="o">;</span>
+        <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_obtido_no_cadastro_da_empresa"</span><span class="o">;</span>
         <span class="n">String</span> <span class="n">chave</span> <span class="o">=</span> <span class="s">"Chave_de_identificação_da_NFe"</span><span class="o">;</span>
 
         <span class="cm">/* Para ambiente de produção use a variável abaixo:
@@ -10831,7 +10831,7 @@ curl -u token obtido no cadastro da empresa: <span class="se">\</span>
 
 </code></pre><pre class="highlight php tab-php"><code><span class="cp">&lt;?php</span>
 <span class="c1">// Solicite o seu token para realizar as requisições com nossa equipe de suporte.
-</span> <span class="nv">$login</span> <span class="o">=</span> <span class="s2">"Token_enviado_pelo_Suporte"</span><span class="p">;</span>
+</span> <span class="nv">$login</span> <span class="o">=</span> <span class="s2">"Token_obtido_no_cadastro_da_empresa"</span><span class="p">;</span>
  <span class="nv">$chave</span> <span class="o">=</span> <span class="s2">"Chave_de_identificação_da_NFe"</span><span class="p">;</span>
 <span class="cm">/* Aqui enviamos o tipo de manifestação que desejamos realizar.
    Consulte nossa documentação, para conhecer os demais tipos possíveis: https://goo.gl/a9o7hm */</span>
@@ -10865,7 +10865,7 @@ Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensi
 
 <span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
 
-<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_enviado_pelo_suporte"</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_obtido_no_cadastro_da_empresa"</span><span class="p">;</span>
 
 <span class="kd">var</span> <span class="nx">chave</span> <span class="o">=</span> <span class="s2">"chave_da_nota_fiscal"</span><span class="p">;</span>
 
@@ -10989,7 +10989,7 @@ url = "https://api.focusnfe.com.br"
 
     <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
 
-        <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_enviado_pelo_Suporte"</span><span class="o">;</span>
+        <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_obtido_no_cadastro_da_empresa"</span><span class="o">;</span>
         <span class="n">String</span> <span class="n">chave</span> <span class="o">=</span> <span class="s">"Chave_de_identificação_da_NFe"</span><span class="o">;</span>
 
         <span class="cm">/* Para ambiente de produção use a variável abaixo:
@@ -11059,7 +11059,7 @@ url = "https://api.focusnfe.com.br"
 
 </code></pre><pre class="highlight php tab-php"><code><span class="cp">&lt;?php</span>
 <span class="c1">// Solicite o seu token para realizar as requisições com nossa equipe de suporte.
-</span> <span class="nv">$login</span> <span class="o">=</span> <span class="s2">"Token_enviado_pelo_Suporte"</span><span class="p">;</span>
+</span> <span class="nv">$login</span> <span class="o">=</span> <span class="s2">"Token_obtido_no_cadastro_da_empresa"</span><span class="p">;</span>
  <span class="nv">$chave</span> <span class="o">=</span> <span class="s2">"Chave_de_identificação_da_NFe"</span><span class="p">;</span>
 <span class="c1">// Para ambiente de Produção, utilize a URL: https://api.focusnfe.com.br/.  
 </span> <span class="nv">$server</span> <span class="o">=</span> <span class="s2">"https://homologacao.focusnfe.com.br/"</span><span class="p">;</span>
@@ -11112,7 +11112,7 @@ url = "https://api.focusnfe.com.br"
 <span class="c"># Mostra na tela o codigo HTTP da requisicao e a mensagem de retorno da API</span>
 <span class="k">print</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
 
-</code></pre><pre class="highlight shell tab-shell"><code>curl -u token obtido no cadastro da empresa: <span class="se">\</span>
+</code></pre><pre class="highlight shell tab-shell"><code>curl -u <span class="s2">"token obtido no cadastro da empresa:"</span> <span class="se">\</span>
   <span class="s2">"https://homologacao.focusnfe.com.br/v2/nfes_recebidas?cnpj=SEU_CNPJ"</span>
 </code></pre><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">com.sun.jersey.api.client.Client</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">com.sun.jersey.api.client.ClientResponse</span><span class="o">;</span>
@@ -11125,7 +11125,7 @@ url = "https://api.focusnfe.com.br"
 
     <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
 
-        <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_enviado_pelo_Suporte"</span><span class="o">;</span>
+        <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_obtido_no_cadastro_da_empresa"</span><span class="o">;</span>
         <span class="n">String</span> <span class="n">cnpj</span> <span class="o">=</span> <span class="s">"CNPJ_da_sua_empresa"</span><span class="o">;</span>
 
         <span class="cm">/* Para ambiente de produção use a variável abaixo:
@@ -11195,7 +11195,7 @@ url = "https://api.focusnfe.com.br"
 
 </code></pre><pre class="highlight php tab-php"><code><span class="cp">&lt;?php</span>
 <span class="c1">// Solicite o seu token para realizar as requisições com nossa equipe de suporte.
-</span> <span class="nv">$login</span> <span class="o">=</span> <span class="s2">"Token_enviado_pelo_Suporte"</span><span class="p">;</span>
+</span> <span class="nv">$login</span> <span class="o">=</span> <span class="s2">"Token_obtido_no_cadastro_da_empresa"</span><span class="p">;</span>
  <span class="nv">$cnpj</span> <span class="o">=</span> <span class="s2">"CNPJ_da_sua_empresa"</span><span class="p">;</span>
 <span class="c1">// Para ambiente de Produção, utilize a URL: https://api.focusnfe.com.br/.  
 </span> <span class="nv">$server</span> <span class="o">=</span> <span class="s2">"https://homologacao.focusnfe.com.br/"</span><span class="p">;</span>
@@ -11227,7 +11227,7 @@ Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensi
 
 <span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
 
-<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_enviado_pelo_suporte"</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_obtido_no_cadastro_da_empresa"</span><span class="p">;</span>
 
 <span class="kd">var</span> <span class="nx">cnpj</span> <span class="o">=</span> <span class="s2">"cnpj_do_destinatario_da_nota"</span><span class="p">;</span>
 
@@ -11371,7 +11371,7 @@ Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensi
 
 <span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
 
-<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_enviado_pelo_suporte"</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_obtido_no_cadastro_da_empresa"</span><span class="p">;</span>
 
 <span class="kd">var</span> <span class="nx">chave</span> <span class="o">=</span> <span class="s2">"chave_da_nota_fiscal"</span><span class="p">;</span>
 
@@ -11411,7 +11411,7 @@ url = "https://api.focusnfe.com.br"
 <span class="c"># Mostra na tela o codigo HTTP da requisicao e a mensagem de retorno da API</span>
 <span class="k">print</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
 
-</code></pre><pre class="highlight shell tab-shell"><code>curl -u token obtido no cadastro da empresa: <span class="se">\</span>
+</code></pre><pre class="highlight shell tab-shell"><code>curl -u <span class="s2">"token obtido no cadastro da empresa:"</span> <span class="se">\</span>
   https://homologacao.focusnfe.com.br/v2/nfes_recebidas/CHAVE.xml
 </code></pre><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">com.sun.jersey.api.client.Client</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">com.sun.jersey.api.client.ClientResponse</span><span class="o">;</span>
@@ -11424,7 +11424,7 @@ url = "https://api.focusnfe.com.br"
 
     <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
 
-        <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_enviado_pelo_Suporte"</span><span class="o">;</span>
+        <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_obtido_no_cadastro_da_empresa"</span><span class="o">;</span>
         <span class="n">String</span> <span class="n">chave</span> <span class="o">=</span> <span class="s">"Chave_de_identificação_da_NFe"</span><span class="o">;</span>
 
         <span class="cm">/* Para ambiente de produção use a variável abaixo:
@@ -11494,7 +11494,7 @@ url = "https://api.focusnfe.com.br"
 
 </code></pre><pre class="highlight php tab-php"><code><span class="cp">&lt;?php</span>
 <span class="c1">// Solicite o seu token para realizar as requisições com nossa equipe de suporte.
-</span> <span class="nv">$login</span> <span class="o">=</span> <span class="s2">"Token_enviado_pelo_Suporte"</span><span class="p">;</span>
+</span> <span class="nv">$login</span> <span class="o">=</span> <span class="s2">"Token_obtido_no_cadastro_da_empresa"</span><span class="p">;</span>
  <span class="nv">$chave</span> <span class="o">=</span> <span class="s2">"Chave_de_identificação_da_NFe"</span><span class="p">;</span>
 <span class="c1">// Para ambiente de Produção, utilize a URL: https://api.focusnfe.com.br/.  
 </span> <span class="nv">$server</span> <span class="o">=</span> <span class="s2">"https://homologacao.focusnfe.com.br/"</span><span class="p">;</span>
@@ -11528,7 +11528,7 @@ Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensi
 
 <span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
 
-<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_enviado_pelo_suporte"</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_obtido_no_cadastro_da_empresa"</span><span class="p">;</span>
 
 <span class="kd">var</span> <span class="nx">chave</span> <span class="o">=</span> <span class="s2">"chave_da_nota_fiscal"</span><span class="p">;</span>
 
@@ -11568,7 +11568,7 @@ url = "https://api.focusnfe.com.br"
 <span class="c"># Mostra na tela o codigo HTTP da requisicao e a mensagem de retorno da API</span>
 <span class="k">print</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span><span class="n">l</span>
 
-</code></pre><pre class="highlight shell tab-shell"><code>curl -u token obtido no cadastro da empresa: <span class="se">\</span>
+</code></pre><pre class="highlight shell tab-shell"><code>curl -u <span class="s2">"token obtido no cadastro da empresa:"</span> <span class="se">\</span>
   <span class="s2">"https://homologacao.focusnfe.com.br/v2/nfes_recebidas/CHAVE.json?completa=1"</span>
 </code></pre><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">com.sun.jersey.api.client.Client</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">com.sun.jersey.api.client.ClientResponse</span><span class="o">;</span>
@@ -11581,7 +11581,7 @@ url = "https://api.focusnfe.com.br"
 
     <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
 
-        <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_enviado_pelo_Suporte"</span><span class="o">;</span>
+        <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_obtido_no_cadastro_da_empresa"</span><span class="o">;</span>
         <span class="n">String</span> <span class="n">chave</span> <span class="o">=</span> <span class="s">"Chave_de_identificação_da_NFe"</span><span class="o">;</span>
 
         <span class="cm">/* Para ambiente de produção use a variável abaixo:
@@ -11651,7 +11651,7 @@ url = "https://api.focusnfe.com.br"
 
 </code></pre><pre class="highlight php tab-php"><code><span class="cp">&lt;?php</span>
 <span class="c1">// Solicite o seu token para realizar as requisições com nossa equipe de suporte.
-</span> <span class="nv">$login</span> <span class="o">=</span> <span class="s2">"Token_enviado_pelo_Suporte"</span><span class="p">;</span>
+</span> <span class="nv">$login</span> <span class="o">=</span> <span class="s2">"Token_obtido_no_cadastro_da_empresa"</span><span class="p">;</span>
  <span class="nv">$chave</span> <span class="o">=</span> <span class="s2">"Chave_de_identificação_da_NFe"</span><span class="p">;</span>
 <span class="c1">// Para ambiente de Produção, utilize a URL: https://api.focusnfe.com.br/.  
 </span> <span class="nv">$server</span> <span class="o">=</span> <span class="s2">"https://homologacao.focusnfe.com.br/"</span><span class="p">;</span>
@@ -11685,7 +11685,7 @@ Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensi
 
 <span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
 
-<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_enviado_pelo_suporte"</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_obtido_no_cadastro_da_empresa"</span><span class="p">;</span>
 
 <span class="kd">var</span> <span class="nx">chave</span> <span class="o">=</span> <span class="s2">"chave_da_nota_fiscal"</span><span class="p">;</span>
 
@@ -11725,7 +11725,7 @@ url = "https://api.focusnfe.com.br"
 <span class="c"># Mostra na tela o codigo HTTP da requisicao e a mensagem de retorno da API</span>
 <span class="k">print</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
 
-</code></pre><pre class="highlight shell tab-shell"><code>curl -u token obtido no cadastro da empresa: <span class="se">\</span>
+</code></pre><pre class="highlight shell tab-shell"><code>curl -u <span class="s2">"token obtido no cadastro da empresa:"</span> <span class="se">\</span>
   https://homologacao.focusnfe.com.br/v2/nfes_recebidas/CHAVE/cancelamento.xml
 </code></pre><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">com.sun.jersey.api.client.Client</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">com.sun.jersey.api.client.ClientResponse</span><span class="o">;</span>
@@ -11738,7 +11738,7 @@ url = "https://api.focusnfe.com.br"
 
     <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
 
-        <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_enviado_pelo_Suporte"</span><span class="o">;</span>
+        <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_obtido_no_cadastro_da_empresa"</span><span class="o">;</span>
         <span class="n">String</span> <span class="n">chave</span> <span class="o">=</span> <span class="s">"Chave_de_identificação_da_NFe"</span><span class="o">;</span>
 
         <span class="cm">/* Para ambiente de produção use a variável abaixo:
@@ -11808,7 +11808,7 @@ url = "https://api.focusnfe.com.br"
 
 </code></pre><pre class="highlight php tab-php"><code><span class="cp">&lt;?php</span>
 <span class="c1">// Solicite o seu token para realizar as requisições com nossa equipe de suporte.
-</span> <span class="nv">$login</span> <span class="o">=</span> <span class="s2">"Token_enviado_pelo_Suporte"</span><span class="p">;</span>
+</span> <span class="nv">$login</span> <span class="o">=</span> <span class="s2">"Token_obtido_no_cadastro_da_empresa"</span><span class="p">;</span>
  <span class="nv">$chave</span> <span class="o">=</span> <span class="s2">"Chave_de_identificação_da_NFe"</span><span class="p">;</span>
 <span class="c1">// Para ambiente de Produção, utilize a URL: https://api.focusnfe.com.br/.  
 </span> <span class="nv">$server</span> <span class="o">=</span> <span class="s2">"https://homologacao.focusnfe.com.br/"</span><span class="p">;</span>
@@ -11842,7 +11842,7 @@ Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensi
 
 <span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
 
-<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_enviado_pelo_suporte"</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_obtido_no_cadastro_da_empresa"</span><span class="p">;</span>
 
 <span class="kd">var</span> <span class="nx">chave</span> <span class="o">=</span> <span class="s2">"chave_da_nota_fiscal"</span><span class="p">;</span>
 
@@ -11882,7 +11882,7 @@ url = "https://api.focusnfe.com.br"
 <span class="c"># Mostra na tela o codigo HTTP da requisicao e a mensagem de retorno da API</span>
 <span class="k">print</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
 
-</code></pre><pre class="highlight shell tab-shell"><code>curl -u token obtido no cadastro da empresa: <span class="se">\</span>
+</code></pre><pre class="highlight shell tab-shell"><code>curl -u <span class="s2">"token obtido no cadastro da empresa:"</span> <span class="se">\</span>
   https://homologacao.focusnfe.com.br/v2/nfes_recebidas/CHAVE/carta_correcao.xml
 </code></pre><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">com.sun.jersey.api.client.Client</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">com.sun.jersey.api.client.ClientResponse</span><span class="o">;</span>
@@ -11895,7 +11895,7 @@ url = "https://api.focusnfe.com.br"
 
     <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
 
-        <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_enviado_pelo_Suporte"</span><span class="o">;</span>
+        <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_obtido_no_cadastro_da_empresa"</span><span class="o">;</span>
         <span class="n">String</span> <span class="n">chave</span> <span class="o">=</span> <span class="s">"Chave_de_identificação_da_NFe"</span><span class="o">;</span>
 
         <span class="cm">/* Para ambiente de produção use a variável abaixo:
@@ -11965,7 +11965,7 @@ url = "https://api.focusnfe.com.br"
 
 </code></pre><pre class="highlight php tab-php"><code><span class="cp">&lt;?php</span>
 <span class="c1">// Solicite o seu token para realizar as requisições com nossa equipe de suporte.
-</span> <span class="nv">$login</span> <span class="o">=</span> <span class="s2">"Token_enviado_pelo_Suporte"</span><span class="p">;</span>
+</span> <span class="nv">$login</span> <span class="o">=</span> <span class="s2">"Token_obtido_no_cadastro_da_empresa"</span><span class="p">;</span>
  <span class="nv">$chave</span> <span class="o">=</span> <span class="s2">"Chave_de_identificação_da_NFe"</span><span class="p">;</span>
 <span class="c1">// Para ambiente de Produção, utilize a URL: https://api.focusnfe.com.br/.  
 </span> <span class="nv">$server</span> <span class="o">=</span> <span class="s2">"https://homologacao.focusnfe.com.br/"</span><span class="p">;</span>
@@ -12143,7 +12143,7 @@ serao convertidos a JSON e enviados para nossa API
 
 </code></pre><pre class="highlight shell tab-shell"><code>
 <span class="c"># substitua CHAVE pela chave da nota</span>
-curl -u token obtido no cadastro da empresa: <span class="se">\</span>
+curl -u <span class="s2">"token obtido no cadastro da empresa:"</span> <span class="se">\</span>
   -X POST -d <span class="s1">'{"observacoes":"Observações referente ao desacordo informado"}'</span> <span class="se">\</span>
   https://homologacao.focusnfe.com.br/v2/ctes_recebidas/CHAVE/desacordo
 </code></pre><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">java.util.HashMap</span><span class="o">;</span>
@@ -12159,7 +12159,7 @@ curl -u token obtido no cadastro da empresa: <span class="se">\</span>
 
     <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
 
-        <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_enviado_pelo_Suporte"</span><span class="o">;</span>
+        <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_obtido_no_cadastro_da_empresa"</span><span class="o">;</span>
         <span class="n">String</span> <span class="n">chave</span> <span class="o">=</span> <span class="s">"Chave_de_identificação_da_NFe"</span><span class="o">;</span>
 
         <span class="cm">/* Para ambiente de produção use a variável abaixo:
@@ -12245,7 +12245,7 @@ curl -u token obtido no cadastro da empresa: <span class="se">\</span>
 
 </code></pre><pre class="highlight php tab-php"><code><span class="cp">&lt;?php</span>
 <span class="c1">// Solicite o seu token para realizar as requisições com nossa equipe de suporte.
-</span> <span class="nv">$login</span> <span class="o">=</span> <span class="s2">"Token_enviado_pelo_Suporte"</span><span class="p">;</span>
+</span> <span class="nv">$login</span> <span class="o">=</span> <span class="s2">"Token_obtido_no_cadastro_da_empresa"</span><span class="p">;</span>
  <span class="nv">$chave</span> <span class="o">=</span> <span class="s2">"Chave_de_identificação_da_NFe"</span><span class="p">;</span>
 <span class="cm">/* Aqui enviamos o tipo de manifestação que desejamos realizar.
    Consulte nossa documentação, para conhecer os demais tipos possíveis: https://goo.gl/a9o7hm */</span>
@@ -12279,7 +12279,7 @@ Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensi
 
 <span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
 
-<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_enviado_pelo_suporte"</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_obtido_no_cadastro_da_empresa"</span><span class="p">;</span>
 
 <span class="kd">var</span> <span class="nx">chave</span> <span class="o">=</span> <span class="s2">"chave_da_nota_fiscal"</span><span class="p">;</span>
 
@@ -12390,7 +12390,7 @@ url = "https://api.focusnfe.com.br"
 
     <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
 
-        <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_enviado_pelo_Suporte"</span><span class="o">;</span>
+        <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_obtido_no_cadastro_da_empresa"</span><span class="o">;</span>
         <span class="n">String</span> <span class="n">chave</span> <span class="o">=</span> <span class="s">"Chave_de_identificação_da_NFe"</span><span class="o">;</span>
 
         <span class="cm">/* Para ambiente de produção use a variável abaixo:
@@ -12460,7 +12460,7 @@ url = "https://api.focusnfe.com.br"
 
 </code></pre><pre class="highlight php tab-php"><code><span class="cp">&lt;?php</span>
 <span class="c1">// Solicite o seu token para realizar as requisições com nossa equipe de suporte.
-</span> <span class="nv">$login</span> <span class="o">=</span> <span class="s2">"Token_enviado_pelo_Suporte"</span><span class="p">;</span>
+</span> <span class="nv">$login</span> <span class="o">=</span> <span class="s2">"Token_obtido_no_cadastro_da_empresa"</span><span class="p">;</span>
  <span class="nv">$chave</span> <span class="o">=</span> <span class="s2">"Chave_de_identificação_da_NFe"</span><span class="p">;</span>
 <span class="c1">// Para ambiente de Produção, utilize a URL: https://api.focusnfe.com.br/.  
 </span> <span class="nv">$server</span> <span class="o">=</span> <span class="s2">"https://homologacao.focusnfe.com.br/"</span><span class="p">;</span>
@@ -12513,7 +12513,7 @@ url = "https://api.focusnfe.com.br"
 <span class="c"># Mostra na tela o codigo HTTP da requisicao e a mensagem de retorno da API</span>
 <span class="k">print</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
 
-</code></pre><pre class="highlight shell tab-shell"><code>curl -u token obtido no cadastro da empresa: <span class="se">\</span>
+</code></pre><pre class="highlight shell tab-shell"><code>curl -u <span class="s2">"token obtido no cadastro da empresa:"</span> <span class="se">\</span>
   <span class="s2">"https://homologacao.focusnfe.com.br/v2/ctes_recebidas?cnpj=SEU_CNPJ"</span>
 </code></pre><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">com.sun.jersey.api.client.Client</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">com.sun.jersey.api.client.ClientResponse</span><span class="o">;</span>
@@ -12526,7 +12526,7 @@ url = "https://api.focusnfe.com.br"
 
     <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
 
-        <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_enviado_pelo_Suporte"</span><span class="o">;</span>
+        <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_obtido_no_cadastro_da_empresa"</span><span class="o">;</span>
         <span class="n">String</span> <span class="n">cnpj</span> <span class="o">=</span> <span class="s">"CNPJ_da_sua_empresa"</span><span class="o">;</span>
 
         <span class="cm">/* Para ambiente de produção use a variável abaixo:
@@ -12596,7 +12596,7 @@ url = "https://api.focusnfe.com.br"
 
 </code></pre><pre class="highlight php tab-php"><code><span class="cp">&lt;?php</span>
 <span class="c1">// Solicite o seu token para realizar as requisições com nossa equipe de suporte.
-</span> <span class="nv">$login</span> <span class="o">=</span> <span class="s2">"Token_enviado_pelo_Suporte"</span><span class="p">;</span>
+</span> <span class="nv">$login</span> <span class="o">=</span> <span class="s2">"Token_obtido_no_cadastro_da_empresa"</span><span class="p">;</span>
  <span class="nv">$cnpj</span> <span class="o">=</span> <span class="s2">"CNPJ_da_sua_empresa"</span><span class="p">;</span>
 <span class="c1">// Para ambiente de Produção, utilize a URL: https://api.focusnfe.com.br/.  
 </span> <span class="nv">$server</span> <span class="o">=</span> <span class="s2">"https://homologacao.focusnfe.com.br/"</span><span class="p">;</span>
@@ -12628,7 +12628,7 @@ Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensi
 
 <span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
 
-<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_enviado_pelo_suporte"</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_obtido_no_cadastro_da_empresa"</span><span class="p">;</span>
 
 <span class="kd">var</span> <span class="nx">cnpj</span> <span class="o">=</span> <span class="s2">"cnpj_do_destinatario_da_nota"</span><span class="p">;</span>
 
@@ -12753,7 +12753,7 @@ Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensi
 
 <span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
 
-<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_enviado_pelo_suporte"</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_obtido_no_cadastro_da_empresa"</span><span class="p">;</span>
 
 <span class="kd">var</span> <span class="nx">chave</span> <span class="o">=</span> <span class="s2">"chave_da_nota_fiscal"</span><span class="p">;</span>
 
@@ -12793,7 +12793,7 @@ url = "https://api.focusnfe.com.br"
 <span class="c"># Mostra na tela o codigo HTTP da requisicao e a mensagem de retorno da API</span>
 <span class="k">print</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
 
-</code></pre><pre class="highlight shell tab-shell"><code>curl -u token obtido no cadastro da empresa: <span class="se">\</span>
+</code></pre><pre class="highlight shell tab-shell"><code>curl -u <span class="s2">"token obtido no cadastro da empresa:"</span> <span class="se">\</span>
   https://homologacao.focusnfe.com.br/v2/ctes_recebidas/CHAVE.xml
 </code></pre><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">com.sun.jersey.api.client.Client</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">com.sun.jersey.api.client.ClientResponse</span><span class="o">;</span>
@@ -12806,7 +12806,7 @@ url = "https://api.focusnfe.com.br"
 
     <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
 
-        <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_enviado_pelo_Suporte"</span><span class="o">;</span>
+        <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_obtido_no_cadastro_da_empresa"</span><span class="o">;</span>
         <span class="n">String</span> <span class="n">chave</span> <span class="o">=</span> <span class="s">"Chave_de_identificação_da_NFe"</span><span class="o">;</span>
 
         <span class="cm">/* Para ambiente de produção use a variável abaixo:
@@ -12876,7 +12876,7 @@ url = "https://api.focusnfe.com.br"
 
 </code></pre><pre class="highlight php tab-php"><code><span class="cp">&lt;?php</span>
 <span class="c1">// Solicite o seu token para realizar as requisições com nossa equipe de suporte.
-</span> <span class="nv">$login</span> <span class="o">=</span> <span class="s2">"Token_enviado_pelo_Suporte"</span><span class="p">;</span>
+</span> <span class="nv">$login</span> <span class="o">=</span> <span class="s2">"Token_obtido_no_cadastro_da_empresa"</span><span class="p">;</span>
  <span class="nv">$chave</span> <span class="o">=</span> <span class="s2">"Chave_de_identificação_da_NFe"</span><span class="p">;</span>
 <span class="c1">// Para ambiente de Produção, utilize a URL: https://api.focusnfe.com.br/.  
 </span> <span class="nv">$server</span> <span class="o">=</span> <span class="s2">"https://homologacao.focusnfe.com.br/"</span><span class="p">;</span>
@@ -12910,7 +12910,7 @@ Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensi
 
 <span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
 
-<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_enviado_pelo_suporte"</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_obtido_no_cadastro_da_empresa"</span><span class="p">;</span>
 
 <span class="kd">var</span> <span class="nx">chave</span> <span class="o">=</span> <span class="s2">"chave_da_nota_fiscal"</span><span class="p">;</span>
 
@@ -12950,7 +12950,7 @@ url = "https://api.focusnfe.com.br"
 <span class="c"># Mostra na tela o codigo HTTP da requisicao e a mensagem de retorno da API</span>
 <span class="k">print</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span><span class="n">l</span>
 
-</code></pre><pre class="highlight shell tab-shell"><code>curl -u token obtido no cadastro da empresa: <span class="se">\</span>
+</code></pre><pre class="highlight shell tab-shell"><code>curl -u <span class="s2">"token obtido no cadastro da empresa:"</span> <span class="se">\</span>
   <span class="s2">"https://homologacao.focusnfe.com.br/v2/ctes_recebidas/CHAVE.json?completa=1"</span>
 </code></pre><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">com.sun.jersey.api.client.Client</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">com.sun.jersey.api.client.ClientResponse</span><span class="o">;</span>
@@ -12963,7 +12963,7 @@ url = "https://api.focusnfe.com.br"
 
     <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
 
-        <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_enviado_pelo_Suporte"</span><span class="o">;</span>
+        <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_obtido_no_cadastro_da_empresa"</span><span class="o">;</span>
         <span class="n">String</span> <span class="n">chave</span> <span class="o">=</span> <span class="s">"Chave_de_identificação_da_NFe"</span><span class="o">;</span>
 
         <span class="cm">/* Para ambiente de produção use a variável abaixo:
@@ -13033,7 +13033,7 @@ url = "https://api.focusnfe.com.br"
 
 </code></pre><pre class="highlight php tab-php"><code><span class="cp">&lt;?php</span>
 <span class="c1">// Solicite o seu token para realizar as requisições com nossa equipe de suporte.
-</span> <span class="nv">$login</span> <span class="o">=</span> <span class="s2">"Token_enviado_pelo_Suporte"</span><span class="p">;</span>
+</span> <span class="nv">$login</span> <span class="o">=</span> <span class="s2">"Token_obtido_no_cadastro_da_empresa"</span><span class="p">;</span>
  <span class="nv">$chave</span> <span class="o">=</span> <span class="s2">"Chave_de_identificação_da_NFe"</span><span class="p">;</span>
 <span class="c1">// Para ambiente de Produção, utilize a URL: https://api.focusnfe.com.br/.  
 </span> <span class="nv">$server</span> <span class="o">=</span> <span class="s2">"https://homologacao.focusnfe.com.br/"</span><span class="p">;</span>
@@ -13067,7 +13067,7 @@ Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensi
 
 <span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
 
-<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_enviado_pelo_suporte"</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_obtido_no_cadastro_da_empresa"</span><span class="p">;</span>
 
 <span class="kd">var</span> <span class="nx">chave</span> <span class="o">=</span> <span class="s2">"chave_da_nota_fiscal"</span><span class="p">;</span>
 
@@ -13107,7 +13107,7 @@ url = "https://api.focusnfe.com.br"
 <span class="c"># Mostra na tela o codigo HTTP da requisicao e a mensagem de retorno da API</span>
 <span class="k">print</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
 
-</code></pre><pre class="highlight shell tab-shell"><code>curl -u token obtido no cadastro da empresa: <span class="se">\</span>
+</code></pre><pre class="highlight shell tab-shell"><code>curl -u <span class="s2">"token obtido no cadastro da empresa:"</span> <span class="se">\</span>
   https://homologacao.focusnfe.com.br/v2/ctes_recebidas/CHAVE/cancelamento.xml
 </code></pre><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">com.sun.jersey.api.client.Client</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">com.sun.jersey.api.client.ClientResponse</span><span class="o">;</span>
@@ -13120,7 +13120,7 @@ url = "https://api.focusnfe.com.br"
 
     <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
 
-        <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_enviado_pelo_Suporte"</span><span class="o">;</span>
+        <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_obtido_no_cadastro_da_empresa"</span><span class="o">;</span>
         <span class="n">String</span> <span class="n">chave</span> <span class="o">=</span> <span class="s">"Chave_de_identificação_da_NFe"</span><span class="o">;</span>
 
         <span class="cm">/* Para ambiente de produção use a variável abaixo:
@@ -13190,7 +13190,7 @@ url = "https://api.focusnfe.com.br"
 
 </code></pre><pre class="highlight php tab-php"><code><span class="cp">&lt;?php</span>
 <span class="c1">// Solicite o seu token para realizar as requisições com nossa equipe de suporte.
-</span> <span class="nv">$login</span> <span class="o">=</span> <span class="s2">"Token_enviado_pelo_Suporte"</span><span class="p">;</span>
+</span> <span class="nv">$login</span> <span class="o">=</span> <span class="s2">"Token_obtido_no_cadastro_da_empresa"</span><span class="p">;</span>
  <span class="nv">$chave</span> <span class="o">=</span> <span class="s2">"Chave_de_identificação_da_NFe"</span><span class="p">;</span>
 <span class="c1">// Para ambiente de Produção, utilize a URL: https://api.focusnfe.com.br/.  
 </span> <span class="nv">$server</span> <span class="o">=</span> <span class="s2">"https://homologacao.focusnfe.com.br/"</span><span class="p">;</span>
@@ -13224,7 +13224,7 @@ Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensi
 
 <span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
 
-<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_enviado_pelo_suporte"</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_obtido_no_cadastro_da_empresa"</span><span class="p">;</span>
 
 <span class="kd">var</span> <span class="nx">chave</span> <span class="o">=</span> <span class="s2">"chave_da_nota_fiscal"</span><span class="p">;</span>
 
@@ -13264,7 +13264,7 @@ url = "https://api.focusnfe.com.br"
 <span class="c"># Mostra na tela o codigo HTTP da requisicao e a mensagem de retorno da API</span>
 <span class="k">print</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
 
-</code></pre><pre class="highlight shell tab-shell"><code>curl -u token obtido no cadastro da empresa: <span class="se">\</span>
+</code></pre><pre class="highlight shell tab-shell"><code>curl -u <span class="s2">"token obtido no cadastro da empresa:"</span> <span class="se">\</span>
   https://homologacao.focusnfe.com.br/v2/ctes_recebidas/CHAVE/carta_correcao.xml
 </code></pre><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">com.sun.jersey.api.client.Client</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">com.sun.jersey.api.client.ClientResponse</span><span class="o">;</span>
@@ -13277,7 +13277,7 @@ url = "https://api.focusnfe.com.br"
 
     <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
 
-        <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_enviado_pelo_Suporte"</span><span class="o">;</span>
+        <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_obtido_no_cadastro_da_empresa"</span><span class="o">;</span>
         <span class="n">String</span> <span class="n">chave</span> <span class="o">=</span> <span class="s">"Chave_de_identificação_da_NFe"</span><span class="o">;</span>
 
         <span class="cm">/* Para ambiente de produção use a variável abaixo:
@@ -13347,7 +13347,7 @@ url = "https://api.focusnfe.com.br"
 
 </code></pre><pre class="highlight php tab-php"><code><span class="cp">&lt;?php</span>
 <span class="c1">// Solicite o seu token para realizar as requisições com nossa equipe de suporte.
-</span> <span class="nv">$login</span> <span class="o">=</span> <span class="s2">"Token_enviado_pelo_Suporte"</span><span class="p">;</span>
+</span> <span class="nv">$login</span> <span class="o">=</span> <span class="s2">"Token_obtido_no_cadastro_da_empresa"</span><span class="p">;</span>
  <span class="nv">$chave</span> <span class="o">=</span> <span class="s2">"Chave_de_identificação_da_NFe"</span><span class="p">;</span>
 <span class="c1">// Para ambiente de Produção, utilize a URL: https://api.focusnfe.com.br/.  
 </span> <span class="nv">$server</span> <span class="o">=</span> <span class="s2">"https://homologacao.focusnfe.com.br/"</span><span class="p">;</span>
@@ -13472,7 +13472,7 @@ url = "https://api.focusnfe.com.br"
 <span class="c"># Mostra na tela o codigo HTTP da requisicao e a mensagem de retorno da API</span>
 <span class="k">print</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
 
-</code></pre><pre class="highlight shell tab-shell"><code>curl -u token obtido no cadastro da empresa: <span class="se">\</span>
+</code></pre><pre class="highlight shell tab-shell"><code>curl -u <span class="s2">"token obtido no cadastro da empresa:"</span> <span class="se">\</span>
   <span class="s2">"https://homologacao.focusnfe.com.br/v2/nfses_recebidas?cnpj=SEU_CNPJ"</span>
 </code></pre><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">com.sun.jersey.api.client.Client</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">com.sun.jersey.api.client.ClientResponse</span><span class="o">;</span>
@@ -13485,7 +13485,7 @@ url = "https://api.focusnfe.com.br"
 
     <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
 
-        <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_enviado_pelo_Suporte"</span><span class="o">;</span>
+        <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_obtido_no_cadastro_da_empresa"</span><span class="o">;</span>
         <span class="n">String</span> <span class="n">cnpj</span> <span class="o">=</span> <span class="s">"CNPJ_da_sua_empresa"</span><span class="o">;</span>
 
         <span class="cm">/* Para ambiente de produção use a variável abaixo:
@@ -13555,7 +13555,7 @@ url = "https://api.focusnfe.com.br"
 
 </code></pre><pre class="highlight php tab-php"><code><span class="cp">&lt;?php</span>
 <span class="c1">// Solicite o seu token para realizar as requisições com nossa equipe de suporte.
-</span> <span class="nv">$login</span> <span class="o">=</span> <span class="s2">"Token_enviado_pelo_Suporte"</span><span class="p">;</span>
+</span> <span class="nv">$login</span> <span class="o">=</span> <span class="s2">"Token_obtido_no_cadastro_da_empresa"</span><span class="p">;</span>
  <span class="nv">$cnpj</span> <span class="o">=</span> <span class="s2">"CNPJ_da_sua_empresa"</span><span class="p">;</span>
 <span class="c1">// Para ambiente de Produção, utilize a URL: https://api.focusnfe.com.br/.  
 </span> <span class="nv">$server</span> <span class="o">=</span> <span class="s2">"https://homologacao.focusnfe.com.br/"</span><span class="p">;</span>
@@ -13587,7 +13587,7 @@ Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensi
 
 <span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
 
-<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_enviado_pelo_suporte"</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_obtido_no_cadastro_da_empresa"</span><span class="p">;</span>
 
 <span class="kd">var</span> <span class="nx">cnpj</span> <span class="o">=</span> <span class="s2">"cnpj_do_destinatario_da_nota"</span><span class="p">;</span>
 
@@ -13850,7 +13850,7 @@ serao convertidos a JSON e enviados para nossa API
 <span class="k">print</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
 
 
-</code></pre><pre class="highlight shell tab-shell"><code>curl -u token obtido no cadastro da empresa: <span class="se">\</span>
+</code></pre><pre class="highlight shell tab-shell"><code>curl -u <span class="s2">"token obtido no cadastro da empresa:"</span> <span class="se">\</span>
   -X POST -d <span class="s1">'{"cnpj":"51916585000125","event":"nfe","url":"http://minha.url/nfe"}'</span> <span class="se">\</span>
   https://homologacao.focusnfe.com.br/v2/hooks
 </code></pre><pre class="highlight php tab-php"><code><span class="cp">&lt;?php</span>
@@ -13885,7 +13885,7 @@ serao convertidos a JSON e enviados para nossa API
 
     <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">JSONException</span><span class="o">{</span>
 
-        <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_enviado_pelo_suporte"</span><span class="o">;</span>
+        <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_obtido_no_cadastro_da_empresa"</span><span class="o">;</span>
 
         <span class="cm">/* Para ambiente de produção use a variável abaixo:
         String server = "https://api.focusnfe.com.br/"; */</span>
@@ -13930,7 +13930,7 @@ Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensi
 
 <span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
 
-<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_enviado_pelo_suporte"</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_obtido_no_cadastro_da_empresa"</span><span class="p">;</span>
 
 <span class="kd">var</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">"https://homologacao.focusnfe.com.br/v2/hooks"</span><span class="p">;</span>
 
@@ -14006,7 +14006,7 @@ url = "https://api.focusnfe.com.br"
 <span class="k">print</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span><span class="n">l</span>
 
 
-</code></pre><pre class="highlight shell tab-shell"><code>curl -u token obtido no cadastro da empresa: <span class="se">\</span>
+</code></pre><pre class="highlight shell tab-shell"><code>curl -u <span class="s2">"token obtido no cadastro da empresa:"</span> <span class="se">\</span>
   https://homologacao.focusnfe.com.br/v2/hooks/Vj5rmkBq
 </code></pre><pre class="highlight php tab-php"><code><span class="cp">&lt;?php</span>
 <span class="nv">$ch</span> <span class="o">=</span> <span class="nb">curl_init</span><span class="p">();</span>
@@ -14036,7 +14036,7 @@ url = "https://api.focusnfe.com.br"
 
     <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">){</span>
 
-        <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_enviado_pelo_suporte"</span><span class="o">;</span>
+        <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_obtido_no_cadastro_da_empresa"</span><span class="o">;</span>
 
         <span class="cm">/* Substituir pela sua identificação interna da nota. */</span>
         <span class="n">String</span> <span class="n">hookId</span> <span class="o">=</span> <span class="s">"Vj5rmkBq"</span><span class="o">;</span>
@@ -14077,7 +14077,7 @@ Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensi
 
 <span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
 
-<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_enviado_pelo_suporte"</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_obtido_no_cadastro_da_empresa"</span><span class="p">;</span>
 
 <span class="kd">var</span> <span class="nx">hook_id</span> <span class="o">=</span> <span class="s2">"n65g0RP1"</span><span class="p">;</span>
 
@@ -14137,7 +14137,7 @@ url = "https://api.focusnfe.com.br"
 <span class="k">print</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
 
 
-</code></pre><pre class="highlight shell tab-shell"><code>curl -u token obtido no cadastro da empresa: -X DELETE <span class="se">\</span>
+</code></pre><pre class="highlight shell tab-shell"><code>curl -u <span class="s2">"token obtido no cadastro da empresa:"</span> -X DELETE <span class="se">\</span>
  https://homologacao.focusnfe.com.br/v2/hooks/Vj5rmkBq
 </code></pre><pre class="highlight php tab-php"><code><span class="cp">&lt;?php</span>
 <span class="nv">$ch</span> <span class="o">=</span> <span class="nb">curl_init</span><span class="p">();</span>
@@ -14169,7 +14169,7 @@ url = "https://api.focusnfe.com.br"
 
     <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">){</span>
 
-        <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_enviado_pelo_suporte"</span><span class="o">;</span>
+        <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_obtido_no_cadastro_da_empresa"</span><span class="o">;</span>
 
         <span class="cm">/* Substituir pela sua identificação interna da nota. */</span>
         <span class="n">String</span> <span class="n">hookId</span> <span class="o">=</span> <span class="s">"Vj5rmkBq"</span><span class="o">;</span>
@@ -14210,7 +14210,7 @@ Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensi
 
 <span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
 
-<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_enviado_pelo_suporte"</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_obtido_no_cadastro_da_empresa"</span><span class="p">;</span>
 
 <span class="kd">var</span> <span class="nx">hook_id</span> <span class="o">=</span> <span class="s2">"n65g0RP1"</span><span class="p">;</span>
 
@@ -14291,7 +14291,7 @@ Passamos o token como quarto parametro deste metodo, como autenticador do HTTP B
 <li>II = Item 1 e 2</li>
 </ul>
 <pre class="highlight shell tab-shell"><code><span class="c"># pesquisa por códigos NCM do capítulo 90</span>
-curl -u token obtido no cadastro da empresa: <span class="se">\</span>
+curl -u <span class="s2">"token obtido no cadastro da empresa:"</span> <span class="se">\</span>
   https://homologacao.focusnfe.com.br/v2/ncms?capitulo<span class="o">=</span>90
 </code></pre><pre class="highlight php tab-php"><code><span class="cp">&lt;?php</span>
 <span class="nv">$ch</span> <span class="o">=</span> <span class="nb">curl_init</span><span class="p">();</span>
@@ -14320,7 +14320,7 @@ curl -u token obtido no cadastro da empresa: <span class="se">\</span>
 
     <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">){</span>
 
-        <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_enviado_pelo_suporte"</span><span class="o">;</span>
+        <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_obtido_no_cadastro_da_empresa"</span><span class="o">;</span>
 
         <span class="cm">/* Para ambiente de produção use a variável abaixo:
         String server = "https://api.focusnfe.com.br/"; */</span>
@@ -14415,7 +14415,7 @@ Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensi
 
 <span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
 
-<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_enviado_pelo_suporte"</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_obtido_no_cadastro_da_empresa"</span><span class="p">;</span>
 
 <span class="cm">/*
 Para ambiente de producao use a URL abaixo:
@@ -14540,7 +14540,7 @@ Para buscar os demais registros, utilize o parâmetro <strong>offset</strong>. E
 
 <p>Por exemplo, o código 5101 refere-se a venda de produção do estabelecimento para um cliente do mesmo estado.</p>
 <pre class="highlight shell tab-shell"><code><span class="c"># pesquisa por CFOPs que iniciam com o dígito 2</span>
-curl -u token obtido no cadastro da empresa: <span class="se">\</span>
+curl -u <span class="s2">"token obtido no cadastro da empresa:"</span> <span class="se">\</span>
   https://homologacao.focusnfe.com.br/v2/cfops?codigo<span class="o">=</span>2
 </code></pre><pre class="highlight php tab-php"><code><span class="cp">&lt;?php</span>
 <span class="nv">$ch</span> <span class="o">=</span> <span class="nb">curl_init</span><span class="p">();</span>
@@ -14569,7 +14569,7 @@ curl -u token obtido no cadastro da empresa: <span class="se">\</span>
 
     <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">){</span>
 
-        <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_enviado_pelo_suporte"</span><span class="o">;</span>
+        <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_obtido_no_cadastro_da_empresa"</span><span class="o">;</span>
 
         <span class="cm">/* Para ambiente de produção use a variável abaixo:
         String server = "https://api.focusnfe.com.br/"; */</span>
@@ -14664,7 +14664,7 @@ Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensi
 
 <span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
 
-<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_enviado_pelo_suporte"</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_obtido_no_cadastro_da_empresa"</span><span class="p">;</span>
 
 <span class="cm">/*
 Para ambiente de producao use a URL abaixo:
@@ -14774,7 +14774,7 @@ Para buscar os demais registros, utilize o parâmetro <strong>offset</strong>. E
 
 <p>Nós disponibilizamos uma API para consultar uma descrição detalhada das informações do CEP.</p>
 <pre class="highlight shell tab-shell"><code><span class="c"># pesquisa por CFOPs que iniciam com o dígito 2</span>
-curl -u token obtido no cadastro da empresa: <span class="se">\</span>
+curl -u <span class="s2">"token obtido no cadastro da empresa:"</span> <span class="se">\</span>
   https://homologacao.focusnfe.com.br/v2/ceps?uf<span class="o">=</span>AC&amp;logradouro<span class="o">=</span>colinas
 </code></pre><pre class="highlight php tab-php"><code><span class="cp">&lt;?php</span>
 <span class="nv">$ch</span> <span class="o">=</span> <span class="nb">curl_init</span><span class="p">();</span>
@@ -14803,7 +14803,7 @@ curl -u token obtido no cadastro da empresa: <span class="se">\</span>
 
     <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">){</span>
 
-        <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_enviado_pelo_suporte"</span><span class="o">;</span>
+        <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_obtido_no_cadastro_da_empresa"</span><span class="o">;</span>
 
         <span class="cm">/* Para ambiente de produção use a variável abaixo:
         String server = "https://api.focusnfe.com.br/"; */</span>
@@ -14898,7 +14898,7 @@ Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensi
 
 <span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
 
-<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_enviado_pelo_suporte"</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_obtido_no_cadastro_da_empresa"</span><span class="p">;</span>
 
 <span class="cm">/*
 Para ambiente de producao use a URL abaixo:
@@ -14982,7 +14982,7 @@ abaixo, substituindo CODIGO_CEP pelo código.</p>
 <h1 id='consulta-de-municipios_consulta-de-municipios'>Consulta de Municípios</h1>
 <p>Utilizamos a base de municípios do IBGE para identificar os municípios em nossa API. Desta forma disponibilizamos uma API para busca dos municípios cadastrados, seja para localizá-los pelo nome, para recuperar o código do município ou verificar se o município tem a NFSe implementada em nosso sistema.</p>
 <pre class="highlight shell tab-shell"><code><span class="c"># pesquisa por todos os municípios do PR</span>
-curl -u token obtido no cadastro da empresa: <span class="se">\</span>
+curl -u <span class="s2">"token obtido no cadastro da empresa:"</span> <span class="se">\</span>
   https://homologacao.focusnfe.com.br/v2/municipios?sigla_uf<span class="o">=</span>PR
 </code></pre><pre class="highlight php tab-php"><code><span class="cp">&lt;?php</span>
 <span class="nv">$ch</span> <span class="o">=</span> <span class="nb">curl_init</span><span class="p">();</span>
@@ -15011,7 +15011,7 @@ curl -u token obtido no cadastro da empresa: <span class="se">\</span>
 
     <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">){</span>
 
-        <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_enviado_pelo_suporte"</span><span class="o">;</span>
+        <span class="n">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"Token_obtido_no_cadastro_da_empresa"</span><span class="o">;</span>
 
         <span class="cm">/* Para ambiente de produção use a variável abaixo:
         String server = "https://api.focusnfe.com.br/"; */</span>
@@ -15106,7 +15106,7 @@ Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensi
 
 <span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
 
-<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_enviado_pelo_suporte"</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">token</span> <span class="o">=</span> <span class="s2">"Token_obtido_no_cadastro_da_empresa"</span><span class="p">;</span>
 
 <span class="cm">/*
 Para ambiente de producao use a URL abaixo:
