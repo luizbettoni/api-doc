@@ -57,7 +57,7 @@ print(r.status_code, r.text)
 
 
 ```shell
-curl -u token obtido no cadastro da empresa: \
+curl -u "token obtido no cadastro da empresa:" \
   "https://homologacao.focusnfe.com.br/v2/nfses_recebidas?cnpj=SEU_CNPJ"
 ```
 
@@ -73,7 +73,7 @@ public class ConsultarTodosManifestos {
 
 	public static void main(String[] args) {
 
-		String login = "Token_enviado_pelo_Suporte";
+		String login = "Token_obtido_no_cadastro_da_empresa";
 		String cnpj = "CNPJ_da_sua_empresa";
 
 		/* Para ambiente de produção use a variável abaixo:
@@ -149,7 +149,7 @@ puts "Corpo da resposta: " + resposta.body
 ```php
 <?php
 // Solicite o seu token para realizar as requisições com nossa equipe de suporte.
- $login = "Token_enviado_pelo_Suporte";
+ $login = "Token_obtido_no_cadastro_da_empresa";
  $cnpj = "CNPJ_da_sua_empresa";
 // Para ambiente de Produção, utilize a URL: https://api.focusnfe.com.br/.  
  $server = "https://homologacao.focusnfe.com.br/";
@@ -184,7 +184,7 @@ var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
 var request = new XMLHttpRequest();
 
-var token = "Token_enviado_pelo_suporte";
+var token = "Token_obtido_no_cadastro_da_empresa";
 
 var cnpj = "cnpj_do_destinatario_da_nota";
 

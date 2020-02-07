@@ -132,7 +132,7 @@ print(r.status_code, r.text)
 ```
 
 ```shell
-curl -u token obtido no cadastro da empresa: \
+curl -u "token obtido no cadastro da empresa:" \
   -X POST -d '{"cnpj":"51916585000125","event":"nfe","url":"http://minha.url/nfe"}' \
   https://homologacao.focusnfe.com.br/v2/hooks
 ```
@@ -172,7 +172,7 @@ public class ExemploCriacaoHook {
 
     public static void main(String[] args) throws JSONException{
 
-        String login = "Token_enviado_pelo_suporte";
+        String login = "Token_obtido_no_cadastro_da_empresa";
 
         /* Para ambiente de produção use a variável abaixo:
         String server = "https://api.focusnfe.com.br/"; */
@@ -220,7 +220,7 @@ var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
 var request = new XMLHttpRequest();
 
-var token = "Token_enviado_pelo_suporte";
+var token = "Token_obtido_no_cadastro_da_empresa";
 
 var url = "https://homologacao.focusnfe.com.br/v2/hooks";
 
@@ -305,7 +305,7 @@ print(r.status_code, r.text)l
 ```
 
 ```shell
-curl -u token obtido no cadastro da empresa: \
+curl -u "token obtido no cadastro da empresa:" \
   https://homologacao.focusnfe.com.br/v2/hooks/Vj5rmkBq
 ```
 
@@ -341,7 +341,7 @@ public class ExemploConsultaHook {
 
     public static void main(String[] args){
 
-        String login = "Token_enviado_pelo_suporte";
+        String login = "Token_obtido_no_cadastro_da_empresa";
 
         /* Substituir pela sua identificação interna da nota. */
         String hookId = "Vj5rmkBq";
@@ -385,7 +385,7 @@ var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
 var request = new XMLHttpRequest();
 
-var token = "Token_enviado_pelo_suporte";
+var token = "Token_obtido_no_cadastro_da_empresa";
 
 var hook_id = "n65g0RP1";
 
@@ -455,7 +455,7 @@ print(r.status_code, r.text)
 
 
 ```shell
-curl -u token obtido no cadastro da empresa: -X DELETE \
+curl -u "token obtido no cadastro da empresa:" -X DELETE \
  https://homologacao.focusnfe.com.br/v2/hooks/Vj5rmkBq
 ```
 
@@ -493,7 +493,7 @@ public class ExemploExclusaoHook {
 
     public static void main(String[] args){
 
-        String login = "Token_enviado_pelo_suporte";
+        String login = "Token_obtido_no_cadastro_da_empresa";
 
         /* Substituir pela sua identificação interna da nota. */
         String hookId = "Vj5rmkBq";
@@ -537,7 +537,7 @@ var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
 var request = new XMLHttpRequest();
 
-var token = "Token_enviado_pelo_suporte";
+var token = "Token_obtido_no_cadastro_da_empresa";
 
 var hook_id = "n65g0RP1";
 

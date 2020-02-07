@@ -22,7 +22,7 @@ Por exemplo, o código 5101 refere-se a venda de produção do estabelecimento p
 
 ```shell
 # pesquisa por CFOPs que iniciam com o dígito 2
-curl -u token obtido no cadastro da empresa: \
+curl -u "token obtido no cadastro da empresa:" \
   https://homologacao.focusnfe.com.br/v2/cfops?codigo=2
 ```
 
@@ -57,7 +57,7 @@ public class ExemploConsultaHook {
 
     public static void main(String[] args){
 
-        String login = "Token_enviado_pelo_suporte";
+        String login = "Token_obtido_no_cadastro_da_empresa";
 
         /* Para ambiente de produção use a variável abaixo:
         String server = "https://api.focusnfe.com.br/"; */
@@ -161,7 +161,7 @@ var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
 var request = new XMLHttpRequest();
 
-var token = "Token_enviado_pelo_suporte";
+var token = "Token_obtido_no_cadastro_da_empresa";
 
 /*
 Para ambiente de producao use a URL abaixo:

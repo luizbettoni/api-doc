@@ -178,9 +178,9 @@ HTTP CODE/STATUS | Status API Focus | Descrição | Correção
 
 ```shell
 # arquivo.json deve conter os dados da CTe
-curl -u token obtido no cadastro da empresa: \
+curl -u "token obtido no cadastro da empresa:" \
   -X POST -T cte.json https://homologacao.focusnfe.com.br/v2/cte?ref=12345
-curl -u token obtido no cadastro da empresa: \
+curl -u "token obtido no cadastro da empresa:" \
   -X POST -T cte_os.json https://homologacao.focusnfe.com.br/v2/cte_os?ref=12345
 ```
 
@@ -200,7 +200,7 @@ public class Autorizar {
 
 	public static void main(String[] args) throws JSONException{
 
-		String login = "Token_enviado_pelo_suporte";
+		String login = "Token_obtido_no_cadastro_da_empresa";
 
 		/* Substituir pela sua identificação interno do CTe. */
 		String ref = "12345";
@@ -453,7 +453,7 @@ var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
 var request = new XMLHttpRequest();
 
-var token = "Token_enviado_pelo_suporte";
+var token = "Token_obtido_no_cadastro_da_empresa";
 
 // Substituir pela sua identificação interno do CTe.
 var ref = "12345";
@@ -565,7 +565,7 @@ $server = "https://homologacao.focusnfe.com.br";
 // Substituir pela sua identificação interno do CTe.
 $ref = "12345";
 
-$login = "Token_enviado_pelo_suporte";
+$login = "Token_obtido_no_cadastro_da_empresa";
 
 $password = "";
 
@@ -679,7 +679,7 @@ url = "https://homologacao.focusnfe.com.br/v2/cte_os"
 # Substituir pela sua identificação interno do CTe.
 ref = {"ref":"12345"}
 
-token="Token_enviado_pelo_suporte"
+token="Token_obtido_no_cadastro_da_empresa"
 
 '''
 Usamos dicionarios para armazenar os campos e valores que em seguida,
@@ -791,7 +791,7 @@ Ao contrátio da CTe convencional, a CTe OS é processada de forma **síncrona**
 ## Consulta
 
 ```shell
-curl -u token obtido no cadastro da empresa: \
+curl -u "token obtido no cadastro da empresa:" \
   https://homologacao.focusnfe.com.br/v2/cte/12345
 ```
 
@@ -807,7 +807,7 @@ public class Consulta {
 
 	public static void main(String[] args){
 
-		String login = "Token_enviado_pelo_suporte";
+		String login = "Token_obtido_no_cadastro_da_empresa";
 
 		/* Substituir pela sua identificação interno do CTe. */
 		String ref = "12345";
@@ -898,7 +898,7 @@ var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
 var request = new XMLHttpRequest();
 
-var token = "Token_enviado_pelo_suporte";
+var token = "Token_obtido_no_cadastro_da_empresa";
 
 // Substituir pela sua identificação interno do CTe.
 var ref = "12345";
@@ -930,7 +930,7 @@ console.log("Corpo: " + request.responseText);
 // Substituir pela sua identificação interno do CTe.
 $ref = "12345";
 
-$login = "Token_enviado_pelo_suporte";
+$login = "Token_obtido_no_cadastro_da_empresa";
 $password = "";
 
 // Para ambiente de produção use a variável abaixo:
@@ -969,7 +969,7 @@ url = "https://homologacao.focusnfe.com.br/v2/cte/"
 # Substituir pela sua identificação interno do CTe.
 ref = "12345"
 
-token="Token_enviado_pelo_suporte"
+token="Token_obtido_no_cadastro_da_empresa"
 
 # Use este parametro para obter mais informacoes em suas consultas.
 completa = "completa=1"
@@ -1120,7 +1120,7 @@ public class Cancelar {
 
 	public static void main(String[] args){
 
-		String login = "Token_enviado_pelo_suporte";
+		String login = "Token_obtido_no_cadastro_da_empresa";
 
 		/* Substituir pela sua identificação interno do CTe. */
 		String ref = "12345";
@@ -1226,7 +1226,7 @@ var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
 var request = new XMLHttpRequest();
 
-var token = "Token_enviado_pelo_suporte";
+var token = "Token_obtido_no_cadastro_da_empresa";
 
 // Substituir pela sua identificação interno do CTe.
 var ref = "12345";
@@ -1272,7 +1272,7 @@ $server = "https://homologacao.focusnfe.com.br";
 
 $justificativa = array ("justificativa" => "A sua justificativa de cancelamento aqui.");
 
-$login = "Token_enviado_pelo_suporte";
+$login = "Token_obtido_no_cadastro_da_empresa";
 $password = "";
 
 curl_setopt($ch, CURLOPT_URL, $server . "/v2/cte/" . $ref);
@@ -1308,7 +1308,7 @@ url = "https://homologacao.focusnfe.com.br/v2/cte/"
 # Substituir pela sua identificação interno do CTe.
 ref = "12345"
 
-token="Token_enviado_pelo_suporte"
+token="Token_obtido_no_cadastro_da_empresa"
 
 '''
 Usamos um dicionario para armazenar os campos e valores que em seguida,
@@ -1325,7 +1325,7 @@ print(r.status_code, r.text)
 ```
 
 ```shell
-curl -u token obtido no cadastro da empresa: \
+curl -u "token obtido no cadastro da empresa:" \
   -X DELETE -d '{"justificativa":"Teste de cancelamento de nota"}' \
   https://homologacao.focusnfe.com.br/v2/cte/12345
 ```
@@ -1389,7 +1389,7 @@ public class EmitirCce {
 
 	public static void main(String[] args){
 
-		String login = "Token_enviado_pelo_suporte";
+		String login = "Token_obtido_no_cadastro_da_empresa";
 
 		/* Substituir pela sua identificação interno do CTe. */
 		String ref = "12345";
@@ -1499,7 +1499,7 @@ var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
 var request = new XMLHttpRequest();
 
-var token = "Token_enviado_pelo_suporte";
+var token = "Token_obtido_no_cadastro_da_empresa";
 
 // Substituir pela sua identificação interno do CTe.
 var ref = "12345";
@@ -1538,7 +1538,7 @@ $server = "https://homologacao.focusnfe.com.br";
 // Substituir pela sua identificação interno do CTe.
 $ref = "12345";
 
-$login = "Token_enviado_pelo_suporte";
+$login = "Token_obtido_no_cadastro_da_empresa";
 $password = "";
 
 $correcao = array (
@@ -1579,7 +1579,7 @@ url = "https://homologacao.focusnfe.com.br/v2/cte/"
 # Substituir pela sua identificação interno do CTe.
 ref = "12345"
 
-token="Token_enviado_pelo_suporte"
+token="Token_obtido_no_cadastro_da_empresa"
 
 '''
 Usamos um dicionario para armazenar os campos e valores que em seguida,
@@ -1595,7 +1595,7 @@ print(r.status_code, r.text)
 ```
 
 ```shell
-curl -u token obtido no cadastro da empresa: \
+curl -u "token obtido no cadastro da empresa:" \
   -X POST -d '{"campo_corrigido":"observacoes","valor_corrigido":"Nova observação"}' \
   https://homologacao.focusnfe.com.br/v2/cte/12345/carta_correcao
 ```
@@ -1656,7 +1656,7 @@ public class Inutilizar {
 
 	public static void main(String[] args) throws JSONException{
 
-		String login = "Token_enviado_pelo_suporte";
+		String login = "Token_obtido_no_cadastro_da_empresa";
 
 		/* Para ambiente de produção use a variável abaixo:
 		String server = "https://api.focusnfe.com.br/"; */
@@ -1770,7 +1770,7 @@ var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
 var request = new XMLHttpRequest();
 
-var token = "Token_enviado_pelo_suporte";
+var token = "Token_obtido_no_cadastro_da_empresa";
 
 /*
 Para ambiente de producao use a URL abaixo:
@@ -1810,7 +1810,7 @@ console.log("Corpo: " + request.responseText);
 
 $server = "https://homologacao.focusnfe.com.br";
 
-$login = "Token_enviado_pelo_suporte";
+$login = "Token_obtido_no_cadastro_da_empresa";
 $password = "";
 
 $inutiliza = array (
@@ -1854,7 +1854,7 @@ url = "https://api.focusnfe.com.br"
 '''
 url = "https://homologacao.focusnfe.com.br/v2/cte/inutilizacao"
 
-token="Token_enviado_pelo_suporte"
+token="Token_obtido_no_cadastro_da_empresa"
 
 '''
 Usamos um dicionario para armazenar os campos e valores que em seguida,

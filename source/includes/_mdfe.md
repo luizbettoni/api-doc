@@ -117,7 +117,7 @@ HTTP CODE/STATUS | Status API Focus | Descrição | Correção
 
 ```shell
 # arquivo.json deve conter os dados da MDF-e
-curl -u token obtido no cadastro da empresa: \
+curl -u "token obtido no cadastro da empresa:" \
   -X POST -T arquivo.json https://homologacao.focusnfe.com.br/v2/mdfe?ref=12345
 ```
 
@@ -141,7 +141,7 @@ Para verificar se a nota já foi autorizada, você terá que efetuar uma [consul
 ## Consulta
 
 ```shell
-curl -u token obtido no cadastro da empresa: \
+curl -u "token obtido no cadastro da empresa:" \
   https://homologacao.focusnfe.com.br/v2/mdfe/12345
 ```
 
@@ -249,7 +249,7 @@ Caso na requisição seja passado o parâmetro `completa=1` será adicionado mai
 
 
 ```shell
-curl -u token obtido no cadastro da empresa: \
+curl -u "token obtido no cadastro da empresa:" \
   -X DELETE -d '{"justificativa":"Teste de cancelamento"}' \
   https://homologacao.focusnfe.com.br/v2/mdfe/12345
 ```
@@ -291,7 +291,7 @@ A MDF-e poderá ser cancelada em até 24 horas após a emissão.
 
 
 ```shell
-curl -u token obtido no cadastro da empresa: \
+curl -u "token obtido no cadastro da empresa:" \
   -X POST -d '{"nome":"João da Silva","cpf":"68971569140"}' \
   https://homologacao.focusnfe.com.br/v2/mdfe/12345/inclusao_condutor
 ```
@@ -331,7 +331,7 @@ A API irá em seguida devolver os seguintes campos:
 
 
 ```shell
-curl -u token obtido no cadastro da empresa: \
+curl -u "token obtido no cadastro da empresa:" \
   -X POST -d '{"data":"2019-03-05","sigla_uf":"SP","nome_municipio":"São Paulo"}' \
   https://homologacao.focusnfe.com.br/v2/mdfe/12345/encerramento
 ```
