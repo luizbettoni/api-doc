@@ -484,7 +484,7 @@ HTTP CODE/STATUS | Status API Focus | Descrição | Correção
 
 ```shell
 # arquivo.json deve conter os dados da NFe, substitua REFERENCIA pela referência de sua escolha
-curl -u token obtido no cadastro da empresa: \
+curl -u "token obtido no cadastro da empresa:" \
   -X POST -T arquivo.json https://homologacao.focusnfe.com.br/v2/nfe?ref=REFERENCIA
 ```
 
@@ -584,7 +584,7 @@ public class NFeAutorizar {
 
 	public static void main(String[] args) throws JSONException{
 
-		String login = "Token_enviado_pelo_suporte";
+		String login = "Token_obtido_no_cadastro_da_empresa";
 
 		/* Substituir pela sua identificação interna da nota. */
 		String ref = "12345";
@@ -806,7 +806,7 @@ var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
 var request = new XMLHttpRequest();
 
-var token = "Token_enviado_pelo_suporte";
+var token = "Token_obtido_no_cadastro_da_empresa";
 
 // Substituir pela sua identificação interna da nota.
 var ref = "12345";
@@ -1071,7 +1071,7 @@ print(r.status_code, r.text)
 ```
 
 ```shell
-curl -u token obtido no cadastro da empresa: \
+curl -u "token obtido no cadastro da empresa:" \
   https://homologacao.focusnfe.com.br/v2/nfe/12345
 ```
 
@@ -1114,7 +1114,7 @@ public class NFeConsulta {
 
 	public static void main(String[] args){
 
-		String login = "Token_enviado_pelo_suporte";
+		String login = "Token_obtido_no_cadastro_da_empresa";
 
 		/* Substituir pela sua identificação interna da nota. */
 		String ref = "12345";
@@ -1204,7 +1204,7 @@ var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
 var request = new XMLHttpRequest();
 
-var token = "Token_enviado_pelo_suporte";
+var token = "Token_obtido_no_cadastro_da_empresa";
 
 // Substituir pela sua identificação interna da nota
 var ref = "12345";
@@ -1443,7 +1443,7 @@ Existe obrigatoriedade legal para armazenar o XML de todas as notas NFe (modelo 
 
 
 ```shell
-curl -u token obtido no cadastro da empresa: \
+curl -u "token obtido no cadastro da empresa:" \
   -X DELETE -d '{"justificativa":"Teste de cancelamento de nota"}' \
   https://homologacao.focusnfe.com.br/v2/nfe/12345
 ```
@@ -1491,7 +1491,7 @@ public class NFeCancelamento {
 
 	public static void main(String[] args){
 
-		String login = "Token_enviado_pelo_suporte";
+		String login = "Token_obtido_no_cadastro_da_empresa";
 
 		/* Substituir pela sua identificação interna da nota. */
 		String ref = "12345";
@@ -1597,7 +1597,7 @@ var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
 var request = new XMLHttpRequest();
 
-var token = "Token_enviado_pelo_suporte";
+var token = "Token_obtido_no_cadastro_da_empresa";
 
 // Substituir pela sua identificação interna da nota.
 var ref = "12345";
@@ -1704,7 +1704,7 @@ A NFe poderá ser cancelada em até 24 horas após a emissão. No entanto, algun
 ## Carta de Correção Eletrônica
 
 ```shell
-curl -u token obtido no cadastro da empresa: \
+curl -u "token obtido no cadastro da empresa:" \
   -X POST -d '{"correcao":"Teste de carta de correcao"}' \
   https://homologacao.focusnfe.com.br/v2/nfe/12345/carta_correcao
 ```
@@ -1754,7 +1754,7 @@ public class NFeCCe {
 
 	public static void main(String[] args){
 
-		String login = "Token_enviado_pelo_suporte";
+		String login = "Token_obtido_no_cadastro_da_empresa";
 
 		/* Substituir pela sua identificação interna da nota. */
 		String ref = "12345";
@@ -1861,7 +1861,7 @@ var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
 var request = new XMLHttpRequest();
 
-var token = "Token_enviado_pelo_suporte";
+var token = "Token_obtido_no_cadastro_da_empresa";
 
 // Substituir pela sua identificação interna da nota.
 var ref = "12345";
@@ -1968,7 +1968,7 @@ Para uma mesma nota fiscal é possível enviar mais de uma carta de correção, 
 ## Reenvio de e-mail
 
 ```shell
-curl -u token obtido no cadastro da empresa: \
+curl -u "token obtido no cadastro da empresa:" \
   -X POST -d '{"emails":["alguem@example.org"]}' \
   https://homologacao.focusnfe.com.br/v2/nfe/12345/email
 ```
@@ -2021,7 +2021,7 @@ public class NFeEnviaEmail {
 
 	public static void main(String[] args) throws JSONException{
 
-		String login = "Token_enviado_pelo_suporte";
+		String login = "Token_obtido_no_cadastro_da_empresa";
 
 		/* Substituir pela sua identificação interna da nota. */
 		String ref = "12345";
@@ -2132,7 +2132,7 @@ var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
 var request = new XMLHttpRequest();
 
-var token = "Token_enviado_pelo_suporte";
+var token = "Token_obtido_no_cadastro_da_empresa";
 
 // Substituir pela sua identificação interna da nota.
 var ref = "12345";
@@ -2208,7 +2208,7 @@ A API imediatamente devolve a requisição com a confirmação dos emails. Os em
 
 
 ```shell
-curl -u token obtido no cadastro da empresa: \
+curl -u "token obtido no cadastro da empresa:" \
   -X POST -d '{"cnpj":"51916585000125","serie":"1","numero_inicial":"7","numero_final":"9","justificativa":"Teste de inutilizacao de nota"}' \
   https://homologacao.focusnfe.com.br/v2/nfe/inutilizacao
 ```
@@ -2262,7 +2262,7 @@ public class NFeInutilizacao {
 
 	public static void main(String[] args) throws JSONException{
 
-		String login = "Token_enviado_pelo_suporte";
+		String login = "Token_obtido_no_cadastro_da_empresa";
 
 		/* Para ambiente de produção use a variável abaixo:
 		String server = "https://api.focusnfe.com.br/"; */
@@ -2374,7 +2374,7 @@ var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
 var request = new XMLHttpRequest();
 
-var token = "Token_enviado_pelo_suporte";
+var token = "Token_obtido_no_cadastro_da_empresa";
 
 /*
 Para ambiente de producao use a URL abaixo:

@@ -314,7 +314,7 @@ print(r.status_code, r.text)
 
 ```shell
 # arquivo.json deve conter os dados da NFCe
-curl -u token obtido no cadastro da empresa: \
+curl -u "token obtido no cadastro da empresa:" \
   -X POST -T arquivo.json https://homologacao.focusnfe.com.br/v2/nfce
 ```
 
@@ -334,7 +334,7 @@ public class NFCeAutorizar {
 
 	public static void main(String[] args) throws JSONException{
 
-		String login = "Token_enviado_pelo_suporte";
+		String login = "Token_obtido_no_cadastro_da_empresa";
 
 		/* Substituir pela sua identificação interna da nota. */
 		String ref = "12345";
@@ -591,7 +591,7 @@ var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
 var request = new XMLHttpRequest();
 
-var token = "Token_enviado_pelo_suporte";
+var token = "Token_obtido_no_cadastro_da_empresa";
 
 // Substituir pela sua identificação interna da nota
 var ref = "12345";
@@ -770,7 +770,7 @@ print(r.status_code, r.text)l
 ```
 
 ```shell
-curl -u token obtido no cadastro da empresa: \
+curl -u "token obtido no cadastro da empresa:" \
   https://homologacao.focusnfe.com.br/v2/nfce/12345
 ```
 
@@ -786,7 +786,7 @@ public class NFCeConsulta {
 
 	public static void main(String[] args) {
 
-		String login = "Token_enviado_pelo_suporte";
+		String login = "Token_obtido_no_cadastro_da_empresa";
 
 		/* Substituir pela sua identificação interna da nota. */
 		String ref = "12345";
@@ -904,7 +904,7 @@ var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
 var request = new XMLHttpRequest();
 
-var token = "Token_enviado_pelo_suporte";
+var token = "Token_obtido_no_cadastro_da_empresa";
 
 // Substituir pela sua identificação interna da nota
 var ref = "12345";
@@ -1154,7 +1154,7 @@ print(r.status_code, r.text)
 ```
 
 ```shell
-curl -u token obtido no cadastro da empresa: \
+curl -u "token obtido no cadastro da empresa:" \
   -X DELETE -d '{"justificativa":"Teste de cancelamento de nota"}' \
   https://homologacao.focusnfe.com.br/v2/nfce/12345
 ```
@@ -1174,7 +1174,7 @@ public class NFCeCancelamento {
 
 	public static void main(String[] args){
 
-		String login = "Token_enviado_pelo_suporte";
+		String login = "Token_obtido_no_cadastro_da_empresa";
 
 		/* Substituir pela sua identificação interna da nota. */
 		String ref = "12345";
@@ -1310,7 +1310,7 @@ var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
 var request = new XMLHttpRequest();
 
-var token = "Token_enviado_pelo_suporte";
+var token = "Token_obtido_no_cadastro_da_empresa";
 
 // Substituir pela sua identificação interna da nota.
 var ref = "12345";
@@ -1432,7 +1432,7 @@ print(r.status_code, r.text)
 ```
 
 ```shell
-curl -u token obtido no cadastro da empresa: \
+curl -u "token obtido no cadastro da empresa:" \
   -X POST -d '{"cnpj":"51916585009999","serie":"9","numero_inicial":"7730","numero_final":"7732","justificativa":"Teste de inutilizacao de nota"}' \
   https://homologacao.focusnfe.com.br/v2/nfce/inutilizacao
 ```
@@ -1453,7 +1453,7 @@ public class NFCeInutilizacao {
 
 	public static void main(String[] args) throws JSONException{
 
-		String login = "Token_enviado_pelo_suporte";
+		String login = "Token_obtido_no_cadastro_da_empresa";
 
 		/* Para ambiente de produção use a variável abaixo:
 		String server = "https://api.focusnfe.com.br/"; */
@@ -1598,7 +1598,7 @@ var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
 var request = new XMLHttpRequest();
 
-var token = "Token_enviado_pelo_suporte";
+var token = "Token_obtido_no_cadastro_da_empresa";
 
 /*
 Para ambiente de producao use a URL abaixo:
@@ -1719,7 +1719,7 @@ print(r.status_code, r.text)l
 ```
 
 ```shell
-curl -u token obtido no cadastro da empresa: \
+curl -u "token obtido no cadastro da empresa:" \
   -X POST -d '{"emails":["alguem@example.org"]}' \
   https://homologacao.focusnfe.com.br/v2/nfce/12345/email
 ```
@@ -1739,7 +1739,7 @@ public class NFCeEnviaEmail {
 
 	public static void main(String[] args) throws JSONException{
 
-		String login = "Token_enviado_pelo_suporte";
+		String login = "Token_obtido_no_cadastro_da_empresa";
 
 		/* Substituir pela sua identificação interna da nota. */
 		String ref = "12345";
@@ -1882,7 +1882,7 @@ var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
 var request = new XMLHttpRequest();
 
-var token = "Token_enviado_pelo_suporte";
+var token = "Token_obtido_no_cadastro_da_empresa";
 
 // Substituir pela sua identificação interna da nota.
 var ref = "12345";

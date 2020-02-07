@@ -228,7 +228,7 @@ print(r.status_code, r.text)
 
 ```shell
 # arquivo.json deve conter os dados da NFSe
-curl -u token obtido no cadastro da empresa: \
+curl -u "token obtido no cadastro da empresa:" \
   -X POST -T arquivo.json https://homologacao.focusnfe.com.br/v2/nfse
 ```
 
@@ -247,7 +247,7 @@ public class NFSeAutorizar {
 
 	public static void main(String[] args) throws JSONException{
 
-		String login = "Token_enviado_pelo_suporte";
+		String login = "Token_obtido_no_cadastro_da_empresa";
 
 		/* Substituir pela sua identificação interna da nota. */
 		String ref = "12345";
@@ -481,7 +481,7 @@ var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
 var request = new XMLHttpRequest();
 
-var token = "Token_enviado_pelo_suporte";
+var token = "Token_obtido_no_cadastro_da_empresa";
 
 // Substituir pela sua identificação interna da nota
 var ref = "12345";
@@ -601,7 +601,7 @@ print(r.status_code, r.text)
 ```
 
 ```shell
-curl -u token obtido no cadastro da empresa: \
+curl -u "token obtido no cadastro da empresa:" \
   https://homologacao.focusnfe.com.br/v2/nfse/12345
 ```
 
@@ -617,7 +617,7 @@ public class NFSeConsulta {
 
 	public static void main(String[] args){
 
-		String login = "Token_enviado_pelo_suporte";
+		String login = "Token_obtido_no_cadastro_da_empresa";
 
 		/* Substituir pela sua identificação interna da nota. */
 		String ref = "12345";
@@ -735,7 +735,7 @@ var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
 var request = new XMLHttpRequest();
 
-var token = "Token_enviado_pelo_suporte";
+var token = "Token_obtido_no_cadastro_da_empresa";
 
 // Substituir pela sua identificação interna da nota
 var ref = "12345";
@@ -900,7 +900,7 @@ print(r.status_code, r.text)
 ```
 
 ```shell
-curl -u token obtido no cadastro da empresa: \
+curl -u "token obtido no cadastro da empresa:" \
   -X DELETE -d '{"justificativa":"Teste de cancelamento de nota"}' \
   https://homologacao.focusnfe.com.br/v2/nfse/12345
 ```
@@ -919,7 +919,7 @@ public class NFSeCancelamento {
 
 	public static void main(String[] args){
 
-		String login = "Token_enviado_pelo_suporte";
+		String login = "Token_obtido_no_cadastro_da_empresa";
 
 		/* Substituir pela sua identificação interna da nota. */
 		String ref = "12345";
@@ -1055,7 +1055,7 @@ var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
 var request = new XMLHttpRequest();
 
-var token = "Token_enviado_pelo_suporte";
+var token = "Token_obtido_no_cadastro_da_empresa";
 
 // Substituir pela sua identificação interna da nota.
 var ref = "12345";
@@ -1176,7 +1176,7 @@ print(r.status_code, r.text)
 
 
 ```shell
-curl -u token obtido no cadastro da empresa: \
+curl -u "token obtido no cadastro da empresa:" \
   -X POST -d '{"emails":["alguem@example.org"]}' \
   https://homologacao.focusnfe.com.br/v2/nfse/12345/email
 ```
@@ -1196,7 +1196,7 @@ public class NFSeEnviaEmail {
 
 	public static void main(String[] args) throws JSONException{
 
-		String login = "Token_enviado_pelo_suporte";
+		String login = "Token_obtido_no_cadastro_da_empresa";
 
 		/* Substituir pela sua identificação interna da nota. */
 		String ref = "12345";
@@ -1341,7 +1341,7 @@ var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
 var request = new XMLHttpRequest();
 
-var token = "Token_enviado_pelo_suporte";
+var token = "Token_obtido_no_cadastro_da_empresa";
 
 // Substituir pela sua identificação interna da nota.
 var ref = "12345";

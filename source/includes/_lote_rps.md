@@ -116,7 +116,7 @@ arquivo_lote_rps.close()
 
 ```shell
 # arquivo.json deve conter os dados da NFSe
-curl -u token obtido no cadastro da empresa: \
+curl -u "token obtido no cadastro da empresa:" \
   -X POST -T arquivo.json https://homologacao.focusnfe.com.br/v2/lotes_rps > arquivo_lote_rps.txt
 ```
 
@@ -135,7 +135,7 @@ public class NFSeAutorizar {
 
   public static void main(String[] args) throws Exception{
 
-    String login = "Token_enviado_pelo_suporte";
+    String login = "Token_obtido_no_cadastro_da_empresa";
 
     /* Substituir pela sua identificação interna da nota. */
     String ref = "12345";
@@ -376,7 +376,7 @@ let fs = require('fs')
 
 let request = new XMLHttpRequest();
 
-const token = "Token_enviado_pelo_suporte";
+const token = "Token_obtido_no_cadastro_da_empresa";
 
 // Substituir pela sua identificação interna da nota
 let ref = "12345";
@@ -490,7 +490,7 @@ arquivo_lote_rps.close()
 
 
 ```shell
-curl -u token obtido no cadastro da empresa: \
+curl -u "token obtido no cadastro da empresa:" \
   -X GET https://homologacao.focusnfe.com.br/v2/lotes_rps/12345 > arquivo_lote_rps.txt
 ```
 
@@ -506,7 +506,7 @@ public class NFSeConsulta {
 
   public static void main(String[] args) throws Exception{
 
-    String login = "Token_enviado_pelo_suporte";
+    String login = "Token_obtido_no_cadastro_da_empresa";
 
     /* Substituir pela sua identificação interna da nota. */
     String ref = "12345";
@@ -619,7 +619,7 @@ let fs = require('fs')
 
 let request = new XMLHttpRequest();
 
-let token = "Token_enviado_pelo_suporte";
+let token = "Token_obtido_no_cadastro_da_empresa";
 
 // Substituir pela sua identificação interna da nota
 let ref = "12345";
@@ -684,7 +684,7 @@ print(r.status_code, r.text)
 
 
 ```shell
-curl -u token obtido no cadastro da empresa: \
+curl -u "token obtido no cadastro da empresa:" \
   -X POST https://homologacao.focusnfe.com.br/v2/lotes_rps/12345/resposta -T caminho/arquivo_retorno.txt
 ```
 
@@ -703,7 +703,7 @@ public class LoteNFSeConsulta {
 
   public static void main(String[] args) throws IOException {
 
-    String login = "Token_enviado_pelo_suporte";
+    String login = "Token_obtido_no_cadastro_da_empresa";
 
     /* Substituir pela sua identificação interna da nota. */
     String ref = "12345";
@@ -835,7 +835,7 @@ let fs = require('fs');
 
 let request = new XMLHttpRequest();
 
-let token = "Token_enviado_pelo_suporte";
+let token = "Token_obtido_no_cadastro_da_empresa";
 
 // Substituir pela sua identificação interna da nota
 let ref = "12345";

@@ -71,7 +71,7 @@ print(r.status_code, r.text)
 ```shell
 
 # substitua CHAVE pela chave da nota
-curl -u token obtido no cadastro da empresa: \
+curl -u "token obtido no cadastro da empresa:" \
   -X POST -d '{"tipo":"confirmacao"}' \
   https://homologacao.focusnfe.com.br/v2/nfes_recebidas/CHAVE/manifesto
 ```
@@ -90,7 +90,7 @@ public class Manifestar {
 
 	public static void main(String[] args) {
 
-		String login = "Token_enviado_pelo_Suporte";
+		String login = "Token_obtido_no_cadastro_da_empresa";
 		String chave = "Chave_de_identificação_da_NFe";
 
 		/* Para ambiente de produção use a variável abaixo:
@@ -188,7 +188,7 @@ puts "Corpo da resposta: " + resposta.body
 ```php
 <?php
 // Solicite o seu token para realizar as requisições com nossa equipe de suporte.
- $login = "Token_enviado_pelo_Suporte";
+ $login = "Token_obtido_no_cadastro_da_empresa";
  $chave = "Chave_de_identificação_da_NFe";
 /* Aqui enviamos o tipo de manifestação que desejamos realizar.
    Consulte nossa documentação, para conhecer os demais tipos possíveis: https://goo.gl/a9o7hm */
@@ -225,7 +225,7 @@ var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
 var request = new XMLHttpRequest();
 
-var token = "Token_enviado_pelo_suporte";
+var token = "Token_obtido_no_cadastro_da_empresa";
 
 var chave = "chave_da_nota_fiscal";
 
@@ -352,7 +352,7 @@ public class ConsultarUltimaManifestacao {
 
 	public static void main(String[] args) {
 
-		String login = "Token_enviado_pelo_Suporte";
+		String login = "Token_obtido_no_cadastro_da_empresa";
 		String chave = "Chave_de_identificação_da_NFe";
 
 		/* Para ambiente de produção use a variável abaixo:
@@ -428,7 +428,7 @@ puts "Corpo da resposta: " + resposta.body
 ```php
 <?php
 // Solicite o seu token para realizar as requisições com nossa equipe de suporte.
- $login = "Token_enviado_pelo_Suporte";
+ $login = "Token_obtido_no_cadastro_da_empresa";
  $chave = "Chave_de_identificação_da_NFe";
 // Para ambiente de Produção, utilize a URL: https://api.focusnfe.com.br/.  
  $server = "https://homologacao.focusnfe.com.br/";
@@ -488,7 +488,7 @@ print(r.status_code, r.text)
 
 
 ```shell
-curl -u token obtido no cadastro da empresa: \
+curl -u "token obtido no cadastro da empresa:" \
   "https://homologacao.focusnfe.com.br/v2/nfes_recebidas?cnpj=SEU_CNPJ"
 ```
 
@@ -504,7 +504,7 @@ public class ConsultarTodosManifestos {
 
 	public static void main(String[] args) {
 
-		String login = "Token_enviado_pelo_Suporte";
+		String login = "Token_obtido_no_cadastro_da_empresa";
 		String cnpj = "CNPJ_da_sua_empresa";
 
 		/* Para ambiente de produção use a variável abaixo:
@@ -580,7 +580,7 @@ puts "Corpo da resposta: " + resposta.body
 ```php
 <?php
 // Solicite o seu token para realizar as requisições com nossa equipe de suporte.
- $login = "Token_enviado_pelo_Suporte";
+ $login = "Token_obtido_no_cadastro_da_empresa";
  $cnpj = "CNPJ_da_sua_empresa";
 // Para ambiente de Produção, utilize a URL: https://api.focusnfe.com.br/.  
  $server = "https://homologacao.focusnfe.com.br/";
@@ -615,7 +615,7 @@ var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
 var request = new XMLHttpRequest();
 
-var token = "Token_enviado_pelo_suporte";
+var token = "Token_obtido_no_cadastro_da_empresa";
 
 var cnpj = "cnpj_do_destinatario_da_nota";
 
@@ -753,7 +753,7 @@ var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
 var request = new XMLHttpRequest();
 
-var token = "Token_enviado_pelo_suporte";
+var token = "Token_obtido_no_cadastro_da_empresa";
 
 var chave = "chave_da_nota_fiscal";
 
@@ -800,7 +800,7 @@ print(r.status_code, r.text)
 ```
 
 ```shell
-curl -u token obtido no cadastro da empresa: \
+curl -u "token obtido no cadastro da empresa:" \
   https://homologacao.focusnfe.com.br/v2/nfes_recebidas/CHAVE.xml
 ```
 
@@ -816,7 +816,7 @@ public class DownloadNotaEspecificaXml {
 
 	public static void main(String[] args) {
 
-		String login = "Token_enviado_pelo_Suporte";
+		String login = "Token_obtido_no_cadastro_da_empresa";
 		String chave = "Chave_de_identificação_da_NFe";
 
 		/* Para ambiente de produção use a variável abaixo:
@@ -892,7 +892,7 @@ puts "Corpo da resposta: " + resposta.body
 ```php
 <?php
 // Solicite o seu token para realizar as requisições com nossa equipe de suporte.
- $login = "Token_enviado_pelo_Suporte";
+ $login = "Token_obtido_no_cadastro_da_empresa";
  $chave = "Chave_de_identificação_da_NFe";
 // Para ambiente de Produção, utilize a URL: https://api.focusnfe.com.br/.  
  $server = "https://homologacao.focusnfe.com.br/";
@@ -928,7 +928,7 @@ var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
 var request = new XMLHttpRequest();
 
-var token = "Token_enviado_pelo_suporte";
+var token = "Token_obtido_no_cadastro_da_empresa";
 
 var chave = "chave_da_nota_fiscal";
 
@@ -977,7 +977,7 @@ print(r.status_code, r.text)l
 
 
 ```shell
-curl -u token obtido no cadastro da empresa: \
+curl -u "token obtido no cadastro da empresa:" \
   "https://homologacao.focusnfe.com.br/v2/nfes_recebidas/CHAVE.json?completa=1"
 ```
 
@@ -993,7 +993,7 @@ public class DownloadNotaEspecifica {
 
 	public static void main(String[] args) {
 
-		String login = "Token_enviado_pelo_Suporte";
+		String login = "Token_obtido_no_cadastro_da_empresa";
 		String chave = "Chave_de_identificação_da_NFe";
 
 		/* Para ambiente de produção use a variável abaixo:
@@ -1069,7 +1069,7 @@ puts "Corpo da resposta: " + resposta.body
 ```php
 <?php
 // Solicite o seu token para realizar as requisições com nossa equipe de suporte.
- $login = "Token_enviado_pelo_Suporte";
+ $login = "Token_obtido_no_cadastro_da_empresa";
  $chave = "Chave_de_identificação_da_NFe";
 // Para ambiente de Produção, utilize a URL: https://api.focusnfe.com.br/.  
  $server = "https://homologacao.focusnfe.com.br/";
@@ -1104,7 +1104,7 @@ var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
 var request = new XMLHttpRequest();
 
-var token = "Token_enviado_pelo_suporte";
+var token = "Token_obtido_no_cadastro_da_empresa";
 
 var chave = "chave_da_nota_fiscal";
 
@@ -1152,7 +1152,7 @@ print(r.status_code, r.text)
 ```
 
 ```shell
-curl -u token obtido no cadastro da empresa: \
+curl -u "token obtido no cadastro da empresa:" \
   https://homologacao.focusnfe.com.br/v2/nfes_recebidas/CHAVE/cancelamento.xml
 ```
 
@@ -1168,7 +1168,7 @@ public class DownloadCancelamentoXml {
 
 	public static void main(String[] args) {
 
-		String login = "Token_enviado_pelo_Suporte";
+		String login = "Token_obtido_no_cadastro_da_empresa";
 		String chave = "Chave_de_identificação_da_NFe";
 
 		/* Para ambiente de produção use a variável abaixo:
@@ -1244,7 +1244,7 @@ puts "Corpo da resposta: " + resposta.body
 ```php
 <?php
 // Solicite o seu token para realizar as requisições com nossa equipe de suporte.
- $login = "Token_enviado_pelo_Suporte";
+ $login = "Token_obtido_no_cadastro_da_empresa";
  $chave = "Chave_de_identificação_da_NFe";
 // Para ambiente de Produção, utilize a URL: https://api.focusnfe.com.br/.  
  $server = "https://homologacao.focusnfe.com.br/";
@@ -1279,7 +1279,7 @@ var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
 var request = new XMLHttpRequest();
 
-var token = "Token_enviado_pelo_suporte";
+var token = "Token_obtido_no_cadastro_da_empresa";
 
 var chave = "chave_da_nota_fiscal";
 
@@ -1326,7 +1326,7 @@ print(r.status_code, r.text)
 
 
 ```shell
-curl -u token obtido no cadastro da empresa: \
+curl -u "token obtido no cadastro da empresa:" \
   https://homologacao.focusnfe.com.br/v2/nfes_recebidas/CHAVE/carta_correcao.xml
 ```
 
@@ -1342,7 +1342,7 @@ public class DownloadXmlCce {
 
 	public static void main(String[] args) {
 
-		String login = "Token_enviado_pelo_Suporte";
+		String login = "Token_obtido_no_cadastro_da_empresa";
 		String chave = "Chave_de_identificação_da_NFe";
 
 		/* Para ambiente de produção use a variável abaixo:
@@ -1418,7 +1418,7 @@ puts "Corpo da resposta: " + resposta.body
 ```php
 <?php
 // Solicite o seu token para realizar as requisições com nossa equipe de suporte.
- $login = "Token_enviado_pelo_Suporte";
+ $login = "Token_obtido_no_cadastro_da_empresa";
  $chave = "Chave_de_identificação_da_NFe";
 // Para ambiente de Produção, utilize a URL: https://api.focusnfe.com.br/.  
  $server = "https://homologacao.focusnfe.com.br/";
