@@ -13806,8 +13806,6 @@ Passamos o token como quarto parametro deste metodo, como autenticador do HTTP B
 <ul>
 <li>Erro na emissão de uma nota fiscal</li>
 <li>Emissão de nota fiscal realizada com sucesso</li>
-<li>Cancelamento de nota fiscal efetuado pela nossa interface web</li>
-<li>Carta de correção emitida pela nossa interface web</li>
 </ul></li>
 <li><strong>NFSe</strong>:
 
@@ -13973,14 +13971,14 @@ Passamos o token como quarto parametro deste metodo, como autenticador do HTTP B
 <p>Utilize o método HTTP POST para criar um novo gatilho. Esta requisição aceita os seguintes parâmetros que deverão ser enviados em formato JSON:</p>
 
 <ul>
-<li> <strong>cnpj</strong> – CNPJ da empresa.</li>
+<li> <strong>cnpj</strong> – CNPJ da empresa. Se o CNPJ for omitido, o gatilho será acionado para todas as emissões feitas pelo token em questão.</li>
 <li> <strong>event</strong> – Informe qual evento que gostará de escutar: nfe, nfse, nfe_recebida ou nfse_recebida</li>
 <li> <strong>url</strong> – URL que deverá ser chamada quando o gatilho for ativado</li>
 <li> <strong>authorization</strong> – (opcional) O valor que for informado neste campo será devolvido no acionamento do gatilho no cabeçalho &quot;Authorization&quot;.
 Desta forma você poderá por exemplo informar um token secreto para garantir que apenas nossa API acione a sua URL.</li>
 </ul>
 
-<p>A API irá devolver como resposta o gatilho criado. É possível ter apenas um gatilho por evento. No momento é necessário que cada empresa tenha seu próprio gatilho cadastrado.</p>
+<p>A API irá devolver como resposta o gatilho criado. É possível ter mais de um gatilho por evento. Note que o gatilho pode ser por empresa ou um gatilho genérico para todas as emissões feitas usando o token informado.</p>
 
 <p><strong>Dicas para uso do campo authorization</strong>: O propósito deste campo é garantir que a sua URL não seja acessada por nenhum outro serviço que não o nosso. Sugerimos duas formas de usar este campo: você pode usar um token secreto, por exemplo: &quot;lFNVw8q5WMeR3U9FOVOABTp36zrkvtaa&quot;. Desta forma, nossa API irá enviar sempre o seguinte cabeçalho ao acionar o gatilho:</p>
 
