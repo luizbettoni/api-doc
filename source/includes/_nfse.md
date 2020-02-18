@@ -775,7 +775,8 @@ console.log("Corpo: " + request.responseText);
   "codigo_verificacao": "DU1M-M2Y",
   "data_emissao": "2019-05-27T00:00:00-03:00",
   "url": "https://200.189.192.82/PilotoNota_Portal/Default.aspx?doc=07504505000132&num=233&cod=DUMMY",
-  "caminho_xml_nota_fiscal": "/notas_fiscais_servico/NFSe075045050001324106902-004949940-433-DUMMY.xml"
+  "caminho_xml_nota_fiscal": "/notas_fiscais_servico/NFSe075045050001324106902-004949940-433-DUMMY.xml",
+  "url_danfse": "https://focusnfe.s3-sa-east-1.amazonaws.com/arquivos/07504505000132/202002/DANFSEs/075045050001324106902.pdf"
 }
 ```
 
