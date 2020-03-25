@@ -4762,6 +4762,38 @@ Passamos o token como quarto parametro deste metodo, como autenticador do HTTP B
 </ul>
 
 <p>O sistema cliente da API pode acompanhar este processo de forma transparente, conforme descrito na seção “Consulta” deste manual.</p>
+<h3 id='nfce_emissao-manual-em-contingencia-offline'>Emissão manual em contingência offline</h3>
+<p>A emissão automática em contingência contempla o caso em que o SEFAZ esteja fora do ar mas não contempla o caso em que <em>sua aplicação</em> esteja sem conexão com a Internet. Neste caso você pode optar por fazer uma emissão manual em contingência nos estados onde isto é autorizado.</p>
+
+<p>De forma resumida, isto poderá ser feito da seguinte forma:</p>
+
+<ol>
+<li>Sua aplicação emite uma DANFCe - sem se comunicar com o nosso sistema - em duas vias (uma para ficar no estabelecimento e outra entregue ao cliente)</li>
+<li>Após identificar que sua conexão foi reestabelecida, você envia os dados da nota  para nossa API informando todos os dados utilizados na NFCe (incluindo número e
+série da nota) e informando o parâmetro &quot;forma_emissao&quot; com o valor &quot;offline&quot;.</li>
+</ol>
+
+<p>Para conseguir realizar estas tarefas, sua aplicação deverá manter um controle
+de numeração de notas emitidas em contingência. A série utilizada deverá ser diferente
+daquela utilizada pelo nosso sistema. Por exemplo: se nosso sistema emite com a
+série 1 o seu sistema poderá emitir notas em contingência com a série 600, por
+exemplo.</p>
+
+<p>Ao emitir a nota em nossa API, você deverá chamar nossa URL acrescentando o campo &quot;forma_emissao&quot; com o valor &quot;offline&quot;. Por exemplo, se você está fazendo testes no ambiente de homologação, e enviando
+a nota com a referência &quot;123&quot;, você deverá chamar a seguinte URL:</p>
+
+<p><code>https://homologacao.focusnfe.com.br/v2/nfce?ref=123&amp;forma_emissao=offline</code></p>
+
+<p>Nos dados JSON da nota, acrescente os seguintes campos:</p>
+
+<ul>
+<li>numero - O número da nota</li>
+<li>serie - A série de contingência</li>
+<li>codigo_unico - O código único (tag cNF) utilizado na geração da chave da NFe</li>
+</ul>
+
+<p>Usando esta forma de emissão, a SEFAZ irá autorizar notas mesmo com a data de
+emissão retroativa.</p>
 <h2 id='nfce_consulta'>Consulta</h2><pre class="highlight python tab-python"><code><span class="c"># Faça o download e instalação da biblioteca requests, através do python-pip.</span>
 <span class="kn">import</span> <span class="nn">requests</span>
 
