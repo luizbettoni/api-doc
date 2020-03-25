@@ -742,6 +742,36 @@ Será de responsabilidade de nossa API, após devolver o XML e DANFCe temporári
 
 O sistema cliente da API pode acompanhar este processo de forma transparente, conforme descrito na seção “Consulta” deste manual.
 
+### Emissão manual em contingência offline
+
+A emissão automática em contingência contempla o caso em que o SEFAZ esteja fora do ar mas não contempla o caso em que *sua aplicação* esteja sem conexão com a Internet. Neste caso você pode optar por fazer uma emissão manual em contingência nos estados onde isto é autorizado.
+
+De forma resumida, isto poderá ser feito da seguinte forma:
+
+1. Sua aplicação emite uma DANFCe - sem se comunicar com o nosso sistema - em duas vias (uma para ficar no estabelecimento e outra entregue ao cliente)
+1. Após identificar que sua conexão foi reestabelecida, você envia os dados da nota  para nossa API informando todos os dados utilizados na NFCe (incluindo número e
+série da nota) e informando o parâmetro "forma_emissao" com o valor "offline".
+
+Para conseguir realizar estas tarefas, sua aplicação deverá manter um controle
+de numeração de notas emitidas em contingência. A série utilizada deverá ser diferente
+daquela utilizada pelo nosso sistema. Por exemplo: se nosso sistema emite com a
+série 1 o seu sistema poderá emitir notas em contingência com a série 600, por
+exemplo.
+
+Ao emitir a nota em nossa API, você deverá chamar nossa URL acrescentando o campo "forma_emissao" com o valor "offline". Por exemplo, se você está fazendo testes no ambiente de homologação, e enviando
+a nota com a referência "123", você deverá chamar a seguinte URL:
+
+`https://homologacao.focusnfe.com.br/v2/nfce?ref=123&forma_emissao=offline`
+
+Nos dados JSON da nota, acrescente os seguintes campos:
+
+* numero - O número da nota
+* serie - A série de contingência
+* codigo_unico - O código único (tag cNF) utilizado na geração da chave da NFe
+
+Usando esta forma de emissão, a SEFAZ irá autorizar notas mesmo com a data de
+emissão retroativa.
+
 ## Consulta
 
 ```python
