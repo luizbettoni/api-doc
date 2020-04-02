@@ -320,6 +320,26 @@
               </ul>
           </li>
           <li>
+            <a href="#enviador-de-arquivos-s-t-nfce_enviador-de-arquivos-s-t-nfce" class="toc-h1 toc-link" data-title="enviador-de-arquivos-s-t-nfce">Enviador de Arquivos S@T / NFCe</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#enviador-de-arquivos-s-t-nfce_visao-geral" class="toc-h2 toc-link" data-title="visao-geral">Visão Geral</a>
+                  </li>
+                  <li>
+                    <a href="#enviador-de-arquivos-s-t-nfce_documentos-suportados" class="toc-h2 toc-link" data-title="documentos-suportados">Documentos Suportados</a>
+                  </li>
+                  <li>
+                    <a href="#enviador-de-arquivos-s-t-nfce_cfe-s-t" class="toc-h2 toc-link" data-title="cfe-s-t">CFe S@T</a>
+                  </li>
+                  <li>
+                    <a href="#enviador-de-arquivos-s-t-nfce_nfce" class="toc-h2 toc-link" data-title="nfce">NFCe</a>
+                  </li>
+                  <li>
+                    <a href="#enviador-de-arquivos-s-t-nfce_download" class="toc-h2 toc-link" data-title="download">Download</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
             <a href="#cte-e-cte-os_cte-e-cte-os" class="toc-h1 toc-link" data-title="cte-e-cte-os">CTe e CTe OS</a>
               <ul class="toc-list-h2">
                   <li>
@@ -2684,7 +2704,7 @@ serao convertidos a JSON e enviados para nossa API
 
 <p>Utilize o comando <strong>HTTP DELETE</strong> para cancelar a sua nota para nossa API. Este método é síncrono, ou seja, a comunicação com a SEFAZ será feita imediatamente e devolvida a resposta na mesma requisição.</p>
 
-<p>O parâmetros de cancelamento deverão ser enviados da seguinte forma:</p>
+<p>O parâmetro de cancelamento deverá ser enviado da seguinte forma:</p>
 
 <ul>
 <li><strong>justificativa</strong>: Justificativa do cancelamento. Deverá conter de 15 a 255 caracteres.</li>
@@ -5370,7 +5390,7 @@ Passamos o token como quarto parametro deste metodo, como autenticador do HTTP B
 
 <p>Utilize o comando HTTP <strong>DELETE</strong> para cancelar a sua nota para nossa API. Este método é síncrono, ou seja, a comunicação com a SEFAZ será feita imediatamente e devolvida a resposta na mesma requisição.</p>
 
-<p>O parâmetros de cancelamento deverão ser enviados da seguinte forma:</p>
+<p>O parâmetro de cancelamento deverá ser enviado da seguinte forma:</p>
 
 <ul>
 <li><strong>justificativa:</strong> Justificativa do cancelamento. Deverá conter de 15 a 255 caracteres.</li>
@@ -5983,6 +6003,426 @@ Na emissão de cancelamento para NFCe o arquivo deverá a justificativa do cance
 Para realizar a reimpressão de determinada NFCe basta salvar um arquivo com nome igual à ref usada no envio e extensão .reimp.</p>
 
 <p>Quando a reimpressão for de um Cupom Fiscal Eletrônico do SAT, basta entrar na pasta &quot;pdf&quot; e reimprimir o arquivo.</p>
+<h1 id='enviador-de-arquivos-s-t-nfce_enviador-de-arquivos-s-t-nfce'>Enviador de Arquivos S@T / NFCe</h1>
+<p>Para os usuários de tecnologias que não permitem o acesso à API via Web Services ou que não desejam programar o acesso HTTP, disponibilizamos um comunicador standalone (desktop) que realiza toda comunicação com a nossa API.</p>
+<h2 id='enviador-de-arquivos-s-t-nfce_visao-geral'>Visão Geral</h2>
+<p>O Enviador de Arquivos, quando é executado, consulta o conteúdo de algumas pastas com descrições especificas que podem ser criados a partir do diretório escolhido pelo usuário, chamamos estes diretórios de &#39;Diretórios de Comunicação&#39;.
+Desta forma, seu programa poderá apenas criar um arquivo em uma pasta específica, contendo o JSON com os dados necessários para emitir a nota.
+O enviador por sua vez consulta esta pasta e armazena o resultado (PDF, XML) em outra pasta para consulta.</p>
+
+<aside class="warning">
+O diretório de comunicação deve ser um local onde o usuário terá plenos direitos de acesso dentro do sistema operacional. Recomendamos o diretório: C:\\Comunicador\
+</aside>
+
+<p><strong>Diretórios de Comunicação</strong></p>
+
+<p>Abaixo a descrição de cada pasta e a sua finalidade:</p>
+
+<ul>
+<li><strong>envios</strong>: diretório inicial do processo de envio. O Enviador irá procurar os arquivos com extensão .nfce ou .cfe para fazer a emissão ou cancelamento.</li>
+<li><strong>enviados</strong>: todos os arquivos lidos no diretório &#39;envios&#39; serão movidos para este diretório.</li>
+<li><strong>tmp</strong>: neste diretório é gerado um arquivo no formato XML para o envio dos dados ao aparelho S@T. Na emissão de NFCe essa etapa não acontece, pois é utilizada a nossa API de NFCe.</li>
+<li><strong>processados</strong>: neste diretório o Enviador de Arquivos irá armazenar as respostas &#39;cruas&#39; recebidas da Sefaz, ele irá adicionar a extensão &#39;.resp.raw.json&#39; nos arquivos .cfe/.cfecanc, .nfce/.canc.</li>
+<li><strong>retornos</strong>: aqui é gerado um novo arquivo com a resposta da Sefaz formatada (mesmo conteúdo presente no arquivo do diretório &#39;processados&#39;), porém com a extensão .cfe/.cfecanc, .nfce/.canc.</li>
+<li><strong>xml</strong>: neste diretório é salvo o XML gerado pela Sefaz, tanto para CFe S@T como para NFCe (emissão e cancelamento).</li>
+<li><strong>pdf</strong>: aqui é salvo a DANFCe e a impressão do CFe do S@T. Não é gerado impressão quando o documento fiscal é cancelado.</li>
+</ul>
+
+<p>No diagrama abaixo mostramos como será o fluxo de acesso aos diretórios citados anteriormente:</p>
+
+<p><img src="images/diagrama_enviador_electron.png" alt="Diagrama enviador electron" /></p>
+<h2 id='enviador-de-arquivos-s-t-nfce_documentos-suportados'>Documentos Suportados</h2>
+<p>Os documentos fiscais suportados atualmente são o Cupom Fiscal Eletrônico gerado por aparelhos S@T do Estado de São Paulo e a Nota Fiscal de Consumidor Eletrônica ou NFCe que pode ser emitida em todos os Estados brasileiros, com exceção de Santa Catarina.</p>
+
+<p>Para cada documento, será esperado um arquivo com formato diferente. Nele, estarão os dados da nota que serão enviados para a Sefaz do Estado.</p>
+<h2 id='enviador-de-arquivos-s-t-nfce_cfe-s-t'>CFe S@T</h2>
+<p>Para emissão dos cupons fiscais com o S@T será necessário, primeiramente, o cumprimento das premissas abaixo:</p>
+
+<ul>
+<li>Ter um aparelho S@T de uma marca homologada com o nosso sistema (consultar aqui).</li>
+<li>O S@T deve estar vinculado ao emitente na Sefaz do Estado de São Paulo.</li>
+<li>O aparelho deve ser atividado, conforme as orientações do fabricante.</li>
+<li>Configurado a Assinatura AC no aparelho S@T, através do seu respectivo software de ativação.</li>
+</ul>
+
+<p>A partir disso, será possível utilizar o nosso Enviador. Ressaltamos que todas as etapas são importantes e, quando não cumpridas, impedem a emissão do documento fiscal.</p>
+
+<p>O arquivo com os dados do CFe S@T deve seguir a estrutura de um arquivo do formato JSON, mas com a extensão <strong>.cfe</strong> (emissão) e <strong>.cfecanc</strong> (cancelamento).</p>
+<h3 id='enviador-de-arquivos-s-t-nfce_campos'>Campos</h3>
+<blockquote>
+<p>Dados de exemplo (campos obrigatórios) <strong>.cfe</strong>:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"items"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"codigo_ncm"</span><span class="p">:</span><span class="w"> </span><span class="s2">"21069090"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"codigo_produto"</span><span class="p">:</span><span class="w"> </span><span class="s2">"L055"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"descricao"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Descricao produto"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"quantidade"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"cfop"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5102"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"valor_unitario"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.01</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"valor_bruto"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.01</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"unidade_comercial"</span><span class="p">:</span><span class="w"> </span><span class="s2">"un"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"icms_situacao_tributaria"</span><span class="p">:</span><span class="w"> </span><span class="s2">"40"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<blockquote>
+<p>Dados de exemplo (campos não obrigatórios) <strong>.cfe</strong>:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"nome_destinatario"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ACRAS TECNOLOGIA DA INFORMACAO LTDA"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"cnpj_destinatario"</span><span class="p">:</span><span class="w"> </span><span class="s2">"07504505000132"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"items"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"codigo_ncm"</span><span class="p">:</span><span class="w"> </span><span class="s2">"21069090"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"codigo_produto"</span><span class="p">:</span><span class="w"> </span><span class="s2">"L055"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"descricao"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Descricao produto"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"quantidade"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"cfop"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5102"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"valor_unitario"</span><span class="p">:</span><span class="w"> </span><span class="mf">1.00</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"valor_bruto"</span><span class="p">:</span><span class="w"> </span><span class="mf">1.00</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"unidade_comercial"</span><span class="p">:</span><span class="w"> </span><span class="s2">"un"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"icms_situacao_tributaria"</span><span class="p">:</span><span class="w"> </span><span class="s2">"40"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"icms_aliquota"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"valor_total_tributos"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"pis_situacao_tributaria"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"pis_aliquota_porcentual"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"cofins_situacao_tributaria"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"cofins_aliquota_porcentual"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="s2">"forma_pagamento"</span><span class="p">:[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"forma_pagamento"</span><span class="p">:</span><span class="w"> </span><span class="s2">"03"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"valor_pagamento"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.50"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"forma_pagamento"</span><span class="p">:</span><span class="w"> </span><span class="s2">"02"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"valor_pagamento"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.50"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>Abaixo os campos mínimos que utilizamos para a emissão de um Cupom Fiscal Eletrônicos S@T:</p>
+
+<p>Campos do grupo &#39;<strong>itens</strong>&#39;:</p>
+
+<table><thead>
+<tr>
+<th>Campo</th>
+<th>Descrição</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>codigo_ncm</td>
+<td>código NCM do produto.</td>
+</tr>
+<tr>
+<td>codigo_produto</td>
+<td>código interno do produto.</td>
+</tr>
+<tr>
+<td>descricao</td>
+<td>descrição do produto.</td>
+</tr>
+<tr>
+<td>quantidade</td>
+<td>quantidade do produto.</td>
+</tr>
+<tr>
+<td>cfop</td>
+<td>código CFOP da operação.</td>
+</tr>
+<tr>
+<td>valor_unitario</td>
+<td>valor unitário da produto.</td>
+</tr>
+<tr>
+<td>valor_bruto</td>
+<td>valor bruto do produto.</td>
+</tr>
+<tr>
+<td>unidade_comercial</td>
+<td>unidade de medida comercial do produto.</td>
+</tr>
+<tr>
+<td>icms_situacao_tributaria</td>
+<td>código da situação tributário do ICMS. Valores possíveis: 00, 20, 40, 60, 102, 103, 300, 500 ou 900.</td>
+</tr>
+</tbody></table>
+
+<p>Para mais detalhes sobre os valores possívels em <strong>icms_situacao_tributaria</strong> consulte nossa documentação de campos da API NFe/NFCe <a href="https://focusnfe.com.br/dsl/4.0/ItemNotaFiscalXML.html">aqui</a>.</p>
+<h3 id='enviador-de-arquivos-s-t-nfce_campos-omitidos-nao-obrigatorios'>Campos omitidos / não obrigatórios</h3>
+<p>Abaixo os campos respectivos ao destinatário do CFe:</p>
+
+<table><thead>
+<tr>
+<th>Campo</th>
+<th>Descrição</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>cnpj_destinatario</td>
+<td>CNPJ do destinatário. Não informar se for preenchido o campo cpf_destinatario.</td>
+</tr>
+<tr>
+<td>cpf_destinatario</td>
+<td>CPF do destinatário. Não informar se for preenchido o campo cnpj_destinatario.</td>
+</tr>
+<tr>
+<td>nome_destinatario</td>
+<td>Nome ou Razão Social do destinatário.</td>
+</tr>
+</tbody></table>
+
+<p>Estes campos são preenchidos automaticamente quando omitidos:</p>
+
+<table><thead>
+<tr>
+<th>Campo</th>
+<th>Descrição</th>
+<th>Valor padrão</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>icms_aliquota</td>
+<td>alíquota do ICMS.</td>
+<td>0.00</td>
+</tr>
+<tr>
+<td>pis_situacao_tributaria</td>
+<td>código da situação tributário do PIS. Valores possíveis: 01, 02, 03, 04, 05, 06, 07, 08 e 09.</td>
+<td>07 / 49</td>
+</tr>
+<tr>
+<td>pis_aliquota_porcentual</td>
+<td>alíquota do PIS.</td>
+<td>0.00</td>
+</tr>
+<tr>
+<td>cofins_situacao_tributaria</td>
+<td>código da situação tributário do COFINS. Valores possíveis: 01, 02, 03, 04, 05, 06, 07, 08 e 09.</td>
+<td>07 / 49</td>
+</tr>
+<tr>
+<td>cofins_aliquota_porcentual</td>
+<td>alíquota do COFINS.</td>
+<td>0.00</td>
+</tr>
+</tbody></table>
+
+<p>Campos do grupo &#39;<strong>formas_pagamento</strong>&#39;:</p>
+
+<p>Quando omitido, será considerado a forma de pagamento dinheiro e o valor total do cupom.</p>
+
+<table><thead>
+<tr>
+<th>Campo</th>
+<th>Descrição</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>forma_pagamento</td>
+<td>forma de pagamento utilizado na venda. Valores possíveis: 01, 02, 03, 04, 05, 10, 11, 12, 13 ou 99.</td>
+</tr>
+<tr>
+<td>valor_pagamento</td>
+<td>valor total utilizado para essa forma de pagamento.</td>
+</tr>
+</tbody></table>
+
+<p>Para mais detalhes sobre os valores possívels em <strong>forma_pagamento</strong> consulte nossa documentação de campos da API NFe/NFCe <a href="https://focusnfe.com.br/dsl/4.0/FormaPagamentoXML.html">aqui</a>.</p>
+
+<p><strong>Emissão</strong></p>
+
+<blockquote>
+<p>Arquivo <strong>.cfe</strong> de exemplo:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"items"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"codigo_ncm"</span><span class="p">:</span><span class="w"> </span><span class="s2">"21069090"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"codigo_produto"</span><span class="p">:</span><span class="w"> </span><span class="s2">"L055"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"descricao"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Descricao produto"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"quantidade"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"cfop"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5102"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"valor_unitario"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.01</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"valor_bruto"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.01</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"unidade_comercial"</span><span class="p">:</span><span class="w"> </span><span class="s2">"un"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"icms_situacao_tributaria"</span><span class="p">:</span><span class="w"> </span><span class="s2">"40"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>O Enviador de Arquivos utiliza a descrição do arquivo no formato &#39;.cfe&#39; para realizar a emissão do cupom fiscal. Essa descrição nós chamamos de referência ou REF, você pode ler mais sobre ela <a href="#introducao_referencia">aqui</a>.</p>
+
+<p>É importante observar que o Enviador de Arquivos não possui qualquer inteligência com relação à referência utilizada, por isso, seu sistema deve garantir a criação das REF&#39;s, de modo que nunca seja criado uma mesma referência para o mesmo emitente. Se isso acontecer, você receberá um retorno informando que a nota já foi autorizada.</p>
+
+<p><strong>Cancelamento</strong></p>
+
+<blockquote>
+<p>Arquivo <strong>.cfecanc</strong> de exemplo:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"chave"</span><span class="p">:</span><span class="w"> </span><span class="s2">"77781082373077987991599000999380000289999993"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<blockquote>
+<p>Arquivo <strong>.cfecanc</strong> de exemplo (quando informado o CNPJ ou CPF do destinatário):</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"chave"</span><span class="p">:</span><span class="w"> </span><span class="s2">"77781082373077987991599000999380000289999993"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"cnpj"</span><span class="p">:</span><span class="w"> </span><span class="s2">"07504505000132"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>Utilizamos a mesma referência de emissão para o cancelamento, contudo, sua extensão é alterada para <strong>.cfecanc</strong> e, em seu conteúdo, deve ser enviado a chave de acesso do Cupom Fiscal Eletrônico. Caso seja informado o documento de identificação do destinatário (CNPJ ou CPF) na emissão, o mesmo terá de ser informado no arquivo de cancelamento.</p>
+
+<p>Após processado o cancelamento um arquivo com o mesmo nome será gravado no diretório &quot;retornos&quot; contendo um JSON simples com o resultado da operação indicando se houve sucesso ou erro.</p>
+
+<p><strong>Reimpressão do Cupom Fiscal Eletrônico</strong></p>
+
+<p>O arquivo de impressão do CFe S@T fica armazenado na pasta &#39;pdf&#39;, basta acessar esse diretório para realizar a reimpressão de Cupons Fiscais já emitidos.</p>
+<h2 id='enviador-de-arquivos-s-t-nfce_nfce'>NFCe</h2>
+<p>Para emissão da Nota Fiscal de Consumidor Eletrônica será necessário, primeiramente, o cumprimento das premissas abaixo:</p>
+
+<ul>
+<li>Possuir Certificado Digital modelo A1.</li>
+<li>Habilitar a emissão de NFCe na Sefaz do Estado do emitente.</li>
+<li>Gerar os códigos CSC e ID_TOKEN na Sefaz.</li>
+<li>Realizar o cadastro da empresa emitente em nossa base (<a href="https://focusnfe.com.br/cadastro/">site Focus NFe</a>, <a href="https://app.focusnfe.com.br/">Painel da API</a> ou <a href="#revenda_revenda">API de Revenda</a>).</li>
+<li>Informar os códigos CSC e ID_TOKEN no cadastro do emitente.</li>
+<li>Importar o Certificado Digital através do Painel da API ou solicitar ao nosso Suporte (suporte@acras.com.br).</li>
+</ul>
+
+<p>A partir disso, será possível utilizar o nosso Enviador. Ressaltamos que todas as etapas são importantes e, quando não cumpridas, impedem a emissão do documento fiscal.</p>
+
+<p>O arquivo com os dados da NFCe deve seguir a estrutura de um arquivo do formato JSON, mas com a extensão <strong>.nfce</strong> (emissão) e <strong>.canc</strong> (cancelamento).</p>
+<h3 id='enviador-de-arquivos-s-t-nfce_campos-2'>Campos</h3>
+<p>Os campos utilizados para emissão da NFCe são os mesmos que utilizamos em nossa API de NFCe, veja os campos obrigatórios <a href="#nfce_campos-obrigatorios-de-uma-nfce">aqui</a>.</p>
+
+<p>Abaixo os campos referentes aos dados do emitente na DANFCe:</p>
+
+<table><thead>
+<tr>
+<th>Campo</th>
+<th>Descrição</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>nome_emitente</td>
+<td>nome da empresa emitente.</td>
+</tr>
+<tr>
+<td>cnpj_emitente</td>
+<td>CNPJ da empresa que está emitindo a NFCe.</td>
+</tr>
+<tr>
+<td>telefone_emitente</td>
+<td>telefone do emitente.</td>
+</tr>
+<tr>
+<td>municipio_emitente</td>
+<td>município do emitente.</td>
+</tr>
+<tr>
+<td>logradouro_emitente</td>
+<td>logradouro do emitente.</td>
+</tr>
+<tr>
+<td>numero_emitente</td>
+<td>numero do logradouro do emitente.</td>
+</tr>
+<tr>
+<td>bairro_emitente</td>
+<td>bairro do emitente</td>
+</tr>
+<tr>
+<td>cep_emitente</td>
+<td>CEP do emitente.</td>
+</tr>
+<tr>
+<td>uf_emitente</td>
+<td>UF do Estado do emitente.</td>
+</tr>
+</tbody></table>
+
+<aside class="notice">
+Atualmente nosso Enviador não faz os cálculos dos impostos apróximados da Lei da Transparência, mas você pode informá-lo através do campo <b>valor_total_tributos</b> nos totais da nota.
+</aside>
+
+<p><strong>Emissão</strong></p>
+
+<blockquote>
+<p>Arquivo <strong>.nfce</strong> de exemplo:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"nome_emitente"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ACME LTDA"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"cnpj_emitente"</span><span class="p">:</span><span class="w"> </span><span class="s2">"51916585000125"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"telefone_emitente"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4139995050"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"municipio_emitente"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Ponta Grossa"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"logradouro_emitente"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Av. XV de Novembro"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"numero_emitente"</span><span class="p">:</span><span class="w"> </span><span class="s2">"12343"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"bairro_emitente"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Centro"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"cep_emitente"</span><span class="p">:</span><span class="w"> </span><span class="s2">"84015500"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"uf_emitente"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PR"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"valor_total"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.00"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"valor_troco"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4.00"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"data_emissao"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2020-03-26T10:47:00-0300"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"cpf_destinatario"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"cnpj_destinatario"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"nome_destinatario"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"indicador_inscricao_estadual_destinatario"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"modalidade_frete"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"local_destino"</span><span class="p">:</span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"presenca_comprador"</span><span class="p">:</span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"formas_pagamento"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"forma_pagamento"</span><span class="p">:</span><span class="w"> </span><span class="s2">"01"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"valor_pagamento"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5.00"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="s2">"items"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"codigo_produto"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0007"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"numero_item"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"codigo_ncm"</span><span class="p">:</span><span class="s2">"62044200"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"cfop"</span><span class="p">:</span><span class="s2">"5102"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"icms_origem"</span><span class="p">:</span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"icms_situacao_tributaria"</span><span class="p">:</span><span class="s2">"102"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"descricao"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NOTA FISCAL EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"quantidade_comercial"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.00"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"unidade_comercial"</span><span class="p">:</span><span class="w"> </span><span class="s2">"UN"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"valor_unitario_comercial"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.00"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>O Enviador de Arquivos utiliza a descrição do arquivo no formato &#39;.nfce&#39; para realizar a emissão da Nota Fiscal de Consumidor. Essa descrição nós chamamos de referência ou REF, você pode ler mais sobre ela <a href="#introducao_referencia">aqui</a>.</p>
+
+<p>É importante observar que o Enviador de Arquivos não possui qualquer inteligência com relação à referência utilizada, por isso, seu sistema deve garantir a criação das REF&#39;s, de modo que nunca seja criado uma mesma referência para o mesmo emitente. Se isso acontecer, você receberá um retorno informando que a nota já foi autorizada.</p>
+
+<p><strong>Cancelamento</strong></p>
+
+<p>Utilizamos a mesma referência de emissão para o cancelamento, contudo, sua extensão é alterada para <strong>.canc</strong> e, em seu conteúdo, deve ser enviado a justificativa do cancelamento da nota contendo de 15 à 200 caracteres.</p>
+
+<p>Após processado o cancelamento um arquivo com o mesmo nome será gravado no diretório &quot;retornos&quot; contendo um JSON simples com o resultado da operação indicando se houve sucesso ou erro.</p>
+
+<blockquote>
+<p>Arquivo de cancelamento da NFCe <strong>.canc</strong>:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"justificativa"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Motivo por solicitar o cancelamento da sua NFCe."</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p><strong>Reimpressão da DANFCe</strong></p>
+
+<p>O arquivo de impressão da NFCe fica armazenado na pasta &#39;pdf&#39;, basta acessar esse diretório para realizar a reimpressão de uma nota já emitida.</p>
+
+<p>Outra forma de realizar este processo é criar um arquivo sem conteúdo com a mesma descrição (REF) usada na emissão da nota, com o acréscimo do sufixo &quot;_nfce&quot;, e com a extensão de arquivo <strong>.reimp.</strong>. Ele deverá ser colocado no diretório &#39;envios&#39;, com isso, o Enviador irá fazer uma chamada na impressora configurada enviando a DANFCe para impressão.</p>
+<h2 id='enviador-de-arquivos-s-t-nfce_download'>Download</h2>
+<p>Para te acesso ao instalador do Enviador de Arquivos, entre em contato com a nossa equipe no email comercial@acras.com.br.</p>
 <h1 id='cte-e-cte-os_cte-e-cte-os'>CTe e CTe OS</h1>
 <p>Através da API CTe é possível:</p>
 
@@ -7378,7 +7818,7 @@ serao convertidos a JSON e enviados para nossa API.
 
 <p>Utilize o comando <strong>HTTP DELETE</strong> para cancelar a sua nota para nossa API. Este método é síncrono, ou seja, a comunicação com a SEFAZ será feita imediatamente e devolvida a resposta na mesma requisição.</p>
 
-<p>O parâmetros de cancelamento deverão ser enviados da seguinte forma:</p>
+<p>O parâmetro de cancelamento deverá ser enviado da seguinte forma:</p>
 
 <ul>
 <li><strong>justificativa</strong>: Justificativa do cancelamento. Deverá conter de 15 a 255 caracteres.</li>
@@ -9527,6 +9967,12 @@ Passamos o token como quarto parametro deste metodo, como autenticador do HTTP B
 
 <p>Utilize o comando <strong>HTTP DELETE</strong> para cancelar a sua nota para nossa API.
 Este método é síncrono, ou seja, a comunicação com a prefeitura será feita imediatamente e devolvida a resposta na mesma requisição.</p>
+
+<p>O parâmetro de cancelamento deverá ser enviado da seguinte forma:</p>
+
+<ul>
+<li><strong>justificativa</strong>: Justificativa do cancelamento. Deverá conter de 15 a 255 caracteres.</li>
+</ul>
 
 <p>A API irá em seguida devolver os seguintes campos:</p>
 
