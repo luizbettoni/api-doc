@@ -1349,7 +1349,7 @@ Cancelar uma CTe já autorizada:
 
 Utilize o comando **HTTP DELETE** para cancelar a sua nota para nossa API. Este método é síncrono, ou seja, a comunicação com a SEFAZ será feita imediatamente e devolvida a resposta na mesma requisição.
 
-O parâmetros de cancelamento deverão ser enviados da seguinte forma:
+O parâmetro de cancelamento deverá ser enviado da seguinte forma:
 
 * **justificativa**: Justificativa do cancelamento. Deverá conter de 15 a 255 caracteres.
 

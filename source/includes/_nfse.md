@@ -1130,6 +1130,10 @@ Para cancelar uma NFSe, basta fazer uma requisição à URL abaixo, alterando o 
 Utilize o comando **HTTP DELETE** para cancelar a sua nota para nossa API.
 Este método é síncrono, ou seja, a comunicação com a prefeitura será feita imediatamente e devolvida a resposta na mesma requisição.
 
+O parâmetro de cancelamento deverá ser enviado da seguinte forma:
+
+* **justificativa**: Justificativa do cancelamento. Deverá conter de 15 a 255 caracteres.
+
 A API irá em seguida devolver os seguintes campos:
 
 * **status**: cancelado, se a nota pode ser cancelada, ou erro_cancelamento, se houve algum erro ao cancelar a nota.
