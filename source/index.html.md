@@ -14,6 +14,7 @@ toc_footers:
 includes:
   - nfe
   - nfce
+  - enviador
   - cte
   - mdfe
   - backups
