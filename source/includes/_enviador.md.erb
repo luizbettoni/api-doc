@@ -1,9 +1,11 @@
 # Enviador de Arquivos S@T / NFCe
-Para os usuários de tecnologias que não permitem o acesso à API via Web Services ou que não desejam programar o acesso HTTP, disponibilizamos um comunicador 'standalone' que realiza toda comunicação com os Web Services de nossa API. 
+Para os usuários de tecnologias que não permitem o acesso à API via Web Services ou que não desejam programar o acesso HTTP, disponibilizamos um comunicador standalone (desktop) que realiza toda comunicação com a nossa API.
 
 ## Visão Geral
 
-O Enviador de Arquivos, quando é executado, consulta o conteúdo de algumas pastas com descrições especificas que podem ser criados a partir do diretório escolhido pelo usuário, chamamos estes diretórios de 'Diretórios de Comunicação'. 
+O Enviador de Arquivos, quando é executado, consulta o conteúdo de algumas pastas com descrições especificas que podem ser criados a partir do diretório escolhido pelo usuário, chamamos estes diretórios de 'Diretórios de Comunicação'.
+Desta forma, seu programa poderá apenas criar um arquivo em uma pasta específica, contendo o JSON com os dados necessários para emitir a nota.
+O enviador por sua vez consulta esta pasta e armazena o resultado (PDF, XML) em outra pasta para consulta.
 
 <aside class="warning">
 O diretório de comunicação deve ser um local onde o usuário terá plenos direitos de acesso dentro do sistema operacional. Recomendamos o diretório: C:\\Comunicador\
@@ -37,7 +39,7 @@ Para cada documento, será esperado um arquivo com formato diferente. Nele, esta
 
 Para emissão dos cupons fiscais com o S@T será necessário, primeiramente, o cumprimento das premissas abaixo:
 
-- Ter um aparelho S@T de uma marca homologada com o nosso sistema (consultar aqui). 
+- Ter um aparelho S@T de uma marca homologada com o nosso sistema (consultar aqui).
 - O S@T deve estar vinculado ao emitente na Sefaz do Estado de São Paulo.
 - O aparelho deve ser atividado, conforme as orientações do fabricante.
 - Configurado a Assinatura AC no aparelho S@T, através do seu respectivo software de ativação.
@@ -109,7 +111,7 @@ Abaixo os campos mínimos que utilizamos para a emissão de um Cupom Fiscal Elet
 
 Campos do grupo '**itens**':
 
-Campo | Descrição 
+Campo | Descrição
 ----- | ----------
 codigo_ncm | código NCM do produto.
 codigo_produto | código interno do produto.
@@ -127,7 +129,7 @@ Para mais detalhes sobre os valores possívels em **icms_situacao_tributaria** c
 
 Abaixo os campos respectivos ao destinatário do CFe:
 
-            Campo | Descrição 
+            Campo | Descrição
 ----------------- | ----------
 cnpj_destinatario | CNPJ do destinatário. Não informar se for preenchido o campo cpf_destinatario.
 cpf_destinatario | CPF do destinatário. Não informar se for preenchido o campo cnpj_destinatario.
@@ -147,7 +149,7 @@ Campos do grupo '**formas_pagamento**':
 
 Quando omitido, será considerado a forma de pagamento dinheiro e o valor total do cupom.
 
-Campo | Descrição 
+Campo | Descrição
 ----- | ----------
 forma_pagamento | forma de pagamento utilizado na venda. Valores possíveis: 01, 02, 03, 04, 05, 10, 11, 12, 13 ou 99.
 valor_pagamento | valor total utilizado para essa forma de pagamento.
@@ -186,7 +188,7 @@ O Enviador de Arquivos utiliza a descrição do arquivo no formato '.cfe' para r
 
 ```json
 {
-    "chave": "77781082373077987991599000999380000289999993"    
+    "chave": "77781082373077987991599000999380000289999993"
 }
 ```
 > Arquivo **.cfecanc** de exemplo (quando informado o CNPJ ou CPF do destinatário):
@@ -194,7 +196,7 @@ O Enviador de Arquivos utiliza a descrição do arquivo no formato '.cfe' para r
 ```json
 {
     "chave": "77781082373077987991599000999380000289999993",
-    "cnpj": "07504505000132"    
+    "cnpj": "07504505000132"
 }
 ```
 
@@ -248,7 +250,7 @@ Atualmente nosso Enviador não faz os cálculos dos impostos apróximados da Lei
 > Arquivo **.nfce** de exemplo:
 
 ```json
-{ 
+{
     "nome_emitente": "ACME LTDA",
     "cnpj_emitente": "51916585000125",
     "telefone_emitente": "4139995050",
@@ -268,7 +270,7 @@ Atualmente nosso Enviador não faz os cálculos dos impostos apróximados da Lei
     "modalidade_frete": "9",
     "local_destino":"1",
     "presenca_comprador":"1",
-    "formas_pagamento": [ 
+    "formas_pagamento": [
         {
             "forma_pagamento": "01",
             "valor_pagamento": "5.00"
@@ -287,7 +289,7 @@ Atualmente nosso Enviador não faz os cálculos dos impostos apróximados da Lei
             "unidade_comercial": "UN",
             "valor_unitario_comercial": "1.00"
         }
-    ] 
+    ]
 }
 ```
 
@@ -317,4 +319,4 @@ Outra forma de realizar este processo é criar um arquivo sem conteúdo com a me
 
 ## Download
 
-Para te acesso ao instalador do Enviador de Arquivos, entre em contato com a nossa equipe no comercial@acras.com.br.
+Para te acesso ao instalador do Enviador de Arquivos, entre em contato com a nossa equipe no email comercial@acras.com.br.
