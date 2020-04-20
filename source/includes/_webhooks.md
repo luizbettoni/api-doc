@@ -90,9 +90,11 @@ Os seguintes eventos causam o acionamento do gatilho:
 * **NFe**:
   * Erro na emissão de uma nota fiscal
   * Emissão de nota fiscal realizada com sucesso
+  * Inutilização de faixa de numeração
 * **NFSe**:
   * Erro na emissão de uma nota fiscal
   * Emissão de nota fiscal realizada com sucesso
+  * Inutilização de faixa de numeração
 * **Documentos fiscais recebidos (manifestação)**:
   * Recebimento de um novo documento fiscal (CTe, NFe ou NFSe)
 
@@ -265,7 +267,7 @@ Para criar um novo gatilho, utilize o endereço abaixo:
 Utilize o método HTTP POST para criar um novo gatilho. Esta requisição aceita os seguintes parâmetros que deverão ser enviados em formato JSON:
 
 *  **cnpj** – CNPJ da empresa. Se o CNPJ for omitido, o gatilho será acionado para todas as emissões feitas pelo token em questão.
-*  **event** – Informe qual evento que gostará de escutar: nfe, nfse, nfe_recebida ou nfse_recebida
+*  **event** – Informe qual evento que gostará de escutar: nfe, nfse, nfe_recebida, nfse_recebida, inutilizacao
 *  **url** – URL que deverá ser chamada quando o gatilho for ativado
 *  **authorization** – (opcional) O valor que for informado neste campo será devolvido no acionamento do gatilho no cabeçalho "Authorization".
 Desta forma você poderá por exemplo informar um token secreto para garantir que apenas nossa API acione a sua URL.
