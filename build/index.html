@@ -3461,6 +3461,8 @@ serao convertidos a JSON e enviados para nossa API
 <li><strong>caminho_xml</strong>: Caminho do XML para download caso a inutilização tenha sido autorizada pela SEFAZ.</li>
 </ul>
 
+<p>Em algumas situações em que sejam identificados erros de emissão de forma tardia, nossa API pode decidir pela inutilização de números ao invés de reutilizá-los para outras emissões. Desta forma você pode criar um gatilho (webhook) para ser notificado sempre que houver a inutilização de alguma faixa de numeração. Consulte a <a href="https://focusnfe.com.br/doc/#gatilhos-webhooks_gatilhos-webhooks">seção de gatilhos</a> e utilize o evento chamado &quot;inutilizacao&quot;.</p>
+
 <blockquote>
 <p>Exemplos de respostas da API por status para a requisição de inutilização:</p>
 
@@ -5688,6 +5690,8 @@ Passamos o token como quarto parametro deste metodo, como autenticador do HTTP B
 <li><strong>numero_final:</strong> Número final a ser inutilizado</li>
 <li><strong>caminho_xml:</strong> Caminho do XML para download caso a inutilização tenha sido autorizada pela SEFAZ.</li>
 </ul>
+
+<p>Em algumas situações em que sejam identificados erros de emissão de forma tardia, nossa API pode decidir pela inutilização de números ao invés de reutilizá-los para outras emissões. Desta forma você pode criar um gatilho (webhook) para ser notificado sempre que houver a inutilização de alguma faixa de numeração. Consulte a <a href="https://focusnfe.com.br/doc/#gatilhos-webhooks_gatilhos-webhooks">seção de gatilhos</a> e utilize o evento chamado &quot;inutilizacao&quot;.</p>
 
 <blockquote>
 <p>Exemplos de respostas da API por <strong>status</strong> para a requisição de inutilização:</p>
@@ -14219,12 +14223,14 @@ url = "https://api.focusnfe.com.br"
 <ul>
 <li>Erro na emissão de uma nota fiscal</li>
 <li>Emissão de nota fiscal realizada com sucesso</li>
+<li>Inutilização de faixa de numeração</li>
 </ul></li>
 <li><strong>NFSe</strong>:
 
 <ul>
 <li>Erro na emissão de uma nota fiscal</li>
 <li>Emissão de nota fiscal realizada com sucesso</li>
+<li>Inutilização de faixa de numeração</li>
 </ul></li>
 <li><strong>Documentos fiscais recebidos (manifestação)</strong>:
 
@@ -14385,7 +14391,7 @@ Passamos o token como quarto parametro deste metodo, como autenticador do HTTP B
 
 <ul>
 <li> <strong>cnpj</strong> – CNPJ da empresa. Se o CNPJ for omitido, o gatilho será acionado para todas as emissões feitas pelo token em questão.</li>
-<li> <strong>event</strong> – Informe qual evento que gostará de escutar: nfe, nfse, nfe_recebida ou nfse_recebida</li>
+<li> <strong>event</strong> – Informe qual evento que gostará de escutar: nfe, nfse, nfe_recebida, nfse_recebida, inutilizacao</li>
 <li> <strong>url</strong> – URL que deverá ser chamada quando o gatilho for ativado</li>
 <li> <strong>authorization</strong> – (opcional) O valor que for informado neste campo será devolvido no acionamento do gatilho no cabeçalho &quot;Authorization&quot;.
 Desta forma você poderá por exemplo informar um token secreto para garantir que apenas nossa API acione a sua URL.</li>
@@ -15692,7 +15698,10 @@ Passamos o token como quarto parametro deste metodo, como autenticador do HTTP B
     </span><span class="s2">"nome_municipio"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Curitiba"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"sigla_uf"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PR"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"nome_uf"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Paraná"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"nfse_habilitada"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+    </span><span class="s2">"nfse_habilitada"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"requer_certificado_nfse"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"possui_ambiente_homologacao_nfse"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"possui_cancelamento_nfse"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 </span></code></pre>
@@ -15704,9 +15713,12 @@ Passamos o token como quarto parametro deste metodo, como autenticador do HTTP B
 <li><strong>sigla_uf</strong>: Sigla do estado do município</li>
 <li><strong>nome_uf</strong>: Nome completo do estado onde se encontra o município</li>
 <li><strong>nfse_habilitada</strong>: Verdadeiro se já implementamos a NFSe para este município, e falso caso contrário</li>
+<li><strong>requer_certificado_nfse</strong>: Se a NFSe para este município está implementada, este campo irá indicar se o município precisa de um certificado digital para emissão deste documento. Caso contrário, alguma combinação de token e/ou usuário e senha deverá ser usado.</li>
+<li><strong>possui_ambiente_homologacao_nfse</strong>: Se a NFSe para este município está implementada, este campo irá indicar se existe ambiente de homologação neste município</li>
+<li><strong>possui_cancelamento_nfse</strong>: Se a NFSe para este município está implementada, este campo irá indicar se é possível o cancelamento de NFSe via API neste município. Caso contrário pode ser possível o cancelamento pela própria interface da prefeitura</li>
 </ul>
 
-<p>Novos campos poderão ser adicionados.</p>
+<p>Considere que novos campos poderão ser adicionados nesta API.</p>
 <h2 id='consulta-de-municipios_paginacao'>Paginação</h2>
 <p>Ao fazer uma pesquisa, a API irá devolver o cabeçalho HTTP <em>X-Total-Count</em> que representa
 o número total de ocorrências da pesquisa, porém a API devolve apenas 100 registros por vez.
