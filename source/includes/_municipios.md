@@ -202,7 +202,10 @@ Caso já saiba o código exato do município, você pode efetuar a busca diretam
     "nome_municipio": "Curitiba",
     "sigla_uf": "PR",
     "nome_uf": "Paraná",
-    "nfse_habilitada": true
+    "nfse_habilitada": true,
+    "requer_certificado_nfse": true,
+    "possui_ambiente_homologacao_nfse": true,
+    "possui_cancelamento_nfse": true
   }
 ]
 ```
@@ -214,8 +217,11 @@ Para cada consulta à nossa API de ,unicípios a resposta trará um ou mais obje
 * **sigla_uf**: Sigla do estado do município
 * **nome_uf**: Nome completo do estado onde se encontra o município
 * **nfse_habilitada**: Verdadeiro se já implementamos a NFSe para este município, e falso caso contrário
+* **requer_certificado_nfse**: Se a NFSe para este município está implementada, este campo irá indicar se o município precisa de um certificado digital para emissão deste documento. Caso contrário, alguma combinação de token e/ou usuário e senha deverá ser usado.
+* **possui_ambiente_homologacao_nfse**: Se a NFSe para este município está implementada, este campo irá indicar se existe ambiente de homologação neste município
+* **possui_cancelamento_nfse**: Se a NFSe para este município está implementada, este campo irá indicar se é possível o cancelamento de NFSe via API neste município. Caso contrário pode ser possível o cancelamento pela própria interface da prefeitura
 
-Novos campos poderão ser adicionados.
+Considere que novos campos poderão ser adicionados nesta API.
 
 ## Paginação
 
