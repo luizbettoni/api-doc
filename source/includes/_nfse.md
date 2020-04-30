@@ -88,6 +88,11 @@ um formato único de campos para todas as prefeituras. A listagem dos campos seg
   - **P**: Exportação de Serviços.
 * **codigo_obra**: (String) Código da obra quando construção civil. Tamanho: 15 caracteres.
 * **art**: (String) Código ART quando construção civil. Este campo é ignorado pelo município de São Paulo. Tamanho: 15 caracteres.
+* **numero_rps_substituido**: (String) Caso o município permita a substituição de notas, aqui você poderá
+informar o número do RPS que será substituído. Municípios que seguem o padrão ABRASF poderão usar esta operação.
+* **serie_rps_substituido**: (String) Obrigatório se informado o campo numero_rps_substituido. Indica a série do RPS a ser substituído.
+* **tipo_rps_substituido**: (String) Obrigatório se informado o campo numero_rps_substituido. Indica o tipo do RPS a ser substituído. Caso desconheça este valor, utiliza o valor "1".
+
 
 ### Prestador
 
@@ -844,16 +849,20 @@ Utilize o comando **HTTP GET** para consultar a sua nota para nossa API.
    * **cancelado:** Indica que a operação de cancelamento do documento foi realizada com sucesso.
    * **erro_autorizacao:** Houve algum erro durante a emissão da NFSe. A mensagem de erro você encontrará dentro do campo "erros". É possível reenviar a nota com a mesma referência após realizar as correções indicadas.
    * **processando_autorizacao:** A NFSe está sendo processada internamente (API Focus NFe) e/ou pela prefeitura, consulte após alguns minutos.
+   * **substituido:** Este documento foi substituído por outra NFSe. Consulte o campo numero_nfse_substituta.
 * **cnpj_prestador:** O CNPJ emitente da nota fiscal (conhecido também como "prestador do serviço").
 * **ref:** Essa é a referência usada na sua requisição.
 * **numero_rps:** Número do RPS de controle da Prefeitura.
-* **serie_rps:** A série da nota fiscal, caso ela tenha sido autorizada.
+* **serie_rps:** A série do RPS de controle da Prefeitura.
+* **tipo_rps:** O tipo do RPS de controle da Prefeitura.
 * **erros:** Quando ocorrerem erros na emissão, será aqui que mostraremos a orientação da Prefeitura.
 * **url:** URL para acesso do espelho da nota (versão HTML). Quando a prefeitura disponibiliza uma URL pública, utilizamos o link da própria prefeitura, caso contrário criamos o nosso próprio espelho através de um link interno.
 * **url_danfse:** URL para acesso e download do DANFSe (versão PDF). A versão em PDF está disponível no momento apenas para alguns municípios. Entre em contato conosco caso precise da versão em PDF para o seu município.
 * **data_emissao:** Data da emissão da nota fiscal.
 * **caminho_xml_nota_fiscal:** Caminho para acesso e download do XML da nota fiscal.
 * **codigo_verificacao:** Código de verificação para consulta da NFSe, pode ser usado no portal da cidade para consulta.
+* **numero_nfse_substituida** Caso a nota seja autorizada e seja uma nota de substituição, este campo irá indicar o número da NFSe substituída.
+* **numero_nfse_substituta** Caso a nota seja autorizada e alguma outra nota substituta tenha sido emitido pela nossa API este campo irá indicar o seu número. No momento só é possível fazer esta associação se a nota substituta for emitida pela nossa API.
 
 ### Download do XML e consulta do documento auxiliar da NFSe
 
