@@ -141,8 +141,18 @@ curl_setopt($ch, CURLOPT_CAINFO, "/pasta/no/servidor/ca.crt");
 
 Verifique em sua linguagem de programação se é necessário alguma configuração adicional para uso de SSL.
 Pode ser necessário indicar explicitamente a confiar na autoridade certificadora que emitiu o certificado SSL.
+Em especial na linguagem Java é necessário adicionar todos os certificados, inclusive de toda cadeia da empresa
+certificadora.
 
-[Você pode baixar a cadeia de certificados aqui](https://focusnfe.com.br/downloads/ca.crt)
+Para poder baixar os certificados de nosso servidor, você pode executar o seguinte comando em algum
+console linux:
+
+  `openssl s_client -showcerts -connect api.focusnfe.com.br:443`
+
+Isto irá listar todos os certificados entre "`-----BEGIN CERTIFICATE-----`"
+e "`-----END CERTIFICATE-----`". Apenas salve todos estes certificados em arquivos separados e importe
+para a sua ferramenta de armazenamento de certificados. Entre em contato com nosso suporte caso encontre
+problemas neste processo.
 
 
 ## Padrão REST
