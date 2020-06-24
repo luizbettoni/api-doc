@@ -1468,7 +1468,7 @@ curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($justificativa));
 curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
 curl_setopt($ch, CURLOPT_USERPWD, "$login:$password");
 $body = curl_exec($ch);
-$result = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 // As próximas três linhas são um exemplo de como imprimir as informações de retorno da API.
 print($http_code."\n");
 print($body."\n\n");
