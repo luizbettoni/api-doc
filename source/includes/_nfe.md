@@ -2459,6 +2459,8 @@ A API irá enviar uma resposta com os seguintes campos:
 * **serie**: Série da numeração da NFe que terá uma faixa de numeração inutilizada
 * **numero_inicial**: Número inicial a ser inutilizado
 * **numero_final**: Número final a ser inutilizado
+* **cnpj:** CNPJ da empresa
+* **modelo:** Modelo do documento (55 para NFe)
 * **caminho_xml**: Caminho do XML para download caso a inutilização tenha sido autorizada pela SEFAZ.
 
 Em algumas situações em que sejam identificados erros de emissão de forma tardia, nossa API pode decidir pela inutilização de números ao invés de reutilizá-los para outras emissões. Desta forma você pode criar um gatilho (webhook) para ser notificado sempre que houver a inutilização de alguma faixa de numeração. Consulte a [seção de gatilhos](https://focusnfe.com.br/doc/#gatilhos-webhooks_gatilhos-webhooks) e utilize o evento chamado "inutilizacao".
@@ -2475,6 +2477,8 @@ Em algumas situações em que sejam identificados erros de emissão de forma tar
   "serie": "1",
   "numero_inicial": "999",
   "numero_final": "1000",
+  "modelo": "55",
+  "cnpj": "1807504505000130",
   "status": "autorizado",
   "caminho_xml": "/arquivos_development/07504505000132/201906/XMLs/190750450500013255001000000999000001000-inu.xml"
 }
