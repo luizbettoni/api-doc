@@ -2541,7 +2541,7 @@ $server = "https://api.focusnfe.com.br"; */</span>
 <span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_HTTPAUTH</span><span class="p">,</span> <span class="nx">CURLAUTH_BASIC</span><span class="p">);</span>
 <span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_USERPWD</span><span class="p">,</span> <span class="s2">"</span><span class="nv">$login</span><span class="s2">:</span><span class="nv">$password</span><span class="s2">"</span><span class="p">);</span>
 <span class="nv">$body</span> <span class="o">=</span> <span class="nb">curl_exec</span><span class="p">(</span><span class="nv">$ch</span><span class="p">);</span>
-<span class="nv">$result</span> <span class="o">=</span> <span class="nb">curl_getinfo</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLINFO_HTTP_CODE</span><span class="p">);</span>
+<span class="nv">$http_code</span> <span class="o">=</span> <span class="nb">curl_getinfo</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLINFO_HTTP_CODE</span><span class="p">);</span>
 <span class="c1">// As próximas três linhas são um exemplo de como imprimir as informações de retorno da API.
 </span><span class="k">print</span><span class="p">(</span><span class="nv">$http_code</span><span class="o">.</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">);</span>
 <span class="k">print</span><span class="p">(</span><span class="nv">$body</span><span class="o">.</span><span class="s2">"</span><span class="se">\n\n</span><span class="s2">"</span><span class="p">);</span>
@@ -3468,6 +3468,8 @@ serao convertidos a JSON e enviados para nossa API
 <li><strong>serie</strong>: Série da numeração da NFe que terá uma faixa de numeração inutilizada</li>
 <li><strong>numero_inicial</strong>: Número inicial a ser inutilizado</li>
 <li><strong>numero_final</strong>: Número final a ser inutilizado</li>
+<li><strong>cnpj:</strong> CNPJ da empresa</li>
+<li><strong>modelo:</strong> Modelo do documento (55 para NFe)</li>
 <li><strong>caminho_xml</strong>: Caminho do XML para download caso a inutilização tenha sido autorizada pela SEFAZ.</li>
 </ul>
 
@@ -3484,6 +3486,8 @@ serao convertidos a JSON e enviados para nossa API
   </span><span class="s2">"serie"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"numero_inicial"</span><span class="p">:</span><span class="w"> </span><span class="s2">"999"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"numero_final"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1000"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"modelo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"55"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"cnpj"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1807504505000130"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"autorizado"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"caminho_xml"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/arquivos_development/07504505000132/201906/XMLs/190750450500013255001000000999000001000-inu.xml"</span><span class="w">
 </span><span class="p">}</span><span class="w">
@@ -5698,6 +5702,8 @@ Passamos o token como quarto parametro deste metodo, como autenticador do HTTP B
 <li><strong>serie:</strong> Série da numeração da NFCe que terá uma faixa de numeração inutilizada</li>
 <li><strong>numero_inicial:</strong> Número inicial a ser inutilizado</li>
 <li><strong>numero_final:</strong> Número final a ser inutilizado</li>
+<li><strong>cnpj:</strong> CNPJ da empresa</li>
+<li><strong>modelo:</strong> Modelo do documento (65 para NFCe)</li>
 <li><strong>caminho_xml:</strong> Caminho do XML para download caso a inutilização tenha sido autorizada pela SEFAZ.</li>
 </ul>
 
@@ -5714,6 +5720,8 @@ Passamos o token como quarto parametro deste metodo, como autenticador do HTTP B
   </span><span class="s2">"serie"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"numero_inicial"</span><span class="p">:</span><span class="w"> </span><span class="s2">"999"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"numero_final"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1000"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"modelo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"65"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"cnpj"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1807504405000132"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"autorizado"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"caminho_xml"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/arquivos_development/07504505000132/201906/XMLs/190750450500013265001000000999000001000-inu.xml"</span><span class="w">
 </span><span class="p">}</span><span class="w">
