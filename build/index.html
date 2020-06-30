@@ -496,6 +496,11 @@
           </li>
           <li>
             <a href="#backups-nfe-nfce-e-cte_backups-nfe-nfce-e-cte" class="toc-h1 toc-link" data-title="backups-nfe-nfce-e-cte">Backups (NFe, NFCe e CTe)</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#backups-nfe-nfce-e-cte_momentos-de-geracao-e-cuidados-necessarios" class="toc-h2 toc-link" data-title="momentos-de-geracao-e-cuidados-necessarios">Momentos de geração e cuidados necessários</a>
+                  </li>
+              </ul>
           </li>
           <li>
             <a href="#gatilhos-webhooks_gatilhos-webhooks" class="toc-h1 toc-link" data-title="gatilhos-webhooks">Gatilhos / Webhooks</a>
@@ -14101,7 +14106,7 @@ url = "https://api.focusnfe.com.br"
 <h1 id='backups-nfe-nfce-e-cte_backups-nfe-nfce-e-cte'>Backups (NFe, NFCe e CTe)</h1>
 <p>Atualmente, realizamos o backup de todos os arquivos XML’s das notas fiscais emitidas pela nossa API. Vale lembrar que o XML é um arquivo com validade legal e deve ser armazenado pelos emitentes, para fins fiscais, por no mínimo 5 anos após a emissão.</p>
 
-<p>Mensalmente a API (primeira hora do primeiro dia de cada mês) gera um arquivo compactado em formato ZIP com todos os arquivos gerados de cada empresa.</p>
+<p>Mensalmente a API gera um arquivo compactado em formato ZIP com todos os arquivos gerados de cada empresa.</p>
 
 <p>A consulta dos arquivos de backup pode ser feito com a URL abaixo:</p>
 
@@ -14122,6 +14127,16 @@ url = "https://api.focusnfe.com.br"
 </ul>
 
 <p>Os backups serão mantidos por 6 meses em nossos servidores.</p>
+<h2 id='backups-nfe-nfce-e-cte_momentos-de-geracao-e-cuidados-necessarios'>Momentos de geração e cuidados necessários</h2>
+<p>O backup é gerado no primeiro dia de cada mês e uma parcial do arquivo é gerado todo sábado com as notas emitidas até então.</p>
+
+<p>Para fins de apuração de imposto, recomendamos que a contabilidade responsável valide as notas recebidas, pois algumas exceções podem ocorrer, por exemplo:</p>
+
+<ul>
+<li>Podem ocorrer emissões de notas com datas retroativas mas posteriores ao download do XML. Neste caso o arquivo será atualizado semanalmente aos sábados.</li>
+<li>É possível que notas tenham sido emitidas usando outros sistemas, então não podemos garantir que todas as notas da empresa estejam presentes.</li>
+<li>Deverá ser considerado o tempo de geração do arquivo, pois dependendo do volume de notas o arquivo pode ficar disponível apenas ao final do dia primeiro. Recomendamos que o download dos arquivos seja feita apenas a partir do dia 2 de cada mês.</li>
+</ul>
 <h1 id='gatilhos-webhooks_gatilhos-webhooks'>Gatilhos / Webhooks</h1><h2 id='gatilhos-webhooks_informacoes-gerais'>Informações gerais</h2>
 <p>Gatilhos ou &quot;WebHooks&quot; são eventos automáticos que são disparados a partir de mudanças especificas na nota fiscal. Quando isso ocorre, é enviado os dados da nota fiscal no formato JSON para uma URL da sua escolha através do método POST. Cada acionamento do gatilho contém os dados de apenas uma nota. Abaixo segue um exemplo de como a API enviará as seguintes informações para sua URL, caso a nota autorizada seja uma NFe:</p>
 
