@@ -1,12 +1,17 @@
 # Consulta de Municípios
 
-Utilizamos a base de municípios do IBGE para identificar os municípios em nossa API. Desta forma disponibilizamos uma API para busca dos municípios cadastrados, seja para localizá-los pelo nome, para recuperar o código do município ou verificar se o município tem a NFSe implementada em nosso sistema.
+Utilizamos a base de municípios do IBGE para identificar os municípios em nossa API. Desta forma disponibilizamos uma API para busca dos municípios cadastrados, seja para localizá-los pelo nome, para recuperar o código do município, verificar se o município tem a NFSe implementada em nosso sistema ou demais especificidades de cada município.
+Ainda, é possível verificar se determinado município apresenta a necessidade de informar o código tributário do município e/ou item da lista de serviço para emissão de uma nota fiscal de serviço. Com isso, é possível verificar os valores que esses campos devem receber através de uma consulta relacionada ao próprio município.
 
 
 ```shell
 # pesquisa por todos os municípios do PR
 curl -u "token obtido no cadastro da empresa:" \
   https://homologacao.focusnfe.com.br/v2/municipios?sigla_uf=PR
+
+# pesquisa pelos itens da lista de serviço que contém a descrição "informática" por um município onde esse campo seja obrigatório.
+curl -u "token obtido no cadastro da empresa:" \
+  https://homologacao.focusnfe.com.br/v2/municipios/4307807/itens_lista_servico?descricao=informatica
 ```
 
 ```php
@@ -167,12 +172,16 @@ console.log("Corpo: " + request.responseText);
 
 ```
 
-Disponibilizamos dois métodos de consulta:
+Disponibilizamos os seguintes métodos de consulta:
 
 Método | URL (recurso) | Ação
 -------|-------|-----
 GET |	/v2/municipios	| Busca todos os municípios ou filtra-os de acordo com parâmetros
-GET |	/v2/municipios/CODIGO	| Busca um município único pelo seu código
+GET |	/v2/municipios/CODIGO_MUNICIPIO	| Busca um município único pelo seu código
+GET |	/v2/municipios/CODIGO_MUNICIPIO/itens_lista_servico	| Busca todos os itens da lista de serviço de acordo com o município ou filtra-os de acordo com parâmetros
+GET |	/v2/municipios/CODIGO_MUNICIPIO/itens_lista_servico/CODIGO	| Busca um item da lista de serviço único pelo seu código de acordo com o município
+GET |	/v2/municipios/CODIGO_MUNICIPIO/codigos_tributarios_municipio	| Busca todos os códigos tributários municípais de acordo com o município ou filtra-os de acordo com parâmetros
+GET |	/v2/municipios/CODIGO_MUNICIPIO/codigos_tributarios_municipio/CODIGO	| Busca um código tributário municipal único pelo seu código de acordo com o município
 
 Os parâmetros disponíveis para consulta dos municípios são atualmente os seguintes:
 
@@ -180,13 +189,25 @@ Os parâmetros disponíveis para consulta dos municípios são atualmente os seg
 * nome_municipio: Busca pelo nome exato do município. Ex: Curitiba irá devolver apenas um registro
 * nome: Busca por parte do nome do município. Ex: Curitiba irá devolver os municípios "Curitiba" e "Curitibanos"
 
+Caso já saiba o código exato do município, você pode efetuar a busca diretamente em:
 
-Caso já saiba o código exato do município, você pode efetuar a busca diretamente em /v2/municipios/CODIGO
+* /v2/municipios/CODIGO_MUNICIPIO
+
+
+Os parâmetros disponíveis para consulta dos itens da lista de serviço e códigos tributários municipais de acordo com o município são atualmente os seguintes:
+
+* codigo: Busca pela código, ex: "14.01". Busca pelo trecho de codigo. ex: "14."
+* descricao: Busca pelo trecho da descrição. Ex: "Aula"
+
+Caso já saiba o código exato do item da lista de serviço ou do código tributário municipal, você pode efetuar a busca diretamente em:
+
+* /v2/municipios/CODIGO_MUNICIPIO/itens_lista_servico/CODIGO	
+* /v2/municipios/CODIGO_MUNICIPIO/codigos_tributarios_municipio/CODIGO
 
 
 ## Resposta da API
 
-> Exemplo de dados de resposta da consulta
+> Exemplo de dados de resposta da consulta aos municípios
 
 ```json
 [
@@ -205,12 +226,35 @@ Caso já saiba o código exato do município, você pode efetuar a busca diretam
     "nfse_habilitada": true,
     "requer_certificado_nfse": true,
     "possui_ambiente_homologacao_nfse": true,
-    "possui_cancelamento_nfse": true
+    "possui_cancelamento_nfse": true,
+    "provedor_nfse": "Tecnos",
+    "endereco_obrigatorio_nfse": null,
+    "cpf_cnpj_obrigatorio_nfse": null,
+    "item_lista_servico_nfse": false,
+    "codigo_tributario_municipio_nfse": false
   }
 ]
 ```
 
-Para cada consulta à nossa API de ,unicípios a resposta trará um ou mais objetos JSON, com os campos como neste exemplo ao lado. Abaixo, a descrição de cada um dos campos:
+> Exemplo de dados de resposta da consulta aos itens da lista de serviço de um determinado município
+
+```json
+[
+  {
+    "codigo": "1.06",
+    "descricao": "Assessoria e consultoria em informática.",
+    "tax_rate": null
+  },
+  {
+    "codigo": "1.07",
+    "descricao": "Suporte técnico em informática, inclusive instalação, configuração e manutenção de programas de computação e bancos de dados.",
+    "tax_rate": null
+  }
+]
+```
+
+
+Para cada consulta à nossa API de municípios a resposta trará um ou mais objetos JSON, com os campos como neste exemplo ao lado. Abaixo, a descrição de cada um dos campos:
 
 * **codigo_municipio**: Representa o código do município frente ao IBGE
 * **nome_municipio**: Nome completo do município segundo o IBGE. Podem haver pequenas diferenças de outras bases, como a dos Correios.
@@ -220,6 +264,11 @@ Para cada consulta à nossa API de ,unicípios a resposta trará um ou mais obje
 * **requer_certificado_nfse**: Se a NFSe para este município está implementada, este campo irá indicar se o município precisa de um certificado digital para emissão deste documento. Caso contrário, alguma combinação de token e/ou usuário e senha deverá ser usado.
 * **possui_ambiente_homologacao_nfse**: Se a NFSe para este município está implementada, este campo irá indicar se existe ambiente de homologação neste município
 * **possui_cancelamento_nfse**: Se a NFSe para este município está implementada, este campo irá indicar se é possível o cancelamento de NFSe via API neste município. Caso contrário pode ser possível o cancelamento pela própria interface da prefeitura
+* **provedor_nfse**: Se a NFSe para este município está implementada, este campo irá indicar o nome do provedor do município.
+* **endereco_obrigatorio_nfse**: Se a NFSe para este município está implementada, esse campo irá indicar se o município precisa informar o endereço para emissão deste documento.
+* **cpf_cnpj_obrigatorio_nfse**: Se a NFSe para este município está implementada, esse campo irá indicar se o município precisa informar o cpf/cnpj para emissão deste documento.
+* **item_lista_servico_nfse**: Se a NFSe para este município está implementada, esse campo irá indicar se o município precisa informar o item da lista de serviço para emissão deste documento. Caso seu valor seja 'true', a busca pelos possíveis valores pode ser feita como exemplificada anteriormente. 
+* **codigo_tributario_municipio_nfse**: Se a NFSe para este município está implementada, esse campo irá indicar se o município precisa informar o código tributário do município para emissão deste documento. Caso seu valor seja 'true', a busca pelos possíveis valores pode ser feita como exemplificada anteriormente. 
 
 Considere que novos campos poderão ser adicionados nesta API.
 
