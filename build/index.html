@@ -590,6 +590,29 @@
           </li>
           <li>
             <a href="#revenda_revenda" class="toc-h1 toc-link" data-title="revenda">Revenda</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#revenda_urls" class="toc-h2 toc-link" data-title="urls">URLs</a>
+                  </li>
+                  <li>
+                    <a href="#revenda_campos" class="toc-h2 toc-link" data-title="campos">Campos</a>
+                  </li>
+                  <li>
+                    <a href="#revenda_criacao-de-empresa" class="toc-h2 toc-link" data-title="criacao-de-empresa">Criação de empresa</a>
+                  </li>
+                  <li>
+                    <a href="#revenda_consulta-de-empresas" class="toc-h2 toc-link" data-title="consulta-de-empresas">Consulta de empresas</a>
+                  </li>
+                  <li>
+                    <a href="#revenda_alteracao-de-empresa" class="toc-h2 toc-link" data-title="alteracao-de-empresa">Alteração de empresa</a>
+                  </li>
+                  <li>
+                    <a href="#revenda_listagem-de-empresas" class="toc-h2 toc-link" data-title="listagem-de-empresas">Listagem de empresas</a>
+                  </li>
+                  <li>
+                    <a href="#revenda_paginacao" class="toc-h2 toc-link" data-title="paginacao">Paginação</a>
+                  </li>
+              </ul>
           </li>
           <li>
             <a href="#limite-de-requisicoes_limite-de-requisicoes" class="toc-h1 toc-link" data-title="limite-de-requisicoes">Limite de requisições</a>
@@ -16077,7 +16100,428 @@ Para buscar os demais registros, utilize o parâmetro <strong>offset</strong>. E
 <p>Registros 201 a 223:
 `https://homologacao.focusnfe.com.br/v2/municipios?sigla_uf=PR&amp;offset=200</p>
 <h1 id='revenda_revenda'>Revenda</h1>
-<p>A API de Revenda ainda não foi migrada para a versão 2.0, você pode consultar a <a href="https://focusnfe.com.br/api/doc/revenda/">versão anterior aqui</a></p>
+<p>A API para revenda consiste em uma série de métodos para criar e habilitar automaticamente uma empresa para emissão de documentos fiscais (NFe, NFCe ou NFSe). São disponibilizados os métodos para criar uma empresa, buscar dados de uma empresa ou listar todas as empresas. Cada empresa possui um identificador único (campo id) que você deverá armazenar em sua base de dados para poder alterar ou buscar dados da empresa posteriormente.</p>
+
+<p><strong>Ambientes</strong></p>
+
+<p>Os dados das empresas de uma revenda são compartilhados nos ambientes de produção e homologação. Desta forma é possível criar uma empresa em produção para poder realizar testes em homologação. Não há um ambiente separado exclusivo para criação de empresas em ambiente de testes. Porém, quando aplicável, adicionamos o parâmetro opcional dry_run=1 que permite que a criação da empresa seja simulada sem que sefa efetivamente comitado no nosso banco de dados. Desta forma você poderá testar as chamadas antes de implementá-las em produção.</p>
+<h2 id='revenda_urls'>URLs</h2>
+<table><thead>
+<tr>
+<th>Método</th>
+<th>URL (recurso)</th>
+<th>Ação</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>POST</td>
+<td>/v2/empresas</td>
+<td>Cria uma nova empresa.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td>/v2/empresas</td>
+<td>Consulta todas as empresas.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td>/v2/empresas/ID</td>
+<td>Consulta uma a empresa a partir do seu identificador.</td>
+</tr>
+<tr>
+<td>POST</td>
+<td>/v2/empresa/ID</td>
+<td>Altera os dados de uma empresa específica.</td>
+</tr>
+</tbody></table>
+<h2 id='revenda_campos'>Campos</h2>
+<p>O formato de envio dos campos é no formato JSON, que deverá ser enviado no formato:</p>
+
+<p>{empresa: {atributo1: valor1, atributo2: valor2, … } }</p>
+
+<p>Abaixo são listados todos os campos de uma empresa.</p>
+
+<blockquote>
+<p>Exemplo de um arquivo JSON</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+   </span><span class="s2">"nome"</span><span class="p">:</span><span class="s2">"Nome da empresa Ltda"</span><span class="p">,</span><span class="w">
+   </span><span class="s2">"nome_fantasia"</span><span class="p">:</span><span class="s2">"Nome Fantasia"</span><span class="p">,</span><span class="w">
+   </span><span class="s2">"bairro"</span><span class="p">:</span><span class="s2">"Vila Isabel"</span><span class="p">,</span><span class="w">
+   </span><span class="s2">"cep"</span><span class="p">:</span><span class="mi">80210000</span><span class="p">,</span><span class="w">
+   </span><span class="s2">"cnpj"</span><span class="p">:</span><span class="s2">"10964044000164"</span><span class="p">,</span><span class="w">
+   </span><span class="s2">"complemento"</span><span class="p">:</span><span class="s2">"Loja 1"</span><span class="p">,</span><span class="w">
+   </span><span class="s2">"discrimina_impostos"</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span><span class="w">
+   </span><span class="s2">"email"</span><span class="p">:</span><span class="s2">"test@example.com"</span><span class="p">,</span><span class="w">
+   </span><span class="s2">"enviar_email_destinatario"</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span><span class="w">
+   </span><span class="s2">"inscricao_estadual"</span><span class="p">:</span><span class="mi">1234</span><span class="p">,</span><span class="w">
+   </span><span class="s2">"inscricao_municipal"</span><span class="p">:</span><span class="mi">46532</span><span class="p">,</span><span class="w">
+   </span><span class="s2">"logradouro"</span><span class="p">:</span><span class="s2">"Rua João da Silva"</span><span class="p">,</span><span class="w">
+   </span><span class="s2">"numero"</span><span class="p">:</span><span class="mi">153</span><span class="p">,</span><span class="w">
+   </span><span class="s2">"regime_tributario"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="w">
+   </span><span class="s2">"telefone"</span><span class="p">:</span><span class="s2">"4130333333"</span><span class="p">,</span><span class="w">
+   </span><span class="s2">"municipio"</span><span class="p">:</span><span class="s2">"Curitiba"</span><span class="p">,</span><span class="w">
+   </span><span class="s2">"uf"</span><span class="p">:</span><span class="s2">"PR"</span><span class="p">,</span><span class="w">
+   </span><span class="s2">"habilita_nfe"</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span><span class="w">
+   </span><span class="s2">"habilita_nfce"</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span><span class="w">
+   </span><span class="s2">"arquivo_certificado_base64"</span><span class="p">:</span><span class="s2">"MIIj4gIBAzCCI54GCSqGSIb3DQEHAaCC..apagado…ASD=="</span><span class="p">,</span><span class="w">
+   </span><span class="s2">"senha_certificado"</span><span class="p">:</span><span class="mi">123456</span><span class="p">,</span><span class="w">
+   </span><span class="s2">"csc_nfce_producao"</span><span class="p">:</span><span class="s2">"ABCDEF"</span><span class="p">,</span><span class="w">
+   </span><span class="s2">"id_token_nfce_producao"</span><span class="p">:</span><span class="s2">"00001"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<table><thead>
+<tr>
+<th>Campo</th>
+<th>Tipo</th>
+<th>Obrig. NFe</th>
+<th>Obrig. NFCe</th>
+<th>Obrig. NFSe</th>
+<th>Descrição</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>nome</td>
+<td>texto</td>
+<td>Sim</td>
+<td>Sim</td>
+<td>Sim</td>
+<td>Razão social da empresa</td>
+</tr>
+<tr>
+<td>nome_fantasia</td>
+<td>texto</td>
+<td>Sim</td>
+<td>Sim</td>
+<td>Sim</td>
+<td>Nome fantasia</td>
+</tr>
+<tr>
+<td>inscricao_estadual</td>
+<td>numérico</td>
+<td>Sim</td>
+<td>Sim</td>
+<td></td>
+<td>Inscrição estadual</td>
+</tr>
+<tr>
+<td>inscricao_municipal</td>
+<td>numérico</td>
+<td></td>
+<td></td>
+<td>Sim</td>
+<td>Inscrição municipal</td>
+</tr>
+<tr>
+<td>cnpj</td>
+<td>numérico</td>
+<td>Sim</td>
+<td>Sim</td>
+<td>Sim</td>
+<td>CNPJ</td>
+</tr>
+<tr>
+<td>regime_tributario</td>
+<td>enumeração</td>
+<td>Sim</td>
+<td>Sim</td>
+<td>Sim</td>
+<td>&quot;Regime tributário. Valores possíveis: 1 - Simples Nacional; 2 - Simples Naciona - Excesso de sublimite de receita bruta; 3 - Regime Normal</td>
+</tr>
+<tr>
+<td>email</td>
+<td>email</td>
+<td>Sim</td>
+<td>Sim</td>
+<td>Sim</td>
+<td>Email de contato da empresa</td>
+</tr>
+<tr>
+<td>telefone</td>
+<td>numérico</td>
+<td>Sim</td>
+<td>Sim</td>
+<td></td>
+<td>Telefone da empresa</td>
+</tr>
+<tr>
+<td>logradouro</td>
+<td>texto</td>
+<td>Sim</td>
+<td>Sim</td>
+<td>Sim</td>
+<td>Endereço: logradouro</td>
+</tr>
+<tr>
+<td>numero</td>
+<td>numérico</td>
+<td>Sim</td>
+<td>Sim</td>
+<td>Sim</td>
+<td>Endereço: número</td>
+</tr>
+<tr>
+<td>complemento</td>
+<td>texto</td>
+<td></td>
+<td></td>
+<td></td>
+<td>Endereço: complemento</td>
+</tr>
+<tr>
+<td>bairro</td>
+<td>texto</td>
+<td>Sim</td>
+<td>Sim</td>
+<td>Sim</td>
+<td>Endereço: bairro</td>
+</tr>
+<tr>
+<td>cep</td>
+<td>numérico</td>
+<td>Sim</td>
+<td>Sim</td>
+<td>Sim</td>
+<td>Endereço: CEP completo</td>
+</tr>
+<tr>
+<td>municipio</td>
+<td>texto</td>
+<td>Sim</td>
+<td>Sim</td>
+<td>Sim</td>
+<td>Endereço: nome do município sem abreviações</td>
+</tr>
+<tr>
+<td>uf</td>
+<td>texto</td>
+<td>Sim</td>
+<td>Sim</td>
+<td>Sim</td>
+<td>Endereço: UF com 2 caracteres</td>
+</tr>
+<tr>
+<td>enviar_email_destinatario</td>
+<td>booleano</td>
+<td></td>
+<td></td>
+<td></td>
+<td>Habilita ou não envio de e-mail ao destinatário/tomador do serviço após emissão do documento fiscal</td>
+</tr>
+<tr>
+<td>discrimina_impostos</td>
+<td>booleano</td>
+<td></td>
+<td></td>
+<td>N/A</td>
+<td>Habilita ou não o cálculo automático de impostos totais aproximados de acordo com a Lei da Transparência. Não é utilizado para NFSe.</td>
+</tr>
+<tr>
+<td>cpf_cnpj_contabilidade</td>
+<td>numérico</td>
+<td></td>
+<td></td>
+<td>N/A</td>
+<td>CPF/CNPJ da contabilidade da empresa. Alguns estados necessitam que esta informação seja adicionado (no momento apenas BA obriga).</td>
+</tr>
+<tr>
+<td>habilita_nfe</td>
+<td>booleano</td>
+<td>Sim</td>
+<td>N/A</td>
+<td>N/A</td>
+<td>Informa se empresa será habilitada para emissão de NFe – Nota Fiscal Eletrônica modelo 55</td>
+</tr>
+<tr>
+<td>habilita_nfce</td>
+<td>booleano</td>
+<td>N/A</td>
+<td>Sim</td>
+<td>N/A</td>
+<td>Informa se empresa será habilitada para emissão de NFCe – Nota Fiscal ao Consumidor Eletrônica modelo 65</td>
+</tr>
+<tr>
+<td>habilita_nfse</td>
+<td>booleano</td>
+<td>N/A</td>
+<td>N/A</td>
+<td>Sim</td>
+<td>Informa se empresa será habilitada para emissão de NFSe – Nota Fiscal de Serviço Eletrônica</td>
+</tr>
+<tr>
+<td>csc_nfce_producao</td>
+<td>texto</td>
+<td>N/A</td>
+<td>Sim</td>
+<td>N/A</td>
+<td>CSC para emissão de NFCe em ambiente de produção. Sem este campo não será possível emitir NFCe em produção. Veja com o SEFAZ do seu estado como gerar este código.</td>
+</tr>
+<tr>
+<td>id_token_nfce_producao</td>
+<td>numérico</td>
+<td>N/A</td>
+<td>Sim</td>
+<td>N/A</td>
+<td>Id do CSC para emissão de NFCe em ambiente de produção. Sem este campo não será possível emitir NFCe em produção.Veja com o SEFAZ do seu estado como gerar este número.</td>
+</tr>
+<tr>
+<td>csc_nfce_homologacao</td>
+<td>texto</td>
+<td>N/A</td>
+<td></td>
+<td>N/A</td>
+<td>CSC para emissão de NFCe em ambiente de homologação. Sem este campo não será possível emitir NFCe em homologação.</td>
+</tr>
+<tr>
+<td>id_token_nfce_homologacao</td>
+<td>numérico</td>
+<td>N/A</td>
+<td></td>
+<td></td>
+<td>Id do CSC para emissão de NFCe em ambiente dehomologação. Sem este campo não será possível emitir NFCe em homologação.</td>
+</tr>
+<tr>
+<td>proximo_numero_nfe_producao</td>
+<td>numérico</td>
+<td></td>
+<td>N/A</td>
+<td>N/A</td>
+<td>Próximo número da NFe a ser emitida em produção. Calculado automaticamente.</td>
+</tr>
+<tr>
+<td>proximo_numero_nfe_homologacao</td>
+<td>numérico</td>
+<td></td>
+<td>N/A</td>
+<td>N/A</td>
+<td>Próximo número da NFe a ser emitida em homologação. Calculado automaticamente.</td>
+</tr>
+<tr>
+<td>serie_nfe_producao</td>
+<td>numérico</td>
+<td></td>
+<td>N/A</td>
+<td>N/A</td>
+<td>Série da NFe a ser emitida em produção. Valor padrão: 1</td>
+</tr>
+<tr>
+<td>serie_nfe_homologacao</td>
+<td>numérico</td>
+<td></td>
+<td>N/A</td>
+<td>N/A</td>
+<td>Série da NFe a ser emitida em homologação. Valor padrão: 1</td>
+</tr>
+<tr>
+<td>proximo_numero_nfse_producao</td>
+<td>numérico</td>
+<td>N/A</td>
+<td>N/A</td>
+<td></td>
+<td>Próximo número do RPS da NFSe a ser emitida em produção. Calculado automaticamente.</td>
+</tr>
+<tr>
+<td>proximo_numero_nfse_homologacao</td>
+<td>numérico</td>
+<td>N/A</td>
+<td>N/A</td>
+<td></td>
+<td>Próximo número do RPS da NFSe a ser emitida em homologação. Calculado automaticamente.</td>
+</tr>
+<tr>
+<td>serie_nfse_producao</td>
+<td>numérico</td>
+<td>N/A</td>
+<td>N/A</td>
+<td></td>
+<td>Série do RPS para envio de NFSe em produção. Algumas prefeituras não utilizam.</td>
+</tr>
+<tr>
+<td>serie_nfse_homologacao</td>
+<td>numérico</td>
+<td>N/A</td>
+<td>N/A</td>
+<td></td>
+<td>Série do RPS em homologação.</td>
+</tr>
+<tr>
+<td>arquivo_certificado_base64</td>
+<td>texto em base 64</td>
+<td>Sim</td>
+<td>Sim</td>
+<td>Sim*</td>
+<td>&quot;Arquivo do certificado digital, em formato PFX ou P12, codificado em base64. Nem todas as prefeituras necessitam de certificado para emissão de NFSe.&quot;</td>
+</tr>
+<tr>
+<td>senha_certificado</td>
+<td>texto</td>
+<td>Sim</td>
+<td>Sim</td>
+<td>Sim*</td>
+<td>Senha do certificado digital.</td>
+</tr>
+<tr>
+<td>arquivo_logo_base64</td>
+<td>texto em base 64</td>
+<td></td>
+<td></td>
+<td></td>
+<td>Logomarca da empresa para ser usada na DANFE. Nem todas as prefeituras aceitam o uso de logo. Utilize uma imagem em formato PNG de no máximo 200×200 pixels</td>
+</tr>
+</tbody></table>
+<h2 id='revenda_criacao-de-empresa'>Criação de empresa</h2><pre class="highlight shell tab-shell"><code>curl -u <span class="s2">"token obtido no cadastro da empresa:"</span> <span class="se">\</span>
+  -T empresa.json
+  https://api.focusnfe.com.br/v2/empresas
+</code></pre>
+<p>Uma empresa pode ser criada usando o seguinte endereço</p>
+
+<p><code>https://api.focusnfe.com.br/v2/empresas</code></p>
+
+<p>Utilize o comando <strong>HTTP POST</strong>.
+O conteúdo do POST deverá conter os dados da empresa. O resultado será os dados da empresa criados ou uma mensagem de erro de validação. É importante salvar o campo id gerado para posterior consulta ou alteração da empresa. Considere o campo &quot;id&quot; como sendo alfanumérico, pois no futuro o formato deverá ser alterado para permitir letras e números na identificação.</p>
+<h2 id='revenda_consulta-de-empresas'>Consulta de empresas</h2><pre class="highlight shell tab-shell"><code>curl -u <span class="s2">"token obtido no cadastro da empresa:"</span> <span class="se">\</span>
+  https://api.focusnfe.com.br/v2/empresas/123
+</code></pre>
+<p>Uma empresa pode ser visualizada usando o seguinte endereço</p>
+
+<p><code>https://api.focusnfe.com.br/v2/empresas/ID</code></p>
+
+<p>Onde ID é o id da empresa fornecido no momento da criação. Utilize o comando <strong>HTTP GET</strong>. O resultado será todos os dados da empresa.</p>
+<h2 id='revenda_alteracao-de-empresa'>Alteração de empresa</h2><pre class="highlight shell tab-shell"><code>curl -X PUT -u <span class="s2">"token obtido no cadastro da empresa:"</span> <span class="se">\</span>
+  -T empresa.json
+  https://api.focusnfe.com.br/v2/empresas/123
+</code></pre>
+<p>Uma empresa pode ser alterada usando o seguinte endereço.</p>
+
+<p><code>https://api.focusnfe.com.br/v2/empresas/ID</code></p>
+
+<p>Onde ID é o id da empresa fornecido no momento da criação Utilize o comando <strong>HTTP PUT</strong> para alterar a empresa. O conteúdo do PUT deverá conter os dados da empresa que serão alterados. Os demais dados permanecerão inalterados. O resultado será todos os dados da empresa criados ou uma mensagem de erro de validação. Os dados devem seguir o mesmo formato para criação da empresa.</p>
+
+<p>Atributos que não serão modificados podem ser omitidos.</p>
+<h2 id='revenda_listagem-de-empresas'>Listagem de empresas</h2><pre class="highlight shell tab-shell"><code>curl -u <span class="s2">"token obtido no cadastro da empresa:"</span> <span class="se">\</span>
+  https://api.focusnfe.com.br/v2/empresas
+</code></pre>
+<p>É possível listar todas as empresas criadas usando o seguinte método HTTP:</p>
+
+<p><code>https://api.focusnfe.com.br/v2/empresas</code></p>
+
+<p>Utilize o comando <strong>HTTP GET</strong>. O resultado será todos os dados de todas a empresas.</p>
+<h2 id='revenda_paginacao'>Paginação</h2>
+<p>Ao fazer uma pesquisa, a API irá devolver o cabeçalho HTTP <em>X-Total-Count</em> que representa
+o número total de ocorrências da pesquisa, porém a API devolve apenas 50 registros por vez.
+Para buscar os demais registros, utilize o parâmetro <strong>offset</strong>. Exemplo:</p>
+
+<p>Vamos supor que a chamada abaixo devolva 123 ocorrências:</p>
+
+<p><code>https://api.focusnfe.com.br/v2/empresas</code></p>
+
+<p>A segunda e terceira páginas da consulta poderão ser acessados desta forma:</p>
+
+<p>Registros 51 a 100:
+<code>https://api.focusnfe.com.br/v2/empresas?offset=50</code></p>
+
+<p>Registros 101 a 123:
+<code>https://api.focusnfe.com.br/v2/empresas?offset=100</code></p>
 <h1 id='limite-de-requisicoes_limite-de-requisicoes'>Limite de requisições</h1>
 <p>A API é limitada a 100 créditos/minuto por token de acesso. Cada requisição consome 1 crédito. Isto é válido para requisições de qualquer documento fiscal, para qualquer método. Todas as respostas da API incluem os cabeçalhos abaixo, que descrevem os limites atuais da sua aplicação:</p>
 
