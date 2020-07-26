@@ -16477,6 +16477,10 @@ Para buscar os demais registros, utilize o parâmetro <strong>offset</strong>. E
 
 <p><code>https://api.focusnfe.com.br/v2/empresas</code></p>
 
+<p>Caso queira apenas testar a criação de uma empresa, utilize o endereço abaixo:</p>
+
+<p><code>https://api.focusnfe.com.br/v2/empresas?dry_run=1</code></p>
+
 <p>Utilize o comando <strong>HTTP POST</strong>.
 O conteúdo do POST deverá conter os dados da empresa. O resultado será os dados da empresa criados ou uma mensagem de erro de validação. É importante salvar o campo id gerado para posterior consulta ou alteração da empresa. Considere o campo &quot;id&quot; como sendo alfanumérico, pois no futuro o formato deverá ser alterado para permitir letras e números na identificação.</p>
 <h2 id='revenda_consulta-de-empresas'>Consulta de empresas</h2><pre class="highlight shell tab-shell"><code>curl -u <span class="s2">"token obtido no cadastro da empresa:"</span> <span class="se">\</span>
@@ -16494,6 +16498,10 @@ O conteúdo do POST deverá conter os dados da empresa. O resultado será os dad
 <p>Uma empresa pode ser alterada usando o seguinte endereço.</p>
 
 <p><code>https://api.focusnfe.com.br/v2/empresas/ID</code></p>
+
+<p>Caso queira apenas testar a alteração de uma empresa, utilize o endereço abaixo:</p>
+
+<p><code>https://api.focusnfe.com.br/v2/empresas?dry_run=1</code></p>
 
 <p>Onde ID é o id da empresa fornecido no momento da criação Utilize o comando <strong>HTTP PUT</strong> para alterar a empresa. O conteúdo do PUT deverá conter os dados da empresa que serão alterados. Os demais dados permanecerão inalterados. O resultado será todos os dados da empresa criados ou uma mensagem de erro de validação. Os dados devem seguir o mesmo formato para criação da empresa.</p>
 
