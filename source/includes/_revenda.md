@@ -4,7 +4,9 @@ A API para revenda consiste em uma série de métodos para criar e habilitar aut
 
 **Ambientes**
 
-Os dados das empresas de uma revenda são compartilhados nos ambientes de produção e homologação. Desta forma é possível criar uma empresa em produção para poder realizar testes em homologação. Não há um ambiente separado exclusivo para criação de empresas em ambiente de testes. Porém, quando aplicável, adicionamos o parâmetro opcional dry_run=1 que permite que a criação da empresa seja simulada sem que sefa efetivamente comitado no nosso banco de dados. Desta forma você poderá testar as chamadas antes de implementá-las em produção.
+A API de Revendas opera exclusivamente no ambiente de produção, não sendo possível realizar operações em homologação. Porém, quando aplicável, adicionamos o parâmetro opcional dry_run=1 que permite que a criação da empresa seja simulada sem que seja efetivamente efetuada no nosso banco de dados. Desta forma você poderá testar as chamadas antes de implementá-las em produção.
+
+Uma vez criada a empresa no ambiente de produção, você poderá emitir documentos fiscais no ambiente de homologação e produção usando esta empresa.
 
 ## URLs
 
