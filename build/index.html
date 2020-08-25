@@ -332,6 +332,12 @@
                     <a href="#enviador-de-arquivos-s-t-nfce_nfce" class="toc-h2 toc-link" data-title="nfce">NFCe</a>
                   </li>
                   <li>
+                    <a href="#enviador-de-arquivos-s-t-nfce_cfe-mfe" class="toc-h2 toc-link" data-title="cfe-mfe">CFe MFe</a>
+                  </li>
+                  <li>
+                    <a href="#enviador-de-arquivos-s-t-nfce_api-local" class="toc-h2 toc-link" data-title="api-local">API Local</a>
+                  </li>
+                  <li>
                     <a href="#enviador-de-arquivos-s-t-nfce_download" class="toc-h2 toc-link" data-title="download">Download</a>
                   </li>
               </ul>
@@ -6416,6 +6422,128 @@ Atualmente nosso Enviador não faz os cálculos dos impostos apróximados da Lei
 <p>O arquivo de impressão da NFCe fica armazenado na pasta &#39;pdf&#39;, basta acessar esse diretório para realizar a reimpressão de uma nota já emitida.</p>
 
 <p>Outra forma de realizar este processo é criar um arquivo sem conteúdo com a mesma descrição (REF) usada na emissão da nota, com o acréscimo do sufixo &quot;_nfce&quot;, e com a extensão de arquivo <strong>.reimp.</strong>. Ele deverá ser colocado no diretório &#39;envios&#39;, com isso, o Enviador irá fazer uma chamada na impressora configurada enviando a DANFCe para impressão.</p>
+<h2 id='enviador-de-arquivos-s-t-nfce_cfe-mfe'>CFe MFe</h2>
+<p>Para emissão do Cupom Fiscal Eletrônico no estado do Ceará será necessário, primeiramente, o cumprimento das premissas abaixo:</p>
+
+<ul>
+<li>Seguir as instruções da seção de &#39;contribuinte&#39; presentes no documento &#39;Manual do Portal CFe destinado aos Contribuintes - Software Houses - Consumidor Final&#39;, que pode ser encontrado <a href="https://servicos.sefaz.ce.gov.br/internet/download/projetomfe/Manual_Manual_PortalCFe_Rev_26.pdf">aqui</a>, ou acessando a área de downloads no Portal da Sefaz do Ceará.</li>
+<li>Possuir acesso a <a href="https://cfe.sefaz.ce.gov.br/mfe/portal#/login?type=TAXPAYER">área restrita</a> do contribuinte no Portal da Sefaz do Ceará.</li>
+<li>Vincular o equipamento MFe (Módulo Fiscal Eletrônico) ao CNPJ do contribuinte e assinar o &#39;Termo de Aceite e Requisição de Certificado Digital da SEFAZ-CE&#39; na área restrita do contribuinte.</li>
+<li>Solicitar para o suporte a vinculação do CNPJ do contribuinte com o Aplicativo Comercial (Comunicador Focus NFe).</li>
+</ul>
+
+<p>Após a vinculação do Comunicador Focus NFe com o CNPJ do Contribuinte, o funcionamento do processo, assim como os campos utilizados, segue os mesmos padrões descritos na seção CFe S@T.</p>
+<h2 id='enviador-de-arquivos-s-t-nfce_api-local'>API Local</h2><pre class="highlight shell tab-shell"><code><span class="c"># Consultar status</span>
+curl -XGET -T http://localhost:55555/fiscal/sat/status
+</code></pre>
+<blockquote>
+<p>Exemplo de resposta da API local após consultar o <strong>status</strong> do equipamento:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"autorizado"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"codigo_sat"</span><span class="p">:</span><span class="w"> </span><span class="s2">"08000"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"mensagem"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SAT em operação"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"mensagem_sefaz"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"numero_sessao"</span><span class="p">:</span><span class="w"> </span><span class="s2">"768630"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"raw_response"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w"> </span><span class="err">#</span><span class="w"> </span><span class="err">Resposta</span><span class="w"> </span><span class="err">sem</span><span class="w"> </span><span class="err">tratamento</span><span class="w"> </span><span class="err">retornada</span><span class="w"> </span><span class="err">pelo</span><span class="w"> </span><span class="err">equipamento.</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre><pre class="highlight shell tab-shell"><code><span class="c"># Extrair logs</span>
+curl -XGET -T http://localhost:55555/fiscal/sat/logs
+</code></pre>
+<blockquote>
+<p>Exemplo de resposta da API local após extrair os <strong>logs</strong> do equipamento:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"autorizado"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"codigo_sat"</span><span class="p">:</span><span class="w"> </span><span class="s2">"15000"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"mensagem_sefaz"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"arquivo_log_base64"</span><span class="p">:</span><span class="w"> </span><span class="s2">"..."</span><span class="p">,</span><span class="w"> </span><span class="err">#</span><span class="w"> </span><span class="err">String</span><span class="w"> </span><span class="err">em</span><span class="w"> </span><span class="err">base</span><span class="mi">64</span><span class="w"> </span><span class="err">contendo</span><span class="w"> </span><span class="err">os</span><span class="w"> </span><span class="err">logs</span><span class="w"> </span><span class="err">retornados</span><span class="w"> </span><span class="err">pelo</span><span class="w"> </span><span class="err">equipamento</span><span class="w">
+  </span><span class="s2">"raw_response"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w"> </span><span class="err">#</span><span class="w"> </span><span class="err">Resposta</span><span class="w"> </span><span class="err">sem</span><span class="w"> </span><span class="err">tratamento</span><span class="w"> </span><span class="err">retornada</span><span class="w"> </span><span class="err">pelo</span><span class="w"> </span><span class="err">equipamento.</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre><pre class="highlight shell tab-shell"><code>curl -XPOST --header <span class="s1">'Content-Type: application/json'</span> http://localhost:55555/fiscal/sat/ -T arquivo.json
+</code></pre>
+<blockquote>
+<p>Exemplo de resposta da API local após <strong>emissão</strong> do cupom fiscal pelo equipamento SAT/MFe:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"autorizado"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"mensagem"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Emitido com sucesso + conteudo notas."</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"cpf_cnpj_emitente"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"chave_cfe"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CFe77781082373077987991599000999380000289999993"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"numero"</span><span class="p">:</span><span class="w"> </span><span class="s2">"123"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"arquivo_cfe_base64"</span><span class="p">:</span><span class="w"> </span><span class="s2">"..."</span><span class="p">,</span><span class="w"> </span><span class="err">#</span><span class="w"> </span><span class="err">String</span><span class="w"> </span><span class="err">em</span><span class="w"> </span><span class="err">base</span><span class="mi">64</span><span class="w"> </span><span class="err">contento</span><span class="w"> </span><span class="err">o</span><span class="w"> </span><span class="err">xml</span><span class="w"> </span><span class="err">do</span><span class="w"> </span><span class="err">cupom</span><span class="w"> </span><span class="err">fiscal</span><span class="w"> </span><span class="err">retornado</span><span class="w"> </span><span class="err">pelo</span><span class="w"> </span><span class="err">equipamento.</span><span class="w">
+  </span><span class="s2">"data_emissao"</span><span class="p">:</span><span class="w"> </span><span class="s2">"20200824185237"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"valor_total_cfe"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10.99"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"arquivo_cfe_pdf_base64"</span><span class="p">:</span><span class="w"> </span><span class="s2">"..."</span><span class="p">,</span><span class="w"> </span><span class="err">#</span><span class="w"> </span><span class="err">String</span><span class="w"> </span><span class="err">em</span><span class="w"> </span><span class="err">base</span><span class="mi">64</span><span class="w"> </span><span class="err">contento</span><span class="w"> </span><span class="err">o</span><span class="w"> </span><span class="err">pdf</span><span class="w"> </span><span class="err">do</span><span class="w"> </span><span class="err">cupom</span><span class="w"> </span><span class="err">fiscal.</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre><pre class="highlight shell tab-shell"><code>curl -XDELETE --header <span class="s1">'Content-Type: application/json'</span> http://localhost:55555/fiscal/sat/ -T arquivo.json
+</code></pre>
+<blockquote>
+<p>Exemplo de resposta da API local após <strong>cancelamento</strong> do cupom fiscal pelo equipamento SAT/MFe:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cancelado"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"mensagem"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Cupom cancelado com sucesso + conteudo CF-E-SAT cancelado."</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"cpf_cnpj_emitente"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"chave_cfe"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CFe77781082373077987991599000999380000289991234"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"numero"</span><span class="p">:</span><span class="w"> </span><span class="s2">"001754"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"arquivo_cfe_base64"</span><span class="p">:</span><span class="w"> </span><span class="s2">"..."</span><span class="p">,</span><span class="w"> </span><span class="err">#</span><span class="w"> </span><span class="err">String</span><span class="w"> </span><span class="err">em</span><span class="w"> </span><span class="err">base</span><span class="mi">64</span><span class="w"> </span><span class="err">contento</span><span class="w"> </span><span class="err">o</span><span class="w"> </span><span class="err">xml</span><span class="w"> </span><span class="err">do</span><span class="w"> </span><span class="err">cupom</span><span class="w"> </span><span class="err">fiscal</span><span class="w"> </span><span class="err">retornado</span><span class="w"> </span><span class="err">pelo</span><span class="w"> </span><span class="err">equipamento.</span><span class="w">
+  </span><span class="s2">"data_emissao"</span><span class="p">:</span><span class="w"> </span><span class="s2">"20200824185237"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"valor_total_cfe"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10.99"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"arquivo_cfe_pdf_base64"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>Além do sistema de comunicação via diretórios, o Comunicador Focus NFe também disponibiliza uma API local para comunicação direta. 
+Através da API Local é possível: </p>
+
+<ul>
+<li>Verificar o status do equipamento (SAT/MFe).</li>
+<li>Extrair os logs do equipamento (SAT/MFe).</li>
+<li>Emissão do cupom fiscal (SAT/MFe).</li>
+<li>Cancalemento do cupom fiscal (SAT/MFe).</li>
+</ul>
+<h3 id='enviador-de-arquivos-s-t-nfce_urls'>URLs</h3>
+<table><thead>
+<tr>
+<th>Método</th>
+<th>URL (recurso)</th>
+<th>Ação</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>GET</td>
+<td>http://localhost:PORTA/fiscal/sat/status</td>
+<td>Retorna o status do equipamento.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td>http://localhost:PORTA/fiscal/sat/logs</td>
+<td>Extrai os logs do equipamento.</td>
+</tr>
+<tr>
+<td>POST</td>
+<td>http://localhost:PORTA/fiscal/sat/</td>
+<td>Emite um cupom fiscal eletrônico.</td>
+</tr>
+<tr>
+<td>DELETE</td>
+<td>http://localhost:PORTA/fiscal/sat/</td>
+<td>Cancela um cupom fiscal eletrônico.</td>
+</tr>
+</tbody></table>
+
+<ul>
+<li>Obs 1: A valor de &#39;PORTA&#39; é definido nas configurações do Comunicador Focus NFe. Caso não seja atribuído um número válido, será escolhido um valor de porta aleatório válido.</li>
+<li>Obs 2: O body das requisições para emissão do cupom fiscal e para o cancelamento segue exatamente o mesmo padrão utilizado nos arquivos &#39;.cfe&#39; e &#39;.cfecanc&#39; exemplificados anteriormente.</li>
+</ul>
+<h3 id='enviador-de-arquivos-s-t-nfce_consultar-status'>Consultar Status</h3>
+<p>A consulta de status retorna o status do equipamento SAT/MFe conectado no computador do usuário. O modelo do equipamento e o código de ativação devem ser devidamente configurados no Comunicador Focus NFe para o correto funcionamento da consulta. </p>
+<h3 id='enviador-de-arquivos-s-t-nfce_extrair-logs'>Extrair logs</h3>
+<p>A extração dos logs retorna os logs do equipamento SAT/MFe conectado no computador do usuário. Devido ao tamanho do arquivo, os dados são retornados em base64.</p>
+<h3 id='enviador-de-arquivos-s-t-nfce_emitir-cupom-fiscal'>Emitir cupom fiscal</h3>
+<p>A emissão de um cupom retorna um json com os detalhes da autorização feita pelo equipamento SAT/MFe conectado no computador do usuário. Os arquivos xmls gerados, assim como o pdf são retornados em base64.</p>
+<h3 id='enviador-de-arquivos-s-t-nfce_cancelar-cupom-fiscal'>Cancelar cupom fiscal</h3>
+<p>O cancelamento de um cupom retorna um json com os detalhes do cancelamento feito pelo equipamento SAT/MFe conectado no computador do usuário. Os arquivos xmls gerados são retornados em base64.</p>
 <h2 id='enviador-de-arquivos-s-t-nfce_download'>Download</h2>
 <p>Para te acesso ao instalador do Enviador de Arquivos, entre em contato com a nossa equipe no email comercial@acras.com.br.</p>
 <h1 id='nfse_nfse'>NFSe</h1>
