@@ -16,6 +16,7 @@ POST|/v2/empresas | Cria uma nova empresa.
 GET|/v2/empresas | Consulta todas as empresas.
 GET|/v2/empresas/ID | Consulta uma a empresa a partir do seu identificador.
 PUT|/v2/empresa/ID | Altera os dados de uma empresa específica.
+DELETE|/v2/empresa/ID | Exclui uma empresa
 
 ## Campos
 
@@ -146,6 +147,19 @@ Caso queira apenas testar a alteração de uma empresa, utilize o endereço abai
 Onde ID é o id da empresa fornecido no momento da criação Utilize o comando **HTTP PUT** para alterar a empresa. O conteúdo do PUT deverá conter os dados da empresa que serão alterados. Os demais dados permanecerão inalterados. O resultado será todos os dados da empresa criados ou uma mensagem de erro de validação. Os dados devem seguir o mesmo formato para criação da empresa.
 
 Atributos que não serão modificados podem ser omitidos.
+
+## Exclusão de empresa
+
+```shell
+curl -X DELETE -u "token obtido no cadastro da empresa:" \
+  https://api.focusnfe.com.br/v2/empresas/123
+```
+
+Uma empresa pode ser cancelada usando o seguinte endereço
+
+`https://api.focusnfe.com.br/v2/empresas/ID`
+
+Onde ID é o id da empresa fornecido no momento da criação. Utilize o comando **HTTP DELETE**. O resultado será todos os dados da empresa excluída. Após esta operação você não terá mais acesso aos dados da empresa ou aos documentos emitidos. Esta operação não é reversível, mas você poderá cadastrar a empresa novamente no futuro se for necessário. 
 
 ## Listagem de empresas
 
