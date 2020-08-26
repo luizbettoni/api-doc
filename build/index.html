@@ -613,6 +613,9 @@
                     <a href="#revenda_alteracao-de-empresa" class="toc-h2 toc-link" data-title="alteracao-de-empresa">Alteração de empresa</a>
                   </li>
                   <li>
+                    <a href="#revenda_exclusao-de-empresa" class="toc-h2 toc-link" data-title="exclusao-de-empresa">Exclusão de empresa</a>
+                  </li>
+                  <li>
                     <a href="#revenda_listagem-de-empresas" class="toc-h2 toc-link" data-title="listagem-de-empresas">Listagem de empresas</a>
                   </li>
                   <li>
@@ -16263,6 +16266,11 @@ Para buscar os demais registros, utilize o parâmetro <strong>offset</strong>. E
 <td>/v2/empresa/ID</td>
 <td>Altera os dados de uma empresa específica.</td>
 </tr>
+<tr>
+<td>DELETE</td>
+<td>/v2/empresa/ID</td>
+<td>Exclui uma empresa</td>
+</tr>
 </tbody></table>
 <h2 id='revenda_campos'>Campos</h2>
 <p>O formato de envio dos campos é no formato JSON, que deverá ser enviado no formato:</p>
@@ -16636,6 +16644,14 @@ O conteúdo do POST deverá conter os dados da empresa. O resultado será os dad
 <p>Onde ID é o id da empresa fornecido no momento da criação Utilize o comando <strong>HTTP PUT</strong> para alterar a empresa. O conteúdo do PUT deverá conter os dados da empresa que serão alterados. Os demais dados permanecerão inalterados. O resultado será todos os dados da empresa criados ou uma mensagem de erro de validação. Os dados devem seguir o mesmo formato para criação da empresa.</p>
 
 <p>Atributos que não serão modificados podem ser omitidos.</p>
+<h2 id='revenda_exclusao-de-empresa'>Exclusão de empresa</h2><pre class="highlight shell tab-shell"><code>curl -X DELETE -u <span class="s2">"token obtido no cadastro da empresa:"</span> <span class="se">\</span>
+  https://api.focusnfe.com.br/v2/empresas/123
+</code></pre>
+<p>Uma empresa pode ser cancelada usando o seguinte endereço</p>
+
+<p><code>https://api.focusnfe.com.br/v2/empresas/ID</code></p>
+
+<p>Onde ID é o id da empresa fornecido no momento da criação. Utilize o comando <strong>HTTP DELETE</strong>. O resultado será todos os dados da empresa excluída. Após esta operação você não terá mais acesso aos dados da empresa ou aos documentos emitidos. Esta operação não é reversível, mas você poderá cadastrar a empresa novamente no futuro se for necessário. </p>
 <h2 id='revenda_listagem-de-empresas'>Listagem de empresas</h2><pre class="highlight shell tab-shell"><code>curl -u <span class="s2">"token obtido no cadastro da empresa:"</span> <span class="se">\</span>
   https://api.focusnfe.com.br/v2/empresas
 </code></pre>
