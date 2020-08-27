@@ -230,8 +230,9 @@ Caso já saiba o código exato do item da lista de serviço ou do código tribut
     "provedor_nfse": "Tecnos",
     "endereco_obrigatorio_nfse": null,
     "cpf_cnpj_obrigatorio_nfse": null,
-    "item_lista_servico_nfse": false,
-    "codigo_tributario_municipio_nfse": false
+    "codigo_cnae_obrigatorio_nfse": true,
+    "item_lista_servico_obrigatorio_nfse": false,
+    "codigo_tributario_municipio_obrigatorio_nfse": false
   }
 ]
 ```
@@ -265,10 +266,11 @@ Para cada consulta à nossa API de municípios a resposta trará um ou mais obje
 * **possui_ambiente_homologacao_nfse**: Se a NFSe para este município está implementada, este campo irá indicar se existe ambiente de homologação neste município
 * **possui_cancelamento_nfse**: Se a NFSe para este município está implementada, este campo irá indicar se é possível o cancelamento de NFSe via API neste município. Caso contrário pode ser possível o cancelamento pela própria interface da prefeitura
 * **provedor_nfse**: Se a NFSe para este município está implementada, este campo irá indicar o nome do provedor do município.
-* **endereco_obrigatorio_nfse**: Se a NFSe para este município está implementada, esse campo irá indicar se o município precisa informar o endereço para emissão deste documento.
-* **cpf_cnpj_obrigatorio_nfse**: Se a NFSe para este município está implementada, esse campo irá indicar se o município precisa informar o cpf/cnpj para emissão deste documento.
-* **item_lista_servico_nfse**: Se a NFSe para este município está implementada, esse campo irá indicar se o município precisa informar o item da lista de serviço para emissão deste documento. Caso seu valor seja 'true', a busca pelos possíveis valores pode ser feita como exemplificada anteriormente. 
-* **codigo_tributario_municipio_nfse**: Se a NFSe para este município está implementada, esse campo irá indicar se o município precisa informar o código tributário do município para emissão deste documento. Caso seu valor seja 'true', a busca pelos possíveis valores pode ser feita como exemplificada anteriormente. 
+* **endereco_obrigatorio_nfse**: Se a NFSe para este município está implementada, esse campo irá indicar se o município precisa informar o endereço para emissão deste documento. O valor 'true' indica a obrigatoriedade, o valor 'false' indica a não obrigatoriedade e o valor 'null' indica a ausência dessa informação no sistema.
+* **cpf_cnpj_obrigatorio_nfse**: Se a NFSe para este município está implementada, esse campo irá indicar se o município precisa informar o cpf/cnpj para emissão deste documento. O valor 'true' indica a obrigatoriedade, o valor 'false' indica a não obrigatoriedade e o valor 'null' indica a ausência dessa informação no sistema.
+* **codigo_cnae_obrigatorio_nfse**: Se a NFSe para este município está implementada, esse campo irá indicar se o município precisa informar o código cnae para emissão deste documento. O valor 'true' indica a obrigatoriedade, o valor 'false' indica a não obrigatoriedade e o valor 'null' indica a ausência dessa informação no sistema.
+* **item_lista_servico_obrigatorio_nfse**: Se a NFSe para este município está implementada, esse campo irá indicar se o município precisa informar o item da lista de serviço para emissão deste documento. Caso seu valor seja 'true', a busca pelos possíveis valores pode ser feita como exemplificada anteriormente.  O valor 'true' indica a obrigatoriedade, o valor 'false' indica a não obrigatoriedade e o valor 'null' indica a ausência dessa informação no sistema.
+* **codigo_tributario_municipio_obrigatorio_nfse**: Se a NFSe para este município está implementada, esse campo irá indicar se o município precisa informar o código tributário do município para emissão deste documento. Caso seu valor seja 'true', a busca pelos possíveis valores pode ser feita como exemplificada anteriormente.  O valor 'true' indica a obrigatoriedade, o valor 'false' indica a não obrigatoriedade e o valor 'null' indica a ausência dessa informação no sistema.
 
 Considere que novos campos poderão ser adicionados nesta API.
 
