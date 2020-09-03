@@ -856,7 +856,7 @@ Utilize o comando **HTTP GET** para consultar a sua nota para nossa API.
 * **serie_rps:** A série do RPS de controle da Prefeitura.
 * **tipo_rps:** O tipo do RPS de controle da Prefeitura.
 * **erros:** Quando ocorrerem erros na emissão, será aqui que mostraremos a orientação da Prefeitura.
-* **url:** URL para acesso do espelho da nota (versão HTML). Quando a prefeitura disponibiliza uma URL pública, utilizamos o link da própria prefeitura, caso contrário criamos o nosso próprio espelho através de um link interno.
+* **url:** URL para acesso do espelho da nota. Quando a prefeitura disponibiliza uma URL pública, utilizamos o link da própria prefeitura, caso contrário criamos o nosso próprio espelho através de um link interno.
 * **url_danfse:** URL para acesso e download do DANFSe (versão PDF). A versão em PDF está disponível no momento apenas para alguns municípios. Entre em contato conosco caso precise da versão em PDF para o seu município.
 * **data_emissao:** Data da emissão da nota fiscal.
 * **caminho_xml_nota_fiscal:** Caminho para acesso e download do XML da nota fiscal.
@@ -869,7 +869,7 @@ Utilize o comando **HTTP GET** para consultar a sua nota para nossa API.
 Após a autorização da nota fiscal de serviço eletrônica será disponibilizado os campos:
 
 *  **caminho_xml_nota_fiscal** - Representa o caminho para montar a URL para download do XML. Por exemplo, se você utilizou o servidor api.focusnfe.com.br e o caminho_xml_nota_fiscal contém o caminho "/notas_fiscais_servico/NFSe075045050001324106902-004940940-428-DUMMY.xml" você poderá acessar o XML pela URL completa https://api.focusnfe.com.br/notas_fiscais_servico/NFSe075045050001324106902-004940940-428-DUMMY.xml
-* **url**. A URL para consultar a NFSe direto no portal da prefeitura em formato **HTML**.
+* **url**. A URL para consultar a NFSe direto no portal da prefeitura.
 
 Utilize o método **HTTP GET** para ambas as consultas.
 
