@@ -335,7 +335,7 @@
                     <a href="#enviador-de-arquivos-s-t-nfce_cfe-mfe" class="toc-h2 toc-link" data-title="cfe-mfe">CFe MFe</a>
                   </li>
                   <li>
-                    <a href="#enviador-de-arquivos-s-t-nfce_api-local" class="toc-h2 toc-link" data-title="api-local">API Local</a>
+                    <a href="#enviador-de-arquivos-s-t-nfce_api-local-beta" class="toc-h2 toc-link" data-title="api-local-beta">API Local (beta)</a>
                   </li>
                   <li>
                     <a href="#enviador-de-arquivos-s-t-nfce_download" class="toc-h2 toc-link" data-title="download">Download</a>
@@ -6436,7 +6436,7 @@ Atualmente nosso Enviador não faz os cálculos dos impostos apróximados da Lei
 </ul>
 
 <p>Após a vinculação do Comunicador Focus NFe com o CNPJ do Contribuinte, o funcionamento do processo, assim como os campos utilizados, segue os mesmos padrões descritos na seção CFe S@T.</p>
-<h2 id='enviador-de-arquivos-s-t-nfce_api-local'>API Local</h2><pre class="highlight shell tab-shell"><code><span class="c"># Consultar status</span>
+<h2 id='enviador-de-arquivos-s-t-nfce_api-local-beta'>API Local (beta)</h2><pre class="highlight shell tab-shell"><code><span class="c"># Consultar status</span>
 curl -XGET -T http://localhost:55555/fiscal/sat/status
 </code></pre>
 <blockquote>
@@ -7452,7 +7452,7 @@ ainda em processamento ou se a nota já foi processada.</p>
 <li><strong>serie_rps:</strong> A série do RPS de controle da Prefeitura.</li>
 <li><strong>tipo_rps:</strong> O tipo do RPS de controle da Prefeitura.</li>
 <li><strong>erros:</strong> Quando ocorrerem erros na emissão, será aqui que mostraremos a orientação da Prefeitura.</li>
-<li><strong>url:</strong> URL para acesso do espelho da nota (versão HTML). Quando a prefeitura disponibiliza uma URL pública, utilizamos o link da própria prefeitura, caso contrário criamos o nosso próprio espelho através de um link interno.</li>
+<li><strong>url:</strong> URL para acesso do espelho da nota. Quando a prefeitura disponibiliza uma URL pública, utilizamos o link da própria prefeitura, caso contrário criamos o nosso próprio espelho através de um link interno.</li>
 <li><strong>url_danfse:</strong> URL para acesso e download do DANFSe (versão PDF). A versão em PDF está disponível no momento apenas para alguns municípios. Entre em contato conosco caso precise da versão em PDF para o seu município.</li>
 <li><strong>data_emissao:</strong> Data da emissão da nota fiscal.</li>
 <li><strong>caminho_xml_nota_fiscal:</strong> Caminho para acesso e download do XML da nota fiscal.</li>
@@ -7465,7 +7465,7 @@ ainda em processamento ou se a nota já foi processada.</p>
 
 <ul>
 <li> <strong>caminho_xml_nota_fiscal</strong> - Representa o caminho para montar a URL para download do XML. Por exemplo, se você utilizou o servidor api.focusnfe.com.br e o caminho_xml_nota_fiscal contém o caminho &quot;/notas_fiscais_servico/NFSe075045050001324106902-004940940-428-DUMMY.xml&quot; você poderá acessar o XML pela URL completa https://api.focusnfe.com.br/notas_fiscais_servico/NFSe075045050001324106902-004940940-428-DUMMY.xml</li>
-<li><strong>url</strong>. A URL para consultar a NFSe direto no portal da prefeitura em formato <strong>HTML</strong>.</li>
+<li><strong>url</strong>. A URL para consultar a NFSe direto no portal da prefeitura.</li>
 </ul>
 
 <p>Utilize o método <strong>HTTP GET</strong> para ambas as consultas.</p>
