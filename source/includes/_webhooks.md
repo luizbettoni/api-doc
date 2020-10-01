@@ -119,6 +119,8 @@ Usamos um dicionario para armazenar os campos e valores que em seguida,
 serao convertidos a JSON e enviados para nossa API
 '''
 dados = {}
+# é possi utilizar CPF também
+# dados["cpf"] = "80032839065"
 dados["cnpj"] = "51916585000125"
 dados["event"] = "nfe"
 dados["url"] = "http://minha.url/nfe"
@@ -188,6 +190,10 @@ public class ExemploCriacaoHook {
         /* Aqui são criados as hash's que receberão os dados da nota. */
         HashMap<String, String> hook = new HashMap<String, String>();
 
+        /*
+         é possível utilizar o CPF também
+         hook.put("cpf", "80032839065");
+        */
         hook.put("cnpj", "51916585000125");
         hook.put("event", "nfe");
         hook.put("url", "http://minha.url/nfe");
@@ -267,12 +273,15 @@ Para criar um novo gatilho, utilize o endereço abaixo:
 Utilize o método HTTP POST para criar um novo gatilho. Esta requisição aceita os seguintes parâmetros que deverão ser enviados em formato JSON:
 
 *  **cnpj** – CNPJ da empresa. Se o CNPJ for omitido, o gatilho será acionado para todas as emissões feitas pelo token em questão.
+*  **cpf** – CPF da empresa/prestador do serviço. Se o CPF for omitido, o gatilho será acionado para todas as emissões feitas pelo token em questão.
 *  **event** – Informe qual evento que gostará de escutar: nfe, nfse, nfe_recebida, nfse_recebida, inutilizacao
 *  **url** – URL que deverá ser chamada quando o gatilho for ativado
 *  **authorization** – (opcional) O valor que for informado neste campo será devolvido no acionamento do gatilho no cabeçalho "Authorization".
 Desta forma você poderá por exemplo informar um token secreto para garantir que apenas nossa API acione a sua URL.
 
 A API irá devolver como resposta o gatilho criado. É possível ter mais de um gatilho por evento. Note que o gatilho pode ser por empresa ou um gatilho genérico para todas as emissões feitas usando o token informado.
+
+**OBS**: Os campos **cpf** e **cnpj** são mutuamente excludentes. No caso de informar um deles não informar o outro.
 
 **Dicas para uso do campo authorization**: O propósito deste campo é garantir que a sua URL não seja acessada por nenhum outro serviço que não o nosso. Sugerimos duas formas de usar este campo: você pode usar um token secreto, por exemplo: "lFNVw8q5WMeR3U9FOVOABTp36zrkvtaa". Desta forma, nossa API irá enviar sempre o seguinte cabeçalho ao acionar o gatilho:
 
