@@ -68,6 +68,28 @@ Para NFSe:
 
 Ressaltamos que os campos devolvidos são os mesmos da consulta da nota fiscal. Veja o tópico [**Consulta**](https://focusnfe.com.br/doc/#nfse_consulta) na categoria NFSe.
 
+Para CTe:
+
+* **cnpj_emitente**: O CNPJ emitente da CTe (o CNPJ de sua empresa).
+* **ref**:A referência da emissão.
+* **status**: A situação da CTe, podendo ser:
+  - **processando_autorizacao**: A nota ainda está em processamento pela API. Você deverá aguardar o processamento pela SEFAZ.
+  - **autorizado**: A nota foi autorizada, neste caso é fornecido os dados completos da nota como chave e arquivos para download
+  - **cancelado**: O documento foi cancelado, neste caso é fornecido o caminho para download do XML de cancelamento (caminho_xml_cancelamento).
+  - **erro_autorizacao**: Houve um erro de autorização por parte da SEFAZ. A mensagem de erro você encontrará nos campos status_sefaz e mensagem_sefaz. É possível fazer o reenvio da nota com a mesma referência se ela estiver neste estado.
+  - **denegado**: O documento foi denegado. Uma SEFAZ pode denegar uma nota se houver algum erro cadastral nos dados do destinatário ou do emitente. A mensagem de erro você encontrará nos campos status_sefaz e mensagem_sefaz. Não é possível reenviar a nota caso este estado seja alcançado pois é gerado um número, série, chave de CTe e XML para esta nota. O XML deverá ser armazenado pelo mesmo período de uma nota autorizada ou cancelada.
+* **status_sefaz**: O status da nota na SEFAZ.
+* **mensagem_sefaz**: Mensagem descritiva da SEFAZ detalhando o status.
+* **serie**: A série da CTe, caso ela tenha sido autorizada.
+* **numero**: O número da CTe, caso ela tenha sido autorizada.
+* **modelo**: O modelo da CTe, caso ela tenha sido autorizada.
+* **chave_cte**: A chave da CTe, caso ela tenha sido autorizada.
+* **caminho_xml_nota_fiscal**: caso a nota tenha sido autorizada, retorna o caminho para download do XML.
+* **caminho_dacte**: caso a nota tenha sido autorizada retorna o caminho para download do DACTe.
+* **caminho_xml**: caso tenha sido emitida alguma carta de correção, aqui aparecerá o caminho para fazer o download do XML.
+
+Ressaltamos que os campos devolvidos são os mesmos da consulta da CTe. Veja o tópico [**Consulta**](https://focusnfe.com.br/doc/#cte-e-cte-os_consulta) na categoria Cte e CTe OS.
+
 A vantagem de utilizar gatilhos é que não haverá a necessidade de fazer "polling" (realizar constantes requisições a fim de verificar o status da nota).
 
 Na ocorrência de falha na execução do POST para a URL definida (exemplo: servidor fora do ar ou alguma resposta HTTP diferente de 20X) a API tentará um reenvio nos seguintes intervalos: 1 minuto, 30 minutos, 1 hora, 3 horas, 24 horas até o momento em que a API irá desistir de acionar o gatilho.
@@ -97,8 +119,10 @@ Os seguintes eventos causam o acionamento do gatilho:
   * Inutilização de faixa de numeração
 * **Documentos fiscais recebidos (manifestação)**:
   * Recebimento de um novo documento fiscal (CTe, NFe ou NFSe)
-
-Os gatilhos para autorização de CTe deverão ser disponibilizados em breve.
+* **CTe**:
+  * Erro na emissão de uma CTe
+  * Emissão de CTe realizada com sucesso
+  * CTe Denegada
 
 ## Criação
 ```python
@@ -119,6 +143,8 @@ Usamos um dicionario para armazenar os campos e valores que em seguida,
 serao convertidos a JSON e enviados para nossa API
 '''
 dados = {}
+# é possi utilizar CPF também
+# dados["cpf"] = "80032839065"
 dados["cnpj"] = "51916585000125"
 dados["event"] = "nfe"
 dados["url"] = "http://minha.url/nfe"
@@ -188,6 +214,10 @@ public class ExemploCriacaoHook {
         /* Aqui são criados as hash's que receberão os dados da nota. */
         HashMap<String, String> hook = new HashMap<String, String>();
 
+        /*
+         é possível utilizar o CPF também
+         hook.put("cpf", "80032839065");
+        */
         hook.put("cnpj", "51916585000125");
         hook.put("event", "nfe");
         hook.put("url", "http://minha.url/nfe");
@@ -267,12 +297,15 @@ Para criar um novo gatilho, utilize o endereço abaixo:
 Utilize o método HTTP POST para criar um novo gatilho. Esta requisição aceita os seguintes parâmetros que deverão ser enviados em formato JSON:
 
 *  **cnpj** – CNPJ da empresa. Se o CNPJ for omitido, o gatilho será acionado para todas as emissões feitas pelo token em questão.
-*  **event** – Informe qual evento que gostará de escutar: nfe, nfse, nfe_recebida, nfse_recebida, inutilizacao
+*  **cpf** – CPF da empresa/prestador do serviço. Se o CPF for omitido, o gatilho será acionado para todas as emissões feitas pelo token em questão.
+*  **event** – Informe qual evento que gostará de escutar: nfe, nfse, nfe_recebida, nfse_recebida, inutilizacao, cte
 *  **url** – URL que deverá ser chamada quando o gatilho for ativado
 *  **authorization** – (opcional) O valor que for informado neste campo será devolvido no acionamento do gatilho no cabeçalho "Authorization".
 Desta forma você poderá por exemplo informar um token secreto para garantir que apenas nossa API acione a sua URL.
 
 A API irá devolver como resposta o gatilho criado. É possível ter mais de um gatilho por evento. Note que o gatilho pode ser por empresa ou um gatilho genérico para todas as emissões feitas usando o token informado.
+
+**OBS**: Os campos **cpf** e **cnpj** são mutuamente excludentes. No caso de informar um deles não informar o outro.
 
 **Dicas para uso do campo authorization**: O propósito deste campo é garantir que a sua URL não seja acessada por nenhum outro serviço que não o nosso. Sugerimos duas formas de usar este campo: você pode usar um token secreto, por exemplo: "lFNVw8q5WMeR3U9FOVOABTp36zrkvtaa". Desta forma, nossa API irá enviar sempre o seguinte cabeçalho ao acionar o gatilho:
 
@@ -601,6 +634,7 @@ Para isso é disponibilizado um endereço para cada tipo de documento que aceita
 
 * NFe: `https://api.focusnfe.com.br/v2/nfe/REFERENCIA/hook`
 * NFSe: `https://api.focusnfe.com.br/v2/nfse/REFERENCIA/hook`
+* CTe: `https://api.focusnfe.com.br/v2/cte/REFERENCIA/hook`
 * NFe Recebida: `https://api.focusnfe.com.br/v2/nfes_recebidas/CHAVE_NFE/hook`
 
 O corpo da requisição do método POST pode ser vazio.
