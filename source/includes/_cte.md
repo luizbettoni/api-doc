@@ -356,7 +356,7 @@ cte = {
   data_emissao: "2018-06-18T09:17:00",
   descricao_servico: "Descricao do seu servico aqui",
   documentos_referenciados: [
-    {  
+    {
       data_emissao: "2018-06-10",
       numero: "1",
       serie: "1",
@@ -470,7 +470,7 @@ Passamos o token como quarto parametro deste metodo, como autenticador do HTTP B
 */
 request.open('POST', url, false, token);
 
-var cte = {  
+var cte = {
    "bairro_emitente":"S\u00e3o Cristov\u00e3o",
    "bairro_tomador":"Bacacheri",
    "cep_emitente":"99880077",
@@ -487,8 +487,8 @@ var cte = {
    "complemento_emitente":"Andar 19 - sala 23",
    "data_emissao":"2018-06-18T09:17:00",
    "descricao_servico":"Descricao do seu servico aqui",
-   "documentos_referenciados":[  
-      {  
+   "documentos_referenciados":[
+      {
          "data_emissao":"2018-06-10",
          "numero":"1",
          "serie":"1",
@@ -521,8 +521,8 @@ var cte = {
    "numero_tomador":"1",
    "pais_tomador":"BRASIL",
    "quantidade":"1.00",
-   "seguros_carga":[  
-      {  
+   "seguros_carga":[
+      {
          "nome_seguradora":"Nome da seguradora aqui",
          "numero_apolice":"12345",
          "responsavel_seguro":4
@@ -586,8 +586,8 @@ $cte = array (
    "complemento_emitente" => "Andar 19 - sala 23",
    "data_emissao" => "2018-06-18T09:17:00",
    "descricao_servico" => "Descricao do seu servico aqui",
-   "documentos_referenciados" => array(  
-      array (  
+   "documentos_referenciados" => array(
+      array (
          "data_emissao" => "2018-06-10",
          "numero" => "1",
          "serie" => "1",
@@ -620,8 +620,8 @@ $cte = array (
    "numero_tomador" => "1",
    "pais_tomador" => "BRASIL",
    "quantidade" => "1.00",
-   "seguros_carga" => array(  
-      array (  
+   "seguros_carga" => array(
+      array (
          "nome_seguradora" => "Nome da seguradora aqui",
          "numero_apolice" => "12345",
          "responsavel_seguro" => 4
@@ -1010,7 +1010,7 @@ Campos de retorno:
 * **modelo**: O modelo da CTe, caso ela tenha sido autorizada.
 * **chave_cte**: A chave da CTe, caso ela tenha sido autorizada.
 * **caminho_xml_nota_fiscal**: caso a nota tenha sido autorizada, retorna o caminho para download do XML.
-* **caminho_danfe**: caso a nota tenha sido autorizada retorna o caminho para download do DACTe.
+* **caminho_dacte**: caso a nota tenha sido autorizada retorna o caminho para download do DACTe.
 * **caminho_xml**: caso tenha sido emitida alguma carta de correção, aqui aparecerá o caminho para fazer o download do XML.
 * **caminho_xml_carta_correcao**: caso tenha sido emitida alguma carta de correção, aqui aparecerá o caminho para fazer o download do XML da carta.
 * **caminho_xml_cancelamento**: Caso a nota esteja cancelada, é fornecido o caminho para fazer o download do XML de cancelamento.
@@ -1182,7 +1182,7 @@ servidor_homologacao = "https://homologacao.focusnfe.com.br/"
 url_envio = servidor_homologacao + "v2/cte/" + ref
 
 # altere os campos conforme a nota que será enviada
-justificativa_cancelamento = {  
+justificativa_cancelamento = {
   justificativa: "Informe aqui a sua justificativa para realizar o cancelamento da NFe."
 }
 
@@ -1453,7 +1453,7 @@ servidor_homologacao = "https://homologacao.focusnfe.com.br/"
 url_envio = servidor_homologacao + "v2/cte/" + ref + "/carta_correcao"
 
 # altere os campos conforme a nota que será enviada
-correcao = {  
+correcao = {
   campo_correcao: "Informe aqui o titulo do campo que será corrigido na CTe.",
   valor_correcao: "Informe aqui o valor para o campo que será corrigido."
 }
@@ -1721,7 +1721,7 @@ servidor_homologacao = "https://homologacao.focusnfe.com.br/"
 url_envio = servidor_homologacao + "v2/cte/inutilizacao"
 
 # altere os campos conforme a nota que será enviada
-dados_inutilizacao = {  
+dados_inutilizacao = {
   cnpj: "51916585000125",
   serie: "1",
   numero_inicial: "1",
@@ -1819,7 +1819,7 @@ $inutiliza = array (
   "numero_inicial" => "1",
   "numero_final" => "3",
   "justificativa" => "A sua justificativa de cancelamento aqui.",
-  "modelo" => 67  
+  "modelo" => 67
 );
 
 $ch = curl_init();
