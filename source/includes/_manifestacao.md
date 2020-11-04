@@ -738,7 +738,7 @@ Isto irá adicionar 6 novos campos:
 * **requisicao_cancelamento**: Dados completos do cancelamento em formato JSON se aplicável.
 * **protocolo_cancelamento**: Dados completos do retorno do cancelamento em formato JSON se aplicável.
 
-## Download de XML
+## Download de DANFe e XML
 
 > Exemplo de como realizar o download do XML de uma Nota Fiscal Eletrônica especifica.
 
@@ -1441,13 +1441,19 @@ puts "Corpo da resposta: " + resposta.body
 ?>
 ```
 
-Também é possível fazer o download do XML das notas fiscais através da API, basta informar a chave de identificação da respectiva nota no parâmetro CHAVE:
+Também é possível fazer o download do XML e DANFe das notas fiscais através da API, basta informar a chave de identificação da respectiva nota no parâmetro CHAVE:
 
 **Baixar o XML de uma nota fiscal especifica:**
 
 `https://api.focusnfe.com.br/v2/nfes_recebidas/CHAVE.xml`
 
 Utilize o método **HTTP GET** para obter os dados das notas no formato XML.
+
+**Baixar a DANFe de uma nota fiscal especifica:**
+
+`https://api.focusnfe.com.br/v2/nfes_recebidas/CHAVE.pdf`
+
+Utilize o método **HTTP GET** para obter os dados das notas no formato PDF. Esta requisição irá redirecionar para o endereço onde é salvo o PDF. Caso a sua biblioteca HTTP não consiga seguir requisições de redirecionamento você pode capturar a URL completa no cabeçalho "Location" devolvido pela API.
 
 **Baixar o XML, em formato json, de uma nota fiscal especifica:**
 

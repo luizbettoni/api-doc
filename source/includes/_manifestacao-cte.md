@@ -703,7 +703,7 @@ Isto irá adicionar os seguintes campos:
 * **requisicao**: Dados completos do documento em formato JSON.
 * **protocolo**: Dados completos do retorno do SEFAZ em formato JSON.
 
-## Download de XML
+## Download de DACTe e XML
 
 > Exemplo de como realizar o download do XML de um documento específico.
 
@@ -1406,13 +1406,19 @@ puts "Corpo da resposta: " + resposta.body
 ?>
 ```
 
-Também é possível fazer o download do XML das notas fiscais através da API, basta informar a chave de identificação da respectiva nota no parâmetro CHAVE:
+Também é possível fazer o download do XML e do DACTe das notas fiscais através da API, basta informar a chave de identificação da respectiva nota no parâmetro CHAVE:
 
-**Baixar o XML de uma nota fiscal especifica:**
+**Baixar o XML de um CTe especifico:**
 
 `https://api.focusnfe.com.br/v2/ctes_recebidas/CHAVE.xml`
 
-Utilize o método **HTTP GET** para obter os dados das notas no formato XML.
+Utilize o método **HTTP GET** para obter os dados no formato XML.
+
+**Baixar o DACTe de um CTe especifico:**
+
+`https://api.focusnfe.com.br/v2/ctes_recebidas/CHAVE.pdf`
+
+Utilize o método **HTTP GET** para obter os dados no formato PDF. Esta requisição irá redirecionar para o endereço onde é salvo o PDF. Caso a sua biblioteca HTTP não consiga seguir requisições de redirecionamento você pode capturar a URL completa no cabeçalho "Location" devolvido pela API.
 
 **Baixar o XML, em formato json, de uma nota fiscal especifica:**
 
