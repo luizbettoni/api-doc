@@ -14,7 +14,7 @@ e NFSe.
 
 Método | URL (recurso) | Ação
 -------|-------|-----
-POST | / v2/nfce?ref=REFERENCIA |  Cria uma nota fiscal e a envia para processamento.
+POST | /v2/nfce?ref=REFERENCIA |  Cria uma nota fiscal e a envia para processamento.
 GET |  /v2/nfce/REFERENCIA | Consulta a nota fiscal com a referência informada e o seu status de processamento.
 DELETE  | /v2/nfce/REFERENCIA |  Cancela uma nota fiscal com a referência informada
 POST | /v2/nfce/REFERENCIA/email |  Envia um email com uma cópia da nota fiscal com a referência informada
