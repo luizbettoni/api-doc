@@ -34,7 +34,7 @@ Abaixo, iremos mostrar todos os campos de uso mais comum para emissão de uma NF
 ```json
 {
    "cnpj_emitente":"05953016000132",
-   "data_emissao":"2017-12-06 14:45:10",
+   "data_emissao":"2015-11-19T13:54:31-02:00",
    "indicador_inscricao_estadual_destinatario":"9",
    "modalidade_frete":"9",
    "local_destino":"1",
