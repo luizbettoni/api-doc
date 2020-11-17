@@ -138,7 +138,7 @@ informar o número do RPS que será substituído. Municípios que seguem o padr�
 	- **desconto_incondicionado**: (Decimal) Valor do desconto incondicionado. Campo ignorado pelo município de São Paulo.
 	- **desconto_condicionado**: (Decimal) Valor do desconto condicionado. Campo ignorado pelo município de São Paulo.
 	- **item_lista_servico**(*): (String) Informar o código da lista de serviços, de acordo com a Lei Complementar 116/2003. Utilize outra tabela para o município de São Paulo.
-	- **codigo_cnae**: (String) Informar o código CNAE de 8 dígitos. Campo ignorado pelo município de São Paulo.
+	- **codigo_cnae**: (String) Informar o código CNAE de 7 dígitos. Campo ignorado pelo município de São Paulo.
 	- **codigo_tributario_municipio**: (String) Informar o código tributário de acordo com a tabela de cada município (não há um padrão). Campo ignorado pelo município de São Paulo.
 	- **discriminacao**(*): (String) Discriminação dos serviços. Tamanho: 2000 caracteres.
 	- **codigo_municipio**(*): (String) Informar o código IBGE de 7 dígitos do município de prestação do serviço.
