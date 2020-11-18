@@ -216,6 +216,7 @@ Utilize o método **HTTP GET** para consultar as notas. Esta requisição aceita
 
 * **cnpj**(*): CNPJ da empresa. Campo obrigatório.
 * **versao**: Se informado, irá buscar apenas os documentos cuja versão seja maior que o parâmetro recebido. Utilize este parâmetro para buscar apenas as notas que seu sistema ainda não conhece.
+* **completa**: Se informado com o valor "1" irá devolver os dados completos do XML da nota, seguindo o padrão dos dados enviados para emissão de NFSe. Caso contrário, irá devolver os dados de forma resumida conforme descrito na próxima seção.
 
 Serão devolvidas as 100 primeiras notas encontradas. Para recuperar as demais notas você deverá fazer uma nova requisição alterando o campo versão.
 
@@ -230,7 +231,7 @@ Serão devolvidas as 100 primeiras notas encontradas. Para recuperar as demais n
     "data_emissao": "2019-11-01T09:53:01-03:00",
     "data_emissao_rps": "2019-11-01T00:00:00-03:00",
     "valor_total": 63.5,
-    "status": "autorizada",
+    "situacao": "autorizada",
     "documento_prestador": "11131112000133",
     "nome_prestador": null,
     "inscricao_municipal_prestador": "12224222",
@@ -252,7 +253,8 @@ A API irá devolver os seguintes cabeçalhos HTTP:
 * **X-Total-Count**: O número total de registros (incluindo aqueles que não foram devolvidos pelo limite de 100 registros)
 * **X-Max-Version**: Valor máximo da versão dos documentos devolvidos. Utilize este cabeçalho para utilizar na próxima busca de versão, caso seja necessário.
 
-Os dados devolvidos no corpo da requisição serão um array de objetos em JSON no seguinte formato:
+Os dados devolvidos podem vir em dois formatos: modo simplificado (default) e completo.
+Se utilizado o formato simplificado o corpo da resposta será um array de objetos em JSON no seguinte formato:
 
 * **numero**: Número da NFSe.
 * **numero_rps**: Número do RPS, se existir.
@@ -271,4 +273,62 @@ Os dados devolvidos no corpo da requisição serão um array de objetos em JSON 
 * **sigla_uf**: UF do prestador.
 * **codigo_municipio**: Código IBGE do município do prestador.
 
-Você pode também configurar o gatilho "nfse_recebida" para receber estes dados diretamente em sua aplicação assim que estiverem disponíveis na API. Consulte a seção de [Gatilhos / Webhooks](#gatilhos-webhooks_gatilhos-webhooks)
+Você pode também configurar o gatilho "nfse_recebida" para receber estes dados resumidos diretamente em sua aplicação assim que estiverem disponíveis na API. Consulte a seção de [Gatilhos / Webhooks](#gatilhos-webhooks_gatilhos-webhooks)
+
+> Exemplo dos dados de resposta usando o parâmetro completa=1:
+
+```json
+[
+  {
+    "numero": "3240",
+    "codigo_verificacao": "HT9MPFM1",
+    "numero_rps": "3187",
+    "serie_rps": "1",
+    "tipo_rps":  "RPS",
+    "status": "N",
+    "situacao": "autorizada",
+    "versao": 123,
+    "prestador": {
+      "cnpj": "11131112000133",
+      "inscricao_municipal": "12224222"
+    },
+    "tomador": {
+      "razao_social": "Tomador Ltda",
+      "cnpj": "11131112000134",
+      "inscricao_municipal": null,
+      "endereco": {
+        "nome_municipio": "Florianópolis",
+        "bairro": "Bom Retiro",
+        "cep": "89223001",
+        "codigo_municipio": null,
+        "logradouro": "AV Santos Dumont",
+        "numero": "22",
+        "uf": "SC"
+      }
+    },
+    "data_emissao": "2019-11-01T09:53:01-03:00",
+    "optante_simples_nacional": "",
+    "incentivador_cultural": "",
+    "valor_liquido": "450",
+    "servico": {
+      "valor_servicos": "450",
+      "valor_deducoes": null,
+      "valor_pis": "2.93",
+      "valor_cofins": "13.5",
+      "valor_inss": null,
+      "valor_ir": null,
+      "valor_csll": "4.5",
+      "valor_iss": 22.5,
+      "item_lista_servico": "3123",
+      "aliquota": "0.0500",
+      "iss_retido": "false",
+      "discriminacao": "Prestação de serviço",
+      "codigo_municipio": null
+    }
+  }
+]
+```
+
+Caso utilize o argumento "completa=1" os dados serão devolvidos no mesmo
+[formato de emissão de NFSe](#nfse_campos). Acrescentado dos campos "versao" e
+"situacao" descritos acima.
