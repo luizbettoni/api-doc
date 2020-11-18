@@ -60,20 +60,20 @@ um formato único de campos para todas as prefeituras. A listagem dos campos seg
 ```
 
 - **data_emissao**(*): (Data) Data/hora de emissão da NFSe. Alguns municípios como São Paulo não utilizam hora e ela será descartada caso seja fornecida. Formato padrão ISO, exemplo: “2016-12-25T12:00-0300”.
-- **natureza_operacao**(*): (String) Natureza da operação. Informar um dos códigos abaixo. Campo ignorado para o município de São Paulo.
+- **natureza_operacao**(*): (String) Natureza da operação. Informar um dos códigos abaixo. Valor padrão: 1. Campo ignorado para o município de São Paulo.
   - **1**: Tributação no município;
   - **2**: Tributação fora do município;
   - **3**: Isenção;
   - **4**: Imune;
   - **5**: Exigibilidade suspensa por decisão judicial;
-  - **6**: Exigibilidade suspensa por procedimento administrativo (Valor padrão: 1).
+  - **6**: Exigibilidade suspensa por procedimento administrativo.
 - **regime_especial_tributacao**: (String) Informar o código de identificação do regime especial de tributação conforme abaixo. Campo ignorado para o município de São Paulo.
   - **1**: Microempresa municipal;
   - **2**: Estimativa;
   - **3**: Sociedade de profissionais;
   - **4**: Cooperativa;
   - **5**: MEI - Simples Nacional;
-  - **6**: ME EPP- Simples Nacional;
+  - **6**: ME EPP- Simples Nacional.
 * **optante_simples_nacional**(*): (Boolean) Informar verdadeiro ou falso se a empresa for optante pelo Simples Nacional. Campo ignorado pelo município de São Paulo.
 * **incentivador_cultural**: (Boolean) Informe verdadeiro ou falso. Valor padrão: falso. Campo ignorado para o município de São Paulo.
 - **tributacao_rps**: (String) Usado apenas pelo município de São Paulo. Informe o tipo de tributação:
