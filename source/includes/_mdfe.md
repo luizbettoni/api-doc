@@ -189,8 +189,8 @@ Caso na requisição seja passado o parâmetro `completa=1` será adicionado mai
 * **requisicao_encerramento**: Inclui os dados completos da requisição de cancelamento da MDF-e.
 * **protocolo_encerramento**: Inclui os dados completos do protocolo devolvido pela SEFAZ.
 * **condutores_incluidos**: Inclui uma lista de dados de condutores que foram incluídos posteriormente. Cada chave contém:
-** **requisicao**: Inclui os dados completos da requisição de inclusão de condutores
-** **protocolo**: Inclui os dados completos do protocolo devolvido pela SEFAZ.
+  * **requisicao**: Inclui os dados completos da requisição de inclusão de condutores
+  * **protocolo**: Inclui os dados completos do protocolo devolvido pela SEFAZ.
 
 
 > Exemplo de resposta da consulta de MDF-e:
