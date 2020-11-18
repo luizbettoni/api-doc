@@ -14,7 +14,7 @@ e NFSe.
 
 Método | URL (recurso) | Ação
 -------|-------|-----
-POST | / v2/nfce?ref=REFERENCIA |  Cria uma nota fiscal e a envia para processamento.
+POST | /v2/nfce?ref=REFERENCIA |  Cria uma nota fiscal e a envia para processamento.
 GET |  /v2/nfce/REFERENCIA | Consulta a nota fiscal com a referência informada e o seu status de processamento.
 DELETE  | /v2/nfce/REFERENCIA |  Cancela uma nota fiscal com a referência informada
 POST | /v2/nfce/REFERENCIA/email |  Envia um email com uma cópia da nota fiscal com a referência informada
@@ -34,7 +34,7 @@ Abaixo, iremos mostrar todos os campos de uso mais comum para emissão de uma NF
 ```json
 {
    "cnpj_emitente":"05953016000132",
-   "data_emissao":"2017-12-06 14:45:10",
+   "data_emissao":"2015-11-19T13:54:31-02:00",
    "indicador_inscricao_estadual_destinatario":"9",
    "modalidade_frete":"9",
    "local_destino":"1",

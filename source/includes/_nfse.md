@@ -60,20 +60,20 @@ um formato único de campos para todas as prefeituras. A listagem dos campos seg
 ```
 
 - **data_emissao**(*): (Data) Data/hora de emissão da NFSe. Alguns municípios como São Paulo não utilizam hora e ela será descartada caso seja fornecida. Formato padrão ISO, exemplo: “2016-12-25T12:00-0300”.
-- **natureza_operacao**(*): (String) Natureza da operação. Informar um dos códigos abaixo. Campo ignorado para o município de São Paulo.
+- **natureza_operacao**(*): (String) Natureza da operação. Informar um dos códigos abaixo. Valor padrão: 1. Campo ignorado para o município de São Paulo.
   - **1**: Tributação no município;
   - **2**: Tributação fora do município;
   - **3**: Isenção;
   - **4**: Imune;
   - **5**: Exigibilidade suspensa por decisão judicial;
-  - **6**: Exigibilidade suspensa por procedimento administrativo (Valor padrão: 1).
+  - **6**: Exigibilidade suspensa por procedimento administrativo.
 - **regime_especial_tributacao**: (String) Informar o código de identificação do regime especial de tributação conforme abaixo. Campo ignorado para o município de São Paulo.
   - **1**: Microempresa municipal;
   - **2**: Estimativa;
   - **3**: Sociedade de profissionais;
   - **4**: Cooperativa;
   - **5**: MEI - Simples Nacional;
-  - **6**: ME EPP- Simples Nacional;
+  - **6**: ME EPP- Simples Nacional.
 * **optante_simples_nacional**(*): (Boolean) Informar verdadeiro ou falso se a empresa for optante pelo Simples Nacional. Campo ignorado pelo município de São Paulo.
 * **incentivador_cultural**: (Boolean) Informe verdadeiro ou falso. Valor padrão: falso. Campo ignorado para o município de São Paulo.
 - **tributacao_rps**: (String) Usado apenas pelo município de São Paulo. Informe o tipo de tributação:
@@ -138,7 +138,7 @@ informar o número do RPS que será substituído. Municípios que seguem o padr�
 	- **desconto_incondicionado**: (Decimal) Valor do desconto incondicionado. Campo ignorado pelo município de São Paulo.
 	- **desconto_condicionado**: (Decimal) Valor do desconto condicionado. Campo ignorado pelo município de São Paulo.
 	- **item_lista_servico**(*): (String) Informar o código da lista de serviços, de acordo com a Lei Complementar 116/2003. Utilize outra tabela para o município de São Paulo.
-	- **codigo_cnae**: (String) Informar o código CNAE de 8 dígitos. Campo ignorado pelo município de São Paulo.
+	- **codigo_cnae**: (String) Informar o código CNAE de 7 dígitos. Campo ignorado pelo município de São Paulo.
 	- **codigo_tributario_municipio**: (String) Informar o código tributário de acordo com a tabela de cada município (não há um padrão). Campo ignorado pelo município de São Paulo.
 	- **discriminacao**(*): (String) Discriminação dos serviços. Tamanho: 2000 caracteres.
 	- **codigo_municipio**(*): (String) Informar o código IBGE de 7 dígitos do município de prestação do serviço.

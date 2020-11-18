@@ -64,11 +64,11 @@ Os campos devolvidos são descritos abaixo:
 
 * email: Email bloqueado
 * block_type: pode ser dos seguites tipos:
-** bounce - O email foi devolvido por algum motivo
-** complaint - O email foi marcado como spam pelo destinatário
+  * bounce - O email foi devolvido por algum motivo
+  * complaint - O email foi marcado como spam pelo destinatário
 * bounce_type: Se o block_type for do tipo "bounce", este campo irá ter um dos valores abaixo:
-** transient - Indica um erro transiente que pode ser resolvido nos próximos dias. Exemplo: usuário sem espaço em sua caixa de email.
-** permanent - Indica um erro considerado permanente. Exemplo: o usuário não é encontrado no domínio especificado.
+  * transient - Indica um erro transiente que pode ser resolvido nos próximos dias. Exemplo: usuário sem espaço em sua caixa de email.
+  * permanent - Indica um erro considerado permanente. Exemplo: o usuário não é encontrado no domínio especificado.
 * diagnostic_code - Indica a mensagem de erro, se houver, devolvida pelo servidor de email do destinatário.
 * blocket_at - Data do bloqueio
 
