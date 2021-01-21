@@ -21,6 +21,7 @@ POST|/v2/nfse/REFERENCIA/email | Envia um email com uma cópia da nota fiscal co
 
 Cada prefeitura pode utilizar um formato diferente de XML, mas utilizando nossa API você utiliza
 um formato único de campos para todas as prefeituras. A listagem dos campos segue abaixo.
+Os campos denotados com (*) são obrigatórios.
 
 ### Geral
 
