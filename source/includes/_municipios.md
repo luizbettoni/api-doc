@@ -1,4 +1,4 @@
-# Consulta de Municípios
+# Consulta de Municípios (beta)
 
 Utilizamos a base de municípios do IBGE para identificar os municípios em nossa API. Desta forma disponibilizamos uma API para busca dos municípios cadastrados, seja para localizá-los pelo nome, para recuperar o código do município, verificar se o município tem a NFSe implementada em nosso sistema ou demais especificidades de cada município.
 Ainda, é possível verificar se determinado município apresenta a necessidade de informar o código tributário do município e/ou item da lista de serviço para emissão de uma nota fiscal de serviço. Com isso, é possível verificar os valores que esses campos devem receber através de uma consulta relacionada ao próprio município.
@@ -201,7 +201,7 @@ Os parâmetros disponíveis para consulta dos itens da lista de serviço e códi
 
 Caso já saiba o código exato do item da lista de serviço ou do código tributário municipal, você pode efetuar a busca diretamente em:
 
-* /v2/municipios/CODIGO_MUNICIPIO/itens_lista_servico/CODIGO	
+* /v2/municipios/CODIGO_MUNICIPIO/itens_lista_servico/CODIGO
 * /v2/municipios/CODIGO_MUNICIPIO/codigos_tributarios_municipio/CODIGO
 
 
