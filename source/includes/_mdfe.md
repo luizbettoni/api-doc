@@ -1,5 +1,5 @@
 
-# MDF-e (beta)
+# MDF-e
 
 A MDF-e (Manifesto Eletrônico de Documentos Fiscais) é utilizada para rastrear a circulação física da carga em transportes interestaduais, transporte de carga fracionada ou por transporte de bens que utilizam mais de uma NFe.
 
