@@ -22,6 +22,12 @@ Abaixo a descrição de cada pasta e a sua finalidade:
 * **retornos**: aqui é gerado um novo arquivo com a resposta da Sefaz formatada (mesmo conteúdo presente no arquivo do diretório 'processados'), porém com a extensão .cfe/.cfecanc, .nfce/.canc.
 * **xml**: neste diretório é salvo o XML gerado pela Sefaz, tanto para CFe S@T como para NFCe (emissão e cancelamento).
 * **pdf**: aqui é salvo a DANFCe e a impressão do CFe do S@T. Não é gerado impressão quando o documento fiscal é cancelado.
+* **html**: aqui é salvo a DANFCe em formato .html. Não é gerado impressão quando o documento fiscal é cancelado.
+
+<aside class="warning">
+O diretório que contém os logs do Comunicador Focus NFe é sempre fixo em: <br>
+C:\Users\{{usuáŕio}}\AppData\Roaming\comunicador-focus-nfe. Onde {{usuário}} corresponde ao usuário do cliente. Obs: AppData é um diretório oculto por padrão no windows.
+</aside>
 
 
 No diagrama abaixo mostramos como será o fluxo de acesso aos diretórios citados anteriormente:
@@ -39,16 +45,16 @@ Para cada documento, será esperado um arquivo com formato diferente. Nele, esta
 
 De forma geral, as fabricantes costumam utilizar a mesma versão da DLL para todos os seus aparelhos S@T, com isso, alguns modelos não listados podem ser compatíveis com a versão atual do nosso Comunicador.
 
-Marcar | Modelo 
+Marcar | Modelo
 -------|---------
-Tanca | TM-1000 
-Epson | SAT A10 
-Bematech | RB 2000 
-Control ID | SAT iD 
-Dimep | D-SAT 2.0 
-Elgin | Linker e Smart 
-Sweda | SS2000 
-Urano | SAT UR   
+Tanca | TM-1000
+Epson | SAT A10
+Bematech | RB 2000
+Control ID | SAT iD
+Dimep | D-SAT 2.0
+Elgin | Linker e Smart
+Sweda | SS2000
+Urano | SAT UR
 
 Entre em contato com o nosso time de Suporte para verificar a possibilidade de integrações de novos fabricantes/modelos.
 
@@ -116,11 +122,13 @@ O arquivo com os dados do CFe S@T deve seguir a estrutura de um arquivo do forma
     "forma_pagamento":[
     	{
     		"forma_pagamento": "03",
-    		"valor_pagamento": "0.50"
+    		"valor_pagamento": "0.50",
+            "nome_credenciadora": "SAFRA"
     	},
     	{
     		"forma_pagamento": "02",
-    		"valor_pagamento": "0.50"
+    		"valor_pagamento": "0.50",
+            "nome_credenciadora": "AMEX"
     	}
     ]
 }
@@ -171,8 +179,51 @@ Campo | Descrição
 ----- | ----------
 forma_pagamento | forma de pagamento utilizado na venda. Valores possíveis: 01, 02, 03, 04, 05, 10, 11, 12, 13 ou 99.
 valor_pagamento | valor total utilizado para essa forma de pagamento.
+nome_credenciadora | nome da credenciadora do cartão de débetio/crédito conforme tabela abaixo
 
 Para mais detalhes sobre os valores possívels em **forma_pagamento** consulte nossa documentação de campos da API NFe/NFCe [aqui](https://focusnfe.com.br/dsl/4.0/FormaPagamentoXML.html).
+
+**Tabela de credenciadoras**
+
+nome_credenciadora | Descrição
+-------------|-------------
+SICREDI | Administradora de Cartões Sicredi Ltda.
+SICREDIRS | Administradora de Cartões Sicredi Ltda.(filial RS)
+AMEX | Banco American Express S/A - AMEX
+GE | BANCO GE - CAPITAL
+SAFRA | BANCO SAFRA S/A
+TOPAZIO | BANCO TOPÁZIO S/A
+TRIANGULO | BANCO TRIANGULO S/A
+BIGCARD | BIGCARD Adm. de Convenios e Serv.
+BOURBON | BOURBON Adm. de Cartões de Crédito
+CABAL | CABAL Brasil Ltda.
+CETELEM | CETELEM Brasil S/A - CFI
+CIELO | CIELO S/A
+CREDI | CREDI 21 Participações Ltda.
+ECX | ECX CARD Adm. e Processadora de Cartões S/A
+EMBRATEC | Empresa Bras. Tec. Adm. Conv. Hom. Ltda. - EMBRATEC
+EMPORIO | EMPÓRIO CARD LTDA
+FREEDDOM | FREEDDOM e Tecnologia e Serviços S/A
+FUNCIONAL | FUNCIONAL CARD LTDA.
+HIPERCARD | HIPERCARD Banco Multiplo S/A
+MAPA | MAPA Admin. Conv. e Cartões Ltda.
+NOVO | Novo Pag Adm. e Proc. de Meios Eletrônicos dePagto. Ltda.
+PERNAMBUCANAS | PERNAMBUCANAS Financiadora S/A Crédito, Fin.e Invest.
+POLICARD | POLICARD Systems e Serviços Ltda.
+PROVAR | PROVAR Negócios de Varejo Ltda.
+REDECARD | REDECARD S/A
+RENNER | RENNER Adm. Cartões de Crédito Ltda.
+RP | RP Administração de Convênios Ltda.
+SANTINVEST | SANTINVEST S/A Crédito, Financiamento e Investimentos
+SODEXHO | SODEXHO Pass do Brasil Serviços e Comércio S/A
+SOROCRED | SOROCRED Meios de Pagamentos Ltda.
+TECBAN | Tecnologia Bancária S/A - TECBAN
+TICKET | TICKET Serviços S/A
+TRIVALE | Unicard Banco Múltiplo S/A - TRICARD
+TRICARD | Unicard Banco Múltiplo S/A - TRICARD
+OUTROS | Outros
+
+
 
 **Emissão**
 
@@ -420,8 +471,8 @@ curl -XDELETE --header 'Content-Type: application/json' http://localhost:55555/f
 }
 ```
 
-Além do sistema de comunicação via diretórios, o Comunicador Focus NFe também disponibiliza uma API local para comunicação direta. 
-Através da API Local é possível: 
+Além do sistema de comunicação via diretórios, o Comunicador Focus NFe também disponibiliza uma API local para comunicação direta.
+Através da API Local é possível:
 
 - Verificar o status do equipamento (SAT/MFe).
 - Extrair os logs do equipamento (SAT/MFe).
@@ -441,7 +492,7 @@ DELETE|http://localhost:PORTA/fiscal/sat/  | Cancela um cupom fiscal eletrônico
 - Obs 2: O body das requisições para emissão do cupom fiscal e para o cancelamento segue exatamente o mesmo padrão utilizado nos arquivos '.cfe' e '.cfecanc' exemplificados anteriormente.
 
 ### Consultar Status
-A consulta de status retorna o status do equipamento SAT/MFe conectado no computador do usuário. O modelo do equipamento e o código de ativação devem ser devidamente configurados no Comunicador Focus NFe para o correto funcionamento da consulta. 
+A consulta de status retorna o status do equipamento SAT/MFe conectado no computador do usuário. O modelo do equipamento e o código de ativação devem ser devidamente configurados no Comunicador Focus NFe para o correto funcionamento da consulta.
 
 ### Extrair logs
 A extração dos logs retorna os logs do equipamento SAT/MFe conectado no computador do usuário. Devido ao tamanho do arquivo, os dados são retornados em base64.
