@@ -78,8 +78,10 @@ Abaixo, iremos mostrar todos os campos de uso mais comum para emissão de uma NF
 | natureza_operacao                   	| texto       	| sim         	| Descrição da natureza de operação.                                                       	| Caso não informado, será utilizado o texto “VENDA AO CONSUMIDOR”.                                                   	|
 | data_emissao                        	| data e hora 	| sim         	| Data e hora de emissão com timezone.                                                     	| Utilize o formato ISO, exemplo 2015-11-19T13:54:31-02:00. Diferença máxima permitida de 5 minutos do horário atual. 	|
 | presenca_comprador                  	| numérico    	| sim         	| Presença do comprador.Valores possíveis:1 – Operação presencial.4 – Entrega a domicílio. 	|                                                                                                                     	|
-| informacoes_adicionais _contribuinte 	| texto       	| não         	| Informações adicionais.                                                                  	|                                                                                                                     	|
+| informacoes_adicionais _contribuinte | texto       	| não         	| Informações adicionais.                                                                  	|                                                                                                                     	|
 | cnpj_emitente                       	| texto       	| sim         	| CNPJ da empresa que está emitindo a NFCe.                                                	| CNPJ válido.                                                                                                        	|
+| modalidade_frete                     | numérico        | sim          | Indica a modalidade do frete da operação. Valores possíveis: '0' – Por conta do emitente; '1' – Por conta do destinatário; '2' – Por conta de terceiros; '9' – Sem frete. |
+| local_destino                        | numérico        | sim |         Local onde a operação irá acontecer. Valores possíveis: '1' – Operação interna; '2' – Operação interestadual; '3' – Operação com exterior. |
 
 
 ### Destinatário
@@ -97,7 +99,7 @@ Abaixo, iremos mostrar todos os campos de uso mais comum para emissão de uma NF
 | municipio_destinatario  | texto | não         | Município do consumidor.          |                                       |
 | uf_destinatario         | texto | não         | Sigla da UF do consumidor.        |                                       |
 | cep_destinatario        | texto | não         | CEP do consumidor.                |                                       |
-
+| indicador_inscricao_estadual_destinatario | numérico | não | Indicador da Inscrição Estadual do destinatário. Valores possíveis: '1' – Contribuinte ICMS (informar a IE do destinatário); '2' – Contribuinte isento de Inscrição no cadastro de Contribuintes do ICMS; '9' – Não Contribuinte, que pode ou não possuir Inscrição Estadual no Cadastro de Contribuintes do ICMS. |
 
 ### Itens
 
