@@ -2445,7 +2445,7 @@ Utilize o comando **HTTP POST** para enviar a sua inutilização para nossa API.
 
 A inutilização precisa dos seguintes parâmetros obrigatórios:
 
-* **cnpj**: CNPJ da empresa emitente
+* **cnpj**: CNPJ da empresa emitente. (Segundo a NT 2018/001 esta operação não se aplica à emitente pessoa física)
 * **serie**: Série da numeração da NFe que terá uma faixa de numeração inutilizada
 * **numero_inicial**: Número inicial a ser inutilizado
 * **numero_final**: Número final a ser inutilizado
