@@ -1056,7 +1056,7 @@ Alguns estados não aceitam a emissão síncrona, são eles: SP, GO e BA.
 Tipo de Emissão | Status HTTP se sucesso | Resposta | Observações
 -------|-------|-----|------
 assíncrona (default) | 202 - Accepted | Dados da nota com status processando_autorizacao | Necessário consultar a nota posteriormente ou utilizar webhooks para receber o resultado do processamento
-síncrona | 202 - Created | Dados da nota autorizada ou mensagem de erro | A emissão síncrona pode não estar disponível, neste caso será devolvido código de status 202 - Accepted e a nota será enfileirada
+síncrona | 201 - Created | Dados da nota autorizada ou mensagem de erro | A emissão síncrona pode não estar disponível, neste caso será devolvido código de status 202 - Accepted e a nota será enfileirada
 
 
 
