@@ -4,7 +4,7 @@
 
 Através da API NFe é possível:
 
-* Emitir NFe utilizando dados simplificados. Este processo é **assíncrono**. Ou seja, após a emissão a nota será enfileirada para processamento.
+* Emitir NFe utilizando dados simplificados. Este processo por default é **assíncrono**. Ou seja, após a emissão a nota será enfileirada para processamento. Em alguns estados é possível configurar a emissão para envio **síncrono** quando possível.
 * Cancelar NFe.
 * Consultar o status de NFe emitidas.
 * Encaminhar uma NFe por email
@@ -1042,6 +1042,22 @@ O sistema cliente da API pode acompanhar este processo de forma transparente, co
   ]
 }
 ```
+
+### Envio síncrono
+
+É possível configurar a empresa para realizar a emissão síncrona. Contate o suporte técnico para alterar o tipo de emissão de sua empresa.
+
+Este tipo de emissão pode ser útil para pequenos envios que necessitam de autorização em tempo real. Para emissão de grandes lotes, recomendamos o uso da emissão assíncrona.
+
+Quando a emissão é síncrona, será feita uma tentativa de envio e caso a nota tenha sido autorizada será devolvido o resultado do processamento *na mesma requisição* com o código de status HTTP 201 (Created). Caso ocorra algum erro, como por exemplo se o servidor da SEFAZ estiver fora do ar, a nota é enfileirada da mesma forma que o envio assíncrono.
+
+Alguns estados não aceitam a emissão síncrona, são eles: SP, GO e BA.
+
+| **Tipo de Emissão** | **Status HTTP se sucesso** | **Resposta** | **Observações** |
+| assíncrona (default) | 202 - Accepted | Dados da nota com status processando_autorizacao | Necessário consultar a nota posteriormente ou utilizar webhooks para receber o resultado do processamento |
+| síncrona | 202 - Created | Dados da nota autorizada ou mensagem de erro | A emissão síncrona pode não estar disponível, neste caso será devolvido código de status 202 - Accepted e a nota será enfileirada |
+
+
 
 ## Consulta
 
