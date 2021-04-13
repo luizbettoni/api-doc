@@ -2498,7 +2498,7 @@ Em algumas situações em que sejam identificados erros de emissão de forma tar
   "modelo": "55",
   "cnpj": "1807504505000130",
   "status": "autorizado",
-  "caminho_xml": "/arquivos_development/07504505000132/201906/XMLs/190750450500013255001000000999000001000-inu.xml"
+  "caminho_xml": "/arquivos_development/07504505000132/201906/XMLs/190750450500013255001000000999000001000-inu.xml",
   "protocolo_sefaz": "135210002233889"
 }
 ```
