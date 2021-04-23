@@ -22,6 +22,7 @@ DELETE |	/v2/nfe/REFERENCIA	| Cancela uma nota fiscal com a referência informad
 POST |	/v2/nfe/REFERENCIA/carta_correcao	| Cria uma carta de correção para a nota fiscal com a referência informada.
 POST |	/v2/nfe/REFERENCIA/email	| Envia um email com uma cópia da nota fiscal com a referência informada
 POST |	/v2/nfe/inutilizacao	| Inutiliza uma numeração da nota fiscal
+POST |	/v2/nfe/importacao?ref=REFERENCIA	| Cria uma nota fiscal a partir da importação de um XML
 
 ## Campos obrigatórios de uma NFe
 
@@ -2579,3 +2580,56 @@ O token é a chave de acesso, fornecida pelo suporte, que irá garantir que a ap
 **Download**
 
 O comunicador foi desenvolvido para uso em sistema operacional Windows, para fazer o download do comunicador [clique aqui](http://www.focusnfe.com.br/downloads/focusNfeFileCommunicator.exe) .
+
+## Importação
+
+Para importar uma NFe a partir de seu XML utilize a URL abaixo, alterando o ambiente de produção para homologação, caso esteja importando notas de teste.
+
+Importação do XML de uma NFe:
+
+`https://api.focusnfe.com.br/v2/nfe/importacao?ref=REFERENCIA`
+
+Utilize o comando **HTTP POST** para importar a sua nota para nossa API. Envie como corpo do POST o conteúdo do arquivo XML. O campo de referência (ref) pode ser omitido, neste caso iremos considerar o valor da chave da nota.
+
+Na importação é feita apenas a validação da empresa emitente, esta empresa deve estar cadastrada previamente para aceitar as importações. Não há necessidade de ter um
+certificado digital instalado para aceitar a importação.
+
+Caso a nota seja validada corretamente, a nota será importada e estará disponível para
+receber outras operações como cancelamento ou carta de correção. Para realizar estas operações será necessário que a empresa tenha um certificado digital.
+
+Os dados devolvidos após a importação com sucesso são os mesmos da operação de
+[consulta](#nfe_consulta)
+
+> Exemplos de respostas da API
+
+> Importação realizada com sucesso
+
+```json
+{
+  "cnpj_emitente": "07504505000132",
+  "ref": "NFe41190607504505000132550010000000221923094166",
+  "status": "autorizado",
+  "status_sefaz": "100",
+  "mensagem_sefaz": "Autorizado o uso da NF-e",
+  "chave_nfe": "NFe41190607504505000132550010000000221923094166",
+  "numero": "22",
+  "serie": "1",
+  "caminho_xml_nota_fiscal": "/arquivos_development/07504505000132/201906/XMLs/41190607504505000132550010000000221923094166-nfe.xml",
+  "caminho_danfe": "/arquivos_development/07504505000132/201906/DANFEs/41190607504505000132550010000000221923094166.pdf"
+}
+```
+
+> Erro na validação do XML
+
+```json
+{
+  "codigo": "erro_validacao_xml",
+  "mensagem": "O XML não pode ser interpretado, verifique seu conteúdo e tente novamente"
+}
+```
+
+```shell
+# arquivo.xml deve conter o XML da NFe
+curl -u "token obtido no cadastro da empresa:" \
+  -X POST -T arquivo.xml https://homologacao.focusnfe.com.br/v2/nfe/importacao
+```
