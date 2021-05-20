@@ -18,8 +18,8 @@ Método | URL (recurso) | Ação
 -------|-------|-----
 POST |	/v2/cte?ref=REFERENCIA	| Cria uma CTe a envia para processamento.
 POST |	/v2/cte_os?ref=REFERENCIA	| Emite uma CTe OS.
-GET	 | /v2/cfe/REFERENCIA	| Consulta a CTe com a referência informada e o seu status de processamento
-DELETE |	/v2/cfe/REFERENCIA	| Cancela uma CTe com a referência informada
+GET	 | /v2/cte/REFERENCIA	| Consulta a CTe com a referência informada e o seu status de processamento
+DELETE |	/v2/cte/REFERENCIA	| Cancela uma CTe com a referência informada
 POST |	/v2/cte/REFERENCIA/carta_correcao	| Cria uma carta de correção para a CTe com a referência informada.
 POST |	/v2/cte/inutilizacao	| Inutiliza uma numeração da CTe
 
